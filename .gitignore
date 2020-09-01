@@ -1,0 +1,11 @@
+.DS_Store
+.env
+.ipynb_checkpoints
+.pytest_cache
+.vscode
+__pycache__
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

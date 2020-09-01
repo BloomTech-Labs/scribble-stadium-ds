@@ -1,0 +1,13 @@
+{
+  "AWSEBDockerrunVersion": "1",
+  "Image": {
+    "Name": "YOUR-DOCKER-HUB-ID/YOUR-IMAGE-NAME",
+    "Update": "true"
+  },
+  "Ports": [
+    {
+      "ContainerPort": "8000"
+    }
+  ], 
+  "Command": "uvicorn app.main:app --workers 1 --host 0.0.0.0 --port 8000"
+}
