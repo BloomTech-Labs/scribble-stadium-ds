@@ -22,11 +22,8 @@ async def check_auth_header(request: Request, next_call):
         if (auth is not None) and (auth == getenv("DS_SECRET_TOKEN")):
             response = await next_call(request)
             return response
-        else:
-            return Response(status_code=401, content="PATH FORBBIDEN")
-    except KeyError as ke:
-        print(ke)
-        return Response(status_code=401, content="PATH FORBBIDEN")
+    except KeyError:
+        return Response(status_code=403, content="PATH FORBBIDEN")
 
 
 app.include_router(predict.router)
