@@ -24,7 +24,7 @@ async def check_auth_header(request: Request, next_call):
     Arguments
     -----------
     `request`: {fastapi.requests.Request} - requesting client
-    `next_call`: {typing.Callable} - callable function that the middlewear
+    `next_call`: {typing.Callable} - callable function that the middleware
     is intercepting
     Returns
     ---------
@@ -32,7 +32,7 @@ async def check_auth_header(request: Request, next_call):
     function
     """
     bad_response = Response(
-        status_code=403, content="PATH FORBBIDEN", media_type="text/html"
+        status_code=403, content="PATH FORBIDEN", media_type="text/html"
     )
     # check for key in headers, doesn't cause an error to raise
     if "Authorization" in request.headers:
