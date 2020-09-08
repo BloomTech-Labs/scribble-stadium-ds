@@ -19,11 +19,11 @@ app = FastAPI(
 async def check_auth_header(request: Request, next_call):
     try:
         auth = request.headers["Authorization"]
-        if (auth is not None) and (auth == getenv("DS_SECRET_TOKEN")):
+        if (auth is not None) and (auth == getenv("DS_SECRET_TOKEN", None)):
             response = await next_call(request)
             return response
     except KeyError:
-        return Response(status_code=403, content="PATH FORBBIDEN")
+        return Response(status_code=403, content="PATH FORBBIDEN", media_type='text/html')
 
 
 app.include_router(predict.router)
