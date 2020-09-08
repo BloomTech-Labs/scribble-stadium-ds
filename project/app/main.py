@@ -17,13 +17,35 @@ app = FastAPI(
 
 @app.middleware("http")
 async def check_auth_header(request: Request, next_call):
-    try:
+    """
+    Function acts as a custom middlewear for http requests, checks if the
+    request header contains Authorization and if the value is equal to the
+    expected value that is stored in memory.
+    Arguments
+    -----------
+    `request`: {fastapi.requests.Request} - requesting client
+    `next_call`: {typing.Callable} - callable function that the middlewear
+    is intercepting
+    Returns
+    ---------
+    `response`: {fastapi.responses.Response} - response from calling the
+    function
+    """
+    bad_response = Response(
+        status_code=403, content="PATH FORBBIDEN", media_type="text/html"
+    )
+    # check for key in headers, doesn't cause an error to raise
+    if "Authorization" in request.headers:
         auth = request.headers["Authorization"]
+        # make sure that auth token is set to a value, and that that value is
+        # what we expect
         if (auth is not None) and (auth == getenv("DS_SECRET_TOKEN", None)):
             response = await next_call(request)
             return response
-    except KeyError:
-        return Response(status_code=403, content="PATH FORBBIDEN", media_type='text/html')
+        else:
+            return bad_response
+    else:
+        return bad_response
 
 
 app.include_router(predict.router)
