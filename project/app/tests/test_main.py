@@ -20,5 +20,6 @@ def test_docs():
     client.headers["Authorization"] = None
     # pull the root page content again
     response = client.get("/")
-    # should throw 401 forbidden
-    assert response.status_code == 403
+    # should be working independent of auth header
+    assert response.status_code == 200
+
