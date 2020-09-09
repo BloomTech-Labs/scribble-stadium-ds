@@ -34,6 +34,10 @@ async def check_auth_header(request: Request, next_call):
     bad_response = Response(
         status_code=403, content="PATH FORBIDDEN", media_type="text/html"
     )
+    # adding an exception to the documentation page
+    if request.base_url.path == "/":
+        response = await next_call(request)
+        return response
     # check for key in headers, doesn't cause an error to raise
     if "Authorization" in request.headers:
         auth = request.headers["Authorization"]
