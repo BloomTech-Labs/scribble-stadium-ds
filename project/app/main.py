@@ -18,7 +18,7 @@ app = FastAPI(
 @app.middleware("http")
 async def check_auth_header(request: Request, next_call):
     """
-    Function acts as a custom middlewear for http requests, checks if the
+    Function acts as a custom middleware for http requests, checks if the
     request header contains Authorization and if the value is equal to the
     expected value that is stored in memory.
     Arguments
@@ -32,7 +32,7 @@ async def check_auth_header(request: Request, next_call):
     function
     """
     bad_response = Response(
-        status_code=403, content="PATH FORBIDEN", media_type="text/html"
+        status_code=403, content="PATH FORBIDDEN", media_type="text/html"
     )
     # check for key in headers, doesn't cause an error to raise
     if "Authorization" in request.headers:
