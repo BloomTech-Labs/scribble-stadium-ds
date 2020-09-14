@@ -1,5 +1,8 @@
 # Google Vision function to extract text from a local or uri hosted image
 
+from google.cloud import vision
+import io
+
 
 def transcribe(image_path):
     '''
@@ -10,8 +13,6 @@ def transcribe(image_path):
             the apporopriate one
     Output: Transcribed text as a string
     '''
-    from google.cloud import vision
-    import io
 
     # If image_path is local
     with io.open(image_path, 'rb') as image_file:
