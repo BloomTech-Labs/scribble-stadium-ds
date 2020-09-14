@@ -1,1 +1,0 @@
-The 'google_api' Notebook has the code to connect to Google Cloud Vision API and return the transcribed text extracted from a given image
