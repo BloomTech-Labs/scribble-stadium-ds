@@ -5,7 +5,7 @@ from fastapi.requests import Request
 from os import getenv
 import uvicorn
 
-from app.api import predict, viz
+from app.api import predict, viz, submission
 
 app = FastAPI(
     title="Labs26-StorySquad-DS-Team B",
@@ -54,6 +54,7 @@ async def check_auth_header(request: Request, next_call):
 
 app.include_router(predict.router)
 app.include_router(viz.router)
+app.include_router(submission.router)
 
 app.add_middleware(
     CORSMiddleware,
