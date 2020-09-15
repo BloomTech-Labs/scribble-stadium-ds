@@ -29,9 +29,13 @@ class Submission(BaseModel):
 
 @router.post("/submission/text")
 async def submission_text(sub: Submission):
-    """Function that takes a file that is sent via FastAPI FileUpload interface
-    and uploads that file to an s3 bucket, then returns the link for the s3
-    bucket object and if the content has been flagged as inappropriate content.
+    """This function takes the passed file in Submission and calls two services,
+    one that uses the Google Vision API and transcribes the text from the file
+    and looks for moderation markers. the other service will take the binary
+    file and upload it to an e3 bucket. after the file has been transcribed,
+    moderated, and stored there will be an entry added to a submissions
+    database with the story_id, s3_path, and the text data from the
+    transcription
 
     ## Arguments:
     -----------
@@ -49,7 +53,8 @@ async def submission_text(sub: Submission):
 @router.post("/submission/illustration")
 async def submission_illustration(sub: Submission):
     """Function that takes an illustration from form data and checks the
-    illustration against the google.cloud.vision api and see's if the content is NSFW
+    illustration against the google.cloud.vision api and see's if the content
+    is NSFW
 
     ## Arguments:
     -----------
