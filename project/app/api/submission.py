@@ -1,8 +1,6 @@
-from fastapi import APIRouter
 import logging
-from json import dumps
+from fastapi import APIRouter, File, UploadFile
 from pydantic import BaseModel, Field, validator
-from requests import get, post
 
 router = APIRouter()
 log = logging.getLogger(__name__)
@@ -13,29 +11,7 @@ class Submission(BaseModel):
     will check if the s3 API server is currently accepting requests"""
 
     story_id: str = Field(..., example="12345")
-    story_url: str = Field(..., example="https://s3.amazonaws.com")
-
-    def to_json(self):
-        "returns the json representation of the object"
-        return dumps(dict(self))
-
-    @validator("story_url")
-    def story_exists_in_bucket(cls, value):
-        """checks to make sure that the value that is passed in story_url is a
-        real address that has a good response code"""
-        try:
-            # let the server know this is a temporary connection
-            r = get(value, headers={"Keep-alive": False})
-            assert r.status_code == 200
-            r.close()
-            return value
-        except AssertionError as ae:
-            # pass forward the AssertionError
-            raise ae
-        except Exception as e:
-            # add cause message and args to the log handler
-            log.warning(e.__cause__, e.args)
-            return {"ERROR": e.__cause__}
+    story_file: bytes = Field(..., example=b"10gh1r447/s4413.")
 
     @validator("story_id")
     def no_none_ids(cls, value):
@@ -43,13 +19,24 @@ class Submission(BaseModel):
         assert value is not None
         return value
 
+    @validator("story_file")
+    def check_file(cls, value):
+        # design method to validate file contents
+        # XXX: (passing a hash then comparing that?)
+        # assert hashlib.sha256(data=file).hexdigest() == passed_hash
+        return value
+
 
 @router.post("/submission/text")
 async def submission_text(sub: Submission):
-    """Function that takes a Submission object from a post request and
-    queries the Google API for a transcription of the picture that is passed,
-    then stores that transcription along with the story_id in a PostgreSQL
-    Database
+    """This function takes the passed file in Submission and calls two services,
+    one that uses the Google Vision API and transcribes the text from the file
+    and looks for moderation markers. the other service will take the binary
+    file and upload it to an e3 bucket. after the file has been transcribed,
+    moderated, and stored there will be an entry added to a submissions
+    database with the story_id, s3_path, and the text data from the
+    transcription
+
     ## Arguments:
     -----------
 
@@ -58,16 +45,24 @@ async def submission_text(sub: Submission):
     ## Returns:
     -----------
 
-    json - {"is_flagged": bool}
+    json - {"is_flagged": bool, "s3_link": type(url)}
     """
-    # @XXX: change this to the result of the moderation search,
-    # for testing just echo
-    return sub.to_json()
+    return {sub}
 
 
-@router.post("/submission/image")
-async def submission_image(sub: Submission):
-    """Identical to /submission/text except that it just flags
-    inappropriate content in the submission to be reviewed by admins"""
-    return sub.to_json()
+@router.post("/submission/illustration")
+async def submission_illustration(sub: Submission):
+    """Function that takes an illustration from form data and checks the
+    illustration against the google.cloud.vision api and see's if the content
+    is NSFW
 
+    ## Arguments:
+    -----------
+
+    sub {Submission} - submission model that is created on post
+
+    ## Returns:
+    -----------
+
+    json - {"is_flagged": bool, "s3_link": type(url)}"""
+    return {sub}
