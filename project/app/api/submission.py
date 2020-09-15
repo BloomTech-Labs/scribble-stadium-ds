@@ -46,10 +46,10 @@ async def submission_text(sub: Submission):
     return {sub}
 
 
-@router.post("/submission/image")
-async def submission_image(sub: Submission):
-    """Function that takes an Image from form data and checks the
-    image against the google.cloud.vision api and see's if the content is NSFW
+@router.post("/submission/illustration")
+async def submission_illustration(sub: Submission):
+    """Function that takes an illustration from form data and checks the
+    illustration against the google.cloud.vision api and see's if the content is NSFW
 
     ## Arguments:
     -----------
