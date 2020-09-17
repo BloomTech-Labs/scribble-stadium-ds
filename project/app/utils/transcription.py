@@ -1,13 +1,13 @@
+# Google Vision function to extract text from a local or uri hosted image
+
 from google.cloud import vision
 from google.cloud.vision import types
 from os import getenv, environ
 
-# XXX: Documentation parses to Markdown on FastAPI Swagger UI
+"""An interface to googles vision API"""
 
 
 class GoogleAPI:
-    """# An Interface To Googles Vision API"""
-
     def __init__(self):
         """function that prepares the GoogleAPI to handle requests from the
         endpoints.
@@ -19,7 +19,6 @@ class GoogleAPI:
         content the will set a new variable GOOGLE_APPLICATION_CREDENTIALS
         which is used by ImageAnnotatorClient to authorize the google API library
         """
-        # TODO: Refactor into separate function
         if getenv("GOOGLE_CREDS") is not None:
             with open("/tmp/google.json", "wt") as fp:
                 # write file to /tmp containing all of the cred info
@@ -38,69 +37,34 @@ class GoogleAPI:
         self.client = vision.ImageAnnotatorClient()
 
     async def transcribe(self, image_file: bytes):
-        """Detects document features in images and returns extracted text
-        Input:
-        --------
-        `image_file`: bytes - The file object to be sent to Google Vision API
-
-        Output:
-        --------
-        `transcribed_text`: str - Transcribed text from Google Vision API
-
+        """
+        Detects document features in images and returns extracted text
+        Input: Path to file where images are stored
+            - Assuming 1 image per image_path
+            - Code for both local image_path and remote image_path, comment out
+                the appropriate one
+        Output: Transcribed text as a string
         """
         # read the file's content and cast into Image type
         # use async friendly await function to fetch read
         content = await image_file.read()
         image = types.Image(content=content)
-        # connect to Google API client with the file that is built above
+        # Connect to Google API client with the file that is built above
         response = self.client.document_text_detection(image=image)
-        # check if there are transcriptions from google
+        # Save transcribed text
         if response.text_annotations:
-            # store and process the response
             transcribed_text = response.text_annotations[0].description
             transcribed_text = transcribed_text.replace("\n", " ")
         else:
-            # forward no text in image exception to caller
             raise NoTextFoundException("No Text Was Found In Image")
-
         return transcribed_text
 
     async def detect_safe_search(self, image_file: bytes):
-        """# Detects adult, violent or racy content in uploaded images
-
-        ## Input:
-        --------
-        `image_file`: bytes - The file object to be sent to Google Vision API
-
-        ## Output:
-        --------
-        response `dict` - a dictionary that contains the following keys:
-
-        ```python3
-        {
-            # bool to signal moderation
-            "is_flagged": [ True / False ],
-            "reason": {
-                        # probabilities of each metric
-                        # occuring in the sourced image
-                        "adult:": P(adult)
-                        "violence": P(violence)
-                        "racy": P(racy)
-                      } or None
-        }
-        ```
-
-        The possible values for the posibilities are:
-
-        ```
-            "UNKNOWN",
-            "VERY_UNLIKELY",
-            "UNLIKELY",
-            "POSSIBLE",
-            "LIKELY",
-            "VERY_LIKELY",
-        ```
-
+        """
+        Detects adult, violent or racy content in uploaded images
+        Input: path to the image file
+        Output: String, either stating 'No inappropriate material detected'
+            or 'Image Flagged' with information about what is inappropriate
         """
         # init a empty list
         flagged = []
@@ -137,6 +101,4 @@ class GoogleAPI:
 
 
 class NoTextFoundException(Exception):
-    """An Exception that occurs when Google Vision API
-    finds no text data in the image"""
     pass
