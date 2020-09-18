@@ -55,7 +55,6 @@ async def submission_text(story_id: str, files: UploadFile = File(...)):
     try:
         # await for the vision API to process the image
         transcript = await vision.transcribe(files)
-        story_id = story_id
 
     # log the error then return what the error is
     except NoTextFoundException as e:
@@ -64,7 +63,7 @@ async def submission_text(story_id: str, files: UploadFile = File(...)):
     print((story_id, transcript))
 
     # return moderation flag and s3_link for that file (not yet implemented)
-    return {"is_flagged": None, "s3_path": None}
+    return {"is_flagged": None, "complexity": None}
 
 
 @router.post("/submission/illustration")
