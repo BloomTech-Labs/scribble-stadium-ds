@@ -1,9 +1,13 @@
 import logging
 from fastapi import APIRouter, File, UploadFile
 from pydantic import BaseModel, Field, validator
+from app.utils.google_api import GoogleAPI, NoTextFoundException
+import json
 
 router = APIRouter()
 log = logging.getLogger(__name__)
+# init the GoogleAPI service to fetch responses from the google vision api
+vision = GoogleAPI()
 
 
 class Submission(BaseModel):
@@ -11,7 +15,7 @@ class Submission(BaseModel):
     will check if the s3 API server is currently accepting requests"""
 
     story_id: str = Field(..., example="12345")
-    story_file: bytes = Field(..., example=b"10gh1r447/s4413.")
+    story_file: str = Field(..., example=b"10gh1r447/s4413.")
 
     @validator("story_id")
     def no_none_ids(cls, value):
@@ -28,7 +32,7 @@ class Submission(BaseModel):
 
 
 @router.post("/submission/text")
-async def submission_text(sub: Submission):
+async def submission_text(story_id: str, files: UploadFile = File(...)):
     """This function takes the passed file in Submission and calls two services,
     one that uses the Google Vision API and transcribes the text from the file
     and looks for moderation markers. the other service will take the binary
@@ -39,30 +43,49 @@ async def submission_text(sub: Submission):
 
     ## Arguments:
     -----------
-
-    sub {Submission} - submission model that is created on post
+    story_id `str` - story_id
+    story_file `UploadFile` - UGC passed with enctype=multipart/form-data
 
     ## Returns:
     -----------
 
-    json - {"is_flagged": bool, "s3_link": type(url)}
+    response `json` - {"is_flagged": bool, "s3_link": type(url)}
     """
-    return {sub}
+    # catch custom exception for no text
+    try:
+        # await for the vision API to process the image
+        transcript = await vision.transcribe(files)
+
+    # log the error then return what the error is
+    except NoTextFoundException as e:
+        log.error(e, stack_info=True)
+        return {"error": e}
+    print((story_id, transcript))
+
+    # return moderation flag and s3_link for that file (not yet implemented)
+    return {"is_flagged": None, "complexity": None}
 
 
 @router.post("/submission/illustration")
-async def submission_illustration(sub: Submission):
-    """Function that takes an illustration from form data and checks the
-    illustration against the google.cloud.vision api and see's if the content
-    is NSFW
+async def submission_illustration(files: UploadFile = File(...)):
+    """Function that checks the illustration against the Google Vision
+    SafeSearch API and flags if explicit content detected.
 
     ## Arguments:
     -----------
+    files `UploadFile` - UGC to be uploaded, transcribed, and stored
 
-    sub {Submission} - submission model that is created on post
+    eg.
+    ```python3
+    files = {"files": (file.name, file)}
+    ```
 
     ## Returns:
     -----------
 
-    json - {"is_flagged": bool, "s3_link": type(url)}"""
-    return {sub}
+    response `json` - {"is_flagged": bool, "reason":`reason`}
+    """
+
+    response = await vision.detect_safe_search(files)
+    return response
+
