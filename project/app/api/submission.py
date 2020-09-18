@@ -69,8 +69,8 @@ async def submission_text(story_id: str, files: UploadFile = File(...)):
 
 @router.post("/submission/illustration")
 async def submission_illustration(files: UploadFile = File(...)):
-    """Function that checks the illustration against the google.cloud.vision
-    api and see's if the content is NSFW.
+    """Function that checks the illustration against the Google Vision
+    SafeSearch API and flags if explicit content detected.
 
     ## Arguments:
     -----------
@@ -84,7 +84,9 @@ async def submission_illustration(files: UploadFile = File(...)):
     ## Returns:
     -----------
 
-    response `json` - {"is_flagged": bool, "reason":`reason`}"""
+    response `json` - {"is_flagged": bool, "reason":`reason`}
+    """
+
     response = await vision.detect_safe_search(files)
     return response
 
