@@ -51,8 +51,12 @@ class GoogleAPI:
         # use async friendly await function to fetch read
         content = await image_file.read()
         image = types.Image(content=content)
+        # adding refined language specification to sort out Non-English
+        # characters from transcription responses
+        language = types.ImageContext(language_hints=['en-t-i0-handwrit'])
         # Connect to Google API client with the file that is built above
-        response = self.client.document_text_detection(image=image)
+        response = self.client.document_text_detection(image=image,
+                                                       image_context=language)
         # check if there are transcriptions from google
         if response.text_annotations:
             # store and process the response
