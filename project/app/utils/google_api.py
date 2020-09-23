@@ -53,8 +53,7 @@ class GoogleAPI:
         image = types.Image(content=content)
         # adding refined language specification to sort out Non-English
         # characters from transcription responses
-        language = vision.types.ImageContext(
-            language_hints=['en-t-i0-handwrit'])
+        language = types.ImageContext(language_hints=['en-t-i0-handwrit'])
         # Connect to Google API client with the file that is built above
         response = self.client.document_text_detection(image=image,
                                                        image_context=language)
