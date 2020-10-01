@@ -11,63 +11,49 @@ vision = GoogleAPI()
 
 
 class Submission(BaseModel):
-    """Data Model to parse Request body JSON, using the Default values
-    will check if the s3 API server is currently accepting requests"""
+    """URL: '', PageNum: 12, SubmissionID: 12, checksum: ''"""
 
-    story_id: str = Field(..., example="12345")
-    story_file: str = Field(..., example=b"10gh1r447/s4413.")
+    subId: int = Field(..., example=123564)
+    storyId: int = Field(..., example=154478)
+    pages: dict = Field(
+        ...,
+        example={
+            "URL": '',
+            "PageNum": 12,
+            "SubmissionID": 12,
+            "checksum": 'acde123345sfd3324jhg34vbj32v4'
+        })
 
-    @validator("story_id")
-    def no_none_ids(cls, value):
-        """Ensure that the value is not passed as None"""
-        assert value is not None
-        return value
 
-    @validator("story_file")
-    def check_file(cls, value):
-        # design method to validate file contents
-        # XXX: (passing a hash then comparing that?)
-        # assert hashlib.sha256(data=file).hexdigest() == passed_hash
-        return value
+class ScoreSquad():
+    """placeholder for now"""
+    def __init__(self, document: str):
+        self.score = len(document.split())
+
+    def get_score(self):
+        return self.score
 
 
 @router.post("/submission/text")
-async def submission_text(story_id: str, files: UploadFile = File(...)):
-    """This function takes the passed file in Submission and calls two services,
-    one that uses the Google Vision API and transcribes the text from the file
-    and looks for moderation markers. the other service will take the binary
-    file and upload it to an e3 bucket. after the file has been transcribed,
-    moderated, and stored there will be an entry added to a submissions
-    database with the story_id, s3_path, and the text data from the
-    transcription
-
-    ## Arguments:
-    -----------
-    story_id `str` - story_id
-    story_file `UploadFile` - UGC passed with enctype=multipart/form-data
-
-    ## Returns:
-    -----------
-
-    response `json` - {"is_flagged": bool, "s3_link": type(url)}
+async def submission_text(sub: Submission):
+    """will update in future
     """
+
     # catch custom exception for no text
     try:
         # await for the vision API to process the image
-        transcript = await vision.transcribe(files)
+        transcript = await vision.transcribe(page_file)
 
     # log the error then return what the error is
     except NoTextFoundException as e:
         log.error(e, stack_info=True)
         return {"error": e}
-    print((story_id, transcript))
 
-    # return moderation flag and s3_link for that file (not yet implemented)
-    return {"is_flagged": None, "complexity": None}
+    return
 
 
 @router.post("/submission/illustration")
-async def submission_illustration(files: UploadFile = File(...)):
+async def submission_illustration(sub: Submission):
     """Function that checks the illustration against the Google Vision
     SafeSearch API and flags if explicit content detected.
 
@@ -88,4 +74,3 @@ async def submission_illustration(files: UploadFile = File(...)):
 
     response = await vision.detect_safe_search(files)
     return response
-
