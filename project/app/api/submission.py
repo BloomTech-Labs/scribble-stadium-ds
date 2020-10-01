@@ -3,6 +3,7 @@ from fastapi import APIRouter, File, UploadFile
 from pydantic import BaseModel, Field, validator
 from app.utils.google_api import GoogleAPI, NoTextFoundException
 import json
+import sys
 
 router = APIRouter()
 log = logging.getLogger(__name__)
@@ -13,16 +14,40 @@ vision = GoogleAPI()
 class Submission(BaseModel):
     """URL: '', PageNum: 12, SubmissionID: 12, checksum: ''"""
 
-    subId: int = Field(..., example=123564)
-    storyId: int = Field(..., example=154478)
-    pages: dict = Field(
+    SubmissionID: int = Field(..., example=123564)
+    StoryId: int = Field(..., example=154478)
+    Pages: dict = Field(
         ...,
         example={
-            "URL": '',
-            "PageNum": 12,
-            "SubmissionID": 12,
-            "checksum": 'acde123345sfd3324jhg34vbj32v4'
+            "1": {
+                "URL": "link",
+                "Checksum": "nla1snkj2fasn44423332sdafv"
+            },
+            "2": {
+                "URL": "link",
+                "Checksum": "3alksjdfljwerproifjkmtrews"
+            }
         })
+    @validator("SubmissionID")
+    def check_valid_subid(cls, value):
+        # no neg numbers and no int overflows
+        assert value >= 0
+        assert value < sys.maxsize
+
+
+class ImageSubmission(BaseModel):
+    """request model of image submissions contains a validator for SubmissionID
+    where 0 < SubmmisionID < 9223372036854775807 (sys.maxsize or 0x7FFFFFFF)"""
+
+    URL: str = Field(..., example="s3.link.com/path/to/file.end")
+    Checksum: str = Field(..., example="alkjsfdljaefnrgit2344asfd4")
+    SubmissionID: int = Field(..., example=265458)
+
+    @validator("SubmissionID")
+    def check_valid_subid(cls, value):
+        # no neg numbers and no int overflows
+        assert value >= 0
+        assert value < sys.maxsize
 
 
 class ScoreSquad():
@@ -42,8 +67,9 @@ async def submission_text(sub: Submission):
     # catch custom exception for no text
     try:
         # await for the vision API to process the image
-        transcript = await vision.transcribe(page_file)
-
+        #transcript = await vision.transcribe()
+        for page in sub.pages:
+            print(page, sub.pages[page])
     # log the error then return what the error is
     except NoTextFoundException as e:
         log.error(e, stack_info=True)
@@ -53,7 +79,7 @@ async def submission_text(sub: Submission):
 
 
 @router.post("/submission/illustration")
-async def submission_illustration(sub: Submission):
+async def submission_illustration(imgsub: ImageSubmission):
     """Function that checks the illustration against the Google Vision
     SafeSearch API and flags if explicit content detected.
 
