@@ -12,8 +12,43 @@ vision = GoogleAPI()
 
 
 class Submission(BaseModel):
-    """URL: '', PageNum: 12, SubmissionID: 12, checksum: ''"""
+    """
+    # Model that handles text submissions to the API `submission/text` endpoint
+    ## **Fields:**
 
+    ### SubmissionID - `int`
+    <p>
+        SubmissionID unique to this submission from a specific student
+    </p>
+
+    ### StoryId - `int`
+    <p>
+        StoryID for keeping track of which story the submission is in reference to
+    </p>
+
+    ### Pages - `dict`
+    <p>
+        A dictionary containing page number keys and value dictionaries with the
+        following keys:
+    </p>
+
+    ```python3
+    {
+        "URL": # The url to the file that will be downloaded for transcription
+        "Checksum": # Checksum for the file that is downloaded to verify it's file integrity
+    }
+    ```
+
+    ## **Validation Functions:**
+
+    ### **check_valid_subid(cls, value)** uses `SubmissionID`
+
+    `Asserts that: 0 < SubmissionID < sys.maxsize`
+    <p>
+        Function is used to make sure that the passed value for SubmissionID
+        is not negative and does not cause an integer overflow.
+    </p>
+    """
     SubmissionID: int = Field(..., example=123564)
     StoryId: int = Field(..., example=154478)
     Pages: dict = Field(
@@ -28,26 +63,67 @@ class Submission(BaseModel):
                 "Checksum": "3alksjdfljwerproifjkmtrews"
             }
         })
+
     @validator("SubmissionID")
     def check_valid_subid(cls, value):
         # no neg numbers and no int overflows
         assert value >= 0
         assert value < sys.maxsize
+        return value
 
 
 class ImageSubmission(BaseModel):
-    """request model of image submissions contains a validator for SubmissionID
-    where 0 < SubmmisionID < 9223372036854775807 (sys.maxsize or 0x7FFFFFFF)"""
+    """
+    # Model that handles illustration submissions to the API `submission/illustration` endpoint
+    ## **Fields:**
 
+    ### SubmissionID -
+    <p>
+        Submission id that is passed to identify the illustration
+        for moderation purposes
+    </p>
+
+    ### URL -
+    <p>
+        Url to the file that is going to be submitted to Google API
+    </p>
+
+    ### Checksum -
+    <p>
+        SHA512 checksum of the file to verify the integrity of the
+        downloaded file
+    </p>
+
+    ## **Validation Functions:**
+
+    ### **check_valid_subid(cls, value)** uses `SubmissionID`
+
+    `Asserts that: 0 < SubmissionID < sys.maxsize`
+
+    <p>
+        Function is used to make sure that the passed value for SubmissionID
+        is not negative and does not cause an integer overflow.
+    </p>
+    <br>
+
+    ### **check_sha_len(cls, value)** uses `Checksum`
+
+    <p>
+        Function that takes the value of checksum and assert that it's 128
+        characters long to ensure that it's the proper length for a SHA512
+        checksum.
+    </p>
+    """
+    SubmissionID: int = Field(..., example=265458)
     URL: str = Field(..., example="s3.link.com/path/to/file.end")
     Checksum: str = Field(..., example="alkjsfdljaefnrgit2344asfd4")
-    SubmissionID: int = Field(..., example=265458)
 
     @validator("SubmissionID")
     def check_valid_subid(cls, value):
         # no neg numbers and no int overflows
         assert value >= 0
         assert value < sys.maxsize
+        return value
 
 
 class ScoreSquad():
