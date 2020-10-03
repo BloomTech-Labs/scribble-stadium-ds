@@ -48,6 +48,14 @@ class Submission(BaseModel):
         Function is used to make sure that the passed value for SubmissionID
         is not negative and does not cause an integer overflow.
     </p>
+
+    ### **check_sha_len(cls, value)** uses `Pages`
+
+    <p>
+        Function that takes the value of checksum and assert that it's 128
+        characters long to ensure that it's the proper length for a SHA512
+        checksum.
+    </p>
     """
     SubmissionID: int = Field(..., example=123564)
     StoryId: int = Field(..., example=154478)
@@ -69,6 +77,11 @@ class Submission(BaseModel):
         # no neg numbers and no int overflows
         assert value >= 0
         assert value < sys.maxsize
+        return value
+    @validator("Pages")
+    def check_sha_len(cls, value):
+        for page in value:
+            assert len(value[page]["Checksum"]) == 128
         return value
 
 
@@ -123,6 +136,11 @@ class ImageSubmission(BaseModel):
         # no neg numbers and no int overflows
         assert value >= 0
         assert value < sys.maxsize
+        return value
+
+    @validator("Checksum")
+    def check_sha_len(cls, value):
+        assert len(value) == 128
         return value
 
 
