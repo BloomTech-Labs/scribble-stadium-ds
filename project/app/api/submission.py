@@ -1,5 +1,6 @@
 import logging
 from fastapi import APIRouter, File, UploadFile
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, validator
 from app.utils.img_processing.google_api import GoogleAPI, NoTextFoundException
 import json
@@ -63,12 +64,16 @@ class Submission(BaseModel):
         ...,
         example={
             "1": {
-                "URL": "link",
-                "Checksum": "1f40fc92da241694750979ee6cf582f2d5d7d28e18335de05abc54d0560e0f5302860c652bf08d560252aa5e74210546f369fbbbce8c12cfc7957b2652fe9a75"
+                "URL":
+                "link",
+                "Checksum":
+                "1f40fc92da241694750979ee6cf582f2d5d7d28e18335de05abc54d0560e0f5302860c652bf08d560252aa5e74210546f369fbbbce8c12cfc7957b2652fe9a75"
             },
             "2": {
-                "URL": "link",
-                "Checksum": "1f40fc92da241694750979ee6cf582f2d5d7d28e18335de05abc54d0560e0f5302860c652bf08d560252aa5e74210546f369fbbbce8c12cfc7957b2652fe9a75"
+                "URL":
+                "link",
+                "Checksum":
+                "1f40fc92da241694750979ee6cf582f2d5d7d28e18335de05abc54d0560e0f5302860c652bf08d560252aa5e74210546f369fbbbce8c12cfc7957b2652fe9a75"
             }
         })
 
@@ -78,6 +83,7 @@ class Submission(BaseModel):
         assert value >= 0
         assert value < sys.maxsize
         return value
+
     @validator("Pages")
     def check_sha_len(cls, value):
         for page in value:
@@ -129,7 +135,11 @@ class ImageSubmission(BaseModel):
     """
     SubmissionID: int = Field(..., example=265458)
     URL: str = Field(..., example="s3.link.com/path/to/file.end")
-    Checksum: str = Field(..., example="1f40fc92da241694750979ee6cf582f2d5d7d28e18335de05abc54d0560e0f5302860c652bf08d560252aa5e74210546f369fbbbce8c12cfc7957b2652fe9a75")
+    Checksum: str = Field(
+        ...,
+        example=
+        "1f40fc92da241694750979ee6cf582f2d5d7d28e18335de05abc54d0560e0f5302860c652bf08d560252aa5e74210546f369fbbbce8c12cfc7957b2652fe9a75"
+    )
 
     @validator("SubmissionID")
     def check_valid_subid(cls, value):
@@ -164,18 +174,17 @@ async def submission_text(sub: Submission):
     # send transcriptions to complexity score
     # send complexity score to web callback with the submission ID
 
-
     # catch custom exception for no text
     try:
         # await for the vision API to process the image
         #transcript = await vision.transcribe()
-
+        print("\n\n")
     # log the error then return what the error is
     except NoTextFoundException as e:
         log.error(e, stack_info=True)
         return {"error": e}
 
-    return
+    return JSONResponse(status_code=200, content={"OK.": None})
 
 
 @router.post("/submission/illustration")
@@ -197,6 +206,5 @@ async def submission_illustration(sub: ImageSubmission):
 
     response `json` - {"is_flagged": bool, "reason":`reason`}
     """
-
-    response = await vision.detect_safe_search(files)
-    return response
+    #response = await vision.detect_safe_search(files)
+    return JSONResponse(status_code=200, content={'OK.': None})
