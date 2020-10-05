@@ -64,11 +64,11 @@ class Submission(BaseModel):
         example={
             "1": {
                 "URL": "link",
-                "Checksum": "nla1snkj2fasn44423332sdafv"
+                "Checksum": "1f40fc92da241694750979ee6cf582f2d5d7d28e18335de05abc54d0560e0f5302860c652bf08d560252aa5e74210546f369fbbbce8c12cfc7957b2652fe9a75"
             },
             "2": {
                 "URL": "link",
-                "Checksum": "3alksjdfljwerproifjkmtrews"
+                "Checksum": "1f40fc92da241694750979ee6cf582f2d5d7d28e18335de05abc54d0560e0f5302860c652bf08d560252aa5e74210546f369fbbbce8c12cfc7957b2652fe9a75"
             }
         })
 
@@ -129,7 +129,7 @@ class ImageSubmission(BaseModel):
     """
     SubmissionID: int = Field(..., example=265458)
     URL: str = Field(..., example="s3.link.com/path/to/file.end")
-    Checksum: str = Field(..., example="alkjsfdljaefnrgit2344asfd4")
+    Checksum: str = Field(..., example="1f40fc92da241694750979ee6cf582f2d5d7d28e18335de05abc54d0560e0f5302860c652bf08d560252aa5e74210546f369fbbbce8c12cfc7957b2652fe9a75")
 
     @validator("SubmissionID")
     def check_valid_subid(cls, value):
