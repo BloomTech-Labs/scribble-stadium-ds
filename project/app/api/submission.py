@@ -1,7 +1,7 @@
 import logging
 from fastapi import APIRouter, File, UploadFile
 from pydantic import BaseModel, Field, validator
-from app.utils.google_api import GoogleAPI, NoTextFoundException
+from app.utils.img_processing.google_api import GoogleAPI, NoTextFoundException
 import json
 import sys
 
@@ -145,7 +145,7 @@ class ImageSubmission(BaseModel):
 
 
 class ScoreSquad():
-    """placeholder for now"""
+    """placeholder class for now"""
     def __init__(self, document: str):
         self.score = len(document.split())
 
@@ -157,13 +157,19 @@ class ScoreSquad():
 async def submission_text(sub: Submission):
     """will update in future
     """
+    # unpack links for file sin submission object
+    # featcha  list of files from s3 server
+    # check the SHA 512 of the file that is featched from the s3 bucket
+    # send each file to transcription service to be transcribed
+    # send transcriptions to complexity score
+    # send complexity score to web callback with the submission ID
+
 
     # catch custom exception for no text
     try:
         # await for the vision API to process the image
         #transcript = await vision.transcribe()
-        for page in sub.pages:
-            print(page, sub.pages[page])
+
     # log the error then return what the error is
     except NoTextFoundException as e:
         log.error(e, stack_info=True)
@@ -173,7 +179,7 @@ async def submission_text(sub: Submission):
 
 
 @router.post("/submission/illustration")
-async def submission_illustration(imgsub: ImageSubmission):
+async def submission_illustration(sub: ImageSubmission):
     """Function that checks the illustration against the Google Vision
     SafeSearch API and flags if explicit content detected.
 
