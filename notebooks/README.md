@@ -1,2 +1,3 @@
 #### Overview of `notebooks` content:
-`submission_endpoint_interactions`: This Notebook demonstrates the functionality for `submission.py` endpoints and outlines the file structure that is required from the endpoints `UploadFile` type.
+- `submission_endpoint_interactions`: This Notebook demonstrates the functionality for `submission.py` endpoints and outlines the file structure that is required from the endpoints `UploadFile` type.
+- `squad_score_mvp`: This notebook contains data exploration of training data, generation of MinMaxScaler, and Squad Score formula composition for complexity metric.
