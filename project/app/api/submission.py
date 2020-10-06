@@ -159,10 +159,8 @@ class ImageSubmission(BaseModel):
 
 class SquadScore():
     """placeholder class for now"""
-    def __init__(self, document: str):
+    async def get_score(self, document):
         self.score = len(document.split())
-
-    async def get_score(self):
         return self.score
 
 
@@ -192,8 +190,10 @@ async def submission_text(sub: Submission):
             # return some usefull information about the error including what
             # caused it and the file effected
             return JSONResponse(status_code=500,
-                                content={"ERROR": "BAD CHECKSUM",
-                                         "file":sub.Pages[page_num])
+                                content={
+                                    "ERROR": "BAD CHECKSUM",
+                                    "file": sub.Pages[page_num]
+                                })
         # transcribe page and store it in a dictionary with page_num as key
         transcriptions[page_num] = await vision.transcribe(fp.read())
         # score the transcription
@@ -203,14 +203,16 @@ async def submission_text(sub: Submission):
 
     # takes the average of the scores between pages and reassigns
     # the score variable to that number
-    score = sum(score.values())/len(sub.Pages)
+    score = sum(score.values()) / len(sub.Pages)
     # send complexity score to web callback with the submission ID
-    return JSONResponse(status_code=200, content={
-                                                  "SubmissionID": sub.SubmissionID,
-                                                  "IsFlagged": False,
-                                                  # return the average Squad score across the pages that have been graded
-                                                  "Complexity": score
-                                                  })
+    return JSONResponse(
+        status_code=200,
+        content={
+            "SubmissionID": sub.SubmissionID,
+            "IsFlagged": False,
+            # return the average Squad score across the pages that have been graded
+            "Complexity": score
+        })
 
 
 @router.post("/submission/illustration")
@@ -232,5 +234,16 @@ async def submission_illustration(sub: ImageSubmission):
 
     response `json` - {"is_flagged": bool, "reason":`reason`}
     """
-    #response = await vision.detect_safe_search(files)
-    return JSONResponse(status_code=200, content={'OK.': None})
+    r = get(sub.URL)
+    hash = sha512()
+    hash.update(r.content)
+    try:
+        assert hash.hexdigest() == sub.Checksum
+    except AssertionError:
+        return JSONResponse(status_code=500,
+                            content={
+                                "ERROR": "BAD CHECKSUM",
+                                "file": sub
+                            })
+    response = await vision.detect_safe_search(r.content)
+    return JSONResponse(status_code=200, content=response)
