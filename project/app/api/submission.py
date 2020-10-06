@@ -23,12 +23,13 @@ class Submission(BaseModel):
 
     ### SubmissionID - `int`
     <p>
-        SubmissionID unique to this submission from a specific student
+        SubmissionID used to index the unique student submission to StoryID
+        prompt
     </p>
 
     ### StoryId - `int`
     <p>
-        StoryID for keeping track of which story the submission is in reference to
+        StoryID used to index the writting prompt given to the students
     </p>
 
     ### Pages - `dict`
@@ -165,11 +166,15 @@ class ImageSubmission(BaseModel):
 @router.post("/submission/text")
 async def submission_text(sub: Submission):
     """Takes a Submission Object and calls the Google Vision API to text annotate
-    the passed s3 link, then passes thos concatenated transcriptions to the SquadScore
+    the passed s3 link, then passes those concatenated transcriptions to the SquadScore
     method, returns:
-
+    Arguments:
+    ---
+    `sub`: Submission - Submission object **see `help(Submission)` for more info**
+    Returns:
+    ---
     ```
-    {"SubmissionID": int, "IsFlagged": boolean, "Complexity": int}
+    {"SubmissionID": int, "IsFlagged": boolean,"LowConfidence": boolean, "Complexity": int}
     ```
 
     """
@@ -188,7 +193,7 @@ async def submission_text(sub: Submission):
             # link
             assert hash.hexdigest() == sub.Pages[page_num]['Checksum']
         except AssertionError:
-            # return some usefull information about the error including what
+            # return some useful information about the error including what
             # caused it and the file effected
             return JSONResponse(status_code=422,
                                 content={
@@ -248,5 +253,5 @@ async def submission_illustration(sub: ImageSubmission):
     # pass file to the GoogleAPI object to safe search filter the file
     response = await vision.detect_safe_search(r.content)
     # respond with the output dictionary that is returned from
-    # GoogleAPI.transcribe() methtod
+    # GoogleAPI.transcribe() method
     return JSONResponse(status_code=200, content=response)
