@@ -3,6 +3,9 @@ from google.cloud.vision import types
 from os import getenv, environ
 
 # XXX: Documentation parses to Markdown on FastAPI Swagger UI
+# Attribution: Most of this code is from transcription.py, safe_search.py, and
+# confidence_flag.py to steamline the implementation with the deployed
+# environment that code has been refactored into this file.
 
 
 class GoogleAPI:
@@ -40,7 +43,7 @@ class GoogleAPI:
         """Detects document features in images and returns extracted text
         Input:
         --------
-        `image_file`: bytes - The file object to be sent to Google Vision API
+        `document`: bytes - The file object to be sent to Google Vision API
 
         Output:
         --------
@@ -65,14 +68,27 @@ class GoogleAPI:
             # forward no text in image exception to caller
             raise NoTextFoundException("No Text Was Found In Image")
 
-        return transcribed_text
+        # List of confidence levels of each character
+        symbol_confidences = []
+        for page in response.full_text_annotation.pages:
+            for block in page.blocks:
+                for paragraph in block.paragraphs:
+                    for word in paragraph.words:
+                        for symbol in word.symbols:
+                            symbol_confidences.append(symbol.confidence)
+        # Calculate the overall confidence for the page
+        page_confidence = sum(symbol_confidences) / len(symbol_confidences)
+
+        # return flag: True under 85% confident, False 85% confident or over
+        # return text transcription
+        return (page_confidence < 0.85), transcribed_text
 
     async def detect_safe_search(self, document):
         """# Detects adult, violent or racy content in uploaded images
 
         ## Input:
         --------
-        `image_file`: bytes - The file object to be sent to Google Vision API
+        `document`: bytes - The file object to be sent to Google Vision API
 
         ## Output:
         --------
