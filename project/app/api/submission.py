@@ -212,16 +212,13 @@ async def submission_text(sub: Submission):
     score = await squad_score(transcriptions, scaler)
 
     # return the complexity score to the web team with the SubmissionID
-    return JSONResponse(
-        status_code=200,
-        content={
-            "SubmissionID": sub.SubmissionID,
-            "IsFlagged": False,
-            "LowConfidence": True in confidence_flags,
-            # return the average Squad score across the pages that have
-            # been graded
-            "Complexity": score
-        })
+    return JSONResponse(status_code=200,
+                        content={
+                            "SubmissionID": sub.SubmissionID,
+                            "IsFlagged": False,
+                            "LowConfidence": True in confidence_flags,
+                            "Complexity": score
+                        })
 
 
 @router.post("/submission/illustration")
