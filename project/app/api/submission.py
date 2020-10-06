@@ -1,91 +1,256 @@
-import logging
-from fastapi import APIRouter, File, UploadFile
-from pydantic import BaseModel, Field, validator
-from app.utils.google_api import GoogleAPI, NoTextFoundException
+from hashlib import sha512
+from io import BytesIO
 import json
+import logging
+import sys
 
+from fastapi import APIRouter, File, UploadFile
+from fastapi.responses import JSONResponse
+from pydantic import BaseModel, Field, validator
+from requests import get
+
+from app.utils.complexity.squad_score import squad_score, scaler
+from app.utils.img_processing.google_api import GoogleAPI, NoTextFoundException
+
+# global variables and services
 router = APIRouter()
 log = logging.getLogger(__name__)
-# init the GoogleAPI service to fetch responses from the google vision api
 vision = GoogleAPI()
 
 
 class Submission(BaseModel):
-    """Data Model to parse Request body JSON, using the Default values
-    will check if the s3 API server is currently accepting requests"""
+    """
+    # Model that handles text submissions to the API `submission/text` endpoint
+    ## **Fields:**
 
-    story_id: str = Field(..., example="12345")
-    story_file: str = Field(..., example=b"10gh1r447/s4413.")
+    ### SubmissionID - `int`
+    <p>
+        SubmissionID used to index the unique student submission to StoryID
+        prompt
+    </p>
 
-    @validator("story_id")
-    def no_none_ids(cls, value):
-        """Ensure that the value is not passed as None"""
-        assert value is not None
+    ### StoryId - `int`
+    <p>
+        StoryID used to index the writting prompt given to the students
+    </p>
+
+    ### Pages - `dict`
+    <p>
+        A dictionary containing page number keys and value dictionaries with the
+        following keys:
+    </p>
+
+    ```python3
+    {
+        "URL": # The url to the file that will be downloaded for transcription
+        "Checksum": # Checksum for the file that is downloaded to verify its file integrity
+    }
+    ```
+
+    ## **Validation Functions:**
+
+    ### **check_valid_subid(cls, value)** uses `SubmissionID`
+
+    `Asserts that: 0 < SubmissionID < sys.maxsize`
+    <p>
+        Function is used to make sure that the passed value for SubmissionID
+        is not negative and does not cause an integer overflow.
+    </p>
+
+    ### **check_sha_len(cls, value)** uses `Pages`
+
+    <p>
+        Function that takes the value of checksum and assert that it's 128
+        characters long to ensure that it's the proper length for a SHA512
+        checksum.
+    </p>
+    """
+    SubmissionID: int = Field(..., example=123564)
+    StoryId: int = Field(..., example=154478)
+    Pages: dict = Field(
+        ...,
+        example={
+            "1": {
+                "URL":
+                "https://test-image-bucket-14579.s3.amazonaws.com/bucketFolder/1600554345008-lg.png",
+                "Checksum":
+                "edbd2c0cd247bda620f9a0a3fe5553fb19606929d686ed3440742b1a25df426a8e6d3188b7eec163488764cc72d8cee67faba47e29f7744871d94d2a19dc70de"
+            },
+            "2": {
+                "URL":
+                "https://test-image-bucket-14579.s3.amazonaws.com/bucketFolder/1600554345008-lg.png",
+                "Checksum":
+                "edbd2c0cd247bda620f9a0a3fe5553fb19606929d686ed3440742b1a25df426a8e6d3188b7eec163488764cc72d8cee67faba47e29f7744871d94d2a19dc70de"
+            }
+        })
+
+    @validator("SubmissionID")
+    def check_valid_subid(cls, value):
+        # no neg numbers and no int overflows
+        assert value >= 0
+        assert value < sys.maxsize
         return value
 
-    @validator("story_file")
-    def check_file(cls, value):
-        # design method to validate file contents
-        # XXX: (passing a hash then comparing that?)
-        # assert hashlib.sha256(data=file).hexdigest() == passed_hash
+    @validator("Pages")
+    def check_sha_len(cls, value):
+        for page in value:
+            assert len(value[page]["Checksum"]) == 128
+        return value
+
+
+class ImageSubmission(BaseModel):
+    """
+    # Model that handles illustration submissions to the API `submission/illustration` endpoint
+    ## **Fields:**
+
+    ### SubmissionID -
+    <p>
+        Submission id that is passed to identify the illustration
+        for moderation purposes
+    </p>
+
+    ### URL -
+    <p>
+        Url to the file that is going to be submitted to Google API
+    </p>
+
+    ### Checksum -
+    <p>
+        SHA512 checksum of the file to verify the integrity of the
+        downloaded file
+    </p>
+
+    ## **Validation Functions:**
+
+    ### **check_valid_subid(cls, value)** uses `SubmissionID`
+
+    `Asserts that: 0 < SubmissionID < sys.maxsize`
+
+    <p>
+        Function is used to make sure that the passed value for SubmissionID
+        is not negative and does not cause an integer overflow.
+    </p>
+    <br>
+
+    ### **check_sha_len(cls, value)** uses `Checksum`
+
+    <p>
+        Function that takes the value of checksum and assert that it's 128
+        characters long to ensure that it's the proper length for a SHA512
+        checksum.
+    </p>
+    """
+    SubmissionID: int = Field(..., example=265458)
+    URL: str = Field(
+        ...,
+        example=
+        "https://test-image-bucket-14579.s3.amazonaws.com/bucketFolder/1600554345008-lg.png"
+    )
+    Checksum: str = Field(
+        ...,
+        example=
+        "edbd2c0cd247bda620f9a0a3fe5553fb19606929d686ed3440742b1a25df426a8e6d3188b7eec163488764cc72d8cee67faba47e29f7744871d94d2a19dc70de"
+    )
+
+    @validator("SubmissionID")
+    def check_valid_subid(cls, value):
+        # no neg numbers and no int overflows
+        assert value >= 0
+        assert value < sys.maxsize
+        return value
+
+    @validator("Checksum")
+    def check_sha_len(cls, value):
+        assert len(value) == 128
         return value
 
 
 @router.post("/submission/text")
-async def submission_text(story_id: str, files: UploadFile = File(...)):
-    """This function takes the passed file in Submission and calls two services,
-    one that uses the Google Vision API and transcribes the text from the file
-    and looks for moderation markers. the other service will take the binary
-    file and upload it to an e3 bucket. after the file has been transcribed,
-    moderated, and stored there will be an entry added to a submissions
-    database with the story_id, s3_path, and the text data from the
-    transcription
+async def submission_text(sub: Submission):
+    """Takes a Submission Object and calls the Google Vision API to text annotate
+    the passed s3 link, then passes those concatenated transcriptions to the SquadScore
+    method, returns:
+    Arguments:
+    ---
+    `sub`: Submission - Submission object **see `help(Submission)` for more info**
+    Returns:
+    ---
+    ```
+    {"SubmissionID": int, "IsFlagged": boolean,"LowConfidence": boolean, "Complexity": int}
+    ```
 
-    ## Arguments:
-    -----------
-    story_id `str` - story_id
-    story_file `UploadFile` - UGC passed with enctype=multipart/form-data
-
-    ## Returns:
-    -----------
-
-    response `json` - {"is_flagged": bool, "s3_link": type(url)}
     """
-    # catch custom exception for no text
-    try:
-        # await for the vision API to process the image
-        transcript = await vision.transcribe(files)
+    transcriptions = ""
+    confidence_flags = []
+    # unpack links for files in submission object
+    for page_num in sub.Pages:
+        # re-init the sha algorithm every file that is processed
+        hash = sha512()
+        # fetch file from s3 bucket
+        r = get(sub.Pages[page_num]["URL"])
+        # update the hash with the file's content
+        hash.update(r.content)
+        try:
+            # assert that the has is the same as the one passed with the file
+            # link
+            assert hash.hexdigest() == sub.Pages[page_num]['Checksum']
+        except AssertionError:
+            # return some useful information about the error including what
+            # caused it and the file affected
+            return JSONResponse(status_code=422,
+                                content={
+                                    "ERROR": "BAD CHECKSUM",
+                                    "file": sub.Pages[page_num]
+                                })
+        # add the response from google_api to a string with an ending
+        # line break and the confidence flag from the method that determines if
+        # the student is reminded about their handwritting
+        conf_flag, trans = await vision.transcribe(r.content)
+        transcriptions += trans + "\n"
+        confidence_flags.append(conf_flag)
+    # score the transcription using SquadScore algorithm
+    score = await squad_score(transcriptions, scaler)
 
-    # log the error then return what the error is
-    except NoTextFoundException as e:
-        log.error(e, stack_info=True)
-        return {"error": e}
-    print((story_id, transcript))
-
-    # return moderation flag and s3_link for that file (not yet implemented)
-    return {"is_flagged": None, "complexity": None}
+    # return the complexity score to the web team with the SubmissionID
+    return JSONResponse(status_code=200,
+                        content={
+                            "SubmissionID": sub.SubmissionID,
+                            "IsFlagged": False,
+                            "LowConfidence": True in confidence_flags,
+                            "Complexity": score
+                        })
 
 
 @router.post("/submission/illustration")
-async def submission_illustration(files: UploadFile = File(...)):
+async def submission_illustration(sub: ImageSubmission):
     """Function that checks the illustration against the Google Vision
     SafeSearch API and flags if explicit content detected.
 
-    ## Arguments:
-    -----------
-    files `UploadFile` - UGC to be uploaded, transcribed, and stored
+    Arguments:
+    ---
+    sub : ImageSubmission(Object)
 
-    eg.
-    ```python3
-    files = {"files": (file.name, file)}
-    ```
-
-    ## Returns:
-    -----------
-
-    response `json` - {"is_flagged": bool, "reason":`reason`}
+    returns:
+    ---
+    JSON: {"SubmissionID": int, "IsFlagged": boolean, "reason": }
     """
-
-    response = await vision.detect_safe_search(files)
-    return response
-
+    # fetch file from s3 bucket
+    r = get(sub.URL)
+    # initalize the sha hashing algorithm
+    hash = sha512()
+    # update the SHA with the file contents
+    hash.update(r.content)
+    # assert the the computed hash and the passed hash are the same
+    try:
+        assert hash.hexdigest() == sub.Checksum
+    except AssertionError:
+        # return bad hash error with the status_code to an ill-formed request
+        return JSONResponse(status_code=422,
+                            content={
+                                "ERROR": "BAD CHECKSUM",
+                            })
+    # pass file to the GoogleAPI object to safe search filter the file
+    response = await vision.detect_safe_search(r.content)
+    # respond with the output dictionary that is returned from
+    # GoogleAPI.transcribe() method
+    return JSONResponse(status_code=200, content=response)

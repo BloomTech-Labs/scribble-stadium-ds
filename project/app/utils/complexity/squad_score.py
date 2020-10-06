@@ -1,5 +1,10 @@
+from os import path
+
 import joblib
 import pandas as pd
+
+PICKLE_PATH = path.join(path.dirname(__file__), "", "MinMaxScaler.pkl")
+scaler = joblib.load(PICKLE_PATH)
 
 
 def metrics(document: str):
@@ -58,7 +63,7 @@ def metrics(document: str):
     return df
 
 
-async def squad_score(document: str):
+async def squad_score(document: str, scaler):
     """
     Generates a complexity metric, Squad Score, for a given transcription.
 
@@ -80,14 +85,13 @@ async def squad_score(document: str):
 
     # Instantiate weights
     weights = {
-              "story_length": 1,
-              "avg_word_len": 1,
-              "quotes_number": 1,
-              "unique_words": 1
-              }
+        "story_length": 1,
+        "avg_word_len": 1,
+        "quotes_number": 1,
+        "unique_words": 1
+    }
 
     # Scale metrics with pickled MinMax Scaler
-    scaler = joblib.load('MinMaxScaler.pkl')
     scaled = scaler.transform([row[1:]])[0]
 
     # Generate scaler to create desired output range (~1-100)
