@@ -1,14 +1,16 @@
+from hashlib import sha512
+from io import BytesIO
+import json
 import logging
+import sys
+
 from fastapi import APIRouter, File, UploadFile
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, validator
-from app.utils.img_processing.google_api import GoogleAPI, NoTextFoundException
-from app.utils.complexity.squad_score import squad_score, scaler
-from hashlib import sha512
-import json
-from io import BytesIO
 from requests import get
-import sys
+
+from app.utils.complexity.squad_score import squad_score, scaler
+from app.utils.img_processing.google_api import GoogleAPI, NoTextFoundException
 
 # global variables and services
 router = APIRouter()
@@ -41,7 +43,7 @@ class Submission(BaseModel):
     ```python3
     {
         "URL": # The url to the file that will be downloaded for transcription
-        "Checksum": # Checksum for the file that is downloaded to verify it's file integrity
+        "Checksum": # Checksum for the file that is downloaded to verify its file integrity
     }
     ```
 
@@ -194,7 +196,7 @@ async def submission_text(sub: Submission):
             assert hash.hexdigest() == sub.Pages[page_num]['Checksum']
         except AssertionError:
             # return some useful information about the error including what
-            # caused it and the file effected
+            # caused it and the file affected
             return JSONResponse(status_code=422,
                                 content={
                                     "ERROR": "BAD CHECKSUM",
