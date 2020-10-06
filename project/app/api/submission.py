@@ -3,15 +3,16 @@ from fastapi import APIRouter, File, UploadFile
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, validator
 from app.utils.img_processing.google_api import GoogleAPI, NoTextFoundException
+from app.utils.complexity.squad_score import squad_score
 from hashlib import sha512
 import json
 from io import BytesIO
 from requests import get
 import sys
 
+# global variables and services
 router = APIRouter()
 log = logging.getLogger(__name__)
-# init the GoogleAPI service to fetch responses from the google vision api
 vision = GoogleAPI()
 
 
@@ -68,15 +69,15 @@ class Submission(BaseModel):
         example={
             "1": {
                 "URL":
-                "link",
+                "https://test-image-bucket-14579.s3.amazonaws.com/bucketFolder/1600554345008-lg.png",
                 "Checksum":
-                "1f40fc92da241694750979ee6cf582f2d5d7d28e18335de05abc54d0560e0f5302860c652bf08d560252aa5e74210546f369fbbbce8c12cfc7957b2652fe9a75"
+                "edbd2c0cd247bda620f9a0a3fe5553fb19606929d686ed3440742b1a25df426a8e6d3188b7eec163488764cc72d8cee67faba47e29f7744871d94d2a19dc70de"
             },
             "2": {
                 "URL":
-                "link",
+                "https://test-image-bucket-14579.s3.amazonaws.com/bucketFolder/1600554345008-lg.png",
                 "Checksum":
-                "1f40fc92da241694750979ee6cf582f2d5d7d28e18335de05abc54d0560e0f5302860c652bf08d560252aa5e74210546f369fbbbce8c12cfc7957b2652fe9a75"
+                "edbd2c0cd247bda620f9a0a3fe5553fb19606929d686ed3440742b1a25df426a8e6d3188b7eec163488764cc72d8cee67faba47e29f7744871d94d2a19dc70de"
             }
         })
 
@@ -137,11 +138,15 @@ class ImageSubmission(BaseModel):
     </p>
     """
     SubmissionID: int = Field(..., example=265458)
-    URL: str = Field(..., example="s3.link.com/path/to/file.end")
+    URL: str = Field(
+        ...,
+        example=
+        "https://test-image-bucket-14579.s3.amazonaws.com/bucketFolder/1600554345008-lg.png"
+    )
     Checksum: str = Field(
         ...,
         example=
-        "1f40fc92da241694750979ee6cf582f2d5d7d28e18335de05abc54d0560e0f5302860c652bf08d560252aa5e74210546f369fbbbce8c12cfc7957b2652fe9a75"
+        "edbd2c0cd247bda620f9a0a3fe5553fb19606929d686ed3440742b1a25df426a8e6d3188b7eec163488764cc72d8cee67faba47e29f7744871d94d2a19dc70de"
     )
 
     @validator("SubmissionID")
@@ -157,31 +162,27 @@ class ImageSubmission(BaseModel):
         return value
 
 
-class SquadScore():
-    """placeholder class for now"""
-    async def get_score(self, document):
-        self.score = len(document.split())
-        return self.score
-
-
 @router.post("/submission/text")
 async def submission_text(sub: Submission):
-    """will update in future
+    """Takes a Submission Object and calls the Google Vision API to text annotate
+    the passed s3 link, then passes thos concatenated transcriptions to the SquadScore
+    method, returns:
+
+    ```
+    {"SubmissionID": int, "IsFlagged": boolean, "Complexity": int}
+    ```
+
     """
-    hash = sha512()
-    transcriptions = {}
-    complexity = SquadScore()
-    score = {}
+    transcriptions = ""
+    confidence_flags = []
     # unpack links for files in submission object
     for page_num in sub.Pages:
+        # re-init the sha algorithm every file that is processed
+        hash = sha512()
         # fetch file from s3 bucket
         r = get(sub.Pages[page_num]["URL"])
-        # convert binary data into a file descriptor
-        fp = BytesIO(r.content)
         # update the hash with the file's content
-        hash.update(fp.read())
-        # rewind the file back to it's starting position
-        fp.seek(0)
+        hash.update(r.content)
         try:
             # assert that the has is the same as the one passed with the file
             # link
@@ -189,28 +190,29 @@ async def submission_text(sub: Submission):
         except AssertionError:
             # return some usefull information about the error including what
             # caused it and the file effected
-            return JSONResponse(status_code=500,
+            return JSONResponse(status_code=422,
                                 content={
                                     "ERROR": "BAD CHECKSUM",
                                     "file": sub.Pages[page_num]
                                 })
-        # transcribe page and store it in a dictionary with page_num as key
-        transcriptions[page_num] = await vision.transcribe(fp.read())
-        # score the transcription
-        score[page_num] = await complexity.get_score(transcriptions[page_num])
-        # close the file since we don't need it anymore
-        fp.close()
+        # add the response from google_api to a string with an ending
+        # line break and the confidence flag from the method that determins if
+        # the student is reminded about their handwritting
+        conf_flag, trans = await vision.transcribe(r.content)
+        transcriptions += trans + "\n"
+        confidence_flags.append(conf_flag)
+    # score the transcription using SquadScore algorithm
+    score = await squad_score(transcriptions)
 
-    # takes the average of the scores between pages and reassigns
-    # the score variable to that number
-    score = sum(score.values()) / len(sub.Pages)
-    # send complexity score to web callback with the submission ID
+    # return the complexity score to the web team with the SubmissionID
     return JSONResponse(
         status_code=200,
         content={
             "SubmissionID": sub.SubmissionID,
             "IsFlagged": False,
-            # return the average Squad score across the pages that have been graded
+            "LowConfidence": True in confidence_flags,
+            # return the average Squad score across the pages that have
+            # been graded
             "Complexity": score
         })
 
@@ -220,30 +222,31 @@ async def submission_illustration(sub: ImageSubmission):
     """Function that checks the illustration against the Google Vision
     SafeSearch API and flags if explicit content detected.
 
-    ## Arguments:
-    -----------
-    files `UploadFile` - UGC to be uploaded, transcribed, and stored
+    Arguments:
+    ---
+    sub : ImageSubmission(Object)
 
-    eg.
-    ```python3
-    files = {"files": (file.name, file)}
-    ```
-
-    ## Returns:
-    -----------
-
-    response `json` - {"is_flagged": bool, "reason":`reason`}
+    returns:
+    ---
+    JSON: {"SubmissionID": int, "IsFlagged": boolean, "reason": }
     """
+    # fetch file from s3 bucket
     r = get(sub.URL)
+    # initalize the sha hashing algorithm
     hash = sha512()
+    # update the SHA with the file contents
     hash.update(r.content)
+    # assert the the computed hash and the passed hash are the same
     try:
         assert hash.hexdigest() == sub.Checksum
     except AssertionError:
-        return JSONResponse(status_code=500,
+        # return bad hash error with the status_code to an ill-formed request
+        return JSONResponse(status_code=422,
                             content={
                                 "ERROR": "BAD CHECKSUM",
-                                "file": sub
                             })
+    # pass file to the GoogleAPI object to safe search filter the file
     response = await vision.detect_safe_search(r.content)
+    # respond with the output dictionary that is returned from
+    # GoogleAPI.transcribe() methtod
     return JSONResponse(status_code=200, content=response)
