@@ -36,7 +36,7 @@ class GoogleAPI:
         # init the client for use by the functions
         self.client = vision.ImageAnnotatorClient()
 
-    async def transcribe(self, image_file: bytes):
+    async def transcribe(self, document):
         """Detects document features in images and returns extracted text
         Input:
         --------
@@ -49,8 +49,7 @@ class GoogleAPI:
         """
         # read the file's content and cast into Image type
         # use async friendly await function to fetch read
-        content = await image_file.read()
-        image = types.Image(content=content)
+        image = types.Image(content=document)
         # adding refined language specification to sort out Non-English
         # characters from transcription responses
         language = types.ImageContext(language_hints=['en-t-i0-handwrit'])
@@ -68,7 +67,7 @@ class GoogleAPI:
 
         return transcribed_text
 
-    async def detect_safe_search(self, image_file: bytes):
+    async def detect_safe_search(self, document):
         """# Detects adult, violent or racy content in uploaded images
 
         ## Input:
@@ -107,10 +106,7 @@ class GoogleAPI:
         """
         # init a empty list
         flagged = []
-        # read the file's content and cast into Image type
-        # use async friendly await function to fetch read
-        content = await image_file.read()
-        image = types.Image(content=content)
+        image = types.Image(content=document)
         # call safe_search_detection search on the image
         response = self.client.safe_search_detection(image=image)
         safe = response.safe_search_annotation

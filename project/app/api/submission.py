@@ -3,7 +3,10 @@ from fastapi import APIRouter, File, UploadFile
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, validator
 from app.utils.img_processing.google_api import GoogleAPI, NoTextFoundException
+from hashlib import sha512
 import json
+from io import BytesIO
+from requests import get
 import sys
 
 router = APIRouter()
@@ -154,12 +157,12 @@ class ImageSubmission(BaseModel):
         return value
 
 
-class ScoreSquad():
+class SquadScore():
     """placeholder class for now"""
     def __init__(self, document: str):
         self.score = len(document.split())
 
-    def get_score(self):
+    async def get_score(self):
         return self.score
 
 
@@ -167,24 +170,47 @@ class ScoreSquad():
 async def submission_text(sub: Submission):
     """will update in future
     """
-    # unpack links for file sin submission object
-    # featcha  list of files from s3 server
-    # check the SHA 512 of the file that is featched from the s3 bucket
-    # send each file to transcription service to be transcribed
-    # send transcriptions to complexity score
+    hash = sha512()
+    transcriptions = {}
+    complexity = SquadScore()
+    score = {}
+    # unpack links for files in submission object
+    for page_num in sub.Pages:
+        # fetch file from s3 bucket
+        r = get(sub.Pages[page_num]["URL"])
+        # convert binary data into a file descriptor
+        fp = BytesIO(r.content)
+        # update the hash with the file's content
+        hash.update(fp.read())
+        # rewind the file back to it's starting position
+        fp.seek(0)
+        try:
+            # assert that the has is the same as the one passed with the file
+            # link
+            assert hash.hexdigest() == sub.Pages[page_num]['Checksum']
+        except AssertionError:
+            # return some usefull information about the error including what
+            # caused it and the file effected
+            return JSONResponse(status_code=500,
+                                content={"ERROR": "BAD CHECKSUM",
+                                         "file":sub.Pages[page_num])
+        # transcribe page and store it in a dictionary with page_num as key
+        transcriptions[page_num] = await vision.transcribe(fp.read())
+        # score the transcription
+        score[page_num] = await complexity.get_score(transcriptions[page_num])
+        # close the file since we don't need it anymore
+        fp.close()
+
+    # takes the average of the scores between pages and reassigns
+    # the score variable to that number
+    score = sum(score.values())/len(sub.Pages)
     # send complexity score to web callback with the submission ID
-
-    # catch custom exception for no text
-    try:
-        # await for the vision API to process the image
-        #transcript = await vision.transcribe()
-        print("\n\n")
-    # log the error then return what the error is
-    except NoTextFoundException as e:
-        log.error(e, stack_info=True)
-        return {"error": e}
-
-    return JSONResponse(status_code=200, content={"OK.": None})
+    return JSONResponse(status_code=200, content={
+                                                  "SubmissionID": sub.SubmissionID,
+                                                  "IsFlagged": False,
+                                                  # return the average Squad score across the pages that have been graded
+                                                  "Complexity": score
+                                                  })
 
 
 @router.post("/submission/illustration")
