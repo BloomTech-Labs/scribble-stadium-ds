@@ -3,7 +3,7 @@ from fastapi import APIRouter, File, UploadFile
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, validator
 from app.utils.img_processing.google_api import GoogleAPI, NoTextFoundException
-from app.utils.complexity.squad_score import squad_score
+from app.utils.complexity.squad_score import squad_score, scaler
 from hashlib import sha512
 import json
 from io import BytesIO
@@ -202,7 +202,7 @@ async def submission_text(sub: Submission):
         transcriptions += trans + "\n"
         confidence_flags.append(conf_flag)
     # score the transcription using SquadScore algorithm
-    score = await squad_score(transcriptions)
+    score = await squad_score(transcriptions, scaler)
 
     # return the complexity score to the web team with the SubmissionID
     return JSONResponse(
