@@ -1,6 +1,7 @@
+from os import path
+
 import joblib
 import pandas as pd
-from os import path
 
 PICKLE_PATH = path.join(path.dirname(__file__), "", "MinMaxScaler.pkl")
 scaler = joblib.load(PICKLE_PATH)
