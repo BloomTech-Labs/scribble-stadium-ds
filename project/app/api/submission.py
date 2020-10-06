@@ -203,7 +203,7 @@ async def submission_text(sub: Submission):
                                     "file": sub.Pages[page_num]
                                 })
         # add the response from google_api to a string with an ending
-        # line break and the confidence flag from the method that determins if
+        # line break and the confidence flag from the method that determines if
         # the student is reminded about their handwritting
         conf_flag, trans = await vision.transcribe(r.content)
         transcriptions += trans + "\n"

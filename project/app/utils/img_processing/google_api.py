@@ -1,10 +1,11 @@
+from os import getenv, environ
+
 from google.cloud import vision
 from google.cloud.vision import types
-from os import getenv, environ
 
 # XXX: Documentation parses to Markdown on FastAPI Swagger UI
 # Attribution: Most of this code is from transcription.py, safe_search.py, and
-# confidence_flag.py to steamline the implementation with the deployed
+# confidence_flag.py. To steamline the implementation with the deployed
 # environment that code has been refactored into this file.
 
 

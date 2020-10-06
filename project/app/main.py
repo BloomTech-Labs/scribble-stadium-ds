@@ -1,8 +1,9 @@
+from os import getenv
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import Response, JSONResponse
 from fastapi.requests import Request
-from os import getenv
 import uvicorn
 
 from app.api import predict, viz, submission
@@ -31,9 +32,9 @@ async def check_auth_header(request: Request, next_call):
     `response`: {fastapi.responses.Response} - response from calling the
     function
     """
-    bad_response = Response(
-        status_code=403, content="PATH FORBIDDEN", media_type="text/html"
-    )
+    bad_response = Response(status_code=403,
+                            content="PATH FORBIDDEN",
+                            media_type="text/html")
     # adding an exception to the documentation page
     if request.base_url.path == "/":
         response = await next_call(request)
