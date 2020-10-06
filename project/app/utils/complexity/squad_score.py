@@ -2,11 +2,15 @@ import joblib
 import pandas as pd
 
 
-def metrics(transcription: str):
+def metrics(document: str):
     """
     Cleans and generates metrics for a single story transcription.
 
-    Outputs a single row of a dataframe, with the following metrics as columns:
+    Called within squad_score async function, so only need be run separately
+    if metrics without a complexity metric are required.
+
+    Input: story transcription as a string
+    Output: a single row of a dataframe, with the following metrics as columns:
 
     Included metrics:
     - Length of story (in characters)
@@ -16,7 +20,7 @@ def metrics(transcription: str):
     """
 
     # Strip leading or tailing spaces and integers
-    cleaned = transcription.strip().strip("/-0123456789")
+    cleaned = document.strip().strip("/-0123456789")
 
     # Ensure all commas and periods are followed by a space
     cleaned = cleaned.replace(".", ". ").replace(",", ", ")
@@ -54,19 +58,26 @@ def metrics(transcription: str):
     return df
 
 
-def squad_score(row):
+async def squad_score(document: str):
     """
-    Scales, weights, and adds all metrics for a given transcription.
+    Generates a complexity metric, Squad Score, for a given transcription.
+
+    Calls metrics function to generate metrics, then scales, weights,
+    and adds all metrics together to create Squad Score.
 
     Initial scaling based on pickled MinMaxScaler from training data.
     See squad_score_mvp notebook for more.
 
-    Weights according to prescribed weights for Story Squad analysis.
+    In future iterations, weights can be adjusted based on additional analysis.
     In version 0.1, weights initialized at 1 for all factors.
 
-    Input: single row of a dataframe, including transcription and metrics
+    Input: story transcription as a string
     Output: single integer value for Squad Score
     """
+
+    # Generate metrics and single row DF from transcription
+    row = metrics(document).iloc[0, :]
+
     # Instantiate weights
     weights = {
               "story_length": 1,
