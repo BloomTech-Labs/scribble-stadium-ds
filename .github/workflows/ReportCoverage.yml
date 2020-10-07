@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      GOOGLE_CREDS: ${{ secrets.GOOGLE_CREDS }}
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.8
