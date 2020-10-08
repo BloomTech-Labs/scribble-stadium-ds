@@ -29,7 +29,10 @@ jobs:
     - name: Test with pytest and capture coverage report
       run: |
         coverage run -m pytest
-    - name: change coverage.py file over to a codeclimate.json file
+    - name: Change ./.coverage to ./coverage.xml
+      run: |
+        coverage xml
+    - name: change coverage.xml to coverage/codeclimate.json
       run: |
         ./cc-test-reporter format-coverage ./.coverage --input-type=coverage.py
     - name: Upload the test coverage to code climate
