@@ -34,7 +34,7 @@ jobs:
         coverage xml
     - name: change coverage.xml to coverage/codeclimate.json
       run: |
-        ./cc-test-reporter format-coverage ./.coverage --input-type=coverage.py
+        ./cc-test-reporter format-coverage ./coverage.xml --input-type=coverage.py
     - name: Upload the test coverage to code climate
       run: |
         ./cc-test-reporter upload-coverage
