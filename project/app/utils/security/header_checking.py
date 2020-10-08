@@ -40,7 +40,7 @@ class AuthRouteHandler(APIRoute):
                     status_code=500,
                     content={"ERROR": "Unknown error please contact sysadmin"})
             finally:
-                # remove secret from mem after using it to authenicate.
+                # remove secret from memory after using it to authenticate.
                 del auth
 
         return custom_route_handler
