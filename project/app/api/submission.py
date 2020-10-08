@@ -11,9 +11,10 @@ from requests import get
 
 from app.utils.complexity.squad_score import squad_score, scaler
 from app.utils.img_processing.google_api import GoogleAPI, NoTextFoundException
+from app.utils.security.header_checking import AuthRouteHandler
 
 # global variables and services
-router = APIRouter()
+router = APIRouter(route_class=AuthRouteHandler)
 log = logging.getLogger(__name__)
 vision = GoogleAPI()
 
