@@ -83,8 +83,7 @@ class GoogleAPI:
                 for paragraph in block.paragraphs:
                     for word in paragraph.words:
                         # check moderation status of word in paragraph
-                        if self.text_moderator.check_word(' '.join(
-                                symbol for symbol in word).lower()):
+                        if self.text_moderator.check_word(str(word).lower()):
                             flagged = True
                         for symbol in word.symbols:
                             symbol_confidences.append(symbol.confidence)
