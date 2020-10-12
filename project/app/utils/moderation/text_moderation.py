@@ -6,11 +6,9 @@ class TextModerationBase:
     """Base Class for text moderation classes"""
     def __init__(self, wordlist_file: str):
         """Arguments:
-        `wordlist_file` str - path to file containing words to be
-        used in moderation"""
-        # wordlist = open file descriptor
+        `wordlist_file` str - path to file containing flag words for
+        filtering content"""
         self._wordlist = wordlist_file
-        # words = a set of words from self._wordlist file descriptor
         self._words = self.open_words(self._wordlist)
 
     def open_words(self, file_name: str) -> set:
@@ -33,7 +31,7 @@ class TextModerationBase:
         data = set(word_file.read().split(",\n")[1:])
         # close file
         word_file.close()
-        # retturn set of words
+        # return set of words
         return data
 
     def check_word(self, word: str) -> bool:
