@@ -54,10 +54,10 @@ class BadWordTextModerator(TextModerationBase):
     list of known inappropriate words
     for more information on specific methods see help(TextModerationBase)"""
     def __init__(self, wordlist_file: str):
-        super.__init__(wordlist_file)
+        super().__init__(wordlist_file)
 
     def check_word(self, word: str) -> bool:
-        return super.check_word(word)
+        return super().check_word(word)
 
 
 class SensitiveContentTextModerator(TextModerationBase):
@@ -65,7 +65,7 @@ class SensitiveContentTextModerator(TextModerationBase):
     list of known abuse flagged words
     for more information on specific methods see help(TextModerationBase)"""
     def __init__(self, wordlist_file: str):
-        super.__init__(wordlist_file)
+        super().__init__(wordlist_file)
 
     def check_word(self, word: str) -> bool:
-        return super.check_word(word)
+        return super().check_word(word)
