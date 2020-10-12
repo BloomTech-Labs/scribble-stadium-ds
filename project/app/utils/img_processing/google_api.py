@@ -1,7 +1,9 @@
-from os import getenv, environ
+from os import getenv, environ, path
 
 from google.cloud import vision
 from google.cloud.vision import types
+
+from app.utils.moderation.text_moderation import BadWordTextModerator
 
 # XXX: Documentation parses to Markdown on FastAPI Swagger UI
 # Attribution: Most of this code is from transcription.py, safe_search.py, and
@@ -40,6 +42,10 @@ class GoogleAPI:
         # init the client for use by the functions
         self.client = vision.ImageAnnotatorClient()
 
+        self.text_moderator = BadWordTextModerator(
+            path.join(path.dirname(__file__), '..', 'moderation',
+                      'bad_single.csv'))
+
     async def transcribe(self, document):
         """Detects document features in images and returns extracted text
         Input:
@@ -69,12 +75,17 @@ class GoogleAPI:
             # forward no text in image exception to caller
             raise NoTextFoundException("No Text Was Found In Image")
 
+        flagged = False
         # List of confidence levels of each character
         symbol_confidences = []
         for page in response.full_text_annotation.pages:
             for block in page.blocks:
                 for paragraph in block.paragraphs:
                     for word in paragraph.words:
+                        # check moderation status of word in paragraph
+                        if self.text_moderator.check_word(' '.join(
+                                symbol for symbol in word).lower()):
+                            flagged = True
                         for symbol in word.symbols:
                             symbol_confidences.append(symbol.confidence)
         # Calculate the overall confidence for the page
@@ -82,7 +93,7 @@ class GoogleAPI:
 
         # return flag: True under 85% confident, False 85% confident or over
         # return text transcription
-        return (page_confidence < 0.85), transcribed_text
+        return (page_confidence < 0.85), flagged, transcribed_text
 
     async def detect_safe_search(self, document):
         """# Detects adult, violent or racy content in uploaded images

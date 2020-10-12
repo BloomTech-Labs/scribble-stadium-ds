@@ -206,7 +206,7 @@ async def submission_text(sub: Submission):
         # add the response from google_api to a string with an ending
         # line break and the confidence flag from the method that determines if
         # the student is reminded about their handwritting
-        conf_flag, trans = await vision.transcribe(r.content)
+        conf_flag, flagged, trans = await vision.transcribe(r.content)
         transcriptions += trans + "\n"
         confidence_flags.append(conf_flag)
     # score the transcription using SquadScore algorithm
@@ -216,7 +216,7 @@ async def submission_text(sub: Submission):
     return JSONResponse(status_code=200,
                         content={
                             "SubmissionID": sub.SubmissionID,
-                            "IsFlagged": False,
+                            "IsFlagged": flagged,
                             "LowConfidence": True in confidence_flags,
                             "Complexity": score
                         })
