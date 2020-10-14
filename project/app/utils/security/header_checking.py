@@ -27,10 +27,9 @@ class AuthRouteHandler(APIRoute):
             except AssertionError:
                 return JSONResponse(status_code=403,
                                     content={"ERROR": "USER NOT AUTHORIZED"})
-            # POST JSON Validation Error from pydantic
+            # POST Validation Error from pydantic
             except ValidationError as ve:
-                return JSONResponse(status_code=422,
-                                    content={"validation error": ve})
+                return Response(status_code=422, content=ve)
             # unexpected error
             except Exception as e:
                 print(
