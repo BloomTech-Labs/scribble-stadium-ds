@@ -8,6 +8,8 @@ WORKDIR /usr/src/app
 RUN python -m pip install --upgrade pip
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
+RUN python -m nltk.downloader punkt
+RUN python -m nltk.downloader averaged_perceptron_tagger
 
 # add app
 COPY . .
