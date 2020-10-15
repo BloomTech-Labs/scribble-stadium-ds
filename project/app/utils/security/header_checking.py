@@ -6,6 +6,8 @@ from fastapi.responses import JSONResponse
 from fastapi.routing import APIRoute
 from pydantic import ValidationError
 
+from app.utils.img_processing.google_api import NoTextFoundException
+
 
 class AuthRouteHandler(APIRoute):
     """Custom APIRoute handler that checks the authorization header for
@@ -27,10 +29,13 @@ class AuthRouteHandler(APIRoute):
             except AssertionError:
                 return JSONResponse(status_code=403,
                                     content={"ERROR": "USER NOT AUTHORIZED"})
-            # POST JSON Validation Error from pydantic
+            # POST Validation Error from pydantic
             except ValidationError as ve:
-                return JSONResponse(status_code=422,
-                                    content={"validation error": ve})
+                return Response(status_code=422, content=ve)
+            # No Text Found from google API
+            except NoTextFoundException:
+                return JSONResponse(status_code=452,
+                                    content={"ERROR": "GOOGLE:NO TEXT FOUND"})
             # unexpected error
             except Exception as e:
                 print(
