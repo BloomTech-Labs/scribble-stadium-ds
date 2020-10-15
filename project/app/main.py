@@ -6,7 +6,7 @@ from fastapi.responses import Response, JSONResponse
 from fastapi.requests import Request
 import uvicorn
 
-from app.api import predict, viz, submission
+from app.api import submission
 
 app = FastAPI(
     title="Labs26-StorySquad-DS-Team B",
@@ -15,46 +15,6 @@ app = FastAPI(
     docs_url="/",
 )
 
-
-@app.middleware("http")
-async def check_auth_header(request: Request, next_call):
-    """
-    Function acts as a custom middleware for http requests, checks if the
-    request header contains Authorization and if the value is equal to the
-    expected value that is stored in memory.
-    Arguments
-    -----------
-    `request`: {fastapi.requests.Request} - requesting client
-    `next_call`: {typing.Callable} - callable function that the middleware
-    is intercepting
-    Returns
-    ---------
-    `response`: {fastapi.responses.Response} - response from calling the
-    function
-    """
-    bad_response = Response(status_code=403,
-                            content="PATH FORBIDDEN",
-                            media_type="text/html")
-    # adding an exception to the documentation page
-    if request.base_url.path == "/":
-        response = await next_call(request)
-        return response
-    # check for key in headers, doesn't cause an error to raise
-    if "Authorization" in request.headers:
-        auth = request.headers["Authorization"]
-        # make sure that auth token is set to a value, and that that value is
-        # what we expect
-        if (auth is not None) and (auth == getenv("DS_SECRET_TOKEN", None)):
-            response = await next_call(request)
-            return response
-        else:
-            return bad_response
-    else:
-        return bad_response
-
-
-app.include_router(predict.router)
-app.include_router(viz.router)
 app.include_router(submission.router)
 
 app.add_middleware(
