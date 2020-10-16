@@ -35,15 +35,13 @@ def cluster(cohort_submissions: dict) -> list:
     # - 5, one group of 3 one group of 2
     if num_submissions < 4:
         clusters.append(list(df.index[:]))
-        return clusters
 
     elif num_submissions == 5:
         clusters.append(list(df.index[:3]))
         clusters.append(list(df.index[3:]))
-        return clusters
 
     # If the remainder is 3 -> last group will be a group of 3 users
-    if remainder == 3:
+    elif remainder == 3:
         for i in range(num_clusters):
             # Group by top 4 squad scores
             clusters.append(list(df.index[:4]))
@@ -52,7 +50,6 @@ def cluster(cohort_submissions: dict) -> list:
 
         # Final group is the last 3 remainders
         clusters.append(list(df.index[:]))
-        return clusters
 
     # If the remainder is 2 -> last 2 groups will be groups of 3
     elif remainder == 2:
@@ -66,7 +63,6 @@ def cluster(cohort_submissions: dict) -> list:
         # The last two groups will be groups of 3
         clusters.append(list(df.index[:3]))
         clusters.append(list(df.index[3:]))
-        return clusters
 
     # If the remainder is 1 -> last 3 groups will be groups of 3
     elif remainder == 1:
@@ -81,7 +77,6 @@ def cluster(cohort_submissions: dict) -> list:
         clusters.append(list(df.index[:3]))
         clusters.append(list(df.index[3:6]))
         clusters.append(list(df.index[6:]))
-        return clusters
 
     # Else, the remainder is 0. Split evenly by 4
     else:
@@ -90,7 +85,8 @@ def cluster(cohort_submissions: dict) -> list:
             clusters.append(list(df.index[:4]))
             # Drop stories you have already grouped
             df = df[4:]
-        return clusters
+
+    return clusters
 
 
 async def batch_cluster(submissions_json: json) -> json:
