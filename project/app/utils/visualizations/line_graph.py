@@ -44,7 +44,7 @@ def line_graph(score_history, name):
 
     # If there is only 1 submission, it will only show a single data point
     # Adds a sentence to the parent to check back when more data is available
-    if len(score_history) < 2:
+    if len(score_history) == 1:
         fig.update_layout(
             annotations=[
                 dict(
@@ -62,6 +62,10 @@ def line_graph(score_history, name):
             ]
         ),
 
+    # If there are zero submissions
+    # Web will not hit our API if there are no submissions, but just in case
+    if len(score_history) == 0:
+        return "No Submission's for This User"
+
     # Return as json for web to use in plotly.js
     return fig.to_json()
-
