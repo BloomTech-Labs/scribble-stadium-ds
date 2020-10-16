@@ -89,20 +89,17 @@ def cluster(cohort_submissions: dict) -> list:
     return clusters
 
 
-async def batch_cluster(submissions_json: json) -> json:
+async def batch_cluster(submissions: dict) -> json:
     """
     Generates a return JSON object of clusters for all provided cohorts.
 
-    Input: JSON object of all cohort submissions
+    Input: dictionary of all cohort submissions
     Output: JSON object of nested lists of submission IDs by cluster, by cohort
 
     To test locally in isolation as an async function, run the following code:
     import asyncio
     asyncio.run(batch_cluster(submissions_json))
     """
-
-    # Convert JSON to dictionary
-    submissions = json.loads(submissions_json)
 
     # Initiate cluster dictionary
     cluster_dict = {}
