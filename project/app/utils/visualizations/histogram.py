@@ -10,6 +10,7 @@ def histogram(grade_list, student_info):
     '''
     Plotly histogram of all of the submission scores for the student's grade
     for the current week
+    
     Plots a vertical line for the student's most recent score so they can see
     how it compares to the rest of the grade
 
@@ -20,6 +21,7 @@ def histogram(grade_list, student_info):
         Output: Plotly JSON that can be passed to the web to display on the
         parent dashboard
     '''
+
     # Dynamic variables to use for labels on the plot
     grade_number, student_name, student_score = student_info
 
