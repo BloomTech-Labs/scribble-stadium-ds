@@ -106,7 +106,7 @@ async def batch_cluster(submissions: dict) -> json:
 
     # Iterate through cohorts to get clusters, and
     # add each to cluster_dict
-    for cohort_id in submissions.keys():
+    for cohort_id in submissions:
         clusters = cluster(submissions[cohort_id])
         cluster_dict[cohort_id] = clusters
 
