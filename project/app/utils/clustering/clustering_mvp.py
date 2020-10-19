@@ -55,8 +55,8 @@ def cluster(cohort_submissions: dict) -> list:
     # If the remainder is 2 -> last 2 groups will be groups of 3
     elif remainder == 2:
         if num_submissions == 6:
-            clusters.append(df.index[:4])
-            clusters.append(df.index[2:])
+            clusters.append(list(df.index[:4]))
+            clusters.append(list(df.index[2:]))
         else:
             # Cluster submissions until 10 remain
             for i in range(num_clusters - 2):
