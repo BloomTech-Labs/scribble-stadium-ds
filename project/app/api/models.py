@@ -1,4 +1,5 @@
 import sys
+from typing import List
 
 from pydantic import BaseModel, Field, validator
 
@@ -50,24 +51,22 @@ class Submission(BaseModel):
         checksum.
     </p>
     """
+
     SubmissionID: int = Field(..., example=123564)
     StoryId: int = Field(..., example=154478)
     Pages: dict = Field(
         ...,
         example={
             "1": {
-                "URL":
-                "https://test-image-bucket-14579.s3.amazonaws.com/bucketFolder/1600554345008-lg.png",
-                "Checksum":
-                "edbd2c0cd247bda620f9a0a3fe5553fb19606929d686ed3440742b1a25df426a8e6d3188b7eec163488764cc72d8cee67faba47e29f7744871d94d2a19dc70de"
+                "URL": "https://test-image-bucket-14579.s3.amazonaws.com/bucketFolder/1600554345008-lg.png",
+                "Checksum": "edbd2c0cd247bda620f9a0a3fe5553fb19606929d686ed3440742b1a25df426a8e6d3188b7eec163488764cc72d8cee67faba47e29f7744871d94d2a19dc70de",
             },
             "2": {
-                "URL":
-                "https://test-image-bucket-14579.s3.amazonaws.com/bucketFolder/1600554345008-lg.png",
-                "Checksum":
-                "edbd2c0cd247bda620f9a0a3fe5553fb19606929d686ed3440742b1a25df426a8e6d3188b7eec163488764cc72d8cee67faba47e29f7744871d94d2a19dc70de"
-            }
-        })
+                "URL": "https://test-image-bucket-14579.s3.amazonaws.com/bucketFolder/1600554345008-lg.png",
+                "Checksum": "edbd2c0cd247bda620f9a0a3fe5553fb19606929d686ed3440742b1a25df426a8e6d3188b7eec163488764cc72d8cee67faba47e29f7744871d94d2a19dc70de",
+            },
+        },
+    )
 
     @validator("SubmissionID")
     def check_valid_subid(cls, value):
@@ -125,16 +124,15 @@ class ImageSubmission(BaseModel):
         checksum.
     </p>
     """
+
     SubmissionID: int = Field(..., example=265458)
     URL: str = Field(
         ...,
-        example=
-        "https://test-image-bucket-14579.s3.amazonaws.com/bucketFolder/1600554345008-lg.png"
+        example="https://test-image-bucket-14579.s3.amazonaws.com/bucketFolder/1600554345008-lg.png",
     )
     Checksum: str = Field(
         ...,
-        example=
-        "edbd2c0cd247bda620f9a0a3fe5553fb19606929d686ed3440742b1a25df426a8e6d3188b7eec163488764cc72d8cee67faba47e29f7744871d94d2a19dc70de"
+        example="edbd2c0cd247bda620f9a0a3fe5553fb19606929d686ed3440742b1a25df426a8e6d3188b7eec163488764cc72d8cee67faba47e29f7744871d94d2a19dc70de",
     )
 
     @validator("SubmissionID")
@@ -148,3 +146,49 @@ class ImageSubmission(BaseModel):
     def check_sha_len(cls, value):
         assert len(value) == 128
         return value
+
+
+class LineGraphRequest(BaseModel):
+    """Model that handles LineGraph Request to API
+    """
+
+    ScoreHistory: List[int] = Field(..., example=[1005, 1500, 9000, 789])
+    StudentName: str = Field(..., example="Firstname")
+
+
+class HistogramRequest(BaseModel):
+    """Model that handles Histogram Request to API
+    """
+
+    GradeList: List[int] = Field(..., example=[1005, 1500, 9000, 789])
+    GradeLevel: int = Field(..., example=8)
+    StudentName: str = Field(..., example="Firstname")
+    StudentScore: int = Field(..., example=1058)
+
+
+class ClusterSubmission(BaseModel):
+    Image: str = Field(..., example="http://lorempixel.com/640/480/abstract")
+    Inappropriate: bool = Field(..., example=False)
+    Sensitive: bool = Field(..., example=False)
+    Status: str = Field(..., example="APPROVED")
+    Complexity: int = Field(..., example=123)
+    Pages: dict = Field(
+        ...,
+        example={
+            "1": "http://lorempixel.com/640/480/abstract",
+            "2": "http://lorempixel.com/640/480/abstract",
+        },
+        description="A dictionary with page number as keys and url for values",
+    )
+
+
+class ClusterCohort(BaseModel):
+    Submissions: List[ClusterSubmission] = []
+
+
+class ClusteringRequest(BaseModel):
+    """Model that handles Clustering Request to API
+    """
+
+    Cohorts: List[ClusterCohort] = []
+
