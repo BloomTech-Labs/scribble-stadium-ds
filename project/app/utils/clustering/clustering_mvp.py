@@ -4,7 +4,7 @@ import pandas as pd
 
 
 def cluster(cohort_submissions: dict) -> list:
-    '''
+    """
     Splits given dict into clusters of 4 based on their ranked complexity
 
     When there is a remainder of users not evenly divisible by 4,
@@ -16,13 +16,13 @@ def cluster(cohort_submissions: dict) -> list:
     and 'complexity' as one of the inner keys
     Output: Nested list of clusters:
     [[list of submission_ids], [list of submission_ids]]
-    '''
+    """
 
     # Generate DataFrame from dict
-    df = pd.DataFrame.from_dict(cohort_submissions, orient='index')
+    df = pd.DataFrame.from_dict(cohort_submissions, orient="index")
 
     # Rank by complexity
-    df = df.sort_values(by=['complexity'], ascending=False)
+    df = df.sort_values(by=["Complexity"], ascending=False)
 
     # Initial variables
     num_submissions = len(df)
@@ -42,7 +42,7 @@ def cluster(cohort_submissions: dict) -> list:
 
     # If the remainder is 3 -> last group will be a group of 3 users
     elif remainder == 3:
-        for i in range(num_clusters):
+        for _ in range(num_clusters):
             # Group by top 4 squad scores
             clusters.append(list(df.index[:4]))
             # Drop stories you have grouped already
