@@ -1,11 +1,12 @@
 import sys
+from typing import List
 
 from pydantic import BaseModel, Field, validator
 
 
 class Submission(BaseModel):
-    """
-    # Model that handles text submissions to the API `submission/text` endpoint
+    """# Model that handles text submissions to the API `submission/text` endpoint
+
     ## **Fields:**
 
     ### SubmissionID - `int`
@@ -82,8 +83,8 @@ class Submission(BaseModel):
 
 
 class ImageSubmission(BaseModel):
-    """
-    # Model that handles illustration submissions to the API `submission/illustration` endpoint
+    """# Model that handles illustration submissions to the API `submission/illustration` endpoint
+
     ## **Fields:**
 
     ### SubmissionID -
@@ -145,3 +146,37 @@ class ImageSubmission(BaseModel):
     def check_sha_len(cls, value):
         assert len(value) == 128
         return value
+
+
+class LineGraphRequest(BaseModel):
+    """Model that handles LineGraph Request to API"""
+
+    ScoreHistory: List[int] = Field(..., example=[1005, 1500, 9000, 789])
+    StudentName: str = Field(..., example="Firstname")
+
+
+class HistogramRequest(BaseModel):
+    """Model that handles Histogram Request to API"""
+
+    GradeList: List[int] = Field(..., example=[1005, 1500, 9000, 789])
+    GradeLevel: int = Field(..., example=8)
+    StudentName: str = Field(..., example="Firstname")
+    StudentScore: int = Field(..., example=1058)
+
+
+class ClusterSubmission(BaseModel):
+    """Model used to psudocode request body"""
+
+    Image: str = Field(..., example="http://lorempixel.com/640/480/abstract")
+    Inappropriate: bool = Field(..., example=False)
+    Sensitive: bool = Field(..., example=False)
+    Status: str = Field(..., example="APPROVED")
+    Complexity: int = Field(..., example=123)
+    Pages: dict = Field(
+        ...,
+        example={
+            "1": "http://lorempixel.com/640/480/abstract",
+            "2": "http://lorempixel.com/640/480/abstract",
+        },
+        description="A dictionary with page number as keys and url for values",
+    )

@@ -25,7 +25,7 @@ def cluster(cohort_submissions: dict) -> list:
     df = pd.DataFrame.from_dict(cohort_submissions, orient="index")
 
     # Rank by complexity
-    df = df.sort_values(by=["complexity"], ascending=False)
+    df = df.sort_values(by=["Complexity"], ascending=False)
 
     # Initial variables
     num_submissions = len(df)
