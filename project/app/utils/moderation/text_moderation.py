@@ -4,6 +4,7 @@ from os import path
 
 class TextModerationBase:
     """Base Class for text moderation classes"""
+
     def __init__(self, wordlist_file: str):
         """Arguments:
         `wordlist_file` str - path to file containing flag words for
@@ -51,6 +52,7 @@ class BadWordTextModerator(TextModerationBase):
     """Class that filters content with self.check_words(word: str) against a
     list of known inappropriate words
     for more information on specific methods see help(TextModerationBase)"""
+
     def __init__(self, wordlist_file: str):
         super().__init__(wordlist_file)
 
@@ -62,6 +64,7 @@ class SensitiveContentTextModerator(TextModerationBase):
     """Class that filters content with self.check_word(word: str) against a
     list of known abuse flagged words
     for more information on specific methods see help(TextModerationBase)"""
+
     def __init__(self, wordlist_file: str):
         super().__init__(wordlist_file)
 
