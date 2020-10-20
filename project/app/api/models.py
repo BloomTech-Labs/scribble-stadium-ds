@@ -50,24 +50,22 @@ class Submission(BaseModel):
         checksum.
     </p>
     """
+
     SubmissionID: int = Field(..., example=123564)
     StoryId: int = Field(..., example=154478)
     Pages: dict = Field(
         ...,
         example={
             "1": {
-                "URL":
-                "https://test-image-bucket-14579.s3.amazonaws.com/bucketFolder/1600554345008-lg.png",
-                "Checksum":
-                "edbd2c0cd247bda620f9a0a3fe5553fb19606929d686ed3440742b1a25df426a8e6d3188b7eec163488764cc72d8cee67faba47e29f7744871d94d2a19dc70de"
+                "URL": "https://test-image-bucket-14579.s3.amazonaws.com/bucketFolder/1600554345008-lg.png",
+                "Checksum": "edbd2c0cd247bda620f9a0a3fe5553fb19606929d686ed3440742b1a25df426a8e6d3188b7eec163488764cc72d8cee67faba47e29f7744871d94d2a19dc70de",
             },
             "2": {
-                "URL":
-                "https://test-image-bucket-14579.s3.amazonaws.com/bucketFolder/1600554345008-lg.png",
-                "Checksum":
-                "edbd2c0cd247bda620f9a0a3fe5553fb19606929d686ed3440742b1a25df426a8e6d3188b7eec163488764cc72d8cee67faba47e29f7744871d94d2a19dc70de"
-            }
-        })
+                "URL": "https://test-image-bucket-14579.s3.amazonaws.com/bucketFolder/1600554345008-lg.png",
+                "Checksum": "edbd2c0cd247bda620f9a0a3fe5553fb19606929d686ed3440742b1a25df426a8e6d3188b7eec163488764cc72d8cee67faba47e29f7744871d94d2a19dc70de",
+            },
+        },
+    )
 
     @validator("SubmissionID")
     def check_valid_subid(cls, value):
@@ -125,16 +123,15 @@ class ImageSubmission(BaseModel):
         checksum.
     </p>
     """
+
     SubmissionID: int = Field(..., example=265458)
     URL: str = Field(
         ...,
-        example=
-        "https://test-image-bucket-14579.s3.amazonaws.com/bucketFolder/1600554345008-lg.png"
+        example="https://test-image-bucket-14579.s3.amazonaws.com/bucketFolder/1600554345008-lg.png",
     )
     Checksum: str = Field(
         ...,
-        example=
-        "edbd2c0cd247bda620f9a0a3fe5553fb19606929d686ed3440742b1a25df426a8e6d3188b7eec163488764cc72d8cee67faba47e29f7744871d94d2a19dc70de"
+        example="edbd2c0cd247bda620f9a0a3fe5553fb19606929d686ed3440742b1a25df426a8e6d3188b7eec163488764cc72d8cee67faba47e29f7744871d94d2a19dc70de",
     )
 
     @validator("SubmissionID")

@@ -4,7 +4,7 @@ import pandas as pd
 
 
 def cluster(cohort_submissions: dict) -> list:
-    '''
+    """
     Splits given dict into clusters of 4 based on their ranked complexity
 
     The 'remainder problem' of needing to have 4 submissions per cluster,
@@ -19,13 +19,13 @@ def cluster(cohort_submissions: dict) -> list:
     and 'complexity' as one of the inner keys
     Output: Nested list of clusters:
     [[list of submission_ids], [list of submission_ids]]
-    '''
+    """
 
     # Generate DataFrame from dict
-    df = pd.DataFrame.from_dict(cohort_submissions, orient='index')
+    df = pd.DataFrame.from_dict(cohort_submissions, orient="index")
 
     # Rank by complexity
-    df = df.sort_values(by=['complexity'], ascending=False)
+    df = df.sort_values(by=["complexity"], ascending=False)
 
     # Initial variables
     num_submissions = len(df)

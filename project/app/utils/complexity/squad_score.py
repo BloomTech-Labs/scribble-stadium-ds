@@ -36,7 +36,7 @@ def metrics(document: str):
     cleaned = " ".join(cleaned.split())
 
     # Generate single row dataframe from transcription
-    cols = ['transcription']
+    cols = ["transcription"]
     df = pd.DataFrame([cleaned], columns=cols)
 
     # Generate metrics
@@ -69,7 +69,7 @@ def metrics(document: str):
         pos = nltk.pos_tag(tokens)
         adj_count = 1
         for word in pos:
-            if word[1] == 'JJ':
+            if word[1] == "JJ":
                 adj_count += 1
         return adj_count
 
@@ -108,7 +108,7 @@ async def squad_score(document: str, scaler):
         "avg_word_len": 1,
         "quotes_number": 1,
         "unique_words": 1,
-        "adj_num": 1
+        "adj_num": 1,
     }
 
     # Scale metrics with pickled MinMax Scaler
