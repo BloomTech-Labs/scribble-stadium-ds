@@ -21,6 +21,7 @@ async def submission_text(sub: Submission):
     """Takes a Submission Object and calls the Google Vision API to text annotate
     the passed s3 link, then passes those concatenated transcriptions to the SquadScore
     method, returns:
+
     Arguments:
     ---
     `sub`: Submission - Submission object **see `help(Submission)` for more info**
@@ -29,7 +30,6 @@ async def submission_text(sub: Submission):
     ```
     {"SubmissionID": int, "IsFlagged": boolean,"LowConfidence": boolean, "Complexity": int}
     ```
-
     """
     transcriptions = ""
     confidence_flags = []
@@ -42,38 +42,39 @@ async def submission_text(sub: Submission):
         # update the hash with the file's content
         hash.update(r.content)
         try:
-            # assert that the has is the same as the one passed with the file
+            # assert that the hash is the same as the one passed with the file
             # link
-            assert hash.hexdigest() == sub.Pages[page_num]['Checksum']
+            assert hash.hexdigest() == sub.Pages[page_num]["Checksum"]
         except AssertionError:
             # return some useful information about the error including what
             # caused it and the file affected
-            return JSONResponse(status_code=422,
-                                content={
-                                    "ERROR": "BAD CHECKSUM",
-                                    "file": sub.Pages[page_num]
-                                })
-        # add the response from google_api to a string with an ending
-        # line break and the confidence flag from the method that determines if
-        # the student is reminded about their handwritting
+            return JSONResponse(
+                status_code=422,
+                content={"ERROR": "BAD CHECKSUM", "file": sub.Pages[page_num]},
+            )
+        # unpack response from GoogleAPI
         conf_flag, flagged, trans = await vision.transcribe(r.content)
+        # concat transcriptions togeather
         transcriptions += trans + "\n"
+        # add page to list of confidence flags
         confidence_flags.append(conf_flag)
     # score the transcription using SquadScore algorithm
     score = await squad_score(transcriptions, scaler)
 
     # return the complexity score to the web team with the SubmissionID
-    return JSONResponse(status_code=200,
-                        content={
-                            "SubmissionID": sub.SubmissionID,
-                            "IsFlagged": flagged,
-                            "LowConfidence": True in confidence_flags,
-                            "Complexity": score
-                        })
+    return JSONResponse(
+        status_code=200,
+        content={
+            "SubmissionID": sub.SubmissionID,
+            "IsFlagged": flagged,
+            "LowConfidence": True in confidence_flags,
+            "Complexity": score,
+        },
+    )
 
 
 @router.post("/submission/illustration")
-async def submission_illustration(sub: ImageSubmission):
+async def submission_illustration(sub):
     """Function that checks the illustration against the Google Vision
     SafeSearch API and flags if explicit content detected.
 
@@ -96,10 +97,7 @@ async def submission_illustration(sub: ImageSubmission):
         assert hash.hexdigest() == sub.Checksum
     except AssertionError:
         # return bad hash error with the status_code to an ill-formed request
-        return JSONResponse(status_code=422,
-                            content={
-                                "ERROR": "BAD CHECKSUM",
-                            })
+        return JSONResponse(status_code=422, content={"ERROR": "BAD CHECKSUM",})
     # pass file to the GoogleAPI object to safe search filter the file
     response = await vision.detect_safe_search(r.content)
     # respond with the output dictionary that is returned from
