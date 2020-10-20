@@ -1,12 +1,9 @@
 import logging
-import json
 
 from fastapi import APIRouter, Response
-from fastapi.responses import JSONResponse
 
 from app.utils.security.header_checking import AuthRouteHandler
 from app.utils.clustering.clustering_mvp import batch_cluster
-from app.api.models import ClusterSubmission
 
 
 # global variables and services
@@ -16,7 +13,50 @@ log = logging.getLogger(__name__)
 
 @router.post("/cluster")
 async def cluster_endpoint(sub: dict):
+    """endpoint takes a list of cohort and submission objects then returns
+     clusters based on cohort in groups of 4.
 
+    Args:
+        sub (dict): Submission Object
+
+        ```
+            {
+                "1": { # cohortID
+                    "1": { # submissionID
+                        "Image": "http://lorempixel.com/640/480/abstract",
+                        "Inappropriate": False,
+                        "Sensitive": False,
+                        "Status": "APPROVED",
+                        "Complexity": 123,
+                        "Pages": {
+                            "1": "http://lorempixel.com/640/480/abstract",
+                            "2": "http://lorempixel.com/640/480/abstract",
+                        },
+                    },
+                },
+                "2":{
+                    "1": {
+                        "Image": "http://lorempixel.com/640/480/abstract",
+                        "Inappropriate": False,
+                        "Sensitive": False,
+                        "Status": "APPROVED",
+                        "Complexity": 123,
+                        "Pages": {
+                            "1": "http://lorempixel.com/640/480/abstract",
+                            "2": "http://lorempixel.com/640/480/abstract",
+                        },
+                    },
+                },
+            }
+
+        ```
+    Returns:
+        `response` json -
+        {
+            "1": [["1","2","3","4"]],
+            "2": [["5","6","7","8"]]
+        }
+    """
     response = await batch_cluster(sub)
     return response
 
