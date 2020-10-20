@@ -5,8 +5,8 @@ from pydantic import BaseModel, Field, validator
 
 
 class Submission(BaseModel):
-    """
-    # Model that handles text submissions to the API `submission/text` endpoint
+    """# Model that handles text submissions to the API `submission/text` endpoint
+
     ## **Fields:**
 
     ### SubmissionID - `int`
@@ -83,8 +83,8 @@ class Submission(BaseModel):
 
 
 class ImageSubmission(BaseModel):
-    """
-    # Model that handles illustration submissions to the API `submission/illustration` endpoint
+    """# Model that handles illustration submissions to the API `submission/illustration` endpoint
+
     ## **Fields:**
 
     ### SubmissionID -
@@ -149,16 +149,14 @@ class ImageSubmission(BaseModel):
 
 
 class LineGraphRequest(BaseModel):
-    """Model that handles LineGraph Request to API
-    """
+    """Model that handles LineGraph Request to API"""
 
     ScoreHistory: List[int] = Field(..., example=[1005, 1500, 9000, 789])
     StudentName: str = Field(..., example="Firstname")
 
 
 class HistogramRequest(BaseModel):
-    """Model that handles Histogram Request to API
-    """
+    """Model that handles Histogram Request to API"""
 
     GradeList: List[int] = Field(..., example=[1005, 1500, 9000, 789])
     GradeLevel: int = Field(..., example=8)
@@ -167,6 +165,8 @@ class HistogramRequest(BaseModel):
 
 
 class ClusterSubmission(BaseModel):
+    """Model used to psudocode request body"""
+
     Image: str = Field(..., example="http://lorempixel.com/640/480/abstract")
     Inappropriate: bool = Field(..., example=False)
     Sensitive: bool = Field(..., example=False)
@@ -180,15 +180,3 @@ class ClusterSubmission(BaseModel):
         },
         description="A dictionary with page number as keys and url for values",
     )
-
-
-class ClusterCohort(BaseModel):
-    Submissions: List[ClusterSubmission] = []
-
-
-class ClusteringRequest(BaseModel):
-    """Model that handles Clustering Request to API
-    """
-
-    Cohorts: List[ClusterCohort] = []
-
