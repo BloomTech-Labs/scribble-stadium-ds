@@ -13,50 +13,56 @@ log = logging.getLogger(__name__)
 
 @router.post("/cluster")
 async def cluster_endpoint(sub: dict):
-    """endpoint takes a list of cohort and submission objects then returns
-     clusters based on cohort in groups of 4.
+    """Endpoint takes a list of cohort and submission objects then returns
+    clusters based on cohort in groups of 4.
 
-    Args:
-        sub (dict): Submission Object
+    Arguments:
+    ---
 
-        ```
-            {
-                "1": { # cohortID
-                    "1": { # submissionID
-                        "Image": "http://lorempixel.com/640/480/abstract",
-                        "Inappropriate": False,
-                        "Sensitive": False,
-                        "Status": "APPROVED",
-                        "Complexity": 123,
-                        "Pages": {
-                            "1": "http://lorempixel.com/640/480/abstract",
-                            "2": "http://lorempixel.com/640/480/abstract",
-                        },
-                    },
-                },
-                "2":{
-                    "1": {
-                        "Image": "http://lorempixel.com/640/480/abstract",
-                        "Inappropriate": False,
-                        "Sensitive": False,
-                        "Status": "APPROVED",
-                        "Complexity": 123,
-                        "Pages": {
-                            "1": "http://lorempixel.com/640/480/abstract",
-                            "2": "http://lorempixel.com/640/480/abstract",
-                        },
-                    },
-                },
-            }
-
-        ```
-    Returns:
-        `response` json -
+    sub (dict): Submission Object Defined by the following form:
+    ```
         {
-            "1": [["1","2","3","4"]],
-            "2": [["5","6","7","8"]]
+            "1": { # cohortID
+                "1": { # submissionID
+                    "Image": "http://lorempixel.com/640/480/abstract",
+                    "Inappropriate": False,
+                    "Sensitive": False,
+                    "Status": "APPROVED",
+                    "Complexity": 123,
+                    "Pages": {
+                        "1": "http://lorempixel.com/640/480/abstract",
+                        "2": "http://lorempixel.com/640/480/abstract",
+                    },
+                },
+            },
+            "2":{
+                "1": {
+                    "Image": "http://lorempixel.com/640/480/abstract",
+                    "Inappropriate": False,
+                    "Sensitive": False,
+                    "Status": "APPROVED",
+                    "Complexity": 123,
+                    "Pages": {
+                        "1": "http://lorempixel.com/640/480/abstract",
+                        "2": "http://lorempixel.com/640/480/abstract",
+                    },
+                },
+            },
         }
+    ```
+
+    Returns:
+    ---
+    `response` json - a list of clusters defined by the following form:
+    {
+        "1": [["1","2","3","4"]], # CohortID: [Group1[SubmissionIDs],GroupN]
+        "2": [["5","6","7","8"]]
+    }
+
+    Note:
+    ---
+    All submissions that are included in this data are post moderation review
+    and Approved for COPPA compliance
     """
     response = await batch_cluster(sub)
     return response
-

@@ -13,7 +13,7 @@ log = logging.getLogger(__name__)
 
 @router.route("/viz/linegraph")
 def return_line_graph(data: LineGraphRequest):
-    """Endpoint produces a line graph of students SquadScore history.
+    """Endpoint produces a line graph of student's SquadScore history.
 
     Arguments
     ---
@@ -24,6 +24,11 @@ def return_line_graph(data: LineGraphRequest):
     Returns:
     ---
     `response` json - A graph object produced by Plotly.Graph.to_json() function
+
+    Note:
+    ---
+    All submissions that are included in this data are post moderation review
+    and Approved for COPPA compliance
     """
     return line_graph.line_graph(data.ScoreHistory, data.StudentName)
 
@@ -48,6 +53,11 @@ def return_histogram(data: HistogramRequest):
     Returns:
     ---
     `response` json - A graph object produced by Plotly.Graph.to_json() function
+
+    Note:
+    ---
+    All submissions that are included in this data are post moderation review
+    and Approved for COPPA compliance
     """
     return histogram.histogram(
         data.GradeList, [data.GradeLevel, data.StudentName, data.StudentScore]
