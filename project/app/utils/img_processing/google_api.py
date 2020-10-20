@@ -13,6 +13,7 @@ from app.utils.moderation.text_moderation import BadWordTextModerator
 
 class GoogleAPI:
     """# An Interface to Google's Vision API"""
+
     def __init__(self):
         """function that prepares the GoogleAPI to handle requests from the
         endpoints.
@@ -43,8 +44,10 @@ class GoogleAPI:
         self.client = vision.ImageAnnotatorClient()
 
         self.text_moderator = BadWordTextModerator(
-            path.join(path.dirname(__file__), '..', 'moderation',
-                      'bad_single.csv'))
+            path.join(
+                path.dirname(__file__), "..", "moderation", "bad_single.csv"
+            )
+        )
 
     async def transcribe(self, document):
         """Detects document features in images and returns extracted text
@@ -62,10 +65,11 @@ class GoogleAPI:
         image = types.Image(content=document)
         # adding refined language specification to sort out Non-English
         # characters from transcription responses
-        language = types.ImageContext(language_hints=['en-t-i0-handwrit'])
+        language = types.ImageContext(language_hints=["en-t-i0-handwrit"])
         # Connect to Google API client with the file that is built above
-        response = self.client.document_text_detection(image=image,
-                                                       image_context=language)
+        response = self.client.document_text_detection(
+            image=image, image_context=language
+        )
         # check if there are transcriptions from google
         if response.text_annotations:
             # store and process the response
@@ -165,4 +169,5 @@ class GoogleAPI:
 class NoTextFoundException(Exception):
     """An Exception that occurs when Google Vision API
     finds no text data in the image"""
+
     pass

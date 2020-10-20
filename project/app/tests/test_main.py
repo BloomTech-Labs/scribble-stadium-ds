@@ -22,4 +22,3 @@ def test_docs():
     response = client.get("/")
     # should be working independent of auth header
     assert response.status_code == 200
-

@@ -44,15 +44,14 @@ async def submission_text(sub: Submission):
         try:
             # assert that the has is the same as the one passed with the file
             # link
-            assert hash.hexdigest() == sub.Pages[page_num]['Checksum']
+            assert hash.hexdigest() == sub.Pages[page_num]["Checksum"]
         except AssertionError:
             # return some useful information about the error including what
             # caused it and the file affected
-            return JSONResponse(status_code=422,
-                                content={
-                                    "ERROR": "BAD CHECKSUM",
-                                    "file": sub.Pages[page_num]
-                                })
+            return JSONResponse(
+                status_code=422,
+                content={"ERROR": "BAD CHECKSUM", "file": sub.Pages[page_num]},
+            )
         # add the response from google_api to a string with an ending
         # line break and the confidence flag from the method that determines if
         # the student is reminded about their handwritting
@@ -63,13 +62,15 @@ async def submission_text(sub: Submission):
     score = await squad_score(transcriptions, scaler)
 
     # return the complexity score to the web team with the SubmissionID
-    return JSONResponse(status_code=200,
-                        content={
-                            "SubmissionID": sub.SubmissionID,
-                            "IsFlagged": flagged,
-                            "LowConfidence": True in confidence_flags,
-                            "Complexity": score
-                        })
+    return JSONResponse(
+        status_code=200,
+        content={
+            "SubmissionID": sub.SubmissionID,
+            "IsFlagged": flagged,
+            "LowConfidence": True in confidence_flags,
+            "Complexity": score,
+        },
+    )
 
 
 @router.post("/submission/illustration")
@@ -96,10 +97,7 @@ async def submission_illustration(sub: ImageSubmission):
         assert hash.hexdigest() == sub.Checksum
     except AssertionError:
         # return bad hash error with the status_code to an ill-formed request
-        return JSONResponse(status_code=422,
-                            content={
-                                "ERROR": "BAD CHECKSUM",
-                            })
+        return JSONResponse(status_code=422, content={"ERROR": "BAD CHECKSUM",})
     # pass file to the GoogleAPI object to safe search filter the file
     response = await vision.detect_safe_search(r.content)
     # respond with the output dictionary that is returned from
