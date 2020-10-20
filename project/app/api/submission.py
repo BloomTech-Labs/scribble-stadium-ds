@@ -42,7 +42,7 @@ async def submission_text(sub: Submission):
         # update the hash with the file's content
         hash.update(r.content)
         try:
-            # assert that the has is the same as the one passed with the file
+            # assert that the hash is the same as the one passed with the file
             # link
             assert hash.hexdigest() == sub.Pages[page_num]["Checksum"]
         except AssertionError:
