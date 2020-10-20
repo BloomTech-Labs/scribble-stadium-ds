@@ -21,6 +21,7 @@ async def submission_text(sub: Submission):
     """Takes a Submission Object and calls the Google Vision API to text annotate
     the passed s3 link, then passes those concatenated transcriptions to the SquadScore
     method, returns:
+
     Arguments:
     ---
     `sub`: Submission - Submission object **see `help(Submission)` for more info**
@@ -29,7 +30,6 @@ async def submission_text(sub: Submission):
     ```
     {"SubmissionID": int, "IsFlagged": boolean,"LowConfidence": boolean, "Complexity": int}
     ```
-
     """
     transcriptions = ""
     confidence_flags = []
