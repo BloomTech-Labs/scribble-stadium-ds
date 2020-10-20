@@ -21,6 +21,7 @@ async def submission_text(sub: Submission):
     """Takes a Submission Object and calls the Google Vision API to text annotate
     the passed s3 link, then passes those concatenated transcriptions to the SquadScore
     method, returns:
+
     Arguments:
     ---
     `sub`: Submission - Submission object **see `help(Submission)` for more info**
@@ -29,7 +30,6 @@ async def submission_text(sub: Submission):
     ```
     {"SubmissionID": int, "IsFlagged": boolean,"LowConfidence": boolean, "Complexity": int}
     ```
-
     """
     transcriptions = ""
     confidence_flags = []
@@ -42,7 +42,7 @@ async def submission_text(sub: Submission):
         # update the hash with the file's content
         hash.update(r.content)
         try:
-            # assert that the has is the same as the one passed with the file
+            # assert that the hash is the same as the one passed with the file
             # link
             assert hash.hexdigest() == sub.Pages[page_num]["Checksum"]
         except AssertionError:
@@ -52,11 +52,11 @@ async def submission_text(sub: Submission):
                 status_code=422,
                 content={"ERROR": "BAD CHECKSUM", "file": sub.Pages[page_num]},
             )
-        # add the response from google_api to a string with an ending
-        # line break and the confidence flag from the method that determines if
-        # the student is reminded about their handwritting
+        # unpack response from GoogleAPI
         conf_flag, flagged, trans = await vision.transcribe(r.content)
+        # concat transcriptions togeather
         transcriptions += trans + "\n"
+        # add page to list of confidence flags
         confidence_flags.append(conf_flag)
     # score the transcription using SquadScore algorithm
     score = await squad_score(transcriptions, scaler)
@@ -74,7 +74,7 @@ async def submission_text(sub: Submission):
 
 
 @router.post("/submission/illustration")
-async def submission_illustration(sub: ImageSubmission):
+async def submission_illustration(sub):
     """Function that checks the illustration against the Google Vision
     SafeSearch API and flags if explicit content detected.
 
