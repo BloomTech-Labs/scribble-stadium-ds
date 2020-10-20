@@ -52,11 +52,11 @@ async def submission_text(sub: Submission):
                 status_code=422,
                 content={"ERROR": "BAD CHECKSUM", "file": sub.Pages[page_num]},
             )
-        # add the response from google_api to a string with an ending
-        # line break and the confidence flag from the method that determines if
-        # the student is reminded about their handwritting
+        # unpack response from GoogleAPI
         conf_flag, flagged, trans = await vision.transcribe(r.content)
+        # concat transcriptions togeather
         transcriptions += trans + "\n"
+        # add page to list of confidence flags
         confidence_flags.append(conf_flag)
     # score the transcription using SquadScore algorithm
     score = await squad_score(transcriptions, scaler)
