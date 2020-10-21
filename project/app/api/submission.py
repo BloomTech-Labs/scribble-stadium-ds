@@ -74,7 +74,7 @@ async def submission_text(sub: Submission):
 
 
 @router.post("/submission/illustration")
-async def submission_illustration(sub):
+async def submission_illustration(sub: ImageSubmission):
     """Function that checks the illustration against the Google Vision
     SafeSearch API and flags if explicit content detected.
 
@@ -97,7 +97,7 @@ async def submission_illustration(sub):
         assert hash.hexdigest() == sub.Checksum
     except AssertionError:
         # return bad hash error with the status_code to an ill-formed request
-        return JSONResponse(status_code=422, content={"ERROR": "BAD CHECKSUM",})
+        return JSONResponse(status_code=422, content={"ERROR": "BAD CHECKSUM"})
     # pass file to the GoogleAPI object to safe search filter the file
     response = await vision.detect_safe_search(r.content)
     # respond with the output dictionary that is returned from
