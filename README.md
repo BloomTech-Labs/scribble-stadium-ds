@@ -10,7 +10,7 @@
 
 
 # Scope
-We worked with a cross-functional team of 5 Web Developers, 3 Data Scientists, and 1 Technical Product Lead. We had 8 weeks to build as much of Story Squad as we could. We referenced a previous team's code body who worked on the project, but mostly we treated it like a greenfield project. We were one of 3 teams working on this same project, who each organically focused on a slightly different piece of the product. Our goal was to get the web application fully functional as far as transcription and complexity analysis, and then any aspects of the clustering and competition (or gamification) were stretch goals, which in the end we successfully implemented most features of. 
+We worked with a cross-functional team of 5 Web Developers, 3 Data Scientists, and 1 Technical Product Lead. We had 8 weeks to build as much of Story Squad as we could. We referenced a previous team's code body who began work on the project, but mostly we treated it like a greenfield project. We were one of 3 teams working on this same project, who each organically focused on a slightly different piece of the product. Our goal was to get the web application fully functional as far as transcription and complexity analysis, and then any aspects of the clustering and competition (or gamification) were stretch goals, which in the end we successfully implemented most features of. 
 
 Our entire implementation was built to be in compliance with the [Children's Online Privacy Protection Act](https://www.ecfr.gov/cgi-bin/text-idx?SID=4939e77c77a1a1a08c1cbf905fc4b409&node=16%3A1.0.1.3.36&rgn=div5) (COPPA).
 
@@ -18,6 +18,9 @@ Our entire implementation was built to be in compliance with the [Children's Onl
 - Link to deployed [Data Science API & documentation](http://labs26-story-squad-teamb.eba-ampzurak.us-east-1.elasticbeanstalk.com/)
 - Link to our team's [Frontend Repo](https://github.com/Lambda-School-Labs/Labs26-StorySquad-FE-TeamB)
 - Link to our team's [Backend Repo](https://github.com/Lambda-School-Labs/Labs26-StorySquad-BE-TeamB)
+
+Given that this project will have future teams of data scientists building off of our codebase, this README also serves as a transition document.
+
 
 # Features
 
@@ -127,3 +130,11 @@ Our entire implementation was built to be in compliance with the [Children's Onl
 ### **Security**
 
 # Future Considerations
+
+# Meet the Team
+Feel free to reach out to any of us with questions about the project!
+[Steven Chase](https://github.com/bramirez96)                                                          |                                                          [Lori Schlatter](https://github.com/Schrese)                                                          |                                                             [Joseph Wilson](https://github.com/Nick-Ohman)                                                             
+| :----------------------------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| [<img src="https://avatars2.githubusercontent.com/u/61038689?s=460&u=6c3e70414c9f30a7580773bb24bce8983a96c414&v=4" width = "100" />](hhttps://github.com/schase15) | [<img src="https://avatars1.githubusercontent.com/u/15877666?s=460&v=4" width = "100" />](https://github.com/lorischl-otter) | [<img src="https://avatars0.githubusercontent.com/u/50245325?s=460&u=6a3aa4d49be9aa30dfefdc4f6c26c223c405473c&v=4" width = "100" />](https://github.com/Jwilson1172) | 
+|                                      [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/schase15)                                       |                                       [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/lorischl-otter)                                       |                                       [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Jwilson1172)                                       |
+|                    [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/steventchase/)                     |                     [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](www.linkedin.com/in/lorischlatter)                     |                     [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/joseph-wilson-98645b49/)                     |                 
