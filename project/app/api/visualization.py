@@ -11,7 +11,7 @@ router = APIRouter(route_class=AuthRouteHandler)
 log = logging.getLogger(__name__)
 
 
-@router.route("/viz/linegraph")
+@router.post("/viz/linegraph")
 def return_line_graph(data: LineGraphRequest):
     """Endpoint produces a line graph of student's SquadScore history.
 
@@ -33,7 +33,7 @@ def return_line_graph(data: LineGraphRequest):
     return line_graph.line_graph(data.ScoreHistory, data.StudentName)
 
 
-@router.route("/viz/histogram")
+@router.post("/viz/histogram")
 def return_histogram(data: HistogramRequest):
     """Endpoint that makes Plotly histogram of current grade's SquadScore
     distribution for the current period. Graph is annotated with a vertical line
