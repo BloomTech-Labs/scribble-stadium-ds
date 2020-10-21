@@ -23,9 +23,45 @@ Our entire implementation was built to be in compliance with the [Children's Onl
 
 ## Transcription and Moderation
 ### **Transcription**
+- Functionality
+   - Connects to Google Cloud Vision API (GCV) to perform transcription of the user uploaded written story. Utilizes the `document_text_detection` method as that is best for Handwritten Text Recognition. Currently being hosted using Google credentials belonging to one of the team members - a new DS team would need to set up their own credentials. It is free to sign up and they provide $300 in free credit. During our time working on this project, we didn’t accrue any charges. While we found using our own credentials sufficient for our purposes, the stakeholders do have Google credentials that they are willing to provide if you prefer.
+- Process
+   - Although we were tempted, as were past teams, to build an OCR by hand, we ultimately decided against it because we did not have a large enough dataset to train an OCR model on. The stakeholders also supported the use of a paid platform and we chose GCV because it produced the best results out of the models we researched.
+   !['OCR_Models'](assets/OCR_Models.png)
+- Future Considerations
+   - While GCV was the best model we had access to, we still came across an issue of transcription errors. These errors are crucial to understand as they affected our ability to extract meaningful and reliable complexity metrics. Improving the transcription would improve the complexity metrics which in turn would improve the visualizations on the parent dashboard and our clustering algorithm. We found that the images with the worst handwriting typically had the most transcription errors. In lieu of the students improving their handwriting, the best place to improve transcription accuracy would be by improving the quality of the images by utilizing pre-processing techniques. A good [article](https://towardsdatascience.com/pre-processing-in-ocr-fc231c6035a7) for exploring pre-processing images.
+   - Another team working on Story Squad at the same time as us spent a lot of time working on training their own OCR with Tesseract. Their use of pre-processing seemed very effective. Explore their [notebook](https://github.com/Lambda-School-Labs/Labs26-StorySquad-DS-TeamC/blob/main/notebooks/UGC_Preprocessing_Exploration.ipynb).
+   - Spell checking was explored to improve the output of the transcription. Currently, it is not implemented as the transcription errors were too high to overcome with a spell checker. If the transcription accuracy can be improved, this could be implemented. The `count_spelling_errors` [notebook](notebooks/count_spelling_errors.ipynb) contains the exploration of two different spell check methods. A third team working on Story Sqaud implemented a spell checker [here](https://github.com/Lambda-School-Labs/Labs26-StorySquad-DS-TeamA/blob/main/project/app/ocr/text_complexity.py).
+- Links
+   - The `transcribed_stories` [notebook](notebooks/transcribed_stories.ipynb) creates a CSV with all of the transcriptions from the stories provided by the stakeholders.
+   - The `google_api.py` [script](project/app/utils/img_processing/google_api.py) builds the class that the application utilizes to connect to GCV API.
+   - The calculation of the error metric was leveraged from a prior DS team’s [notebook](https://github.com/Lambda-School-Labs/story-squad-ds/blob/master/Notebooks/addingmetrics.ipynb).
+
 ### **Safe Search**
+- Functionality
+   - Utilizes the SafeSearch method provided by Google Cloud Vision, which screens user-uploaded drawings for inappropriate content. Google will return the likelihood of the image being ‘adult’, ‘racy’, or ‘violent’. A flag will be raised and returned to the administration dashboard if Google returns a probability of ‘Possible’ or above for any of these categories.
+- Process
+   - This functionality was not actually requested by the stakeholders. Under COPPA regulation, every illustration that is uploaded by the students is required to have human moderation to prevent inappropriate material being displayed to the other students.
+   - We decided to include the SafeSearch functionality because it was a simple implementation that would help the moderators prioritize their work.
+   - On that same note, we decided to have a lower threshold to ensure that our recall rate was optimized. As the SafeSearch flags will be confirmed by human eyes we felt that it was better to flag too many submissions than potentially miss inappropriate images.
+- Future Considerations
+   - Through our testing, this system seems to work very well. If future teams decide the SafeSearch is too sensitive or not sensitive enough, the threshold can be adjusted.
+- Links
+   - The `safe_search.py` [script](project/app/utils/img_processing/safe_search.py) is the function used in the application to perform the SafeSearch.
+
 ### **Low Confidence Flag**
+- Functionality
+   - This feature raises a flag if the Google Cloud Vision API is less than 85% confident about its transcription. The logic is that a low confidence transcription will result in higher transcription errors. High transcription errors will, in turn, produce an unreliable evaluation metric for that submission. By monitoring this confidence level, we hope to return a disclaimer to the user that the evaluation metric may not be accurate and tips to improve image and handwriting quality to improve our transcription. While the framework for this feature is completed on the data science end, it is not a feature that the web team has implemented on their side yet. Currently, the threshold is set fairly low which will serve to catch the submissions that are likely to be severely impacted by poor translation.
+- Process
+   - We were given 167 images of stories as well as their human transcriptions by the stakeholders. We used these human transcriptions alongside the transcriptions created with Google Cloud Vision to calculate the error rate of the GCV transcription. The hope was that the error rate and confidence level were directly correlated. Unfortunately, the highest correlation we saw was 0.49.
+- Future Considerations
+   - Future improvements on transcription quality, such as implementing pre-processing, may improve the correlation between the error metric and the confidence level. Additionally, different methods of calculating the error may result in higher correlation. A higher correlation would allow us to select a more discerning threshold that will flag submissions that are being negatively affected by poor transcription. A deeper discussion on discovering errors in the human transcriptions, with the missing pages identified, can be found in the `transcription_confidence` [notebook](notebooks/transcription_confidence.ipynb).
+   - As mentioned above, this feature has not been implemented on the web team’s end yet.
+- Links
+   - The notebook exploring the transcription confidence levels can be found in `transcription_confidence` [notebook](notebooks/transcription_confidence.ipynb). The correlation matrix and scatter plot exploring the relationship between the confidence level and error metric can be found in this notebook. Additionally, this notebook creates a CSV with the API transcriptions, human transcriptions, calculated error between the two and Google API confidence level for each submission.
+   - The `confidence_flag.py` [file](project/app/utils/img_processing/confidence_flag.py) contains the script that the application uses to implement this feature.
 ### **Inappropriate Content Flagging**
+- TODO
 ### **Sensitive Content Flagging**
 - Functionality
    - This feature is not currently functional, but there is the framework of a function in place in [`text_moderation.py`](project/app/utils/moderation/text_moderation.py) to be able to add the sensitive content flag in addition to the inappropriate content flag, to flag both for the moderator. The current implementation will just always return a `False` flag for `SensitiveContent`.
@@ -59,6 +95,20 @@ Our entire implementation was built to be in compliance with the [Children's Onl
    - If new data is provided in the future, the MinMaxScaler in the [`squad_score_mvp` notebook](notebooks/squad_score_mvp.ipynb) will need to be retrained with the entire corpus, and re-pickled and deployed. 
 
 ### **Visualizations**
+- Functionality
+   - Creates two visualizations for the parent dashboard. This will allow the parents to keep an eye on the progress of their student. The final visuals are a result of discussions with the stakeholders. One visual is a histogram that plots the distribution of all of that week’s scores for the student’s specific grade. The student’s score for that week is plotted as a vertical line to be able to see how they compare to the other submissions for that week. The second visual is a line graph that charts the history of the student’s submissions. At least one submission must be made for the parents to be able to view these visuals. Additionally, scores will not be available to display until the submissions have successfully gone through the moderation process at which point they will be released by the web back-end.
+- Process
+   - This is a new feature idea that was the result of a lot of back and forth discussion between the stakeholders and our DS team member Lori. The stakeholders were very supportive of this idea but very specific in its implementation. They want to provide visibility so that the parents can be engaged in their student's progress, but they do not want to display any metrics to either the student or parent user. They feel this would take away from the creative safe-space they are trying to cultivate for the students.
+   - The stakeholders requested a working model by the end of our time working on this project (10/23/20) so they could test it in front of a panel of parent users for feedback.
+- Future Considerations
+   - For a future iteration, we had an idea that the stakeholders were very excited about. Our idea is to populate a dynamic sentence at the bottom of the line graph that highlights an area that the student improved in for that week. By keeping track of the metrics for each of the student’s submissions, we can highlight improvements against either their average performance or their last submission. Again we would want to do this at a high level without disclosing specific numbers. The idea is to always be able to highlight something positive about the student’s writing that week. For example: “It looks like Bobby used more description adjectives than average this week!” or “Bobby increased his use of dialogue this week compared to last week!”
+   - Again, the stakeholders will be testing this new feature in front of parent users at some point and will have feedback on what to change, keep or may decide against the feature altogether.
+- Links
+   - The `score_visual` [notebook](notebooks/score_visual.ipynb) explores various visuals that we presented to the stakeholders. The `histogram.py` [file](project/app/utils/visualizations/histogram.py) and the `line_graph.py` [file](project/app/utils/visualizations/line_graph.py) include the scripts for the final approved visualizations. They produce a JSON file for the web to display on the parent dashboard.
+![line_graph](assets/line_graph.png)
+![histogram](assets/histogram.png)
+
+
 ### **Gamification / Clustering**
 - Functionality
    - The current clustering function we have implemented is a basic MVP for clustering, which sorts moderator-accepted submissions for each cohort (meaning the group of users that is on a given chapter of the story) by Squad Score, and returns clusters of 4 by submission ID to the web backend to be randomly paired. 
