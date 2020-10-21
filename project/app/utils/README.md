@@ -4,7 +4,7 @@
 - `clustering_mvp.py`: Contains two functions: 1) `cluster`, which takes in a dictionary of one cohort's submissions, orders by complexity score, and clusters submission IDs into groups of 4 by score, duplicating 1-3 submission IDs as needed to ensure all clusters contain 4 IDs. Returns a list of lists. 2) `batch_cluster`, which takes a dictionary of nested dictionaries of all the cohort's submission scores for a week and runs them all through the `cluster` function. Returns a JSON object of the returns from each cohort.
 
 #### `complexity` subfolder:
-- `squad_score.py`: Contains two functions: `metrics`, which generates a single row DataFrame of complexity metrics from a transcription string, and `squad_score` which takes a single row of complexity metrics and outputs a complexity metric integer, or "Squad Score."
+- `squad_score.py`: Contains two functions: `metrics`, which generates a single row DataFrame of complexity metrics from a transcription string, and `squad_score` which takes a transcription string, runs it through `metrics`, then generates a complexity metric integer, or "Squad Score."
 
 #### `img_processing` subfolder:
 - `transcription.py`: Utilizes the Google Cloud Vision API and their `document_text_detection` method to transcribe text from a given image
