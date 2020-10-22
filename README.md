@@ -11,8 +11,7 @@
 
 Check out our product video for an overview of all our features, or keep reading for more in-depth information on each feature.
 
-<video src="assets/product_video.mp4" controls preload></video>
-
+<video src="assets/product-video.mp4" poster="assets/story_squad_banner.png" width="320" height="200" controls preload></video>
 
 # Scope
 We worked with a cross-functional team of 5 Web Developers, 3 Data Scientists, and 1 Technical Product Lead. We had 8 weeks to build as much of Story Squad as we could. We referenced a previous team's code body who began work on the project, but mostly we treated it like a greenfield project. We were one of 3 teams working on this same project, who each organically focused on a slightly different piece of the product. Our goal was to get the web application fully functional as far as transcription and complexity analysis, and then any aspects of the clustering and competition (or gamification) were stretch goals, which in the end we successfully implemented most features of.
