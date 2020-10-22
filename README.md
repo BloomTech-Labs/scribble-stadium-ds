@@ -64,7 +64,10 @@ Given that this project will have future teams of data scientists building off o
    - The notebook exploring the transcription confidence levels can be found in `transcription_confidence` [notebook](notebooks/transcription_confidence.ipynb). The correlation matrix and scatter plot exploring the relationship between the confidence level and error metric can be found in this notebook. Additionally, this notebook creates a CSV with the API transcriptions, human transcriptions, calculated error between the two and Google API confidence level for each submission.
    - The `confidence_flag.py` [file](project/app/utils/img_processing/confidence_flag.py) contains the script that the application uses to implement this feature.
 ### **Inappropriate Content Flagging**
-- TODO
+- Functionality
+   - This feature is currently not implemented as it required a large amount of research and aggregated data that was outside of the scope of our project and would have put us over on the deadlines.
+   - Ideally this function along with the sensitive content flagging should be handled by a separate NLP project to evaluate sentiment analysis
+
 ### **Sensitive Content Flagging**
 - Functionality
    - This feature is not currently functional, but there is the framework of a function in place in [`text_moderation.py`](project/app/utils/moderation/text_moderation.py) to be able to add the sensitive content flag in addition to the inappropriate content flag, to flag both for the moderator. The current implementation will just always return a `False` flag for `SensitiveContent`.
