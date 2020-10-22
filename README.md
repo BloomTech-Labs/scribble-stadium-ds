@@ -5,8 +5,13 @@
 
 ![Story Squad Banner](assets/story_squad_banner.png)
 
+
 # What is Story Squad?
 [Story Squad](https://www.storysquad.education/) is the dream of a former teacher, Graig Peterson, to create opportunities for children to have creative writing and drawing time off-screen. Here's how it works: child users of the website are provided a new chapter in an ongoing story each weekend. They read the story, and then follow both a writing and drawing prompt to spend an hour off-screen writing and drawing. When they're done, they upload photos of each, and this is where our data science team comes in. The stories are transcribed into text, analyzed for complexity, screened for inappropriate content, and then sent to a moderator. Once all submissions have been checked over on moderation day, our clustering algorithm groups the submissions by similar complexity and creates Squads of 4 to head into a game of assigning points and voting for the best submissions in head-to-head pairings within the cluster! Then it starts all over again the following weekend.
+
+Check out our product video for an overview of all our features, or keep reading for more in-depth information on each feature.
+
+<video src="assets/product_video.mp4" controls preload></video>
 
 
 # Scope
