@@ -10,7 +10,7 @@
 
 
 # Scope
-We worked with a cross-functional team of 5 Web Developers, 3 Data Scientists, and 1 Technical Product Lead. We had 8 weeks to build as much of Story Squad as we could. We referenced a previous team's code body who began work on the project, but mostly we treated it like a greenfield project. We were one of 3 teams working on this same project, who each organically focused on a slightly different piece of the product. Our goal was to get the web application fully functional as far as transcription and complexity analysis, and then any aspects of the clustering and competition (or gamification) were stretch goals, which in the end we successfully implemented most features of. 
+We worked with a cross-functional team of 5 Web Developers, 3 Data Scientists, and 1 Technical Product Lead. We had 8 weeks to build as much of Story Squad as we could. We referenced a previous team's code body who began work on the project, but mostly we treated it like a greenfield project. We were one of 3 teams working on this same project, who each organically focused on a slightly different piece of the product. Our goal was to get the web application fully functional as far as transcription and complexity analysis, and then any aspects of the clustering and competition (or gamification) were stretch goals, which in the end we successfully implemented most features of.
 
 Our entire implementation was built to be in compliance with the [Children's Online Privacy Protection Act](https://www.ecfr.gov/cgi-bin/text-idx?SID=4939e77c77a1a1a08c1cbf905fc4b409&node=16%3A1.0.1.3.36&rgn=div5) (COPPA).
 
@@ -77,25 +77,25 @@ Given that this project will have future teams of data scientists building off o
 ## Complexity Analysis
 ### **Complexity Metric**
 - Functionality
-   - We named our complexity metric the "Squad Score". The functionality of each Squad Score version is fully documented in the Release notes of both [v1.0](https://github.com/Lambda-School-Labs/Labs26-StorySquad-DS-TeamB/releases/tag/v1.0) and [v1.1](https://github.com/Lambda-School-Labs/Labs26-StorySquad-DS-TeamB/releases/tag/v1.1). 
-   - Essentially, the Squad Score feature generates a complexity metric for each story transcription, that is used both for visualizations on the parent dashboard to show student progress, and used to cluster child users for the gamification component. 
+   - We named our complexity metric the "Squad Score". The functionality of each Squad Score version is fully documented in the Release notes of both [v1.0](https://github.com/Lambda-School-Labs/Labs26-StorySquad-DS-TeamB/releases/tag/v1.0) and [v1.1](https://github.com/Lambda-School-Labs/Labs26-StorySquad-DS-TeamB/releases/tag/v1.1).
+   - Essentially, the Squad Score feature generates a complexity metric for each story transcription, that is used both for visualizations on the parent dashboard to show student progress, and used to cluster child users for the gamification component.
    - Formula: story_length(1)(30) + avg_word_len(1)(30) + quotes_number(1)(30) + unique_words(1)(30) + adj_num(1)(30)
-   - See Release notes for further information on the formula, including the features, initialized weights, and metrics. 
+   - See Release notes for further information on the formula, including the features, initialized weights, and metrics.
 - Process / Reasoning
    - Check out [this Medium article](https://medium.com/@lori.schlatter/simplicity-of-complexity-the-realities-of-data-science-decision-making-af0ef737a5bf) for more thorough detail on the process of developing this metric.
-   - Coming into the project, we assumed we would be using some kind of advanced NLP techniques for this text analysis. Then the stakeholder’s initial guidance on a complexity metric was for it to resemble a [Lexile score](https://www.lexialearning.com/blog/more-number-what-is-lexile-measure), which we quickly realized was a proprietary metric that we wouldn’t be able to replicate. We did find a [free Lexile analyzer](https://la-tools.lexile.com/help/), but it specifically indicated that student writing was not a good candidate for use as input. We then looked into the Python [`textstat`](https://pypi.org/project/textstat/) package and explored the origins of all of those metrics (see [this doc](https://docs.google.com/document/d/1e-LcyRn0DHQJa9pueNpCjKAYj-dyjI3fDtynhTrlGy4/edit?usp=sharing) for that writeup). Ultimately, however, we came to a similar conclusion that the previous team did -- that these metrics are all trained on professionally edited and proofread text, and did not have a guarantee of generalizing to unedited, un-proofread, error-prone transcriptions of children’s writing. 
+   - Coming into the project, we assumed we would be using some kind of advanced NLP techniques for this text analysis. Then the stakeholder’s initial guidance on a complexity metric was for it to resemble a [Lexile score](https://www.lexialearning.com/blog/more-number-what-is-lexile-measure), which we quickly realized was a proprietary metric that we wouldn’t be able to replicate. We did find a [free Lexile analyzer](https://la-tools.lexile.com/help/), but it specifically indicated that student writing was not a good candidate for use as input. We then looked into the Python [`textstat`](https://pypi.org/project/textstat/) package and explored the origins of all of those metrics (see [this doc](https://docs.google.com/document/d/1e-LcyRn0DHQJa9pueNpCjKAYj-dyjI3fDtynhTrlGy4/edit?usp=sharing) for that writeup). Ultimately, however, we came to a similar conclusion that the previous team did -- that these metrics are all trained on professionally edited and proofread text, and did not have a guarantee of generalizing to unedited, un-proofread, error-prone transcriptions of children’s writing.
    - We wanted to generate a metric that would be as minimally impacted in its consistency by inevitable errors we knew would come up in our transcribed text, but also would have a high likelihood of being generalizable to new data. Therefore, we opted to build our own simple metric for our MVP that would only use features that we could justify based either on features that:
-      - showed up in other validated complexity metrics (such as word length) 
-      - or 
+      - showed up in other validated complexity metrics (such as word length)
+      - or
       - were specifically requested by our stakeholder (such as quotes number)
       - and
-      - that were implemented in ways that minimized error (such as using word length by character rather than syllable, or number of quotes rather than aiming for a percentage-of-dialogue feature, or number of unique words rather than a comparison to a set list of complex words). 
+      - that were implemented in ways that minimized error (such as using word length by character rather than syllable, or number of quotes rather than aiming for a percentage-of-dialogue feature, or number of unique words rather than a comparison to a set list of complex words).
    - See the [`squad_score_mvp` notebook](notebooks/squad_score_mvp.ipynb) for creation of the Squad Score and exploration of some additional features, and see the [previous team's notebook](https://github.com/Lambda-School-Labs/story-squad-ds/blob/master/Notebooks/addingmetrics.ipynb) that includes error exploration of quote count difference between the computer-generated and human-generated transcriptions.
    - v1.0 utilized only the metrics that could be generated with Python alone, and then v1.1 implemented `nltk` with the number of adjectives feature.
    - Given that we did not have a labeled dataset, we opted to not fine-tune any of the weights for the features, as there was no way to test this kind of customization. See [this doc](https://docs.google.com/document/d/1JfJY4qY-1BGgdbpDrtCxG0Vz8SHXcCAHQLBAlZunxm0/edit?usp=sharing) transcribing a conversation with the stakeholder about potential solutions to this problem. After this conversation, our stakeholder provided us with a small set of labels midway through the project, of 25 stories that were hand-ranked by a third party (see `rankings.csv` in [`data`](data/) folder). We did use this ranking to generate our metric for our formula in terms of correlation, but did not use it to generate weights since it was such a small, and potentially subjective list of labels.
 - Future Considerations
    - It’s worth additional conversation with the stakeholder about whether or not labels can ever be generated on the existing and incoming data. This would provide the best way to provide a little more confidence about adding weights or more experimental features. In lieu of this, the stakeholders were clear that they still value exploration of this metric, as long as it is heavily documented and versioned (we used GitHub releases for our versioning) so that any iteration can easily be pulled up. Note that if at any time labels are added, the stakeholders were also clear that the labels would need to be treated as imperfect, since it’s nearly impossible to have totally objective metrics for this writing.
-   - If new data is provided in the future, the MinMaxScaler in the [`squad_score_mvp` notebook](notebooks/squad_score_mvp.ipynb) will need to be retrained with the entire corpus, and re-pickled and deployed. 
+   - If new data is provided in the future, the MinMaxScaler in the [`squad_score_mvp` notebook](notebooks/squad_score_mvp.ipynb) will need to be retrained with the entire corpus, and re-pickled and deployed.
 
 ### **Visualizations**
 - Functionality
@@ -115,19 +115,71 @@ Given that this project will have future teams of data scientists building off o
 
 ### **Gamification / Clustering**
 - Functionality
-   - The current clustering function we have implemented is a basic MVP for clustering, which sorts moderator-accepted submissions for each cohort (meaning the group of users that is on a given chapter of the story) by Squad Score, and returns clusters of 4 by submission ID to the web backend to be randomly paired. 
-   - For cohorts with submission counts not divisible by 4, some submission IDs are duplicated (that are still close in Squad Score) to ensure that only clusters of 4 are returned. This is coded such that, if at all possible, no cluster will have more than 1 submission ID that is also found in another cluster. 
-   - If there are under 4 submissions in a cohort, a message is returned instead, that there are not enough submissions to form a cluster. 
+   - The current clustering function we have implemented is a basic MVP for clustering, which sorts moderator-accepted submissions for each cohort (meaning the group of users that is on a given chapter of the story) by Squad Score, and returns clusters of 4 by submission ID to the web backend to be randomly paired.
+   - For cohorts with submission counts not divisible by 4, some submission IDs are duplicated (that are still close in Squad Score) to ensure that only clusters of 4 are returned. This is coded such that, if at all possible, no cluster will have more than 1 submission ID that is also found in another cluster.
+   - If there are under 4 submissions in a cohort, a message is returned instead, that there are not enough submissions to form a cluster.
 - Process
    - We did not end up implementing a DS database, meaning that unless we requested the web backend to store story transcriptions (which could be an option for a future iteration), we would need to re-transcribe stories after they were moderated each week in order to generate a more sophisticated clustering algorithm based on features. As it is, without either of these things in place, the best way to cluster was simply by ordered Squad Score. However, other potential clustering algorithms were explored in the [clustering notebook](notebooks/clustering.ipynb).
-   - One big issue that has yet to have a fully engineered solution is the “remainder problem”, which is essentially that the gamification framework requires there to be 4 players per cluster, but of course there will not always be a number of submissions divisible by 4. Our idea for a solution is to duplicate submissions (as mentioned above), meaning we’d pull in another story submitted that week with a similar Squad Score, but without being attached to an actual user. This way, the others in the cluster can still view 4 stories, but then have a default code script in place that will auto-vote and assign points on behalf of the duplicated submissions, essentially having a “bot” as part of the team (and thus, we want to ensure no more than 1 bot per cluster). However, this structure that would generate the “bot” auto-play is not yet in place on our web backend, so the remainder problem isn’t fully solved in our deployed implementation. 
+   - One big issue that has yet to have a fully engineered solution is the “remainder problem”, which is essentially that the gamification framework requires there to be 4 players per cluster, but of course there will not always be a number of submissions divisible by 4. Our idea for a solution is to duplicate submissions (as mentioned above), meaning we’d pull in another story submitted that week with a similar Squad Score, but without being attached to an actual user. This way, the others in the cluster can still view 4 stories, but then have a default code script in place that will auto-vote and assign points on behalf of the duplicated submissions, essentially having a “bot” as part of the team (and thus, we want to ensure no more than 1 bot per cluster). However, this structure that would generate the “bot” auto-play is not yet in place on our web backend, so the remainder problem isn’t fully solved in our deployed implementation.
 - Future Considerations
-   - Of course, a more sophisticated clustering algorithm would be preferred. In order to avoid re-transcribing stories (which would take a lot of extra time, and would add to the Google Cloud bill), either the web database could store transcriptions after initial submission, or DS could generate its own database. Note that if DS creates its own database, it needs to have the same considerations that Web’s does: i.e. how to handle stories that are moderated out of gamification, etc. 
+   - Of course, a more sophisticated clustering algorithm would be preferred. In order to avoid re-transcribing stories (which would take a lot of extra time, and would add to the Google Cloud bill), either the web database could store transcriptions after initial submission, or DS could generate its own database. Note that if DS creates its own database, it needs to have the same considerations that Web’s does: i.e. how to handle stories that are moderated out of gamification, etc.
 
 ## Deployment
+### **Infrastructure**
+The Infrastructure is handled by AWS Elastic Beanstalk Service using Docker
+containers built and pushed to the registry by GitHub actions this has let us
+automate a decent part of the deployment cycle.
+### **Diagram**
+<img src="assets/arch_layout.png" alt="arch diagram"/>
+
+These links were important to learn where to start with `AWS`:
+- [The Official labs guide for DS](https://docs.labs.lambdaschool.com/data-science/)
+- [A guide to setting up HTTPS on Route 53 (may require APL)](https://docs.labs.lambdaschool.com/guides/aws/elastic-beanstalk/elastic-beanstalk-dns)
+- [AWS EBS Dashboard](https://console.aws.amazon.com/elasticbeanstalk/home?region=us-east-1#/environments)
+
 ### **API Endpoints**
+<img src="assets/endpoints.png" alt="arch diagram"/>
+
+- Submission subroute:
+   - This subroute deals with original copy uploads of the User generated content, in the `text` endpoint the transcription service and score squad method are used to flag and score submissions
+
+   - urls' in these endpoints are verified via a SHA512 checksum that accompanies the file. these hashes are used to add an extra layer of protection to make sure that the file that is passed to the web backend and upladed to the S3 bucket is indeed the file that we are grading.
+
+   - A particular note about the `/cluster` endpoint. Because of the limitations with pydantic data modeling package I could not structure a proper request body model.
+   Our request body was structured so that the keys of the dictionary were ID's to the cohort then the nested dictionary contained keys what represented ID's for the submissionID's
+   Given that the cluster endpoint was a late implementation into the project I was bound by these limitations and building a model around the existing request body. in future iterations **I would HIGHLY RECOMMEND changing the request body of this endpoint** so that a proper Pydantic model can be used to build out the SwaggerUI example request body.
+
 ### **GitHub Actions**
+
+- Functionality:
+   - `.github/workflows/ReportCoverage.yml` - Runs on: commits on an open pull request with main.
+   Reports test coverage to Code Climate using a series of run commands to capture test coverage and upload it to the Code Climate using the utility that is provided by Code Climate.
+   - `.github/workflows/DockerBuildPush.yml` - Runs on: merge into main.
+   Builds and pushes a docker image to the public DockerHub registry.
+   This action uses the github cache to store layers of the docker image to increase the speed of the build action
+
+   - Use of these actions help automate the process of deploying a new docker image to the production server. My main motivation for making these features was to increase the code quality in the codebase and to get read of one of my more repetitive tasks. that is building the Docker image and pushing it to the registry.
+- Known Problems:
+   - The coverage action doesn't actually upload the coverage data to Code Climate. I couldn't find any documentation on using `Coverage.py` with GitHub Actions as the CI/CD provider. my approach was to curl the uploader program and execute it with local reports file.
+
+- future improvements:
+   - TravisCI would be a better CI/CD provider. The Code Climate uploader is supported by TravisCI natively.
+   - Formatting bot that would format to black before merge to main to ensure PEP compliance.
+   - Converting the existing actions into Docker Containers that can be hosted as a community asset for other projects to leverage. converting the coverage report to a docker image may also fix the reports not being uploaded.
+   - working with the artifacts action to export the coverage reports and docker image layer cache on tag bump.
+   - there should be an action that is developed to increment the release version of the application.
+
 ### **Security**
+<img src="assets/security_diagram.png" alt="security"/>
+
+- Functionality
+   - Currently there is an APIRoute class that can plug into the application router for different endpoints, this function takes all incoming requests and separates the authorization header from the request client to check if that client is authorized to use the API endpoints.
+- reasoning
+   - initially this functionality was going to get handled by the [FastAPI.middleware decorator](https://fastapi.tiangolo.com/tutorial/middleware/) to declare a custom function as middleware which is supposed to have the exact same functionality as the class that I implemented however during testing it was clear that the middleware function was ineffective. the function has a limited scope that it can work with, for FastAPI that is restricted to HTTP requests made from a web browser. when hitting the endpoints from an unauthorized client through python the middleware function would not trigger and check the request client header. To get around this limited functionality of the built in middleware I customized the service that the middleware uses to recive it's hook. the documentation for doing so can be found on the [FastAPI Documentation here](https://fastapi.tiangolo.com/advanced/custom-request-and-route/)
+- future improvements
+   - I think that this method is a scrappy hacked together way of fixing this issue, I think that in future iterations this class should be completely reworked into a framework for adding custom middleware solutions that are not restricted to HTTP network traffic.
+   - In our application the value of `DS_SECRET_TOKEN` is static, I think that in future iterations this should be given routes to regenerate new tokens and deprecate compromised and old tokens. I think that adding this functionality would increase the security of the tokens and decrease the attack vectors that could be exploited in a production server.
+
 
 # Future Considerations
 
@@ -136,6 +188,6 @@ Feel free to reach out to anyone on the team with any questions about the projec
 
 | [Steven Chase](https://github.com/schase15) | [Lori Schlatter](https://github.com/lorischl-otter) | [Joseph Wilson](https://github.com/Jwilson1172) |
 | :-----------------------------------------: | :-------------------------------------------------: | :---------------------------------------------: |
-| [<img src="https://avatars2.githubusercontent.com/u/61038689?s=460&u=6c3e70414c9f30a7580773bb24bce8983a96c414&v=4" width = "100" />](https://github.com/schase15) | [<img src="https://avatars1.githubusercontent.com/u/15877666?s=460&v=4" width = "100" />](https://github.com/lorischl-otter) | [<img src="https://avatars0.githubusercontent.com/u/50245325?s=460&u=6a3aa4d49be9aa30dfefdc4f6c26c223c405473c&v=4" width = "100" />](https://github.com/Jwilson1172) | 
+| [<img src="https://avatars2.githubusercontent.com/u/61038689?s=460&u=6c3e70414c9f30a7580773bb24bce8983a96c414&v=4" width = "100" />](https://github.com/schase15) | [<img src="https://avatars1.githubusercontent.com/u/15877666?s=460&v=4" width = "100" />](https://github.com/lorischl-otter) | [<img src="https://avatars0.githubusercontent.com/u/50245325?s=460&u=6a3aa4d49be9aa30dfefdc4f6c26c223c405473c&v=4" width = "100" />](https://github.com/Jwilson1172) |
 | [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/schase15) | [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/lorischl-otter) | [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Jwilson1172) |
 | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/steventchase/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/lorischlatter) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/joseph-wilson-98645b49/) |
