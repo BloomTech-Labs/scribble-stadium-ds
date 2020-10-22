@@ -65,8 +65,10 @@ Given that this project will have future teams of data scientists building off o
    - The `confidence_flag.py` [file](project/app/utils/img_processing/confidence_flag.py) contains the script that the application uses to implement this feature.
 ### **Inappropriate Content Flagging**
 - Functionality
-   - This feature is currently not implemented as it required a large amount of research and aggregated data that was outside of the scope of our project and would have put us over on the deadlines.
-   - Ideally this function along with the sensitive content flagging should be handled by a separate NLP project to evaluate sentiment analysis
+    - This feature serves to moderate the written submissions that the student's upload. Each word in the transcribed text is referenced against a dictionary of inappropriate words ([bad_single.csv](project/app/utils/moderation/bad_single.csv)).
+    - If inappropriate words are detected, a flag is raised and passed to an administrator for further evaluation.
+- Future Considerations
+    - Ideally this feature would utilize NLP techniques to evaluate sentiment analysis for better moderation
 
 ### **Sensitive Content Flagging**
 - Functionality
