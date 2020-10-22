@@ -6,3 +6,4 @@
 - The `rankings` csv file contains the hand-rankings of 25 stories in the dataset, which is the only piece of labeled data provided by the stakeholder.
    - features: ranking, story_id
 - Anyone with access to the Story Squad data can download any of the notebooks in this repository to generate any additional needed csv files. The [README](../notebooks) in the notebooks folder will list any csv a notebook creates.
+- Note: for anyone with access to Story Squad data, be advised that the human transcriptions of the stories corresponding to the following Story IDs are missing pages, and are therefore inaccurate and should be removed from any comparisons of human vs computer transcriptions: 3213, 3215, 3240, 5104, 5109, 5262
