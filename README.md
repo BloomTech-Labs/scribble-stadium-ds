@@ -10,7 +10,7 @@
 
 
 # Scope
-We worked with a cross-functional team of 5 Web Developers, 3 Data Scientists, and 1 Technical Product Lead. We had 8 weeks to build as much of Story Squad as we could. We referenced a previous team's code body who worked on the project, but mostly we treated it like a greenfield project. We were one of 3 teams working on this same project, who each organically focused on a slightly different piece of the product. Our goal was to get the web application fully functional as far as transcription and complexity analysis, and then any aspects of the clustering and competition (or gamification) were stretch goals, which in the end we successfully implemented most features of.
+We worked with a cross-functional team of 5 Web Developers, 3 Data Scientists, and 1 Technical Product Lead. We had 8 weeks to build as much of Story Squad as we could. We referenced a previous team's code body who began work on the project, but mostly we treated it like a greenfield project. We were one of 3 teams working on this same project, who each organically focused on a slightly different piece of the product. Our goal was to get the web application fully functional as far as transcription and complexity analysis, and then any aspects of the clustering and competition (or gamification) were stretch goals, which in the end we successfully implemented most features of.
 
 Our entire implementation was built to be in compliance with the [Children's Online Privacy Protection Act](https://www.ecfr.gov/cgi-bin/text-idx?SID=4939e77c77a1a1a08c1cbf905fc4b409&node=16%3A1.0.1.3.36&rgn=div5) (COPPA).
 
@@ -18,6 +18,9 @@ Our entire implementation was built to be in compliance with the [Children's Onl
 - Link to deployed [Data Science API & documentation](http://labs26-story-squad-teamb.eba-ampzurak.us-east-1.elasticbeanstalk.com/)
 - Link to our team's [Frontend Repo](https://github.com/Lambda-School-Labs/Labs26-StorySquad-FE-TeamB)
 - Link to our team's [Backend Repo](https://github.com/Lambda-School-Labs/Labs26-StorySquad-BE-TeamB)
+
+Given that this project will have future teams of data scientists building off of our codebase, this README also serves as a transition document.
+
 
 # Features
 
@@ -89,7 +92,7 @@ Our entire implementation was built to be in compliance with the [Children's Onl
       - that were implemented in ways that minimized error (such as using word length by character rather than syllable, or number of quotes rather than aiming for a percentage-of-dialogue feature, or number of unique words rather than a comparison to a set list of complex words).
    - See the [`squad_score_mvp` notebook](notebooks/squad_score_mvp.ipynb) for creation of the Squad Score and exploration of some additional features, and see the [previous team's notebook](https://github.com/Lambda-School-Labs/story-squad-ds/blob/master/Notebooks/addingmetrics.ipynb) that includes error exploration of quote count difference between the computer-generated and human-generated transcriptions.
    - v1.0 utilized only the metrics that could be generated with Python alone, and then v1.1 implemented `nltk` with the number of adjectives feature.
-   - Given that we did not have a labeled dataset, we opted to not fine-tune any of the weights for the features, as there was no way to test this kind of customization. See [this doc](https://docs.google.com/document/d/1JfJY4qY-1BGgdbpDrtCxG0Vz8SHXcCAHQLBAlZunxm0/edit?usp=sharing) transcribing a conversation with the stakeholder about potential solutions to this problem. After this conversation, our stakeholder provided us with a small set of labels midway through the project, of 25 stories that were hand-ranked by a third party. We did use this ranking to generate our metric for our formula in terms of correlation, but did not use it to generate weights since it was such a small, and potentially subjective list of labels.
+   - Given that we did not have a labeled dataset, we opted to not fine-tune any of the weights for the features, as there was no way to test this kind of customization. See [this doc](https://docs.google.com/document/d/1JfJY4qY-1BGgdbpDrtCxG0Vz8SHXcCAHQLBAlZunxm0/edit?usp=sharing) transcribing a conversation with the stakeholder about potential solutions to this problem. After this conversation, our stakeholder provided us with a small set of labels midway through the project, of 25 stories that were hand-ranked by a third party (see `rankings.csv` in [`data`](data/) folder). We did use this ranking to generate our metric for our formula in terms of correlation, but did not use it to generate weights since it was such a small, and potentially subjective list of labels.
 - Future Considerations
    - It’s worth additional conversation with the stakeholder about whether or not labels can ever be generated on the existing and incoming data. This would provide the best way to provide a little more confidence about adding weights or more experimental features. In lieu of this, the stakeholders were clear that they still value exploration of this metric, as long as it is heavily documented and versioned (we used GitHub releases for our versioning) so that any iteration can easily be pulled up. Note that if at any time labels are added, the stakeholders were also clear that the labels would need to be treated as imperfect, since it’s nearly impossible to have totally objective metrics for this writing.
    - If new data is provided in the future, the MinMaxScaler in the [`squad_score_mvp` notebook](notebooks/squad_score_mvp.ipynb) will need to be retrained with the entire corpus, and re-pickled and deployed.
@@ -144,7 +147,7 @@ These links were important to learn where to stat with `AWS`:
    - This subroute deals with original copy uploads of the User generated content, in the `text` endpoint the transcription service and score squad method are used to flag and score submissions
 
    urls' in these endpoints are verified via a SHA512 checksum that accompanies the file. these hashes are used to add an extra layer of protection to make sure that the file that is passed to the web backend and upladed to the S3 bucket is indeed the file that we are grading.
-   
+
 ### **GitHub Actions**
 
 - Functionality:
@@ -165,3 +168,12 @@ These links were important to learn where to stat with `AWS`:
 ### **Security**
 
 # Future Considerations
+
+# Meet the Team
+Feel free to reach out to anyone on the team with any questions about the project!
+
+| [Steven Chase](https://github.com/schase15) | [Lori Schlatter](https://github.com/lorischl-otter) | [Joseph Wilson](https://github.com/Jwilson1172) |
+| :-----------------------------------------: | :-------------------------------------------------: | :---------------------------------------------: |
+| [<img src="https://avatars2.githubusercontent.com/u/61038689?s=460&u=6c3e70414c9f30a7580773bb24bce8983a96c414&v=4" width = "100" />](https://github.com/schase15) | [<img src="https://avatars1.githubusercontent.com/u/15877666?s=460&v=4" width = "100" />](https://github.com/lorischl-otter) | [<img src="https://avatars0.githubusercontent.com/u/50245325?s=460&u=6a3aa4d49be9aa30dfefdc4f6c26c223c405473c&v=4" width = "100" />](https://github.com/Jwilson1172) |
+| [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/schase15) | [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/lorischl-otter) | [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Jwilson1172) |
+| [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/steventchase/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/lorischlatter) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/joseph-wilson-98645b49/) |
