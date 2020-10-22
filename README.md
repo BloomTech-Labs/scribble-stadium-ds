@@ -183,9 +183,6 @@ These links were important to learn where to start with `AWS`:
    - I think that this method is a scrappy hacked together way of fixing this issue, I think that in future iterations this class should be completely reworked into a framework for adding custom middleware solutions that are not restricted to HTTP network traffic.
    - In our application the value of `DS_SECRET_TOKEN` is static, I think that in future iterations this should be given routes to regenerate new tokens and deprecate compromised and old tokens. I think that adding this functionality would increase the security of the tokens and decrease the attack vectors that could be exploited in a production server.
 
-
-# Future Considerations
-
 # Meet the Team
 Feel free to reach out to anyone on the team with any questions about the project!
 
