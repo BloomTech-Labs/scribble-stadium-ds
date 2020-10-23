@@ -74,7 +74,7 @@ Given that this project will have future teams of data scientists building off o
     - This feature serves to moderate the written submissions that the student's upload. Each word in the transcribed text is referenced against a dictionary of inappropriate words ([bad_single.csv](project/app/utils/moderation/bad_single.csv)).
     - If inappropriate words are detected, a flag is raised and passed to an administrator for further evaluation.
 - Process
-   - This was the only feature that we pulled directly from [the previous implementation](https://github.com/Lambda-School-Labs/story-squad-ds) without additional iteration. It was requested by the stakeholder.
+   - This was the only feature that we pulled directly from [the previous team's DS work](https://github.com/Lambda-School-Labs/story-squad-ds) without additional iteration. It was requested by the stakeholder.
 - Future Considerations
     - Ideally this feature would utilize NLP techniques to evaluate sentiment analysis for better moderation.
 
@@ -139,9 +139,9 @@ Given that this project will have future teams of data scientists building off o
 
 ## Deployment
 ### **Infrastructure**
-The Infrastructure is handled by AWS Elastic Beanstalk Service using Docker
-containers built and pushed to the registry by GitHub actions this has let us
+The infrastructure is handled by AWS Elastic Beanstalk Service using Docker containers built and pushed to the registry by GitHub actions. This has allowed us to
 automate a decent part of the deployment cycle.
+
 ### **Diagram**
 <img src="assets/arch_layout.png" alt="arch diagram"/>
 
@@ -154,44 +154,47 @@ These links were important to learn where to start with `AWS`:
 <img src="assets/endpoints.png" alt="arch diagram"/>
 
 - Submission subroute:
-   - This subroute deals with original copy uploads of the User generated content, in the `text` endpoint the transcription service and score squad method are used to flag and score submissions
+   - This subroute deals with original copy uploads of the user generated content (UGC).
 
-   - urls' in these endpoints are verified via a SHA512 checksum that accompanies the file. these hashes are used to add an extra layer of protection to make sure that the file that is passed to the web backend and upladed to the S3 bucket is indeed the file that we are grading.
+   - URLs in these endpoints are verified via a SHA512 checksum that accompanies the file. These hashes are used to add an extra layer of protection to make sure that the file that is passed to the web backend and uploaded to the S3 bucket is indeed the file that we are grading.
 
-   - A particular note about the `/cluster` endpoint. Because of the limitations with pydantic data modeling package I could not structure a proper request body model.
-   Our request body was structured so that the keys of the dictionary were ID's to the cohort then the nested dictionary contained keys what represented ID's for the submissionID's
-   Given that the cluster endpoint was a late implementation into the project I was bound by these limitations and building a model around the existing request body. in future iterations **I would HIGHLY RECOMMEND changing the request body of this endpoint** so that a proper Pydantic model can be used to build out the SwaggerUI example request body.
+   - In the `/text` endpoint, the transcription service and `squad_score` method are used to transcribe, flag, and score submissions,
+
+   - A particular note about the `/cluster` endpoint. Because of the limitations with Pydantic data modeling package, we could not structure a proper request body model.
+   Our request body was structured with cohort IDs as the dictionary keys, then nested dictionaries inside each contained submissionIDs as keys. Given that the cluster endpoint was a late implementation into the project, we were bound by these limitations and therefore built a model around the existing request body. in future iterations **we would HIGHLY RECOMMEND changing the request body of this endpoint** so that a proper Pydantic model can be used to build out the SwaggerUI example request body.
 
 ### **GitHub Actions**
 
 - Functionality:
-   - `.github/workflows/ReportCoverage.yml` - Runs on: commits on an open pull request with main.
-   Reports test coverage to Code Climate using a series of run commands to capture test coverage and upload it to the Code Climate using the utility that is provided by Code Climate.
-   - `.github/workflows/DockerBuildPush.yml` - Runs on: merge into main.
-   Builds and pushes a docker image to the public DockerHub registry.
-   This action uses the github cache to store layers of the docker image to increase the speed of the build action
+   - `.github/workflows/ReportCoverage.yml` - Runs on: commits to an open pull request to the main branch.
+   Reports test coverage to Code Climate using a series of run commands to capture test coverage.
+   - `.github/workflows/DockerBuildPush.yml` - Runs on: merge into main branch.
+   Builds and pushes a Docker image to the public DockerHub registry.
+   This action uses the GitHub cache to store layers of the docker image to increase the speed of the build action.
 
-   - Use of these actions help automate the process of deploying a new docker image to the production server. My main motivation for making these features was to increase the code quality in the codebase and to get read of one of my more repetitive tasks. that is building the Docker image and pushing it to the registry.
+   - Use of these actions help automate the process of deploying a new Docker image to the production server. Our main motivation for making these features was to increase the code quality in the codebase and to eliminate one of the more repetitive tasks of building the Docker image and pushing it to the registry on each merge.
+
 - Known Problems:
-   - The coverage action doesn't actually upload the coverage data to Code Climate. I couldn't find any documentation on using `Coverage.py` with GitHub Actions as the CI/CD provider. my approach was to curl the uploader program and execute it with local reports file.
+   - The coverage action doesn't actually upload the coverage data to Code Climate. We couldn't find any documentation on using `Coverage.py` with GitHub Actions as the CI/CD provider. Our approach was to curl the uploader program and execute it with local reports file.
 
-- future improvements:
+- Future Suggestions:
    - TravisCI would be a better CI/CD provider. The Code Climate uploader is supported by TravisCI natively.
-   - Formatting bot that would format to black before merge to main to ensure PEP compliance.
-   - Converting the existing actions into Docker Containers that can be hosted as a community asset for other projects to leverage. converting the coverage report to a docker image may also fix the reports not being uploaded.
-   - working with the artifacts action to export the coverage reports and docker image layer cache on tag bump.
-   - there should be an action that is developed to increment the release version of the application.
+   - Formatting bot that would format to Black before merge to `main` to ensure PEP compliance.
+   - Converting the existing actions into Docker Containers that can be hosted as a community asset for other projects to leverage. Converting the coverage report to a Docker image may also fix the reports not being uploaded.
+   - Working with the artifacts action to export the coverage reports and Docker image layer cache on tag bump.
+   - There should also be an action that is developed to increment the release version of the application.
 
 ### **Security**
 <img src="assets/security_diagram.png" alt="security"/>
 
 - Functionality
-   - Currently there is an APIRoute class that can plug into the application router for different endpoints, this function takes all incoming requests and separates the authorization header from the request client to check if that client is authorized to use the API endpoints.
-- reasoning
-   - initially this functionality was going to get handled by the [FastAPI.middleware decorator](https://fastapi.tiangolo.com/tutorial/middleware/) to declare a custom function as middleware which is supposed to have the exact same functionality as the class that I implemented however during testing it was clear that the middleware function was ineffective. the function has a limited scope that it can work with, for FastAPI that is restricted to HTTP requests made from a web browser. when hitting the endpoints from an unauthorized client through python the middleware function would not trigger and check the request client header. To get around this limited functionality of the built in middleware I customized the service that the middleware uses to recive it's hook. the documentation for doing so can be found on the [FastAPI Documentation here](https://fastapi.tiangolo.com/advanced/custom-request-and-route/)
-- future improvements
-   - I think that this method is a scrappy hacked together way of fixing this issue, I think that in future iterations this class should be completely reworked into a framework for adding custom middleware solutions that are not restricted to HTTP network traffic.
-   - In our application the value of `DS_SECRET_TOKEN` is static, I think that in future iterations this should be given routes to regenerate new tokens and deprecate compromised and old tokens. I think that adding this functionality would increase the security of the tokens and decrease the attack vectors that could be exploited in a production server.
+   - Currently there is an APIRoute class that can plug into the application router for different endpoints. This function takes all incoming requests and separates the authorization header from the request client to check if that client is authorized to use the API endpoints.
+
+- Process
+   - Initially this functionality was going to get handled by the [FastAPI.middleware decorator](https://fastapi.tiangolo.com/tutorial/middleware/) to declare a custom function as middleware which is supposed to have the exact same functionality as the class that we implemented. However, during testing it was clear that the middleware function was ineffective. The function has a limited scope that it can work with, which for FastAPI that is restricted to HTTP requests made from a web browser. When hitting the endpoints from an unauthorized client through Python, the middleware function would not trigger and check the request client header. To get around this limited functionality of the built-in middleware, we customized the service that the middleware uses to receive its hook. The documentation for doing so can be found on the [FastAPI Documentation here](https://fastapi.tiangolo.com/advanced/custom-request-and-route/)
+- Future Considerations
+   - This method is clearly a bit of a workaround. In future iterations, this class could be completely reworked into a framework for adding custom middleware solutions that are not restricted to HTTP network traffic.
+   - In our application, the value of `DS_SECRET_TOKEN` is static. In future iterations this should be given routes to regenerate new tokens and deprecate compromised or old tokens. Adding this functionality would increase the security of the tokens and decrease the attack vectors that could be exploited in a production server.
 
 # Meet the Team
 Feel free to reach out to anyone on the team with any questions about the project!
