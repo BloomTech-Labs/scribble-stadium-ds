@@ -9,7 +9,7 @@
 # What is Story Squad?
 [Story Squad](https://www.storysquad.education/) is the dream of a former teacher, Graig Peterson, to create opportunities for children to have creative writing and drawing time off-screen. Here's how it works: child users of the website are provided a new chapter in an ongoing story each weekend. They read the story, and then follow both a writing and drawing prompt to spend an hour off-screen writing and drawing. When they're done, they upload photos of each, and this is where our data science team comes in. The stories are transcribed into text, analyzed for complexity, screened for inappropriate content, and then sent to a moderator. Once all submissions have been checked over on moderation day, our clustering algorithm groups the submissions by similar complexity and creates Squads of 4 to head into a game of assigning points and voting for the best submissions in head-to-head pairings within the cluster! Then it starts all over again the following weekend.
 
-**Want to hear an overview of all our project features?** Click the banner above for a link to our product video! Or keep scrolling to read more thorough information on each feature.
+**Want to hear an overview of all our project features?** Click the Story Squad banner above for a link to our product video! Or keep scrolling to read more thorough information on each feature.
 
 
 # Scope
@@ -17,10 +17,13 @@ We worked with a cross-functional team of 5 Web Developers, 3 Data Scientists, a
 
 Our entire implementation was built to be in compliance with the [Children's Online Privacy Protection Act](https://www.ecfr.gov/cgi-bin/text-idx?SID=4939e77c77a1a1a08c1cbf905fc4b409&node=16%3A1.0.1.3.36&rgn=div5) (COPPA).
 
+See links below for our deployed sites and our team's corresponding web development repos. Please note that our website and API were hosted on AWS accounts owned by Lambda School, which are likely to be discontinued at the close of our project, therefore breaking two of the links below.
+
 - Link to [deployed application](https://b.storysquad.dev/)
 - Link to deployed [Data Science API & documentation](http://labs26-story-squad-teamb.eba-ampzurak.us-east-1.elasticbeanstalk.com/)
 - Link to our team's [Frontend Repo](https://github.com/Lambda-School-Labs/Labs26-StorySquad-FE-TeamB)
 - Link to our team's [Backend Repo](https://github.com/Lambda-School-Labs/Labs26-StorySquad-BE-TeamB)
+
 
 Given that this project will have future teams of data scientists building off of our codebase, this README also serves as a transition document.
 
