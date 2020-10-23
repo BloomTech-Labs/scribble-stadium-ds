@@ -70,8 +70,10 @@ Given that this project will have future teams of data scientists building off o
 - Functionality
     - This feature serves to moderate the written submissions that the student's upload. Each word in the transcribed text is referenced against a dictionary of inappropriate words ([bad_single.csv](project/app/utils/moderation/bad_single.csv)).
     - If inappropriate words are detected, a flag is raised and passed to an administrator for further evaluation.
+- Process
+   - This was the only feature that we pulled directly from [the previous implementation](https://github.com/Lambda-School-Labs/story-squad-ds) without additional iteration. It was requested by the stakeholder.
 - Future Considerations
-    - Ideally this feature would utilize NLP techniques to evaluate sentiment analysis for better moderation
+    - Ideally this feature would utilize NLP techniques to evaluate sentiment analysis for better moderation.
 
 ### **Sensitive Content Flagging**
 - Functionality
