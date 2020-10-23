@@ -3,15 +3,14 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/146d9feb7549b988077a/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/Labs26-StorySquad-DS-TeamB/test_coverage)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-![Story Squad Banner](assets/story_squad_banner.png)
+[![Story Squad Banner](assets/story_squad_banner.png)](http://www.youtube.com/watch?v=-cDqvmmtuiE)
 
 
 # What is Story Squad?
 [Story Squad](https://www.storysquad.education/) is the dream of a former teacher, Graig Peterson, to create opportunities for children to have creative writing and drawing time off-screen. Here's how it works: child users of the website are provided a new chapter in an ongoing story each weekend. They read the story, and then follow both a writing and drawing prompt to spend an hour off-screen writing and drawing. When they're done, they upload photos of each, and this is where our data science team comes in. The stories are transcribed into text, analyzed for complexity, screened for inappropriate content, and then sent to a moderator. Once all submissions have been checked over on moderation day, our clustering algorithm groups the submissions by similar complexity and creates Squads of 4 to head into a game of assigning points and voting for the best submissions in head-to-head pairings within the cluster! Then it starts all over again the following weekend.
 
-Check out our product video for an overview of all our features, or keep reading for more in-depth information on each feature.
+**Want to hear an overview of all our project features?** Click the banner above for a link to our product video! Or keep scrolling to read more thorough information on each feature.
 
-<video src="assets/product-video.mp4" poster="assets/story_squad_banner.png" width="320" height="200" controls preload></video>
 
 # Scope
 We worked with a cross-functional team of 5 Web Developers, 3 Data Scientists, and 1 Technical Product Lead. We had 8 weeks to build as much of Story Squad as we could. We referenced a previous team's code body who began work on the project, but mostly we treated it like a greenfield project. We were one of 3 teams working on this same project, who each organically focused on a slightly different piece of the product. Our goal was to get the web application fully functional as far as transcription and complexity analysis, and then any aspects of the clustering and competition (or gamification) were stretch goals, which in the end we successfully implemented most features of.
