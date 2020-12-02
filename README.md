@@ -139,11 +139,7 @@ Given that this project will have future teams of data scientists building off o
 
 ## Deployment
 ### **Infrastructure**
-The infrastructure is handled by AWS Elastic Beanstalk Service using Docker containers built and pushed to the registry by GitHub actions. This has allowed us to
-automate a decent part of the deployment cycle.
-
-### **Diagram**
-<img src="assets/arch_layout.png" alt="arch diagram"/>
+The infrastructure is handled by AWS Elastic Beanstalk Service using Docker containers.
 
 These links were important to learn where to start with `AWS`:
 - [The Official labs guide for DS](https://docs.labs.lambdaschool.com/data-science/)
@@ -163,26 +159,6 @@ These links were important to learn where to start with `AWS`:
    - A particular note about the `/cluster` endpoint. Because of the limitations with Pydantic data modeling package, we could not structure a proper request body model.
    Our request body was structured with cohort IDs as the dictionary keys, then nested dictionaries inside each contained submissionIDs as keys. Given that the cluster endpoint was a late implementation into the project, we were bound by these limitations and therefore built a model around the existing request body. in future iterations **we would HIGHLY RECOMMEND changing the request body of this endpoint** so that a proper Pydantic model can be used to build out the SwaggerUI example request body.
 
-### **GitHub Actions**
-
-- Functionality:
-   - `.github/workflows/ReportCoverage.yml` - Runs on: commits to an open pull request to the main branch.
-   Reports test coverage to Code Climate using a series of run commands to capture test coverage.
-   - `.github/workflows/DockerBuildPush.yml` - Runs on: merge into main branch.
-   Builds and pushes a Docker image to the public DockerHub registry.
-   This action uses the GitHub cache to store layers of the docker image to increase the speed of the build action.
-
-   - Use of these actions help automate the process of deploying a new Docker image to the production server. Our main motivation for making these features was to increase the code quality in the codebase and to eliminate one of the more repetitive tasks of building the Docker image and pushing it to the registry on each merge.
-
-- Known Problems:
-   - The coverage action doesn't actually upload the coverage data to Code Climate. We couldn't find any documentation on using `Coverage.py` with GitHub Actions as the CI/CD provider. Our approach was to curl the uploader program and execute it with local reports file.
-
-- Future Suggestions:
-   - TravisCI would be a better CI/CD provider. The Code Climate uploader is supported by TravisCI natively.
-   - Formatting bot that would format to Black before merge to `main` to ensure PEP compliance.
-   - Converting the existing actions into Docker Containers that can be hosted as a community asset for other projects to leverage. Converting the coverage report to a Docker image may also fix the reports not being uploaded.
-   - Working with the artifacts action to export the coverage reports and Docker image layer cache on tag bump.
-   - There should also be an action that is developed to increment the release version of the application.
 
 ### **Security**
 <img src="assets/security_diagram.png" alt="security"/>

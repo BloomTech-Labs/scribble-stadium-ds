@@ -1,7 +1,17 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+jupyter = "*"
+pytest = "*"
+
+[packages]
 fastapi==0.60.1
 pandas==1.1.0
 plotly==4.9.0
-uvicorn==0.11.8
+uvicorn = {extras = ["standard"], version = "0.11.8"}
 cachetools==4.1.1
 certifi==2020.6.20
 cffi==1.14.2
@@ -27,3 +37,7 @@ joblib==0.16.0
 scikit-learn==0.23.2
 scipy==1.5.2
 nltk==3.4.4
+sqlalchemy = "*"
+
+[requires]
+python_version = "3"
