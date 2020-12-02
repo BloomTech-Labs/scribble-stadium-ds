@@ -6,7 +6,7 @@ from fastapi.responses import Response, JSONResponse
 from fastapi.requests import Request
 import uvicorn
 
-from app.api import submission, visualization, clustering
+from app.api import submission, visualization, clustering, db
 
 app = FastAPI(
     title="Labs26-StorySquad-DS-Team B",
@@ -15,9 +15,10 @@ app = FastAPI(
     docs_url="/",
 )
 
-app.include_router(submission.router)
-app.include_router(visualization.router)
-app.include_router(clustering.router)
+app.include_router(submission.router, tags=['Submission']))
+app.include_router(visualization.router, tags=['Visualization'])
+app.include_router(clustering.router, tags=['Clustering'])
+app.include_router(db.router, tags=['Database'])
 
 app.add_middleware(
     CORSMiddleware,
