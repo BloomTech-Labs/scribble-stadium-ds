@@ -2,12 +2,11 @@ import logging
 
 from fastapi import APIRouter, Response
 
-from app.utils.security.header_checking import AuthRouteHandler
 from app.utils.clustering.clustering_mvp import batch_cluster
 
 
 # global variables and services
-router = APIRouter(route_class=AuthRouteHandler)
+router = APIRouter()
 log = logging.getLogger(__name__)
 
 

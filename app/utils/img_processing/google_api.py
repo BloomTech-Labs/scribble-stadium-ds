@@ -1,5 +1,6 @@
 from os import getenv, environ, path
 
+from dotenv import load_dotenv
 from google.cloud import vision
 from google.cloud.vision import types
 
@@ -26,6 +27,7 @@ class GoogleAPI:
         which is used by ImageAnnotatorClient to authorize the google API library
         """
         # TODO: Refactor into separate function
+        load_dotenv()
         if getenv("GOOGLE_CREDS") is not None:
             with open("/tmp/google.json", "wt") as fp:
                 # write file to /tmp containing all of the cred info
