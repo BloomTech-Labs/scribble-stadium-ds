@@ -2,14 +2,18 @@ import logging
 
 from fastapi import APIRouter
 
-from app.utils.security.header_checking import AuthRouteHandler
 from app.api.models import HistogramRequest, LineGraphRequest
 from app.utils.visualizations import histogram, line_graph
 
 # global variables and services
-router = APIRouter(route_class=AuthRouteHandler)
+router = APIRouter()
 log = logging.getLogger(__name__)
 
+# New experiment
+import os
+from dotenv import load_dotenv
+from fastapi import HTTPException, Security, status
+from fastapi.security.api_key import APIKeyHeader
 
 @router.post("/viz/linegraph")
 def return_line_graph(data: LineGraphRequest):
