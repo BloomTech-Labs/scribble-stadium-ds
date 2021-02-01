@@ -39,6 +39,8 @@ scipy = "==1.5.2"
 nltk = "==3.4.4"
 sqlalchemy = "*"
 python-dotenv = "*"
+wget = "*"
+pillow = "*"
 
 [requires]
 python_version = "3"
