@@ -1,0 +1,3 @@
+[submodule "convert2tif"]
+	path = convert2tif
+	url = https://github.com/dakotagporter/convert2tif
