@@ -21,12 +21,16 @@ def line_graph(score_history, name):
         data=go.Scatter(
             x=[i + 1 for i in range(len(score_history))],
             y=score_history,
-            line_width=7,
-            line_color="#EB7E5B",
+            line={
+                'width': 7,
+                'color': '#EB7E5B'
+            },
             mode="lines+markers+text",
-            marker_size=18,
-            marker_color="#FED23E",
-            marker_symbol="star",
+            marker={
+                'size': 18,
+                'color': '#FED23E',
+                'symbol': 'star'
+            }
         )
     )
 
