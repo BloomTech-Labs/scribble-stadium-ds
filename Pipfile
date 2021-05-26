@@ -43,6 +43,13 @@ wget = "*"
 pillow = "*"
 pipfile = "*"
 jamspell = "*"
+scikit-image = "*"
+imutils = "*"
+matplotlib = "*"
+textblob = "*"
+numpy = "*"
+opencv-contrib-python = "*"
+pytesseract = "*"
 
 [requires]
 python_version = "3"
