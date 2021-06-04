@@ -151,6 +151,8 @@ It is possible to deploy this API locally on a Windows 10 machine. There are som
 
 * In the same file and function as above, you need to also change: `environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/tmp/google.json"` (currently line 41) to : `environ["GOOGLE_APPLICATION_CREDENTIALS"] = "././app/tmp/google.json"`
 
+  * ***NOTE:*** If the above path does not work for you, you can try to replace `"/tmp/google.json"` with `"app/tmp/google.json"`, which is the path from the repository root.
+
 * Then in the `app` directory you need to create a new directory called `tmp`.
 
 * In the `tmp` directory, create an empty file named `google.json`
