@@ -141,11 +141,11 @@ Given that this project will have future teams of data scientists building off o
      
 ### How to Deploy locally on a Windows Machine:
 
-It is possible to deploy this API locally on a Windows 10 machine. There are some changes that you will need to make in order to do so. There are other options for local deployment on a Windows machine that does not involve making changes, such as running a Linux Ubuntu WSL. This is just another option if you are unable to use one of the other methods.
+It is possible to deploy this API locally on a Windows 10 machine. There are some changes that you will need to make to do so. There are other options for local deployment on a Windows machine that does not involve making changes, such as running a Ubuntu WSL (Windows Subsystem for Linux). 
 
-* If you have `Python 3.9` on your machine, you will have to specify which version of Python you want your environment to use because there are packages in the `Pipfile` that are not compatible with the 3.9 version of Python yet. Otherwise, the computer will automatically select the most recent version of Python that you have on your machine, if you do not specify which version you want it to use for this environment.
+* If you have `Python 3.9` on your machine, you will have to specify which version of Python you want your environment to use because some packages in the `Pipfile` are not compatible with the 3.9 version of Python yet. Otherwise, the computer will automatically select the most recent version of Python that you have on your machine if you do not specify which version you want to use for this environment.
   
-  * In this case, when you set up your environment, you will need to run the following command: `pipenv --python 3.8 install --dev`. You can also use Python 3.7, just change the 3.8 to 3.7 when you run the command. 
+  * In this case, when you set up your environment, you will need to run the following command: `pipenv --python 3.8 install --dev`. You can also use Python 3.7. Just change the 3.8 to 3.7 when you run the command. 
 
 * Then you need to go to `app/utils/img_processing/google_api.py` and locate the code: `with open("/tmp/google.json", "wt") as fp:` in the `__init__` function (currently it is line 32) and change that to: `with open("././app/tmp/google.json", "wt") as fp:`
 
@@ -153,11 +153,11 @@ It is possible to deploy this API locally on a Windows 10 machine. There are som
 
   * ***NOTE:*** If the above path does not work for you, you can try to replace `"/tmp/google.json"` with `"app/tmp/google.json"`, which is the path from the repository root.
 
-* Then in the `app` directory you need to create a new directory called `tmp`.
+* Then, in the `app` directory, you need to create a new directory called `tmp`
 
 * In the `tmp` directory, create an empty file named `google.json`
 
-* Now you should be all set to run `uvicorn app.main:app --reload` to deploy the API locally, provided you have the proper credentials. 
+* Now, you should be all set to run `uvicorn app.main:app --reload` to deploy the API locally, provided you have the proper credentials. 
 
   > ***NOTE:***  
   > **Do NOT push these changes to GitHub!**  
