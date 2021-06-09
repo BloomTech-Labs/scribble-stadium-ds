@@ -55,6 +55,19 @@ class TestLinegraph(unittest.TestCase):
         self.scores3, self.name3 = self.d3.ScoreHistory, self.d3.StudentName
         self.scores4, self.name4 = self.d4.ScoreHistory, self.d4.StudentName
 
+    def get_json_bool(self, json_data):
+        """
+        This function will check that the file is in the json format
+
+            :param json_data: the file/data you want to verify
+            :return: bool: True or False if in json format
+        """
+        try:
+            json.loads(json_data)
+        except ValueError as err:
+            return False
+        return True
+
     def test_empty(self):
         """
         This method will test if the input contains any empty fields.
