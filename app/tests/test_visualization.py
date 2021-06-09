@@ -31,18 +31,24 @@ class TestLinegraph(unittest.TestCase):
             StudentName="John"
         )
         cls.data2 = return_line_graph(cls.d2)
-        # This data has a score as a string
+        # This data has an empty string for the Student Name
         cls.d3 = LineGraphRequest(
+            ScoreHistory=[9000, 789, 800, 1000, 1300],
+            StudentName=""
+        )
+        cls.data3 = return_line_graph(cls.d3)
+        # This data has a score as a string
+        cls.d4 = LineGraphRequest(
             ScoreHistory=[1005, 1500, '9000', 789, 800, 1000, 1300],
             StudentName="Jane"
         )
-        cls.data3 = return_line_graph(cls.d3)
+        cls.data4 = return_line_graph(cls.d4)
         # This is the default example data
-        cls.d4 = LineGraphRequest(
+        cls.d5 = LineGraphRequest(
             ScoreHistory=[1005, 1500, 9000, 789],
             StudentName="Firstname"
         )
-        cls.data4 = return_line_graph(cls.d4)
+        cls.data5 = return_line_graph(cls.d5)
 
     def setUp(self):
         """
@@ -54,6 +60,7 @@ class TestLinegraph(unittest.TestCase):
         self.scores2, self.name2 = self.d2.ScoreHistory, self.d2.StudentName
         self.scores3, self.name3 = self.d3.ScoreHistory, self.d3.StudentName
         self.scores4, self.name4 = self.d4.ScoreHistory, self.d4.StudentName
+        self.scores5, self.name5 = self.d5.ScoreHistory, self.d5.StudentName
 
     def get_json_bool(self, json_data):
         """
@@ -72,7 +79,16 @@ class TestLinegraph(unittest.TestCase):
         """
         This method will test if the input contains any empty fields.
         """
-        pass
+        # Tests the properly formatted dummy data
+        self.assertTrue(
+            self.get_json_bool(line_graph.line_graph(self.scores1, self.name1))
+        )
+        # Tests the dummy data with empty list for the score history
+        self.assertEqual(line_graph.line_graph(self.scores2, self.name2),
+                         "No Submissions for This User")
+        # Tests the dummy data with empty string for the student name
+        self.assertEqual(line_graph.line_graph(self.scores3, self.name3),
+                         "No User Specified")
 
     def test_ints(self):
         """
