@@ -92,9 +92,18 @@ class TestLinegraph(unittest.TestCase):
 
     def test_ints(self):
         """
-        This method will test if all the values are integers in the input.
+        This method will test if all the values are integers in
+            the ScoreHistory input.
         """
-        pass
+        # Tests the properly formatted dummy data
+        self.assertTrue(
+            self.get_json_bool(line_graph.line_graph(self.scores1, self.name1))
+        )
+        # Tests the dummy data that has a string value in ScoreHistory to
+        #   verify that we are getting a TypeError raised for the wrong type
+        self.assertRaises(
+            TypeError, line_graph.line_graph(self.scores4, self.name4)
+        )
 
     def test_response(self):
         """
@@ -107,7 +116,7 @@ class TestLinegraph(unittest.TestCase):
         This method will test the output to ensure we are returning the
             data in json format in the response body.
         """
-        pass
+
 
     def test_line_graph(self):
         """
