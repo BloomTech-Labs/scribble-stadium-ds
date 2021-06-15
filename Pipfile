@@ -51,6 +51,7 @@ numpy = "*"
 opencv-contrib-python = "*"
 pytesseract = "*"
 tesserocr = "*"
+jiwer = "*"
 
 [requires]
 python_version = "3"
