@@ -138,6 +138,32 @@ Given that this project will have future teams of data scientists building off o
    - Of course, a more sophisticated clustering algorithm would be preferred. In order to avoid re-transcribing stories (which would take a lot of extra time, and would add to the Google Cloud bill), either the web database could store transcriptions after initial submission, or DS could generate its own database. Note that if DS creates its own database, it needs to have the same considerations that Web’s does: i.e. how to handle stories that are moderated out of gamification, etc.
 
 ## Deployment
+     
+### How to Deploy locally on a Windows Machine:
+
+It is possible to deploy this API locally on a Windows 10 machine. There are some changes that you will need to make to do so. There are other options for local deployment on a Windows machine that does not involve making changes, such as running a Ubuntu WSL (Windows Subsystem for Linux). 
+
+* If you have `Python 3.9` on your machine, you will have to specify which version of Python you want your environment to use because some packages in the `Pipfile` are not compatible with the 3.9 version of Python yet. Otherwise, the computer will automatically select the most recent version of Python that you have on your machine if you do not specify which version you want to use for this environment.
+  
+  * In this case, when you set up your environment, you will need to run the following command: `pipenv --python 3.8 install --dev`. You can also use Python 3.7. Just change the 3.8 to 3.7 when you run the command. 
+
+* Then you need to go to `app/utils/img_processing/google_api.py` and locate the code: `with open("/tmp/google.json", "wt") as fp:` in the `__init__` function (currently it is line 32) and change that to: `with open("././app/tmp/google.json", "wt") as fp:`
+
+* In the same file and function as above, you need to also change: `environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/tmp/google.json"` (currently line 41) to : `environ["GOOGLE_APPLICATION_CREDENTIALS"] = "././app/tmp/google.json"`
+
+  * ***NOTE:*** If the above path does not work for you, you can try to replace `"/tmp/google.json"` with `"app/tmp/google.json"`, which is the path from the repository root.
+
+* Then, in the `app` directory, you need to create a new directory called `tmp`
+
+* In the `tmp` directory, create an empty file named `google.json`
+
+* Now, you should be all set to run `uvicorn app.main:app --reload` to deploy the API locally, provided you have the proper credentials. 
+
+  > ***NOTE:***  
+  > **Do NOT push these changes to GitHub!**  
+  > These changes need to remain on your local machine only!
+
+
 ### **Infrastructure**
 The infrastructure is handled by AWS Elastic Beanstalk Service using Docker containers.
 
