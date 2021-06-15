@@ -5,6 +5,68 @@
 # Imports
 import plotly.express as px
 
+'''
+The following functions serve as validtion on the HistogramRequest
+class outlined in app/api/models.py. They test for input specifications
+that are specific to Story Squad; such as the grade level being between
+8-12.
+'''
+def grade_list_type_test(grade_list):
+  if type(grade_list) != list:
+    error = "GradeList not formatted as a list."
+    return error
+
+def grade_list_entry_type_test(grade_list):
+  indexes = []
+  for i, score in enumerate(grade_list):
+    if type(score) != int:
+      indexes.append(i)
+  if len(indexes) >= 1:
+    error = f'Index entries {indexes} of GradeList is not of type \'integer\'.'
+    return error
+
+def student_grade_range_test(student_info):
+  if student_info[0] not in range(8,13):
+    error = 'Student\'s grade level is not between 8 and 12.'
+    return error
+
+def student_info_grade_number_type_test(student_info):
+  if type(student_info[0]) != int:
+    error = 'Student\'s grade level is not of type \'integer\'.'
+    return error
+
+def student_info_name_type_test(student_info):
+  if type(student_info[1]) != str or len(student_info[1]) == 0:
+    error = 'Student\'s name is not a valid \'string\' type or is empty.'
+    return error
+
+def student_score_type_test(student_info):
+  if type(student_info[2]) != int:
+    error = 'Student\'s score is not of type \'integer\'.'
+    return error
+
+def input_error_results(grade_list, student_info):
+  input_errors = []
+  check1 = grade_list_type_test(grade_list)
+  if type(check1) == str:
+    input_errors.append(check1 + ' ')
+  check2 = grade_list_entry_type_test(grade_list)
+  if type(check2) == str:
+    input_errors.append(check2 + ' ')
+  check3 = student_grade_range_test(student_info)
+  if type(check3) == str:
+    input_errors.append(check3 + ' ')
+  check4 = student_info_grade_number_type_test(student_info)
+  if type(check4) == str:
+    input_errors.append(check4 + ' ')
+  check5 = student_info_name_type_test(student_info)
+  if type(check5) == str:
+    input_errors.append(check5 + ' ')
+  check6 = student_score_type_test(student_info)
+  if type(check6) == str:
+    input_errors.append(check6 + ' ')
+  return input_errors
+
 
 def histogram(grade_list, student_info):
     """
@@ -21,7 +83,11 @@ def histogram(grade_list, student_info):
         Output: Plotly JSON that can be passed to the web to display on the
         parent dashboard
     """
-
+    # This returns input error messages if any exist.
+    input_errors = input_error_results(grade_list, student_info)
+    if len(input_errors) > 0:
+      return input_errors
+      
     # Dynamic variables to use for labels on the plot
     grade_number, student_name, student_score = student_info
 
