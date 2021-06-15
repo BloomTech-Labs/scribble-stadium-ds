@@ -17,7 +17,7 @@ class Submission(BaseModel):
 
     ### StoryId - `int`
     <p>
-        StoryID used to index the writting prompt given to the students
+        StoryID used to index the writing prompt given to the students
     </p>
 
     ### Pages - `dict`
