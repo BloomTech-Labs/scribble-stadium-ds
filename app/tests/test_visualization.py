@@ -4,6 +4,7 @@ This file contains code for testing the endpoints in the visualization.py file
 
 import unittest
 import json
+import pprint
 from ..api.visualization import router, return_line_graph, return_histogram
 from ..utils.visualizations import line_graph
 from ..utils.visualizations import histogram
@@ -15,7 +16,6 @@ from ..api.models import LineGraphRequest, HistogramRequest
 # from pydantic import ValidationError
 # import app.main
 # from ..api import visualization
-import pprint
 
 
 class TestLinegraph(unittest.TestCase):
@@ -23,39 +23,52 @@ class TestLinegraph(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         """
-        This method will run its code at the beginning,
+        A class method that will run its code at the beginning,
             before anything else runs.
         """
-
-        # This data is in the proper input format we need
+        # This data is in the proper input format we need,
+        #   inputted in the pydantic model format
         cls.d1 = LineGraphRequest(
             ScoreHistory=[1005, 1500, 9000, 789, 800, 1000, 1300],
             StudentName="Sally"
         )
+        # Using the route function to test the inputted data
         cls.data1 = return_line_graph(cls.d1)
-        # This data has an empty list for the score history
+
+        # This data has an empty list for the score history,
+        #   inputted in the pydantic model format
         cls.d2 = LineGraphRequest(
             ScoreHistory=[],
             StudentName="John"
         )
+        # Using the route function to test the inputted data
         cls.data2 = return_line_graph(cls.d2)
-        # This data has an empty string for the Student Name
+
+        # This data has an empty string for the student name,
+        #   inputted in the pydantic model format
         cls.d3 = LineGraphRequest(
             ScoreHistory=[9000, 789, 800, 1000, 1300],
             StudentName=""
         )
+        # Using the route function to test the inputted data
         cls.data3 = return_line_graph(cls.d3)
-        # This data has a score as a string
+
+        # This data has a score as a string,
+        #   inputted in the pydantic model format
         cls.d4 = LineGraphRequest(
             ScoreHistory=[1005, 1500, '9000', 789, 800, 1000, 1300],
             StudentName="Jane"
         )
+        # Using the route function to test the inputted data
         cls.data4 = return_line_graph(cls.d4)
-        # This is the default example data
+
+        # This is the default example data,
+        #   inputted in the pydantic model format
         cls.d5 = LineGraphRequest(
             ScoreHistory=[1005, 1500, 9000, 789],
             StudentName="Firstname"
         )
+        # Using the route function to test the inputted data
         cls.data5 = return_line_graph(cls.d5)
 
     def setUp(self):
@@ -64,10 +77,15 @@ class TestLinegraph(unittest.TestCase):
             individual test is ran within this class.
         """
         # Create test variables for the scores and names based on dummy data
+        # Properly formatted dummy data
         self.scores1, self.name1 = self.d1.ScoreHistory, self.d1.StudentName
+        # Dummy data with empty scores list
         self.scores2, self.name2 = self.d2.ScoreHistory, self.d2.StudentName
+        # Dummy data with empty name string
         self.scores3, self.name3 = self.d3.ScoreHistory, self.d3.StudentName
+        # Dummy data with one score as a string in the scores list
         self.scores4, self.name4 = self.d4.ScoreHistory, self.d4.StudentName
+        # Dummy data using default data
         self.scores5, self.name5 = self.d5.ScoreHistory, self.d5.StudentName
 
     def get_json_bool(self, json_data):
@@ -78,9 +96,15 @@ class TestLinegraph(unittest.TestCase):
             :return: bool: True or False if in json format
         """
         try:
+            # If json_data is a json object, converts to a string
             json.loads(json_data)
+
+        # Otherwise, will raise a ValueError
         except ValueError as err:
+            # Not a json object, returns False
             return False
+
+        # Is a json object, returns True
         return True
 
     def test_empty(self):
@@ -91,9 +115,11 @@ class TestLinegraph(unittest.TestCase):
         self.assertTrue(
             self.get_json_bool(line_graph.line_graph(self.scores1, self.name1))
         )
+
         # Tests the dummy data with empty list for the score history
         self.assertEqual(line_graph.line_graph(self.scores2, self.name2),
                          "No Submissions for This User")
+
         # Tests the dummy data with empty string for the student name
         self.assertEqual(line_graph.line_graph(self.scores3, self.name3),
                          "No User Specified")
@@ -107,6 +133,7 @@ class TestLinegraph(unittest.TestCase):
         self.assertTrue(
             self.get_json_bool(line_graph.line_graph(self.scores1, self.name1))
         )
+
         # Tests the dummy data that has a string value in ScoreHistory to
         #   verify that we are getting a TypeError raised for the wrong type
         self.assertRaises(
@@ -117,13 +144,19 @@ class TestLinegraph(unittest.TestCase):
         """
         This method will test for the proper response status code.
         """
+
+        # # Attempts I did to try to write the logic for testing the
+        # #     response status code. I was unable to make any of it usable
+        # #     before running out of time on this project. I am leaving
+        # #     this code here, but commented it out in hopes that someone
+        # #     who continues the work will be able to make one of these
+        # #     work.
+
         # # Use mocking context manager to test response code
         # with patch('.api.visualization.requests.post') as mock_get:
         #     mock_get.return_value.ok = True
         #
         #     response = router.post('/viz/linegraph')
-        #
-        # self.
 
         # tester = router.test_client(self)
         # resp = tester.post('/viz/linegraph')
@@ -142,7 +175,6 @@ class TestLinegraph(unittest.TestCase):
         # stat_code = resp.status_code
         pass
 
-
     def test_json(self):
         """
         This method will test the output to ensure we are returning the
@@ -152,6 +184,7 @@ class TestLinegraph(unittest.TestCase):
         self.assertTrue(
             self.get_json_bool(line_graph.line_graph(self.scores1, self.name1))
         )
+
         # Tests the properly formatted dummy data
         self.assertFalse(
             self.get_json_bool(line_graph.line_graph(self.scores5, self.name5))
