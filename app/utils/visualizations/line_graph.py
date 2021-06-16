@@ -16,6 +16,14 @@ def line_graph(score_history, name):
         parent dashboard
     """
 
+    # If no scores are inputted, should not pass through API, but just in case
+    if len(score_history) == 0:
+        return "No Submissions for This User"
+
+    # If no name is inputted, should not pass through API, but just in case
+    if name == "":
+        return "No User Specified"
+
     # Plotly line graph to show improvement over time
     fig = go.Figure(
         data=go.Scatter(
@@ -78,11 +86,6 @@ def line_graph(score_history, name):
                 )
             ]
         ),
-
-    # If there are zero submissions
-    # Web will not hit our API if there are no submissions, but just in case
-    if len(score_history) == 0:
-        return "No Submissions for This User"
 
     # Return as json for web to use in plotly.js
     return fig.to_json()
