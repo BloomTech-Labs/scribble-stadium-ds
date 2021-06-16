@@ -9,15 +9,20 @@ import plotly.express as px
 The following functions serve as validtion on the HistogramRequest
 class outlined in app/api/models.py. They test for input specifications
 that are specific to Story Squad; such as the grade level being between
-8-12.
+8-12.  The error messages produced by these functions are used in
+app/api/tests/test_visualization.py to validate inputs.
 '''
+# Check that the GradeList is of 'list' type.
 def grade_list_type_test(grade_list):
   if type(grade_list) != list:
     error = "GradeList not formatted as a list."
     return error
 
+# Check that the GradeList entries are 'int' types.
 def grade_list_entry_type_test(grade_list):
   indexes = []
+  if type(grade_list) != list:
+    return
   for i, score in enumerate(grade_list):
     if type(score) != int:
       indexes.append(i)
@@ -25,27 +30,39 @@ def grade_list_entry_type_test(grade_list):
     error = f'Index entries {indexes} of GradeList is not of type \'integer\'.'
     return error
 
+# Checks that the Student's grade is in the valid range.
 def student_grade_range_test(student_info):
+  if type(student_info[0]) != int:
+    return
   if student_info[0] not in range(8,13):
     error = 'Student\'s grade level is not between 8 and 12.'
     return error
 
+# Checks that the Student's grade is of type 'int'.
 def student_info_grade_number_type_test(student_info):
   if type(student_info[0]) != int:
     error = 'Student\'s grade level is not of type \'integer\'.'
     return error
 
+# Checks that the Student's name is of type 'str' and is not empty.
 def student_info_name_type_test(student_info):
   if type(student_info[1]) != str or len(student_info[1]) == 0:
     error = 'Student\'s name is not a valid \'string\' type or is empty.'
     return error
 
+# Checks that the Student's score is of type 'int'.
 def student_score_type_test(student_info):
   if type(student_info[2]) != int:
     error = 'Student\'s score is not of type \'integer\'.'
     return error
 
 def input_error_results(grade_list, student_info):
+  '''
+  This compiles all of the above functions and appends any
+  error messages to the 'input_error' variable.  If 'input_error'
+  has a length greater than zero (meaning an input error has occured),
+  the histogram function will return the error messages and not run.
+  '''
   input_errors = []
   check1 = grade_list_type_test(grade_list)
   if type(check1) == str:
@@ -83,7 +100,7 @@ def histogram(grade_list, student_info):
         Output: Plotly JSON that can be passed to the web to display on the
         parent dashboard
     """
-    # This returns input error messages if any exist.
+    # This returns input errors if any exist and stops the function.
     input_errors = input_error_results(grade_list, student_info)
     if len(input_errors) > 0:
       return input_errors
