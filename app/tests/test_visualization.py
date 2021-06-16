@@ -3,19 +3,13 @@ This file contains code for testing the endpoints in the visualization.py file
 """
 
 import unittest
+import requests
 import json
 import pprint
 from ..api.visualization import router, return_line_graph, return_histogram
 from ..utils.visualizations import line_graph
 from ..utils.visualizations import histogram
 from ..api.models import LineGraphRequest, HistogramRequest
-
-# # Imports currently not being used, keeping for future attempts at fixing issues
-# from unittest.mock import patch
-# import requests
-# from pydantic import ValidationError
-# import app.main
-# from ..api import visualization
 
 
 class TestLinegraph(unittest.TestCase):
@@ -145,35 +139,25 @@ class TestLinegraph(unittest.TestCase):
         This method will test for the proper response status code.
         """
 
-        # # Attempts I did to try to write the logic for testing the
-        # #     response status code. I was unable to make any of it usable
-        # #     before running out of time on this project. I am leaving
-        # #     this code here, but commented it out in hopes that someone
-        # #     who continues the work will be able to make one of these
-        # #     work.
+        headers = {
+            'accept': 'application/json',
+            'Authorization': '2gSZupaEuN5ye4GGHwr8Ewsv',
+            'Content-Type': 'application/json',
+        }
 
-        # # Use mocking context manager to test response code
-        # with patch('.api.visualization.requests.post') as mock_get:
-        #     mock_get.return_value.ok = True
-        #
-        #     response = router.post('/viz/linegraph')
+        data1 = '{"ScoreHistory":[1000,1500,9000,789],"StudentName":"Joanne"}'
+        data2 = '{"ScoreHistory":[1000,1500,9000,789],"StudentName":}'
 
-        # tester = router.test_client(self)
-        # resp = tester.post('/viz/linegraph')
-        # stat_code = resp.status_code
-        # self.assertEqual(stat_code, 200)
+        response1 = requests.post('http://127.0.0.1:8000/viz/linegraph', headers=headers, data=data1)
+        response2 = requests.post('http://127.0.0.1:8000/viz/linegraph', headers=headers, data=data2)
 
-        # # Use mocking context manager to test response code
-        # with patch('.app.main.app.include_router(visualization.router)') as mock_post:
-        #     mock_post.return_value.ok = True
-        #     url = router.post('/viz/linegraph')
-        #     stat_code = url.status_code()
-        #
-        # self.assertEqual(stat_code, 200)
 
-        # resp = app.main.app.post('/viz/linegraph')
-        # stat_code = resp.status_code
-        pass
+        stat_code1 = response1.status_code
+        self.assertEqual(stat_code1, 200)
+
+        stat_code2 = response2.status_code
+        self.assertEqual(stat_code2, 422)
+
 
     def test_json(self):
         """
