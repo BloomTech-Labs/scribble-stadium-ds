@@ -4,10 +4,17 @@ This file contains code for testing the endpoints in the visualization.py file
 
 import unittest
 import json
-from ..api.visualization import return_line_graph, return_histogram
+from ..api.visualization import router, return_line_graph, return_histogram
 from ..utils.visualizations import line_graph
 from ..utils.visualizations import histogram
 from ..api.models import LineGraphRequest, HistogramRequest
+
+# # Imports currently not being used, keeping for future attempts at fixing issues
+# from unittest.mock import patch
+# import requests
+# from pydantic import ValidationError
+# import app.main
+# from ..api import visualization
 
 
 class TestLinegraph(unittest.TestCase):
@@ -111,12 +118,20 @@ class TestLinegraph(unittest.TestCase):
         """
         pass
 
+
     def test_json(self):
         """
         This method will test the output to ensure we are returning the
             data in json format in the response body.
         """
-
+        # Tests the properly formatted dummy data
+        self.assertTrue(
+            self.get_json_bool(line_graph.line_graph(self.scores1, self.name1))
+        )
+        # Tests the properly formatted dummy data
+        self.assertFalse(
+            self.get_json_bool(line_graph.line_graph(self.scores5, self.name5))
+        )
 
     def test_line_graph(self):
         """
@@ -134,7 +149,6 @@ class TestHistogram(unittest.TestCase):
         This method will run its code at the beginning,
             before anything else runs.
         """
-
         # This data is in the proper input format we need
         cls.d1 = HistogramRequest(
             GradeList=[1005, 1500, 9000, 789, 800, 1000, 1300],
@@ -143,30 +157,22 @@ class TestHistogram(unittest.TestCase):
             StudentScore=600
         )
         cls.data1 = return_histogram(cls.d1)
-        # This data has an empty list for the score history
-        cls.d2 = HistogramRequest(
-            GradeList=[],
-            GradeLevel=6,
-            StudentName="John",
-            StudentScore=700
-        )
-        cls.data2 = return_histogram(cls.d2)
         # This data has a score as a string
-        cls.d3 = HistogramRequest(
+        cls.d2 = HistogramRequest(
             GradeList=[1005, 1500, 9000, '789', 800, 1000, 1300],
             GradeLevel=4,
             StudentName="Jane",
             StudentScore=350
         )
-        cls.data3 = return_histogram(cls.d3)
+        cls.data2 = return_histogram(cls.d2)
         # This is the default example data
-        cls.d4 = HistogramRequest(
+        cls.d3 = HistogramRequest(
             GradeList=[1005, 1500, 9000, 789],
             GradeLevel=8,
             StudentName="Firstname",
             StudentScore=1058
         )
-        cls.data4 = return_histogram(cls.d4)
+        cls.data3 = return_histogram(cls.d3)
 
     def setUp(self):
         """
@@ -180,8 +186,18 @@ class TestHistogram(unittest.TestCase):
         self.info2 = [self.d2.GradeLevel, self.d2.StudentName, self.d2.StudentScore]
         self.grades3 = self.d3.GradeList
         self.info3 = [self.d3.GradeLevel, self.d3.StudentName, self.d3.StudentScore]
-        self.grades4 = self.d4.GradeList
-        self.info4 = [self.d4.GradeLevel, self.d4.StudentName, self.d4.StudentScore]
+
+    def get_json_bool(self, json_data):
+        """
+        This function will check that the file is in the json format
+            :param json_data: the file/data you want to verify
+            :return: bool: True or False if in json format
+        """
+        try:
+            json.loads(json_data)
+        except ValueError as err:
+            return False
+        return True
 
     def test_empty(self):
         """
@@ -204,7 +220,7 @@ class TestHistogram(unittest.TestCase):
     def test_json(self):
         """
         This method will test the output to ensure we are returning the
-            data in json format in the response body.
+            data in json format in the response body through the API.
         """
         pass
 
