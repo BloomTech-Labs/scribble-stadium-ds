@@ -15,6 +15,7 @@ from ..api.models import LineGraphRequest, HistogramRequest
 # from pydantic import ValidationError
 # import app.main
 # from ..api import visualization
+import pprint
 
 
 class TestLinegraph(unittest.TestCase):
@@ -160,8 +161,33 @@ class TestLinegraph(unittest.TestCase):
         """
         This method will test the output to ensure we are getting the proper
             data outputted in the response body in the json file format.
+
+        Locations of input data in the output json file:
+
+        ['data'][0]['x'] = list: range length of score_history +1, start at 1
+        ['data'][0]['y'] = list: score_history values
+        ['layout']['title']['text'] = str: contains name string
         """
-        pass
+        # Load proper json dummy data through line_graph function for testing
+        load1 = json.loads(line_graph.line_graph(self.scores1, self.name1))
+        x_list = [int(i) + 1 for i in range(len(self.scores1))]
+        # Load string json dummy data through line_graph function for testing
+        load2 = json.loads(line_graph.line_graph(self.scores4, self.name4))
+
+        # # This code is for finding location of the input data in the json file
+        # print('\n')
+        # pprint.pprint(load1)
+
+        # Verify all of the input data is in the proper location in the
+        #   json file that is outputted for properly formatted dummy data
+        self.assertEqual(load1['data'][0]['x'], x_list)
+        self.assertEqual(load1['data'][0]['y'], self.scores1)
+        self.assertTrue(
+            load1['layout']['title']['text'].__contains__(self.name1)
+        )
+
+        # Verify the string dummy data returns error message
+        self.assertRaises(TypeError, load2)
 
 
 class TestHistogram(unittest.TestCase):
