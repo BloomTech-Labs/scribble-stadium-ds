@@ -116,6 +116,29 @@ class TestLinegraph(unittest.TestCase):
         """
         This method will test for the proper response status code.
         """
+        # # Use mocking context manager to test response code
+        # with patch('.api.visualization.requests.post') as mock_get:
+        #     mock_get.return_value.ok = True
+        #
+        #     response = router.post('/viz/linegraph')
+        #
+        # self.
+
+        # tester = router.test_client(self)
+        # resp = tester.post('/viz/linegraph')
+        # stat_code = resp.status_code
+        # self.assertEqual(stat_code, 200)
+
+        # # Use mocking context manager to test response code
+        # with patch('.app.main.app.include_router(visualization.router)') as mock_post:
+        #     mock_post.return_value.ok = True
+        #     url = router.post('/viz/linegraph')
+        #     stat_code = url.status_code()
+        #
+        # self.assertEqual(stat_code, 200)
+
+        # resp = app.main.app.post('/viz/linegraph')
+        # stat_code = resp.status_code
         pass
 
 
