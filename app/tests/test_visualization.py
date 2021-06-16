@@ -139,23 +139,32 @@ class TestLinegraph(unittest.TestCase):
         This method will test for the proper response status code.
         """
 
+        # Header information needed to call on the API directly
+        #   Information obtained from the "Curl" command on the Swagger UI
         headers = {
             'accept': 'application/json',
             'Authorization': '2gSZupaEuN5ye4GGHwr8Ewsv',
             'Content-Type': 'application/json',
         }
 
+        # The proper data format for inputting through the API
         data1 = '{"ScoreHistory":[1000,1500,9000,789],"StudentName":"Joanne"}'
+        # Incorrect data format for inputting through the API
         data2 = '{"ScoreHistory":[1000,1500,9000,789],"StudentName":}'
 
+        # Should return a 200 status code for properly formatted input
         response1 = requests.post('http://127.0.0.1:8000/viz/linegraph', headers=headers, data=data1)
+        # Should return a 422 status code for incorrect formatted input
         response2 = requests.post('http://127.0.0.1:8000/viz/linegraph', headers=headers, data=data2)
 
-
+        # Get the status code for properly formatted input
         stat_code1 = response1.status_code
+        # Assert we are getting 200 - Successful Response
         self.assertEqual(stat_code1, 200)
 
+        # Get the status code for incorrect formatted input
         stat_code2 = response2.status_code
+        # Assert we are getting 422 - Error: Unprocessable Entity
         self.assertEqual(stat_code2, 422)
 
 
