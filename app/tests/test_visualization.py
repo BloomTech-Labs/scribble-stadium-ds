@@ -65,14 +65,13 @@ class TestLinegraph(unittest.TestCase):
     def get_json_bool(self, json_data):
         """
         This function will check that the file is in the json format
+
             :param json_data: the file/data you want to verify
             :return: bool: True or False if in json format
         """
         try:
-            json.dumps(json_data)
+            json.loads(json_data)
         except ValueError:
-            return False
-        except TypeError:
             return False
         return True
 

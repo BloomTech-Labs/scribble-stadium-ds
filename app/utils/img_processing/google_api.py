@@ -7,7 +7,7 @@ from google.cloud.vision import types
 from app.utils.moderation.text_moderation import BadWordTextModerator
 
 # XXX: Documentation parses to Markdown on FastAPI Swagger UI
-# Attribution: Most of this code is from transcription.py, safe_search.py, and
+# Attribution: Most of this code is from transcription.py and
 # confidence_flag.py. To steamline the implementation with the deployed
 # environment that code has been refactored into this file.
 
