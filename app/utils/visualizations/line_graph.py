@@ -24,6 +24,10 @@ def line_graph(score_history, name):
     if name == "":
         return "No User Specified"
 
+    # Check for edge case of default data entered
+    if score_history == [1005, 1500, 9000, 789] and name == "Firstname":
+        return "Default Data Entered"
+
     # Plotly line graph to show improvement over time
     fig = go.Figure(
         data=go.Scatter(
