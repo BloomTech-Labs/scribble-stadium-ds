@@ -140,7 +140,9 @@ class TestLinegraph(unittest.TestCase):
         """
         This method will test for the proper response status code.
         """
+        # Code to load .env file for secret credentials
         load_dotenv()
+        # Get secret credentials from .env file
         token = getenv('DS_SECRET_TOKEN')
 
         # Header information needed to call on the API directly
@@ -174,7 +176,6 @@ class TestLinegraph(unittest.TestCase):
         stat_code2 = response2.status_code
         # Assert we are getting 422 - Error: Unprocessable Entity
         self.assertEqual(stat_code2, 422)
-
 
     def test_json(self):
         """
