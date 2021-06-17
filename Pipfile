@@ -52,6 +52,9 @@ opencv-contrib-python = "*"
 pytesseract = "*"
 tesserocr = "*"
 jiwer = "*"
+fuzzywuzzy = "*"
+python-levenshtein = "*"
+asrtoolkit = "*"
 
 [requires]
 python_version = "3"
