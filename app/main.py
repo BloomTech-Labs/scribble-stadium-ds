@@ -6,7 +6,7 @@ from fastapi.responses import Response, JSONResponse
 from fastapi.requests import Request
 import uvicorn
 
-from app.api import submission, visualization, clustering, db
+from app.api import submission, visualization, clustering, db, wordcloud
 from app.utils.security.header_checking import get_api_key
 
 app = FastAPI(
@@ -16,6 +16,7 @@ app = FastAPI(
     docs_url="/"
 )
 
+app.include_router(wordcloud.router, tags=['Word Cloud'])
 app.include_router(submission.router, tags=['Submission'], dependencies=[Security(get_api_key)])
 app.include_router(visualization.router, tags=['Visualization'], dependencies=[Security(get_api_key)])
 app.include_router(clustering.router, tags=['Clustering'], dependencies=[Security(get_api_key)])
