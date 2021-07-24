@@ -24,8 +24,8 @@ async def transcribe(page_image_file):
     with open(page_image_file, mode='rb') as pifd:
         page_image = pifd.read()
 
-    low_confidence = True
-    flagged = True
+    low_confidence = None
+    flagged = None
     trans_text = 'No Text Found'
     try:
         low_confidence, flagged, trans_text = await vision.transcribe(page_image)
