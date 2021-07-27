@@ -55,10 +55,10 @@ jiwer = "*"
 fuzzywuzzy = "*"
 python-levenshtein = "*"
 asrtoolkit = "*"
+wordcloud = "*"
 
 [requires]
 python_version = "3"
 
-[packages.uvicorn]
-extras = [ "standard",]
-version = "==0.11.8"
+[packages]
+uvicorn = {extras = [ "standard",], version = "==0.11.8"}
