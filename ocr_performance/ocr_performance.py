@@ -73,13 +73,13 @@ class CompareTranscriptions():
 
         return sim
 
-    def compute_similarity(self, hypothesis_transcripts_dir):
+    def compute_error(self, hypothesis_transcripts_dir):
         self.load_hypothesis_transcriptions(hypothesis_transcripts_dir)
         self.generate_encoded_dtm()
 
-        sim = self.mean_cosine_similarity()
+        mcs = self.mean_cosine_similarity()
 
-        return sim, round((1-sim)*1e5, 4)
+        return round((1-mcs)*1e7, 0)
         
 
 
@@ -87,12 +87,10 @@ if __name__ == '__main__':
     
     comparator = CompareTranscriptions()
 
-    rsim, rcsim = comparator.compute_similarity(REFERENCE_TRANSCRIPTS_DIR)
+    rerr = comparator.compute_error(REFERENCE_TRANSCRIPTS_DIR)
 
-    print(rsim, rcsim)
+    print(rerr)
 
-    hsim, hcsim = comparator.compute_similarity(GOOGLE_TRANSCRIPTS_DIR)
+    herr = comparator.compute_error(GOOGLE_TRANSCRIPTS_DIR)
 
-    print(hsim, hcsim)
-
-    print(round(hcsim/rcsim,4))
+    print(herr)
