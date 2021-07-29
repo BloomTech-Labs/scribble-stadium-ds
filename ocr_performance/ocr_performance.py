@@ -20,6 +20,7 @@ ENCODED_REF_DTM = MODELS_DIR + 'encoded_ref_dtm.pkl'
 TFIDF = MODELS_DIR + 'tfidf.pkl'
 FILE_ROOTS = MODELS_DIR+'file_roots.pkl'
 
+REFERENCE_TRANSCRIPTS_DIR = DATA_DIR+ 'transcripts'
 GOOGLE_TRANSCRIPTS_DIR = DATA_DIR + 'google_transcripts'
 
 class CompareTranscriptions():
@@ -86,6 +87,12 @@ if __name__ == '__main__':
     
     comparator = CompareTranscriptions()
 
-    sim, csim = comparator.compute_similarity(GOOGLE_TRANSCRIPTS_DIR)
+    rsim, rcsim = comparator.compute_similarity(REFERENCE_TRANSCRIPTS_DIR)
 
-    print(sim, csim)
+    print(rsim, rcsim)
+
+    hsim, hcsim = comparator.compute_similarity(GOOGLE_TRANSCRIPTS_DIR)
+
+    print(hsim, hcsim)
+
+    print(round(hcsim/rcsim,4))
