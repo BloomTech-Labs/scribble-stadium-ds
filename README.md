@@ -7,7 +7,7 @@
 
 
 ###TABLE OF CONTENTS
-#### [What is Story Squad?](#what-is-story-squad-)
+#### [What is Story Squad?](#what-is-story-squad)
 #### [Scope](#scope)
 #### [Features](#features)
   * [Transcription and Moderation](#transcription-and-moderation)
