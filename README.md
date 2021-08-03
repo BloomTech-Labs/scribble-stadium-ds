@@ -6,7 +6,7 @@
 [![Story Squad Banner](assets/story_squad_banner.png)](http://www.youtube.com/watch?v=-cDqvmmtuiE)
 
 
-###TABLE OF CONTENTS
+### TABLE OF CONTENTS
 #### [What is Story Squad?](#what-is-story-squad)
 #### [Scope](#scope)
 #### [Features](#features)
