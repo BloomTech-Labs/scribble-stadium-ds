@@ -7,9 +7,9 @@
 
 
 ### TABLE OF CONTENTS
-#### [What is Story Squad?](#what-is-story-squad)
-#### [Scope](#scope)
-#### [Features](#features)
+#### - [What is Story Squad?](#what-is-story-squad)
+#### - [Scope](#scope)
+#### - [Features](#features)
   * [Transcription and Moderation](#transcription-and-moderation)
     + [**Transcription**](#transcription)
     + [**Safe Search**](#safe-search)
@@ -19,13 +19,13 @@
   * [Complexity Analysis](#complexity-analysis)
     + [**Complexity Metric**](#complexity-metric)
     + [**Visualizations**](#visualizations)
-    + [**Gamification / Clustering**](#gamification-clustering)
+    + [**Gamification and Clustering**](#gamification-and-clustering)
   * [Deployment](#deployment)
     + [**How to Deploy locally on a Windows Machine**](#how-to-deploy-locally-on-a-windows-machine)
     + [**Infrastructure**](#infrastructure)
     + [**API Endpoints**](#api-endpoints)
     + [**Security**](#security)
-#### [Meet the Team](#meet-the-team)
+#### - [Meet the Team](#meet-the-team)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
@@ -150,7 +150,7 @@ Given that this project will have future teams of data scientists building off o
 ![histogram](assets/histogram.png)
 
 
-### **Gamification / Clustering**
+### **Gamification and Clustering**
 - Functionality
    - The current clustering function we have implemented is a basic MVP for clustering, which sorts moderator-accepted submissions for each cohort (meaning the group of users that is on a given chapter of the story) by Squad Score, and returns clusters of 4 by submission ID to the web backend to be randomly paired.
    - For cohorts with submission counts not divisible by 4, some submission IDs are duplicated (that are still close in Squad Score) to ensure that only clusters of 4 are returned. This is coded such that, if at all possible, no cluster will have more than 1 submission ID that is also found in another cluster.
