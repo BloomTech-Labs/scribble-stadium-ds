@@ -1,4 +1,5 @@
 import pandas as pd
+from collections import Counter
 
 def count_syllables(word):
     word = word.lower()
@@ -21,13 +22,12 @@ def count_syllables(word):
     
 
 def clean_text(story):
-    # remove punctuation
-    story = story.replace('"','')
-    story = story.replace('.','')
-    story = story.replace(',','')
+    # remove weird characters
+    whitelist = set("abcdefghijklmnopqrstuvwxyz' ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+    story = ''.join(filter(whitelist.__contains__, story))
 
     #tokenize words
-    story = story.split(sep=' ')
+    story = story.split()
 
     #remove '' from list
     story = [x for x in story if x != '']
@@ -38,12 +38,7 @@ def clean_text(story):
 def complexity_df(story_words):
 
     # Create a dictionary to count occurences of words
-    word_counts = dict()
-    for word in story_words:
-        if word in word_counts:
-            word_counts[word] += 1
-        else:
-            word_counts[word] = 1
+    word_counts = Counter(story_words)
 
     # Convert the dictionary to a dataframe
     word_list = []
