@@ -159,14 +159,14 @@ Given that this project will have future teams of data scientists building off o
    - Of course, a more sophisticated clustering algorithm would be preferred. In order to avoid re-transcribing stories (which would take a lot of extra time, and would add to the Google Cloud bill), either the web database could store transcriptions after initial submission, or DS could generate its own database. Note that if DS creates its own database, it needs to have the same considerations that Web’s does: i.e. how to handle stories that are moderated out of gamification, etc.
 
 ## Deployment
-     
+
+### Setting up a python environment.
+
+It is recommended to use `pipenv` for creating a python environment. First, install python with pip. Then open a terminal and enter `pip install pipenv`. After that, navigate to the root folder of this project, and enter `pipenv install --dev`. This uses Pipfile and Pipfile.lock to recreate the same python environment used in development. We are also trying to keep the requirements in the [packages] section to a minimum so the deployed version doesn't get bloated. The dependencies in [packages] are only those imported into the app itself. Many of the python notebooks use packages that are not in this environment, as they contain a lot of proof of concept work that never made it into the app itself. Much of their imported data also isn't present in this repo for COPPA reasons. It would be fine to add notebook-only dependencies to the [dev-packages] section of Pipfile if this makes development easier. If you change Pipfile, please run `pipenv update` afterwards. This runs `pipenv lock` and `pipenv sync` for you, and keeps Pipfile.lock in aggreement with Pipfile. Then commit and push the changes to Pipfile.lock.
+
 ### How to Deploy locally on a Windows Machine:
 
-It is possible to deploy this API locally on a Windows 10 machine. There are some changes that you will need to make to do so. There are other options for local deployment on a Windows machine that does not involve making changes, such as running a Ubuntu WSL (Windows Subsystem for Linux). 
-
-* If you have `Python 3.9` on your machine, you will have to specify which version of Python you want your environment to use because some packages in the `Pipfile` are not compatible with the 3.9 version of Python yet. Otherwise, the computer will automatically select the most recent version of Python that you have on your machine if you do not specify which version you want to use for this environment.
-  
-  * In this case, when you set up your environment, you will need to run the following command: `pipenv --python 3.8 install --dev`. You can also use Python 3.7. Just change the 3.8 to 3.7 when you run the command. 
+It is possible to deploy this API locally on Windows 10, but you will need to make some local changes to do so. There are other options for local deployment on a Windows machine that does not involve making changes, such as running a Ubuntu WSL (Windows Subsystem for Linux).
 
 * Then you need to go to `app/utils/img_processing/google_api.py` and locate the code: `with open("/tmp/google.json", "wt") as fp:` in the `__init__` function (currently it is line 32) and change that to: `with open("././app/tmp/google.json", "wt") as fp:`
 
