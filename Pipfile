@@ -23,6 +23,7 @@ pydantic = "*"
 python-dotenv = "==0.15.0"
 requests = "==2.24.0"
 scikit-image = "*"
+scikit-learn = "==0.23.2"
 sqlalchemy = "*"
 uvicorn = "*"
 
