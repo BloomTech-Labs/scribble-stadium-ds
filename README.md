@@ -6,6 +6,30 @@
 [![Story Squad Banner](assets/story_squad_banner.png)](http://www.youtube.com/watch?v=-cDqvmmtuiE)
 
 
+### TABLE OF CONTENTS
+#### - [What is Story Squad?](#what-is-story-squad)
+#### - [Scope](#scope)
+#### - [Features](#features)
+  * [Transcription and Moderation](#transcription-and-moderation)
+    + [**Transcription**](#transcription)
+    + [**Safe Search**](#safe-search)
+    + [**Low Confidence Flag**](#low-confidence-flag)
+    + [**Inappropriate Content Flagging**](#inappropriate-content-flagging)
+    + [**Sensitive Content Flagging**](#sensitive-content-flagging)
+  * [Complexity Analysis](#complexity-analysis)
+    + [**Complexity Metric**](#complexity-metric)
+    + [**Visualizations**](#visualizations)
+    + [**Gamification and Clustering**](#gamification-and-clustering)
+  * [Deployment](#deployment)
+    + [**How to Deploy locally on a Windows Machine**](#how-to-deploy-locally-on-a-windows-machine)
+    + [**Infrastructure**](#infrastructure)
+    + [**API Endpoints**](#api-endpoints)
+    + [**Security**](#security)
+#### - [Meet the Team](#meet-the-team)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
+
 # What is Story Squad?
 [Story Squad](https://www.storysquad.education/) is the dream of a former teacher, Graig Peterson, to create opportunities for children to have creative writing and drawing time off-screen. Here's how it works: child users of the website are provided a new chapter in an ongoing story each weekend. They read the story, and then follow both a writing and drawing prompt to spend an hour off-screen writing and drawing. When they're done, they upload photos of each, and this is where our data science team comes in. The stories are transcribed into text, analyzed for complexity, screened for inappropriate content, and then sent to a moderator. Once all submissions have been checked over on moderation day, our clustering algorithm groups the submissions by similar complexity and creates Squads of 4 to head into a game of assigning points and voting for the best submissions in head-to-head pairings within the cluster! Then it starts all over again the following weekend.
 
@@ -126,7 +150,7 @@ Given that this project will have future teams of data scientists building off o
 ![histogram](assets/histogram.png)
 
 
-### **Gamification / Clustering**
+### **Gamification and Clustering**
 - Functionality
    - The current clustering function we have implemented is a basic MVP for clustering, which sorts moderator-accepted submissions for each cohort (meaning the group of users that is on a given chapter of the story) by Squad Score, and returns clusters of 4 by submission ID to the web backend to be randomly paired.
    - For cohorts with submission counts not divisible by 4, some submission IDs are duplicated (that are still close in Squad Score) to ensure that only clusters of 4 are returned. This is coded such that, if at all possible, no cluster will have more than 1 submission ID that is also found in another cluster.
@@ -138,14 +162,14 @@ Given that this project will have future teams of data scientists building off o
    - Of course, a more sophisticated clustering algorithm would be preferred. In order to avoid re-transcribing stories (which would take a lot of extra time, and would add to the Google Cloud bill), either the web database could store transcriptions after initial submission, or DS could generate its own database. Note that if DS creates its own database, it needs to have the same considerations that Web’s does: i.e. how to handle stories that are moderated out of gamification, etc.
 
 ## Deployment
-     
+
+### Setting up a python environment.
+
+It is recommended to use `pipenv` for creating a python environment. First, install python with pip. Then open a terminal and enter `pip install pipenv`. After that, navigate to the root folder of this project, and enter `pipenv install --dev`. This uses Pipfile and Pipfile.lock to recreate the same python environment used in development. We are also trying to keep the requirements in the [packages] section to a minimum so the deployed version doesn't get bloated. The dependencies in [packages] are only those imported into the app itself. Many of the python notebooks use packages that are not in this environment, as they contain a lot of proof of concept work that never made it into the app itself. Much of their imported data also isn't present in this repo for COPPA reasons. It would be fine to add notebook-only dependencies to the [dev-packages] section of Pipfile if this makes development easier. If you change Pipfile, please run `pipenv update` afterwards. This runs `pipenv lock` and `pipenv sync` for you, and keeps Pipfile.lock in aggreement with Pipfile. Then commit and push the changes to Pipfile.lock.
+
 ### How to Deploy locally on a Windows Machine:
 
-It is possible to deploy this API locally on a Windows 10 machine. There are some changes that you will need to make to do so. There are other options for local deployment on a Windows machine that does not involve making changes, such as running a Ubuntu WSL (Windows Subsystem for Linux). 
-
-* If you have `Python 3.9` on your machine, you will have to specify which version of Python you want your environment to use because some packages in the `Pipfile` are not compatible with the 3.9 version of Python yet. Otherwise, the computer will automatically select the most recent version of Python that you have on your machine if you do not specify which version you want to use for this environment.
-  
-  * In this case, when you set up your environment, you will need to run the following command: `pipenv --python 3.8 install --dev`. You can also use Python 3.7. Just change the 3.8 to 3.7 when you run the command. 
+It is possible to deploy this API locally on Windows 10, but you will need to make some local changes to do so. There are other options for local deployment on a Windows machine that does not involve making changes, such as running a Ubuntu WSL (Windows Subsystem for Linux).
 
 * Then you need to go to `app/utils/img_processing/google_api.py` and locate the code: `with open("/tmp/google.json", "wt") as fp:` in the `__init__` function (currently it is line 32) and change that to: `with open("././app/tmp/google.json", "wt") as fp:`
 

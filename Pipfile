@@ -30,3 +30,4 @@ wordcloud = "*"
 
 [requires]
 python_version = "3"
+
