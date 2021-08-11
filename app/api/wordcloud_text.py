@@ -1,6 +1,6 @@
 import pandas as pd
 from fastapi import APIRouter
-from .wordcloud_functions import clean_text, complexity_df
+from app.utils.wordcloud_functions import clean_text, complexity_df
 
 router = APIRouter()
 
