@@ -26,6 +26,8 @@ scikit-image = "*"
 scikit-learn = "==0.23.2"
 sqlalchemy = "*"
 uvicorn = "*"
+wordcloud = "*"
 
 [requires]
 python_version = "3"
+
