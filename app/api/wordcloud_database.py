@@ -2,20 +2,25 @@ from sqlalchemy import create_engine, Integer, Column, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 from fastapi import APIRouter, Depends, HTTPException
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 router = APIRouter()
 
-'''
-temporarily using SQLite database for local development
-SQLALCHEMY_DATABASE_URL = dialect://user:password@host.dbname
-'''
 
-SQLALCHEMY_DATABASE_URL = r'sqlite:///C:\Users\temsy\Documents\GitHub\ebtest\test_data.db'
-# SQLALCHEMY_DATABASE_URL = 's3://labspt21teambdemodata/load/test_data.db'
+#connect to ElephantSQL-hosted PostgreSQL
+DB_NAME = os.getenv("RDS_DB_NAME", default="OOPS")
+DB_USER = os.getenv("RDS_USERNAME", default="OOPS")
+DB_PASSWORD = os.getenv("RDS_PASSWORD", default="OOPS")
+DB_HOST = os.getenv("RDS_HOSTNAME", default="OOPS")
+DB_PORT = os.getenv("RDS_PORT", default="OOPS")
+
+DATABASE_URL = 'postgresql+psycopg2://{}:{}@{}:{}/{}'.format(DB_USER,DB_PASSWORD,DB_HOST,DB_PORT,DB_NAME)
 
 engine = create_engine(
-    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
+    DATABASE_URL, pool_pre_ping=True
 )
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
