@@ -27,10 +27,3 @@ with open('37 stories.csv', 'r') as f:
         cur.execute(sql_query, row)
 
 conn.commit()
-
-    
-
-
-
-
-
