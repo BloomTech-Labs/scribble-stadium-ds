@@ -4,6 +4,8 @@ from sqlalchemy.orm import sessionmaker, Session
 from fastapi import APIRouter, Depends, HTTPException
 import os
 from dotenv import load_dotenv
+from app.utils.wordcloud.wordcloud_functions import clean_text, complexity_df
+
 
 load_dotenv()
 
@@ -49,5 +51,20 @@ def show_story(id: int, db: Session = Depends(get_db)):
     db_story = get_story(db, id=id)
     if db_story is None:
         raise HTTPException(status_code=404, detail="Story not found, id must be between 1-167")
-    return db_story
+
+    story_string = db_story.story
+
+    story_words = clean_text(story_string)
+
+    words = complexity_df(story_words)
+
+    #Use length count metric=
+    words['len'] = words['word'].apply(len)
+    words['complexity'] = words['len'] / words['count']
+
+    # scale the complexities so the sum is 1000
+    words['complexity'] = words['complexity'] / words['complexity'].sum()
+    word_complexities = dict(zip(words.word, words.complexity))
+
+    return word_complexities
 
