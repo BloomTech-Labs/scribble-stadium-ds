@@ -2,8 +2,8 @@ import logging
 
 from fastapi import APIRouter
 
-from app.api.models import HistogramRequest, LineGraphRequest
-from app.utils.visualizations import histogram, line_graph
+from app.api.models import HistogramRequest, LineGraphRequest, CropCloudRequest
+from app.utils.visualizations import histogram, line_graph, crop_cloud
 
 # global variables and services
 router = APIRouter()
@@ -66,3 +66,29 @@ def return_histogram(data: HistogramRequest):
     return histogram.histogram(
         data.GradeList, [data.GradeLevel, data.StudentName, data.StudentScore]
     )
+
+@router.post("/viz/cropcloud")
+def return_crop_cloud(data: CropCloudRequest):
+    """Endpoint produces a crop cloud of the student's progression in handwritting over time.
+
+    Arguments
+    ---
+    `DateRange` list - a list of two dates in the format of YYYY-MM-DD
+
+    `UserName` str - a string containing the username
+
+    Returns:
+    ---
+    `response` json - a picture of the rendered crop cloud
+
+    Note:
+    ---
+    All submissions that are included in this data are pre moderation review
+    and not Approved for COPPA compliance
+    """
+    return crop_cloud.make_cropcloud(
+        data.user_id,
+        data.date_range,
+        data.complexity_metric,
+        data.image_format,
+        )

@@ -149,14 +149,21 @@ class ImageSubmission(BaseModel):
 
 
 class LineGraphRequest(BaseModel):
-    """Model that handles LineGraph Request to API"""
+    """Model that handles LineGraph Requests to the API"""
 
     ScoreHistory: List[int] = Field(..., example=[1005, 1500, 9000, 789])
     StudentName: str = Field(..., example="Firstname")
 
+class CropCloudRequest(BaseModel):
+    """Model that handles CropCloud Requests to the API"""
+
+    user_id: str = Field(..., example="Chickpea")
+    date_range: List[str] = Field(..., example=["12-05-2019","03-15-2020"])
+    complexity_metric: str = Field(..., example="len_count")
+    image_format: str = Field(..., example=".webp")
 
 class HistogramRequest(BaseModel):
-    """Model that handles Histogram Request to API"""
+    """Model that handles Histogram Requests to the API"""
 
     GradeList: List[int] = Field(..., example=[1005, 1500, 9000, 789])
     GradeLevel: int = Field(..., example=8)
