@@ -47,7 +47,7 @@ def get_story(db: Session, id: int):
     return db.query(Stories).filter(Stories.id == id).first()
 
 @router.get('/storytext')
-def show_story(id: int, db: Session = Depends(get_db)):
+def show_story(id: int = 1, db: Session = Depends(get_db)):
     db_story = get_story(db, id=id)
     if db_story is None:
         raise HTTPException(status_code=404, detail="Story not found, id must be between 1-167")
