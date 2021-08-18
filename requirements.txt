@@ -7,10 +7,12 @@ googleapis-common-protos==1.52.0
 joblib==0.16.0
 matplotlib
 nltk==3.4.4
+opencv-python
 pandas==1.1.0
 pep8
 plotly==4.9.0
 pydantic
+pytesseract
 python-dotenv==0.15.0
 requests==2.24.0
 scikit-image

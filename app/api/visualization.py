@@ -67,28 +67,29 @@ def return_histogram(data: HistogramRequest):
         data.GradeList, [data.GradeLevel, data.StudentName, data.StudentScore]
     )
 
-@router.post("/viz/cropcloud")
+@router.get("/viz/cropped_words")
 def return_crop_cloud(data: CropCloudRequest):
     """Endpoint produces a crop cloud of the student's progression in handwritting over time.
 
     Arguments
     ---
-    `DateRange` list - a list of two dates in the format of YYYY-MM-DD
-
-    `UserName` str - a string containing the username
+    `user_id` str - a string containing the username
+    `date_range` list - a list of two dates in the format of YYYY-MM-DD
+    `complexity_metric` str - how to calculate the complexity of words (from 'len', 'syl', 'len_count', 'syl_count')
+    `format` str - the format of the cropped word images (from 'png', 'webp', or anything OpenCSV supports)
 
     Returns:
     ---
-    `response` json - a picture of the rendered crop cloud
+    `response` json - a csv table of the cropped words
 
     Note:
     ---
     All submissions that are included in this data are pre moderation review
     and not Approved for COPPA compliance
     """
-    return crop_cloud.make_cropcloud(
-        data.user_id,
-        data.date_range,
-        data.complexity_metric,
-        data.image_format,
+    return crop_cloud.get_cropped_words(
+        user_id=data.user_id,
+        date_range=data.date_range,
+        complexity_metric=data.complexity_metric,
+        format=data.image_format,
         )
