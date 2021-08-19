@@ -19,7 +19,7 @@ DB_PASSWORD = os.getenv("RDS_PASSWORD", default="OOPS")
 DB_HOST = os.getenv("RDS_HOSTNAME", default="OOPS")
 DB_PORT = os.getenv("RDS_PORT", default="OOPS")
 
-DATABASE_URL = 'postgresql+psycopg2://{}:{}@{}:{}/{}'.format(DB_USER,DB_PASSWORD,DB_HOST,DB_PORT,DB_NAME)
+DATABASE_URL = 'postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOS}:{DB_PORT}/{DB_NAME}'
 
 engine = create_engine(
     DATABASE_URL, pool_pre_ping=True
