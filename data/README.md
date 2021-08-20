@@ -10,7 +10,7 @@
 
  As of 8/18/21
 - The storysquad.traineddata model has been trained on all --32 files, as well about 50% of --52 files, this training data, as well as the .box and .lstmf files generated while running the model can be found in storysquad-ground-truth.
-- The storysquad-ground-truth folder .tif files contain snippets of student handwriting as well as corresponding translations. As per Jake Mallory "If the data does not contain the names of children it's safe. The idea is to protect the identity of the children, not the artifacts created by them." 
+- The files in storysquad-ground-truth folder contain snippets of student handwriting, as well as corresponding translations. As per Jake Mallory "If the data does not contain the names of children it's safe. The idea is to protect the identity of the children, not the artifacts created by them." 
 - All folders in --52 numbered 5236 and higher still need to be cleaned and ground truth nees to be edited, see list below
 - These folders contain very few files, it appears that segmentation was unsuccessful:
           5209, 5214, 5216, 5223, 5233, 5243, 5246, 5251, 5252, 5253, 5256, 5259, 5262, 5263
