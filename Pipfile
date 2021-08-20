@@ -7,6 +7,10 @@ verify_ssl = "true"
 jupyter = "*"
 pep8 = "*"
 pytest = "*"
+tensorflow = "*"
+path = "*"
+pytesseract = "*"
+opencv-python = "*"
 
 [packages]
 fastapi = "==0.60.1"
@@ -32,4 +36,3 @@ wordcloud = "*"
 
 [requires]
 python_version = "3"
-

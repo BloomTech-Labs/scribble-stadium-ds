@@ -4,7 +4,7 @@ import random
 from wordcloud import WordCloud
 from io import BytesIO
 import base64
-from app.utils.wordcloud_functions import clean_text, complexity_df
+from app.utils.wordcloud.wordcloud_functions import clean_text, complexity_df
 
 router = APIRouter()
 
