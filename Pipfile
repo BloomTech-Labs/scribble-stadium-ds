@@ -10,7 +10,7 @@ pytest = "*"
 
 [packages]
 fastapi = "==0.60.1"
-google-api-core = "==1.22.2"
+google-api-core = {extras = ["grpc"], version = "==1.22.2"}
 google-auth = "==1.21.2"
 google-cloud-vision = "==1.0.0"
 googleapis-common-protos = "==1.52.0"
@@ -24,10 +24,10 @@ python-dotenv = "==0.15.0"
 requests = "==2.24.0"
 scikit-image = "*"
 scikit-learn = "==0.23.2"
-sqlalchemy = "*"
+sqlalchemy = "==1.3.20"
 uvicorn = "*"
-wordcloud = "*"
+wordcloud = "==1.8.1"
+pep8 = "*"
 
 [requires]
 python_version = "3"
-

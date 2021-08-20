@@ -1,29 +1,83 @@
+import pymysql
 import os
 import csv
-import psycopg2
 from dotenv import load_dotenv
+import boto3
+from pymysql.cursors import DictCursor
 
 load_dotenv()
 
-DB_NAME = os.getenv('DB_NAME', default='Check env variables')
-DB_USER = os.getenv('DB_USER', default='Check env variables')
-DB_PASSWORD = os.getenv('DB_PASSWORD', default='Check env variables')
-DB_HOST = os.getenv('DB_HOST', default='Check env variables')
+class CropData:
+    
+    HOST_NAME = os.getenv('MY_SQL_HOSTNAME')
+    USER_NAME = os.getenv('MY_SQL_USERNAME')
+    PASSWORD = os.getenv('MY_SQL_PASSWORD')
+    
+    def __init__(self):
+        self.HOST_NAME = self.HOST_NAME
+        self.USER_NAME = self.USER_NAME
+        self.PASSWORD = self.PASSWORD
+        self.CONNECTION = pymysql.connect(host = self.HOST_NAME, user = self.USER_NAME, password = self.PASSWORD, cursorclass=DictCursor)
+        self.CURSOR = self.CONNECTION.cursor()
 
-conn = psycopg2.connect(dbname = DB_NAME, user = DB_USER,
-                                password = DB_PASSWORD, host = DB_HOST)
+    def GetImage(self, id):
+        """Function to retrieve file name from RDS database
 
-print("CONNECTION:", conn)
+        Args:
+            id (INT): id of user entry
 
-cur = conn.cursor()
+        Returns:
+            STR: File name in S3 bucket 
+        """
+        db_query = "USE cropcloud"
+        image_query = 'SELECT id, image_url FROM cropcloud'
+        self.CURSOR.execute(db_query)
+        self.CURSOR.execute(image_query)
+        records = self.CURSOR.fetchall()
+        for row in records:
+            if row['id'] == id:
+                return row['image_url']
+    
+    def GetTranscript(self, id):
+        """Function to retrieve transcript from id
 
-sql_query = "INSERT INTO cropcloud (id, username, submission_datetime, transcript, image_url) VALUES (%s, %s, %s, %s, %s)"
+        Args:
+            id (INT): id of user entry
 
-# Getting data from .csv
-with open('37 stories.csv', 'r') as f:
-    reader = csv.reader(f)
-    next(reader)
-    for row in reader:
-        cur.execute(sql_query, row)
+        Returns:
+            STR: Transcript in S3 bucket
+        """
+        db_query = "USE cropcloud"
+        transcript_query = "SELECT id, transcript FROM cropcloud"
+        self.CURSOR.execute(db_query)
+        self.CURSOR.execute(transcript_query)
+        records = self.CURSOR.fetchall()
+        for row in records:
+            if row['id'] == id:
+                return row['transcript']
+    
+    def GetSubmissionDateTime(self, id):
+        """Function to retreive submission date time
 
-conn.commit()
+        Args:
+            id (INT): id of user entry
+
+        Returns:
+            STR: Submission Date and Time
+        """
+        db_query = "USE cropcloud"
+        datetime_query = "SELECT id, submission_datetime FROM cropcloud"
+        self.CURSOR.execute(db_query)
+        self.CURSOR.execute(datetime_query)
+        records = self.CURSOR.fetchall()
+        for row in records:
+            if row['id'] == id:
+                return row['submission_datetime']
+
+# Tests
+
+db = CropData()
+
+print(db.GetImage(3))
+print(db.GetTranscript(3))
+print(db.GetSubmissionDateTime(3))

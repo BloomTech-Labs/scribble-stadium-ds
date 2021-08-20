@@ -1,8 +1,8 @@
 from os import getenv, environ, path
 
 from dotenv import load_dotenv
-from google.cloud import vision
-from google.cloud.vision import types
+from google.cloud import vision_v1
+from google.cloud.vision_v1 import types
 
 from app.utils.moderation.text_moderation import BadWordTextModerator
 
@@ -43,7 +43,7 @@ class GoogleAPI:
             raise RuntimeError("Missing Google Credentials, Exiting app")
 
         # init the client for use by the functions
-        self.client = vision.ImageAnnotatorClient()
+        self.client = vision_v1.ImageAnnotatorClient()
 
         self.text_moderator = BadWordTextModerator(
             path.join(
