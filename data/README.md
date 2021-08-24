@@ -9,7 +9,7 @@
 - Note: for anyone with access to Story Squad data, be advised that the human transcriptions of the stories corresponding to the following Story IDs are missing pages, and are therefore inaccurate and should be removed from any comparisons of human vs computer transcriptions: 3213, 3215, 3240, 5104, 5109, 5262
 
  As of 8/18/21
-- The storysquad.traineddata model has been trained on all --32 files, as well about 50% of --52 files, this training data, as well as the .box and .lstmf files generated while running the model can be found in storysquad-ground-truth.
+- The storysquad.traineddata model has been trained on all --32 files, as well about 50% of --52 files, these files can be found in storysquad-ground-truth.
 - The files in storysquad-ground-truth folder contain snippets of student handwriting as well as corresponding transcriptions. As per Jake Mallory "If the data does not contain the names of children it's safe. The idea is to protect the identity of the children, not the artifacts created by them." 
 - All folders in --52 numbered 5236 and higher still need to be cleaned and ground truth nees to be edited, see list below
 - These folders contain very few files, it appears that segmentation was unsuccessful:
