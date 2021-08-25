@@ -18,3 +18,7 @@
 - `histogram.py`: Creates a Plotly histogram to show the distribution of `squad_scores` of a specified grade level for the current week. Additionally plots a vertical line with the most recent `squad_score` for the specified user to compare against their grade level.
 - `line_graph.py`: Creates a Plotly line graph to show the history of a specified user's `squad scores`. 
 - Accompanying exploration work for both visuals can be found in the `score_visual` [notebook](../../../notebooks/score_visual.ipynb).
+
+#### `wordcloud` subfolder:
+- `wordcloud_demodata_load.py`: We were given a zip file of 167 story submissions (already transcribed) in the form of text files to be used as demo data for our word cloud. This .py file creates a database table of these stories, which is used in the wordcloud API endpoint as a source to create word clouds with. When the wordcloud feature is integrated with the rest of the app, the data will come from the transcribed stories of real users, and this demo database can be removed. 
+- `wordcloud_functions.py`: Contains all the algorithms used in the wordcloud feature to pre-process text and determine what complex words will go in the wordcloud.
