@@ -20,5 +20,6 @@
 - Accompanying exploration work for both visuals can be found in the `score_visual` [notebook](../../../notebooks/score_visual.ipynb).
 
 #### `wordcloud` subfolder:
-- `wordcloud_demodata_load.py`: We were given a zip file of 167 story submissions (already transcribed) in the form of text files to be used as demo data for our word cloud. This .py file creates a database table of these stories, which is used in the wordcloud API endpoint as a source to create word clouds with. When the wordcloud feature is integrated with the rest of the app, the data will come from the transcribed stories of real users, and this demo database can be removed. 
-- `wordcloud_functions.py`: Contains all the algorithms used in the wordcloud feature to pre-process text and determine what complex words will go in the wordcloud.
+- `wordcloud_demodata_load.py`: We were given a zip file of 167 story submissions (already transcribed) in the form of text files to be used as demo data for our word cloud. This .py file creates a database table of these stories to an ElephantSQL database (you can alter the code to create a table just on your local machine). The table is used in the wordcloud API endpoint as a source to create word clouds with. When the wordcloud feature is integrated with the rest of the app, the data will come from the transcribed stories of real users, and this demo database can be removed. 
+    I imported the table into an AWS RDS database (if you can create one in there that would be fine). The wordcloud_database.py API must be connected to an RDS database.
+- `wordcloud_functions.py`: Contains the algorithms used in the wordcloud feature to pre-process text and determine what complex words will go in the wordcloud.
