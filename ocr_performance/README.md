@@ -29,7 +29,7 @@ NOTE:
 * Created `app.utils.img_processing.tesseract_api.TesseractAPI` as a drop in replacement for `app.utils.img_processing.google_api.GoogleAPI`
 * The Tesseract language files(`ssq.trainedata` and `storysquad.trainedata`) are stored in `.../models`
 
-    * `ssq.trainedata` is from Dakota's [tesstrain](https://github.com/dakotagporter/tesstrain) repo - it was trained on 5% of the data from the 31– folder.
+    * `ssq.trainedata` is from Dakota's [tesstrain](https://github.com/dakotagporter/tesstrain) repo - it was trained on 75% of the data from the 31– folder.
     * `storysquad.trainedata` is from SaraW - it was trained on the 32- folder and 50% of the 52- folder.
 * When the google engine is used, `GOOGLE_CREDS` must be defined in `.../.env`
 
