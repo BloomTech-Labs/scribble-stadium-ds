@@ -1,3 +1,28 @@
+Usage
+=====
+Before attempting to run these commands, please do the following
+
+* Talk to your DS lead and obtain access to the zip archive containing image files and reference transcripts for the 167 stories.
+* Unpack it inthe `data` dir of your repo - you should see `photos` and `transcripts` sub dirs containing the 314 image(.jpg)  and 167 reference transcript(.txt) files respectively.
+* Obtain the `GOOGLE_CREDS` required to use Google's Cloud Vision API and stick it in a `.env` file located in your repo's root dir.
+
+All subsequent commands must be perfrormed in your repo's root dir.
+
+Working with a new Tesseract language model(.trainedata) file
+--------------------------------------------------------------
+
+* The first step is to copy the model file into your repo's `data` dir - `cp <new .trainedata file> data/storysquad.trainedata`
+* Generate transcripts with the new model - `python -m ocr_performance.google_tesseract_transcripts`
+* Compute OCR performance - `python -m ocr_performance.ocr_performance`
+* Add and commit files to the repo - `git add data/storysquad.trainedata data/tess_storysquad_cos_error.csv; git commit -m "Latest lang and perf csv files for Tesseract" `
+
+Regenerating Google transcripts
+-------------------------------
+* Generate transcripts  - `python -m ocr_performance.google_tesseract_transcripts -e google`
+* Compute OCR performance - `python -m ocr_performance.ocr_performance -e google`
+* Add and commit files to the repo - `git add data/google_cos_error.csv; git commit -m "Latest perf csv file for Google" `
+
+
 google_tesseract_transcripts.py
 ===============================
 `python -m ocr_performance.google_tesseract_transcripts -h`
@@ -29,7 +54,7 @@ NOTE:
 * Created `app.utils.img_processing.tesseract_api.TesseractAPI` as a drop in replacement for `app.utils.img_processing.google_api.GoogleAPI`
 * The Tesseract language files(`ssq.trainedata` and `storysquad.trainedata`) are stored in `.../models`
 
-    * `ssq.trainedata` is from Dakota's [tesstrain](https://github.com/dakotagporter/tesstrain) repo - it was trained on 5% of the data from the 31– folder.
+    * `ssq.trainedata` is from Dakota's [tesstrain](https://github.com/dakotagporter/tesstrain) repo - it was trained on 75% of the data from the 31– folder.
     * `storysquad.trainedata` is from SaraW - it was trained on the 32- folder and 50% of the 52- folder.
 * When the google engine is used, `GOOGLE_CREDS` must be defined in `.../.env`
 
@@ -71,3 +96,5 @@ NOTE:
     *   `tfidf.pkl` - Tfidf vectorizer
     *   `encoder.h5` - Dimensionality reducing encoder
     *   `encoded_ref_dtm.pkl` - Encoded(dimensionality reduced) DTM(Document Term Matrix) for the reference transcripts
+
+
