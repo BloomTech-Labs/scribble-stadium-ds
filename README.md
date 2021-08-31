@@ -25,6 +25,7 @@
     + [**Infrastructure**](#infrastructure)
     + [**API Endpoints**](#api-endpoints)
     + [**Security**](#security)
+    + [**Wordcloud Feature**](#wordcloud-feature)
 #### - [Meet the Team](#meet-the-team)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
@@ -221,6 +222,12 @@ These links were important to learn where to start with `AWS`:
 - Future Considerations
    - This method is clearly a bit of a workaround. In future iterations, this class could be completely reworked into a framework for adding custom middleware solutions that are not restricted to HTTP network traffic.
    - In our application, the value of `DS_SECRET_TOKEN` is static. In future iterations this should be given routes to regenerate new tokens and deprecate compromised or old tokens. Adding this functionality would increase the security of the tokens and decrease the attack vectors that could be exploited in a production server.
+
+### **Wordcloud Feature**
+
+- API
+   - app/api/wordcloud_database.py is an endpoint that works with the front end to create a word cloud from the most complex words in a story submission. app/utils/wordcloud contains the algorithms used to determine complex words. This API fetches demo data from an RDS database that holds 167 stories. The endpoint requires the user to choose the story ID (1-167), and then returns all the words in the story, along with the weight of the words according to how complex it is (all the weights of the document added together equals 1). Front end takes the words and weights and creates an animated word cloud with it.
+
 
 # Meet the Team
 Feel free to reach out to anyone on the team with any questions about the project!
