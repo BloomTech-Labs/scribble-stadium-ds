@@ -67,7 +67,7 @@ def return_histogram(data: HistogramRequest):
         data.GradeList, [data.GradeLevel, data.StudentName, data.StudentScore]
     )
 
-@router.get("/viz/cropped_words")
+@router.post("/viz/cropped_words")
 def get_cropped_words(data: CroppedWordsRequest):
     """Endpoint produces a crop cloud of the student's progression in handwritting over time.
 
@@ -103,7 +103,7 @@ def get_cropped_words(data: CroppedWordsRequest):
         density=data.density,
         )
 
-@router.get("/viz/crop_cloud")
+@router.post("/viz/crop_cloud")
 def get_crop_cloud(data: CropCloudRequest):
     """Endpoint produces a crop cloud of the student's progression in handwritting over time.
 
