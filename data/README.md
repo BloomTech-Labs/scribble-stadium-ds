@@ -14,3 +14,5 @@
 - All folders in --52 numbered 5236 and higher still need to be cleaned and ground truth nees to be edited, see list below
 - These folders contain very few files, it appears that segmentation was unsuccessful:
           5209, 5214, 5216, 5223, 5233, 5243, 5246, 5251, 5252, 5253, 5256, 5259, 5262, 5263
+
+- Use this link for instruction for preprocessing data which has been segmented (.tif & .gt.txt files) https://docs.google.com/document/d/18ivuF40EqTIzE-BJbbk-5Rmp7CFYZ2fp1Odow0wt2T4/edit?usp=sharing
