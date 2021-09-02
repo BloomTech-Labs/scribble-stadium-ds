@@ -7,7 +7,7 @@ import base64
 from math import sqrt
 import random
 import json
-from zipfile import ZipFile
+import zipfile
 from dotenv import load_dotenv
 import numpy as np
 import pandas as pd
@@ -37,7 +37,7 @@ else:
 
 # Load the filenames inside a given zip file
 def get_filenames(zip_filename):
-    with ZipFile(zip_filename, 'r') as zip_file:
+    with zipfile.ZipFile(zip_filename, 'r') as zip_file:
         files_in_zip = zip_file.filelist
     for i, fileinfo in enumerate(files_in_zip):
         files_in_zip[i] = fileinfo.filename
@@ -116,7 +116,7 @@ def make_monochrome(image, blur=1, block_size=31, c=13):
 def test_exposure():
     stories_archive = "./data/story_images.zip"
     page_filenames = get_filenames(stories_archive)
-    with ZipFile(stories_archive, 'r') as zip_file:
+    with zipfile.ZipFile(stories_archive, 'r') as zip_file:
         page_filename = page_filenames[2]
         raw_data = zip_file.read(page_filename)
         original = cv2.imdecode(np.frombuffer(raw_data, np.uint8), 1)
@@ -274,7 +274,7 @@ def get_pages(user_id, date_range=None):
 def parse_page(page_uri):
     # open zip, read in one image
     stories_archive = "./data/story_images.zip"
-    with ZipFile(stories_archive, 'r') as zip_file:
+    with zipfile.ZipFile(stories_archive, 'r') as zip_file:
         # load and prep image
         raw_data = zip_file.read(page_uri)
     original = cv2.imdecode(np.frombuffer(raw_data, np.uint8), 1)
@@ -313,7 +313,7 @@ def fill_metadata_holes():
         if root_uri not in page_metas:
             page_data = parse_page(page_uri)
         else:
-            with ZipFile(page_metadata_file, 'r') as zip_file:
+            with zipfile.ZipFile(page_metadata_file, 'r') as zip_file:
                 buffer = zip_file.read(page_uri)
             page_data = pd.read_csv(buffer)
         all_metadata.append((csv_name, page_data))
@@ -338,7 +338,7 @@ def assemble_page_data(page_specs):
     page_data['date'] = page_specs["submission_datetime"]
 
     # add the cropped words
-    with ZipFile("./data/story_images.zip", 'r') as zip_file:
+    with zipfile.ZipFile("./data/story_images.zip", 'r') as zip_file:
         # load and prep image
         raw_data = zip_file.read(page_uri)
         original = cv2.imdecode(np.frombuffer(raw_data, np.uint8), 1)
