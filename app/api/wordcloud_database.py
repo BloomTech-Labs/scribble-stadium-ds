@@ -17,7 +17,7 @@ DB_NAME = os.getenv("RDS_DB_NAME", default="OOPS")
 DB_USER = os.getenv("RDS_USERNAME", default="OOPS")
 DB_PASSWORD = os.getenv("RDS_PASSWORD", default="OOPS")
 DB_HOST = os.getenv("RDS_HOSTNAME", default="OOPS")
-DB_PORT = os.getenv("RDS_PORT", default="OOPS")
+DB_PORT = os.getenv("RDS_PORT", default=-1)
 
 DATABASE_URL = f'postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 
