@@ -1,11 +1,7 @@
 {
     "_meta": {
         "hash": {
-<<<<<<< HEAD
-            "sha256": "4f26dc094a88119a2401185c372017f2d25bde45ddd2163d930c661a1f349aab"
-=======
             "sha256": "848cee7b974a5a77d4a8751aca270e5295d20d95a26b68de866b9993c12c4dfa"
->>>>>>> dd2911ec3cf73186ff30d9e2f02c20e34cb0ecfd
         },
         "pipfile-spec": 6,
         "requires": {
@@ -790,11 +786,7 @@
                 "sha256:d9a3c0dd1ca86728d3e235182683b4cf94cd53a867c288eaeca80ee781b2caff"
             ],
             "index": "pypi",
-<<<<<<< HEAD
-            "version": "==0.14.0"
-=======
             "version": "==0.15.0"
->>>>>>> dd2911ec3cf73186ff30d9e2f02c20e34cb0ecfd
         },
         "wordcloud": {
             "hashes": [
@@ -1786,7 +1778,7 @@
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==2.8.2"
         },
-<<<<<<< HEAD
+
         "pywin32": {
             "hashes": [
                 "sha256:595d397df65f1b2e0beaca63a883ae6d8b6df1cdea85c16ae85f6d2e648133fe",
@@ -1814,8 +1806,7 @@
             "markers": "os_name == 'nt'",
             "version": "==1.1.3"
         },
-=======
->>>>>>> dd2911ec3cf73186ff30d9e2f02c20e34cb0ecfd
+
         "pyzmq": {
             "hashes": [
                 "sha256:021e22a8c58ab294bd4b96448a2ca4e716e1d76600192ff84c33d71edb1fbd37",
