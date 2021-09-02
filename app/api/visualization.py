@@ -111,7 +111,7 @@ def get_crop_cloud(data: CropCloudRequest):
     ---
     `user_id` str - a string containing the user_id. Choices are "Chickpea", "Holmes", "XiChi", "YoungBlood", "PenDragon", "Frogurt"
 
-    `date_range` List[str] - a list of two dates in the format of YYYY-MM-DD. Submission were randomly generated between 2015-01-01 and 2021-12-31
+    `date_range` List[str] - a list of two dates in the format of YYYY-MM-DD. Submissions were randomly generated between 2015-01-01 and 2021-12-31
 
     `complexity_metric` str - how to calculate the complexity of words (from 'len', 'syl', 'len_count', 'syl_count')
 

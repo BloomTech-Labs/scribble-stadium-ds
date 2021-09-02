@@ -44,24 +44,6 @@ def get_filenames(zip_filename):
     return files_in_zip
 # Working with Zip Files  https://www.geeksforgeeks.org/working-zip-files-python/
 
-# Returns the transcript for a particular story, or a random story if no arguments are used
-def get_transcript(story_file=None):
-    transcripts_filename = "./data/story_transcripts.zip"
-    with ZipFile(transcripts_filename, 'r') as zip_file:
-        files_in_zip = zip_file.filelist
-    for i, fileinfo in enumerate(files_in_zip):
-        files_in_zip[i] = fileinfo.filename
-
-    if story_file == None:
-        story_file = random.choice(files_in_zip)
-    elif story_file not in files_in_zip:
-        raise ValueError(f"couldn't find {story_file} in story_transcripts.zip")
-
-    with ZipFile(transcripts_filename, 'r') as zip_file:
-        byte_string = zip_file.read(story_file)
-    story_text = byte_string.decode(encoding='utf-8')
-    return story_text
-
 # Create a random database for all the story images
 def create_random_database(db_filename):
     import datetime
@@ -83,25 +65,22 @@ def create_random_database(db_filename):
 
     names = []
     dates = []
-    transcripts = []
     for filename in page_filenames:
         names.append(get_random_name())
         dates.append(get_random_date())
-        match = re.search("Photo (\d{4})",filename)
-        if match:
-            pass
-            # print(match[1])
-            story_id = match[1]
-            transcript = get_transcript(f'{story_id}.txt')
-            transcripts.append(transcript)
-        else:
-            print(f"can't find {filename}'s story_id")
+        # match = re.search("Photo (\d{4})",filename)
+        # if match:
+        #     pass
+        #     # print(match[1])
+        #     story_id = match[1]
+        #     transcripts.append(transcript)
+        # else:
+        #     print(f"can't find {filename}'s story_id")
 
     user_stories = pd.DataFrame({
         'username':names,
         'submission_datetime':dates,
-        'transcript':transcripts,
-        'image_uri':page_filenames,
+        'image_url':page_filenames,
     })
     user_stories.to_csv(open(db_filename,'w'), index=False)
     user_stories.head()
@@ -274,7 +253,7 @@ def img_to_base64(image, format='.png'):
 # Filters the dataframe of whole-page metadata for a given user and date range
 # replace this with a SQL query that pulls from a database
 def get_pages(user_id, date_range=None):
-        pages = pd.read_csv("./data/stories_db.csv")
+        pages = pd.read_csv("./data/crop-cloud/stories_db.csv")
         pages["submission_datetime"] = pd.to_datetime(pages["submission_datetime"], infer_datetime_format=True)
         pages = pages[pages["username"] == user_id]
         if date_range is not None:
@@ -384,7 +363,7 @@ def get_user_words(user_id, date_range=None, complexity_metric="len_count"):
         # returns a table of words with cropped images in RGBA format
         page_data = assemble_page_data(page_specs)
         user_words = pd.concat([user_words,page_data])
-    user_words.drop(columns=['left', 'top', 'conf'], inplace=True)
+    user_words.drop(columns=['left', 'top', 'conf'], inplace=True, errors='ignore')
 
     # add complexity
     user_words["complexity"] = get_complexity(user_words, metric=complexity_metric)
@@ -598,7 +577,7 @@ if __name__ == "__main__":
     print(f"crop_cloud_json is {len(crop_cloud_json)/1024:,.0f} KB")
 
     # Generate a new random stories database
-    # create_random_database("stories_db.csv")
+    # create_random_database("./data/crop-cloud/stories_db.csv")
 
 
     ## Save the json to a sample response
