@@ -16,11 +16,11 @@ app = FastAPI(
     docs_url="/"
 )
 
-app.include_router(wordcloud_database.router, tags=['Database'])
 app.include_router(submission.router, tags=['Submission'], dependencies=[Security(get_api_key)])
 app.include_router(visualization.router, tags=['Visualization'], dependencies=[Security(get_api_key)])
 app.include_router(clustering.router, tags=['Clustering'], dependencies=[Security(get_api_key)])
 app.include_router(db.router, tags=['Database'], dependencies=[Security(get_api_key)])
+# app.include_router(wordcloud_database.router, tags=['Database'])
 
 app.add_middleware(
     CORSMiddleware,
