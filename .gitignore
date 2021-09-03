@@ -144,7 +144,12 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+# Children's story images (can't make public due to COPPA)
+data/story_images.zip
+data/story_transcripts.zip

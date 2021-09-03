@@ -542,7 +542,7 @@ def get_crop_cloud(user_id, date_range=None, complexity_metric="len_count", imag
     # cv2.destroyAllWindows()
 
     # package into json
-    crop_cloud_base64 = img_to_base64(canvas, format=image_format)
+    crop_cloud_base64 = img_to_base64(crop_cloud, format=image_format)
     crop_cloud_json = json.dumps(crop_cloud_base64)
     return crop_cloud_json
 
@@ -552,37 +552,41 @@ if __name__ == "__main__":
     # `user_id` can be "Chickpea", "Holmes", "XiChi", "YoungBlood", "PenDragon", "Frogurt"
     # `date_range` - Dates were randomly generated between 2015-01-01 and 2021-12-31
 
-    # Test GET viz/cropped_words, which calls get_cropped_words()
+    # # Test GET viz/cropped_words, which calls get_cropped_words()
     # words_json = get_cropped_words(
-    #     user_id="XiChi",
-    #     date_range=("2020-10-01", "2020-12-31"),
+    #     user_id="PenDragon",
+    #     date_range=("2019-10-01", "2020-10-31"),
     #     complexity_metric="len",
     #     image_format=".webp",
-    #     canvas_area=960*686,
+    #     canvas_area=658560,  # 960*686
     #     density=0.40,
     #     )
     # print(f"words_json is {len(words_json)/1024:,.0f} KB")
 
+    # # Save the json to a sample response
+    # with open("cropped_words.json", mode='w') as file:
+    #   file.write(words_json)
 
     # Test GET viz/crop_cloud, which calls get_crop_cloud()
     crop_cloud_json = get_crop_cloud(
-        user_id="XiChi",
-        date_range=("2020-10-01", "2020-10-01"),
+        user_id="PenDragon",
+        date_range=("2019-10-01", "2020-10-31"),
         complexity_metric="len",
         image_format=".webp",
-        canvas_width=640,
+        canvas_width=960,
         density=0.40,
         max_words=200,
         )
     print(f"crop_cloud_json is {len(crop_cloud_json)/1024:,.0f} KB")
 
+    # Save the json to a sample response
+    with open("crop_cloud.json", mode='w') as file:
+      file.write(crop_cloud_json)
+
     # Generate a new random stories database
     # create_random_database("./data/crop-cloud/stories_db.csv")
 
 
-    ## Save the json to a sample response
-    # with open("cropped_words.json", mode='w') as file:
-    #   file.write(words_json)
 
 # XiChi's page dates:
 # 2015-09-29 06:46:39
@@ -599,3 +603,57 @@ if __name__ == "__main__":
 # 2020-10-01 17:19:19
 # 2020-10-23 16:33:27
 # 2020-11-14 19:31:27
+
+# TODO:
+# Features:
+# Database Integration:
+  # right now, the crop cloud pulls it's data from images and csv's stored in the repo in zip files
+  # put this data in SQL tables in an actual database
+  # hook the crop cloud code up to the database
+# add a GET usernames endpoint so the frontend can add a drop down for usernames
+# add a GET submission_dates endpoint (given a user_id) so the frontend can add date pickers to choose a start/end date (maybe)
+# Color:
+  # convert the submission dates for a given crop cloud to d = date number (starting at 0) and D = number of dates. 
+  # colormap choices https://matplotlib.org/2.0.2/examples/color/colormaps_reference.html
+  # make a function that converts a float number and the name of a colormap to a color in RGB
+  # choose the color for each word based on it's submission date as a float (d/(D-1))
+  # put extra blur on the transparency map and layer in a colored blurred halo behind the word
+  # add parameters to both crop cloud endpoints: "color_map" and "border_width" so the frontend has artistic control
+# Page thumbnails:
+  # add page thumbnails in a row across the top of the canvas
+  # outline the thumbnails using the same color and border style as the words, so they appear associated
+  # submissions that are more than one page should appear as a stack of pages with a single border around the whole stack
+# Chronological layout:
+  # place words in even fractions just to get something simple working
+  # do the math to make the horizontal placement be choosen according to a cosine distribution so the word placements are 
+    # loosely connected to which document they came from, and so the overall word density across the canvas is constant
+  # put this equation in Desmos to start where I left off
+  # \left(1-\frac{\arccos\left(2x-1\right)}{\pi\left(D-1\right)}\right)+\frac{d}{D}
+  # https://www.desmos.com/calculator
+  # d = date number, D = number of dates. The function should make an arccosine wave that claims a d/D fraction of the vertical interval [0-1]
+  # Then pass a uniform random number and d and D into this function and you should get a cosine distribution out
+  # place the words according to this fuzzy placement, using d and D to clump the words under their page thumbnails
+# under the word cloud draw a timeline (arrow and start and end date (Feb 2021 format)) and make the style look like friendly hand drawn marker
+
+# Robustness, Accuracy and Speed:
+# The crop cloud endpoints will currently return a code 500 if you request a date with no documents.
+  # This should fail more gracefully. Perhaps return an empty word table or just the canvas image
+# Caching word bounding boxes for each page and maybe the cropped words too:
+  # debug fill_metadata_holes() so that it caches the bounding box locations of words on each page
+  # refactor assemble_page_data() to pull saved bounding box data and page images
+  # possibly cache the cropped words in the metadata if the time/space tradeoff looks good
+# Preprocessing:
+  # add auto-deskewing (rotation < 45 degrees)
+  # add auto-orienting the page (rotations of 90 degrees)
+  # auto-detect the trapezoid of the page/writing and unwarp that instead of deskewing
+  # benchmark and optimize the code. perhaps migrate functions to different libraries.
+  # during preprocessing, add standardizing the greyscale histogram to read pencil (they don't allow pen in grade school)
+  # do hyperparameter tuning to optimize the accuracy you can get from tesseract without retraining
+    # do some reading on optimizing segmentation for OCR
+    # bundle the optimized preprocessing steps and parameters into a function (raw image in, ready for OCR image out)
+    # give the optimized preprocessing function to the tesseract group
+# on tesseract add parameters for which mode, engine, and model to use to improve time and accuracy
+# plug in the in house tesseract model when it's better than the out of the box one, and re-optimize the best preprocessing parameters
+# Testing:
+  # write Unit tests
+  # write API tests
