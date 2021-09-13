@@ -146,4 +146,4 @@ cython_debug/
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
-/data/Transcribed Stories/
+/data/transcribed_stories/
