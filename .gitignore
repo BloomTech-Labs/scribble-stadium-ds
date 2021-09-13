@@ -1,3 +1,4 @@
+.idea
 *.h5
 .DS_Store
 .vscode/
@@ -145,3 +146,4 @@ cython_debug/
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+/data/Transcribed Stories/
