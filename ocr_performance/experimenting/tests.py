@@ -34,6 +34,9 @@ class TestCpuLoader(unittest.TestCase):
         self.assertTrue(len(storys) > 3, "No storys found")
 
     def test_data_file_contents(self):
+        """
+        Tests the actual contents of the images and transcriptions
+        """
         import glob
         import os
         import cv2
@@ -60,7 +63,10 @@ class TestCpuLoader(unittest.TestCase):
             story_name = fname
             fname = fname.replace("Story", "Photo")
             image_names = [fname + ".jpg", fname + " pg1.jpg", fname + " pg2.jpg"]
+
+            # Some typos occured during transcription, these patterns will generate a warning
             image_names_warning = [fname + " .jpg", fname + " pg1 .jpg", fname + " pg2 .jpg"]
+
             image_names_to_check = image_names + image_names_warning
 
             found_valid = False
