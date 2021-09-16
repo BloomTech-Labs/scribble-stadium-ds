@@ -13,18 +13,10 @@ from tkinter import filedialog as fd
 from PIL import ImageTk, Image
 import cv2
 
-
-# from imutils.perspective import four_point_transform
-
-
 def np_photo_image(image: np.ndarray):
     height, width, channels = image.shape
     data = f'P6 {width} {height} 255 '.encode() + image.astype(np.uint8).tobytes()
     return tk.PhotoImage(width=width, height=height, data=data, format='PPM')
-
-
-# np_img = np.array(Image.open(filename))
-
 
 class Application(tk.Frame):
     def __init__(self, master=None):
@@ -99,7 +91,6 @@ class Application(tk.Frame):
         self.cursor_oval_handles = []
         self.line_handles=[]
 
-
     def canvas_2_img_pt(self, canvas_pt: list):
         img_x = canvas_pt[0] / self.canvas.winfo_width() * self.np_img.shape[1]
         img_y = canvas_pt[1] / self.canvas.winfo_height() * self.np_img.shape[0]
@@ -128,8 +119,6 @@ class Application(tk.Frame):
                 if self.newest_pt_idx==2:
                     pt3 = self.img_2_canvas_pt(self.points[0])
                     self.line_handles.append( self.canvas.create_line([pt1[0], pt1[1], pt3[0], pt3[1]], fill="#ffff00"))
-
-    #self.paint()
 
     def canvas_mouseover(self, event):
         ## create elements needed
@@ -168,7 +157,6 @@ class Application(tk.Frame):
             self.canvas.coords(self.line_handles[2], [pt1[0],pt1[1],pt2[0],pt2[1]])
             self.canvas.coords(self.line_handles[3], [pt3[0], pt3[1], pt2[0], pt2[1]])
 
-
     def update_lines(self,curosor_x,curosor_y):
         last_point = self.points[-1]
 
@@ -203,7 +191,6 @@ class Application(tk.Frame):
             for i,pt in enumerate(self.points):
                 pt = self.img_2_canvas_pt()
                 self.canvas.coords(self.line_handles[i - 1], [pt1[i - 1], pt1[i], pt[i], pt[i]])
-
 
     def img_2_canvas_pt(self, pt: list):
         x = (pt[0] / self.np_img.shape[1]) * self.canvas.winfo_width()
