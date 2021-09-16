@@ -10,7 +10,7 @@ import numpy as np
 import os.path as path
 import tkinter as tk
 from tkinter import filedialog as fd
-from PIL import ImageTk, Image
+#from PIL import ImageTk, Image
 import cv2
 
 def np_photo_image(image: np.ndarray):
