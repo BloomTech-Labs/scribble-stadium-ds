@@ -10,13 +10,16 @@ import numpy as np
 import os.path as path
 import tkinter as tk
 from tkinter import filedialog as fd
-#from PIL import ImageTk, Image
+import pathlib
+# from PIL import ImageTk, Image
 import cv2
+
 
 def np_photo_image(image: np.ndarray):
     height, width, channels = image.shape
     data = f'P6 {width} {height} 255 '.encode() + image.astype(np.uint8).tobytes()
     return tk.PhotoImage(width=width, height=height, data=data, format='PPM')
+
 
 class Application(tk.Frame):
     def __init__(self, master=None):
@@ -25,15 +28,15 @@ class Application(tk.Frame):
         self.pack()
 
         self.filename = fd.askopenfilename(
-            initialdir=path.join(path.dirname(__file__), "..", "data", "transcribed_stories", "5101"))
+            initialdir=path.join(path.dirname(__file__), "..", "data", "transcribed_stories", "51--"))
         self.np_img = np.array(cv2.cvtColor(cv2.imread(self.filename), cv2.COLOR_RGB2BGR))
         self.img = np_photo_image(self.np_img)
         self.points = []
-        self.cursor_oval_handles=[]
+        self.cursor_oval_handles = []
         self.line_handles = []
         self.create_widgets()
-        self.newest_pt_idx=-1
-        #self.cursor
+        self.newest_pt_idx = -1
+        # self.cursor
 
         print(self.filename)
 
@@ -89,7 +92,7 @@ class Application(tk.Frame):
 
         self.points = []
         self.cursor_oval_handles = []
-        self.line_handles=[]
+        self.line_handles = []
 
     def canvas_2_img_pt(self, canvas_pt: list):
         img_x = canvas_pt[0] / self.canvas.winfo_width() * self.np_img.shape[1]
@@ -114,15 +117,16 @@ class Application(tk.Frame):
             pt1 = self.img_2_canvas_pt(self.points[self.newest_pt_idx])
             pt2 = self.img_2_canvas_pt(self.points[self.newest_pt_idx - 1])
             if self.line_handles[self.newest_pt_idx] is None:
-                #b,c,d,e =
-                self.line_handles[self.newest_pt_idx] = self.canvas.create_line([pt1[0], pt1[1], pt2[0], pt2[1]], fill="#ffff00")
-                if self.newest_pt_idx==2:
+                # b,c,d,e =
+                self.line_handles[self.newest_pt_idx] = self.canvas.create_line([pt1[0], pt1[1], pt2[0], pt2[1]],
+                                                                                fill="#ffff00")
+                if self.newest_pt_idx == 2:
                     pt3 = self.img_2_canvas_pt(self.points[0])
-                    self.line_handles.append( self.canvas.create_line([pt1[0], pt1[1], pt3[0], pt3[1]], fill="#ffff00"))
+                    self.line_handles.append(self.canvas.create_line([pt1[0], pt1[1], pt3[0], pt3[1]], fill="#ffff00"))
 
     def canvas_mouseover(self, event):
         ## create elements needed
-        if len(self.cursor_oval_handles)< len(self.points)+1:
+        if len(self.cursor_oval_handles) < len(self.points) + 1:
             o_size = 5
             x = event.x
             y = event.y
@@ -134,7 +138,7 @@ class Application(tk.Frame):
             pt1 = [event.x, event.y]
             o_size = 5
             oval = [pt1[0] - o_size, pt1[1] - o_size, pt1[0] + o_size, pt1[1] + o_size]
-            self.canvas.coords(self.cursor_oval_handles[-1],oval)
+            self.canvas.coords(self.cursor_oval_handles[-1], oval)
 
         ## draw line to cursor if needed
         if (self.newest_pt_idx >= 0) and (self.newest_pt_idx < 2):
@@ -144,9 +148,9 @@ class Application(tk.Frame):
             x = event.x
             y = event.y
             oval = [x - o_size, y - o_size, x + o_size, y + o_size]
-            self.canvas.coords(self.line_handles[self.newest_pt_idx], [pt1[0],pt1[1],pt2[0],pt2[1]])
+            self.canvas.coords(self.line_handles[self.newest_pt_idx], [pt1[0], pt1[1], pt2[0], pt2[1]])
 
-        elif self.newest_pt_idx==2:
+        elif self.newest_pt_idx == 2:
             pt1 = self.img_2_canvas_pt(self.points[2])
             pt2 = [event.x, event.y]
             pt3 = self.img_2_canvas_pt(self.points[0])
@@ -154,10 +158,10 @@ class Application(tk.Frame):
             x = event.x
             y = event.y
             oval = [x - o_size, y - o_size, x + o_size, y + o_size]
-            self.canvas.coords(self.line_handles[2], [pt1[0],pt1[1],pt2[0],pt2[1]])
+            self.canvas.coords(self.line_handles[2], [pt1[0], pt1[1], pt2[0], pt2[1]])
             self.canvas.coords(self.line_handles[3], [pt3[0], pt3[1], pt2[0], pt2[1]])
 
-    def update_lines(self,curosor_x,curosor_y):
+    def update_lines(self, curosor_x, curosor_y):
         last_point = self.points[-1]
 
         if len(self.points) == 0:
@@ -165,8 +169,8 @@ class Application(tk.Frame):
 
         if len(self.points) == 1:
             pass
-            pt1 = self. img_2_canvas_pt(self.points[0])
-            pt2 = [curosor_x,curosor_y]
+            pt1 = self.img_2_canvas_pt(self.points[0])
+            pt2 = [curosor_x, curosor_y]
             if self.line_handles.__len__() < 1:
                 self.line_handles.append(self.canvas.create_line(pt1, pt2, fill="#ffff00"))
             self.canvas.coords(self.line_handles[0], [pt1[0], pt1[1], pt2[0], pt2[1]])
@@ -188,7 +192,7 @@ class Application(tk.Frame):
             self.canvas.coords(self.line_handles[0], [pt1[0], pt1[1], pt2[0], pt2[1]])
 
         if len(self.points) == 4:
-            for i,pt in enumerate(self.points):
+            for i, pt in enumerate(self.points):
                 pt = self.img_2_canvas_pt()
                 self.canvas.coords(self.line_handles[i - 1], [pt1[i - 1], pt1[i], pt[i], pt[i]])
 
@@ -210,6 +214,7 @@ class Application(tk.Frame):
             self.canvas.itemconfig(self.image_handle, image=self.img)
         self.canvas.update()
         # self.paint()
+
 
 root = tk.Tk()
 app = Application(master=root)
