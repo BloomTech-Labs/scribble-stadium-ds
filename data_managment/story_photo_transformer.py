@@ -11,6 +11,7 @@ import os.path as path
 import tkinter as tk
 from tkinter import filedialog as fd
 import cv2
+from enum import IntFlag,auto
 
 def np_photo_image(image: np.ndarray):
     height, width, channels = image.shape
@@ -20,7 +21,6 @@ def np_photo_image(image: np.ndarray):
 class Application(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
-        from enum import IntFlag,auto
         self.master = master
         self.pack()
 
@@ -30,11 +30,12 @@ class Application(tk.Frame):
             modify_points=auto()
             saved=auto()
             modified=auto()
+
         self.states = States
         self.state = States.choose_file
-        # needs fixed
+
         self.filename = fd.askopenfilename(
-            initialdir=path.join(path.dirname(__file__), "..", "data", "transcribed_stories", "51--"))
+            initialdir=path.join(path.dirname(__file__), "..", "data", "transcribed_stories", "51--","5101"))
         self.np_img = np.array(cv2.cvtColor(cv2.imread(self.filename), cv2.COLOR_RGB2BGR))
         self.img = np_photo_image(self.np_img)
         self.np_img_points = [[]] * 4
@@ -133,16 +134,6 @@ class Application(tk.Frame):
                     pt2 = self.img_2_canvas_pt(self.np_img_points[pt2_idx])
                     self.canvas.coords(self.line_handles[pt1_idx], * (pt1+pt2))
 
-        # will happen when len(self.points) >= 2
-        if self.newest_pt_idx >= 0:
-            pt1 = self.img_2_canvas_pt(self.points[self.newest_pt_idx])
-            pt2 = self.img_2_canvas_pt(self.points[self.newest_pt_idx - 1])
-            if self.line_handles[self.newest_pt_idx] is None:
-                #b,c,d,e =
-                self.line_handles[self.newest_pt_idx] = self.canvas.create_line([pt1[0], pt1[1], pt2[0], pt2[1]], fill="#ffff00")
-                if self.newest_pt_idx==2:
-                    pt3 = self.img_2_canvas_pt(self.points[0])
-                    self.line_handles.append( self.canvas.create_line([pt1[0], pt1[1], pt3[0], pt3[1]], fill="#ffff00"))
 
     def canvas_mouseover(self, event):
 
@@ -203,6 +194,9 @@ class Application(tk.Frame):
         self.canvas.update()
 
 
+
 root = tk.Tk()
+# Resize the display window
+root.geometry("800x1000")
 app = Application(master=root)
 app.mainloop()
