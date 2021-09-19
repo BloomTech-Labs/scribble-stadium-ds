@@ -76,6 +76,9 @@ class Application(tk.Frame):
         directory = path.dirname(self.filename)
         filename, extension = path.basename(self.filename).split(".")
         new_file_name = path.join(directory, filename + "-transformed" + "." + extension)
+
+        self.np_img = np.array(cv2.cvtColor(self.np_img, cv2.COLOR_BGR2RGB))
+
         cv2.imwrite(new_file_name, self.np_img)
         print(new_file_name)
 
