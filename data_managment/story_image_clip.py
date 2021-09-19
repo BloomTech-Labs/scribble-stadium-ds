@@ -7,12 +7,16 @@ import os.path as path
 import tkinter as tk
 from tkinter import filedialog as fd
 import cv2
+import os
+import glob
 from enum import IntFlag,auto
 
 def np_photo_image(image: np.ndarray):
     height, width, channels = image.shape
     data = f'P6 {width} {height} 255 '.encode() + image.astype(np.uint8).tobytes()
     return tk.PhotoImage(width=width, height=height, data=data, format='PPM')
+
+
 
 
 class Application(tk.Frame):
@@ -33,6 +37,11 @@ class Application(tk.Frame):
 
         self.filename = fd.askopenfilename(
             initialdir=path.join(path.dirname(__file__), "..", "data", "transcribed_stories", "51--","5101"))
+        # correct path specifier
+        self.filename = os.path.join(*self.filename.split("/"))
+        self.filename = self.filename.replace(":", ":\\")
+        self.photo_folder = os.path.dirname(self.filename)
+
         self.np_img = np.array(cv2.cvtColor(cv2.imread(self.filename), cv2.COLOR_RGB2BGR))
         self.img = np_photo_image(self.np_img)
         self.np_img_points = [[]] * 4
@@ -72,21 +81,43 @@ class Application(tk.Frame):
     def save_button(self):
         directory = path.dirname(self.filename)
         filename, extension = path.basename(self.filename).split(".")
-        new_file_name = path.join(directory, filename + "-template" + "." + extension)
+        new_file_name = path.join(directory, filename + "-clipped" + "." + extension)
         cv2.imwrite(new_file_name, self.np_img)
         print(new_file_name)
+
+    def get_next_clip_filename(self):
+        tmp = os.path.join(self.photo_folder, "*-clip-*")
+        clips = glob.glob(tmp)
+        name, ext = os.path.splitext(os.path.basename(self.filename))
+
+        if clips ==[]:
+            ret_val =os.path.join(self.photo_folder,name+"-clip-00"+ext)
+            print(ret_val)
+            return ret_val
+        else:
+            clips.sort()
+            path,ext = os.path.splitext(clips[-1])
+            num = int(path[-2:])
+            num=num+1
+            if num <= 9 :
+                num = "0"+str(num)
+            else:
+                num = str(num)
+
+
+            retval = os.path.join(self.photo_folder,name+"-clip-"+num+ext)
+            print(path, ext, num,retval)
+            return retval
 
     def clip_button(self):
 
         def bounding_box(points):
             x_coordinates, y_coordinates = zip(*points)
 
-            return [
-                (
+            return [(
                     int(min(x_coordinates)),
                     int(min(y_coordinates))
-                 ),
-                (
+                 ),(
                     int(max(x_coordinates)),
                     int(max(y_coordinates))
                 )]
@@ -99,7 +130,7 @@ class Application(tk.Frame):
         pts = np.int32(np.array(self.np_img_points))
 
         # store the contents of the bounding box of the poly to clip
-        clip = self.np_img[box[0][1]:box[1][1], box[0][0]:box[1][0]]
+        clip = self.np_img[box[0][1]:box[1][1], box[0][0]:box[1][0]].copy()
 
         # remove the polygonal area where the image is from the working img of this phase
         cv2.fillPoly(self.np_img, [pts], (255, 255, 255))
@@ -116,8 +147,9 @@ class Application(tk.Frame):
         # mask and store result in new_img
         new_img=cv2.multiply(new_img/255.0,clip,dtype=8)
 
-        cv2.imwrite("test.png",new_img)
-
+        file_name = self.get_next_clip_filename()
+        cv2.imwrite(file_name,new_img)
+        self.resize(None)
 
     def canvas_2_img_pt(self, canvas_pt: list):
         img_x = canvas_pt[0] / self.canvas.winfo_width() * self.np_img.shape[1]
