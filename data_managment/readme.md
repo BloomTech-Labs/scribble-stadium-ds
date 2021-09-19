@@ -3,7 +3,7 @@ These modules represent phases in the pipeline
 
 ### Phase 1 - Transform the geometry of the photo: story_photo_transformer.py
 - Perform progressive perspective warps on the image given user input
-### Phase 2 - extract small images
+### Phase 2 - extract small images: story_image_clip.py
 - Allow the user to highlight and extract small drawings often captured with the story
 ### Phase 3 - Modify the color information of the photo
 - Color manipulation to help remove lines on lined writing paper
