@@ -15,8 +15,15 @@ import cv2
 
 
 def np_photo_image(image: np.ndarray):
-    height, width, channels = image.shape
-    data = f'P6 {width} {height} 255 '.encode() + image.astype(np.uint8).tobytes()
+    # This function creates the header information for PPM file format
+    # grayscale / RGB images have a differing "magic number" p5/p6
+
+    if len(image.shape) == 3:
+        height, width, channels = image.shape
+        data = f'P6 {width} {height} 255 '.encode() + image.astype(np.uint8).tobytes()
+    elif len(image.shape) == 2:
+        height, width = image.shape
+        data = f'P5 {width} {height} 255 '.encode() + image.astype(np.uint8).tobytes()
     return tk.PhotoImage(width=width, height=height, data=data, format='PPM')
 
 
@@ -86,13 +93,8 @@ class Application(tk.Frame):
         :return: None
         """
         print('Button Pressed')
-        # Get CV to convert the image to GrayScale
-        self.image_grayscale = cv2.imread(self.filename)
-        self.gray = cv2.cvtColor(self.image_grayscale, cv2.COLOR_BGR2GRAY)
-        self.resized = cv2.resize(self.gray, (800, 1000))
-        cv2.imshow('Gray image (press any key to exit)', self.resized)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+        self.np_img = cv2.cvtColor(self.np_img, cv2.COLOR_BGR2GRAY)
+        self.resize(None)
 
     def resize(self, event):
         w = self.canvas.winfo_height()
@@ -102,11 +104,8 @@ class Application(tk.Frame):
         if not self.image_handle:
             self.image_handle = self.canvas.create_image(0, 0, anchor=tk.NW, image=self.img)
         else:
-            # if (self.img.width() != w) or (self.img.height() != h):
-            # self.canvas.create_image(0, 0, anchor=tk.NW, image=self.img)
             self.canvas.itemconfig(self.image_handle, image=self.img)
         self.canvas.update()
-        # self.paint()
 
 
 root = tk.Tk()
