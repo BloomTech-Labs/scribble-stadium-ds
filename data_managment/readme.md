@@ -9,12 +9,12 @@ These modules represent phases in the pipeline
 - Color manipulation to help remove lines on lined writing paper
 ### Phase 4 - Convert to grayscale
 - Allow the user to verify and possibly modify the parameters
-### Phase 5 - Line removal
-- Apply automatic line removal, and allow user to manually remove writing lines
-### Phase 6 - Convert to individual lines of writing
-- Apply automatic writing line segmentation and allow user to verify / manually enter
-### Phase 7 - Convert to black and white
+### Phase 5 - Convert to black and white
 - Allow the user to verify and possibly modify the parameters
+### Phase 6 - Line removal
+- Apply automatic line removal, and allow user to manually remove writing lines
+### Phase 7 - Convert to individual lines of writing
+- Apply automatic writing line segmentation and allow user to verify / manually enter
 ### Phase 8 - Acquire ground truth
 - Allow user to translate the line of text
 ### Phase 9 - Test and review entire story
