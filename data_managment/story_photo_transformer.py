@@ -11,31 +11,34 @@ import os.path as path
 import tkinter as tk
 from tkinter import filedialog as fd
 import cv2
-from enum import IntFlag,auto
+from enum import IntFlag, auto
+
 
 def np_photo_image(image: np.ndarray):
     height, width, channels = image.shape
     data = f'P6 {width} {height} 255 '.encode() + image.astype(np.uint8).tobytes()
     return tk.PhotoImage(width=width, height=height, data=data, format='PPM')
 
+
 class Application(tk.Frame):
-    def __init__(self, master=None):
+    def __init__(self, next_phase, master=None):
         super().__init__(master)
+        self.next_phase = next_phase
         self.master = master
         self.pack()
 
         class States(IntFlag):
-            choose_file=auto()
-            specify_points=auto()
-            modify_points=auto()
-            saved=auto()
-            modified=auto()
+            choose_file = auto()
+            specify_points = auto()
+            modify_points = auto()
+            saved = auto()
+            modified = auto()
 
         self.states = States
         self.state = States.choose_file
 
         self.filename = fd.askopenfilename(
-            initialdir=path.join(path.dirname(__file__), "..", "data", "transcribed_stories", "51--","5101"))
+            initialdir=path.join(path.dirname(__file__), "..", "data", "transcribed_stories", "51--", "5101"))
         self.np_img = np.array(cv2.cvtColor(cv2.imread(self.filename), cv2.COLOR_RGB2BGR))
         self.img = np_photo_image(self.np_img)
         self.np_img_points = [[]] * 4
@@ -44,6 +47,7 @@ class Application(tk.Frame):
         self.state = set()
         self.state.add(States.specify_points)
         self.state.add(States.saved)
+        self.goto_next_phase_flag = None
         self.create_widgets()
 
     def create_widgets(self):
@@ -60,6 +64,11 @@ class Application(tk.Frame):
         self.quit = tk.Button(self, text="QUIT", fg="red", command=self.master.destroy)
         self.quit.pack(side="bottom")
 
+        self.next_phase_btn = tk.Button(self)
+        self.next_phase_btn["text"] = "Next Phase"
+        self.next_phase_btn["command"] = self.next_phase_button
+        self.next_phase_btn.pack(side="right")
+
         self.canvas = tk.Canvas()
         self.canvas.pack(fill="both", expand=True)
         self.canvas.create_image(8, 8, anchor=tk.NW, image=self.img)
@@ -68,9 +77,13 @@ class Application(tk.Frame):
         self.canvas.bind("<Button-1>", self.canvas_click)
         self.canvas.bind("<Motion>", self.canvas_mouseover)
 
-        self.line_handles = [self.canvas.create_line([0,0,0,0], fill="#ffff00") for i in range(4)]
-        self.cursor_oval_handles = [self.canvas.create_oval([-10,-10,10,10], fill="#ffff00") for i in range(4)]
+        self.line_handles = [self.canvas.create_line([0, 0, 0, 0], fill="#ffff00") for i in range(4)]
+        self.cursor_oval_handles = [self.canvas.create_oval([-10, -10, 10, 10], fill="#ffff00") for i in range(4)]
         self.image_handle = None
+
+    def next_phase_button(self):
+        self.goto_next_phase_flag = True
+        command = self.master.destroy()
 
     def save_button(self):
         directory = path.dirname(self.filename)
@@ -122,19 +135,17 @@ class Application(tk.Frame):
             self.state.remove(self.states.specify_points)
             self.state.add(self.states.modify_points)
 
-
     def canvas_click(self, event):
-        if  self.states.specify_points in self.state:
+        if self.states.specify_points in self.state:
             self.record_pt([event.x, event.y])
 
             # part one of line drawing, other part is handled by canvas_mouseover
-            pairs=[[0,1],[1,2],[2,3],[3,0]]
-            for pt1_idx,pt2_idx in pairs:
+            pairs = [[0, 1], [1, 2], [2, 3], [3, 0]]
+            for pt1_idx, pt2_idx in pairs:
                 if (pt1_idx < self.current_np_img_point_idx) & (pt2_idx < self.current_np_img_point_idx):
                     pt1 = self.img_2_canvas_pt(self.np_img_points[pt1_idx])
                     pt2 = self.img_2_canvas_pt(self.np_img_points[pt2_idx])
-                    self.canvas.coords(self.line_handles[pt1_idx], * (pt1+pt2))
-
+                    self.canvas.coords(self.line_handles[pt1_idx], *(pt1 + pt2))
 
     def canvas_mouseover(self, event):
 
@@ -145,16 +156,15 @@ class Application(tk.Frame):
             oval = [pt1[0] - o_size, pt1[1] - o_size, pt1[0] + o_size, pt1[1] + o_size]
             self.canvas.coords(self.cursor_oval_handles[self.current_np_img_point_idx], oval)
 
-
         ## draw line to cursor if needed
         if (self.current_np_img_point_idx > 0) and (self.current_np_img_point_idx < 3):
-            pt1 = self.img_2_canvas_pt(self.np_img_points[self.current_np_img_point_idx-1])
+            pt1 = self.img_2_canvas_pt(self.np_img_points[self.current_np_img_point_idx - 1])
             pt2 = [event.x, event.y]
             o_size = 5
             x = event.x
             y = event.y
             oval = [x - o_size, y - o_size, x + o_size, y + o_size]
-            self.canvas.coords(self.line_handles[self.current_np_img_point_idx-1], [pt1[0], pt1[1], pt2[0], pt2[1]])
+            self.canvas.coords(self.line_handles[self.current_np_img_point_idx - 1], [pt1[0], pt1[1], pt2[0], pt2[1]])
 
         elif self.current_np_img_point_idx == 3:
             pt1 = self.img_2_canvas_pt(self.np_img_points[2])
@@ -195,9 +205,28 @@ class Application(tk.Frame):
         self.canvas.update()
 
 
+if __name__ == "__main__":
+    import story_image_clip
+    import story_photo_GUI_grayscale
+    phase_list = [Application, story_image_clip,story_photo_GUI_grayscale]
 
-root = tk.Tk()
-# Resize the display window
-root.geometry("800x1000")
-app = Application(master=root)
-app.mainloop()
+    #root = tk.Tk()
+    # Resize the display window
+    #root.geometry("800x1000")
+    #app = Application(master=root, next_phase=phase2)
+    #app.mainloop()  # this call is "blocking"
+
+    first = True
+    root = tk.Tk()
+    app = Application(master=root, next_phase=None)
+
+    for app_to_run in phase_list:
+        if app.goto_next_phase_flag or first:
+            if not first:
+                root = tk.Tk()
+                app = app_to_run.Application(master=root, next_phase=None)
+            # Resize the display window
+            root.geometry("800x1000")
+
+            app.mainloop()  # this call is "blocking"
+            first=False

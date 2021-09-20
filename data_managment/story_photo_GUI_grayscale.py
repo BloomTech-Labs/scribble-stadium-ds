@@ -107,9 +107,9 @@ class Application(tk.Frame):
             self.canvas.itemconfig(self.image_handle, image=self.img)
         self.canvas.update()
 
-
-root = tk.Tk()
-# Resize the display window
-root.geometry("800x1000")
-app = Application(master=root)
-app.mainloop()
+if __name__ == "__main__":
+    root = tk.Tk()
+    # Resize the display window
+    root.geometry("800x1000")
+    app = Application(master=root)
+    app.mainloop()
