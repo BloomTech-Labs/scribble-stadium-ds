@@ -208,16 +208,12 @@ class Application(tk.Frame):
 if __name__ == "__main__":
     import story_image_clip
     import story_photo_GUI_grayscale
-    phase_list = [Application, story_image_clip,story_photo_GUI_grayscale]
 
-    #root = tk.Tk()
-    # Resize the display window
-    #root.geometry("800x1000")
-    #app = Application(master=root, next_phase=phase2)
-    #app.mainloop()  # this call is "blocking"
+    phase_list = [Application, story_image_clip, story_photo_GUI_grayscale]
 
     first = True
     root = tk.Tk()
+    root.geometry("800x1000")
     app = Application(master=root, next_phase=None)
 
     for app_to_run in phase_list:
@@ -225,8 +221,8 @@ if __name__ == "__main__":
             if not first:
                 root = tk.Tk()
                 app = app_to_run.Application(master=root, next_phase=None)
-            # Resize the display window
-            root.geometry("800x1000")
+                # Resize the display window
+                root.geometry("800x1000")
 
             app.mainloop()  # this call is "blocking"
-            first=False
+            first = False
