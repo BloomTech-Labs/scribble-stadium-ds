@@ -20,7 +20,7 @@ def np_photo_image(image: np.ndarray):
 
 
 class Application(tk.Frame):
-    def __init__(self, master=None):
+    def __init__(self, next_phase,master=None):
         super().__init__(master)
         self.master = master
         self.pack()
@@ -243,9 +243,9 @@ class Application(tk.Frame):
         self.canvas.update()
 
 
-
-root = tk.Tk()
-# Resize the display window
-root.geometry("800x1000")
-app = Application(master=root)
-app.mainloop()
+if __name__== "__main__":
+    root = tk.Tk()
+    # Resize the display window
+    root.geometry("800x1000")
+    app = Application(master=root)
+    app.mainloop()
