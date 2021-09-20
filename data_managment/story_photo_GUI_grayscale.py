@@ -83,6 +83,8 @@ class Application(tk.Frame):
         """
         directory = path.dirname(self.filename)
         filename, extension = path.basename(self.filename).split(".")
+        if "jpg" in extension:
+            extension="png"
         new_file_name = path.join(directory, filename + "-grayscale" + "." + extension)
         cv2.imwrite(new_file_name, self.np_img_grayscale)
         print('File saved as grayscale, path -->', new_file_name)
