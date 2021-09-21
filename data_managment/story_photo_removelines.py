@@ -5,6 +5,13 @@ version of the photo used for further processing. This template will also act as
 transformations required in the future.
 
 image will be saved with _template appended before the file extension
+
+#1 sharpen image
+#2 change it image to black and white
+#3 remove horizontal lines
+#4 use denoising autoencoder to remove background noise
+
+at the moment this phase is taking in a B&W image
 """
 
 import numpy as np
