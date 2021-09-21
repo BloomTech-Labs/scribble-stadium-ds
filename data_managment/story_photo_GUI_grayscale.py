@@ -20,7 +20,7 @@ class Application(PipelinePhase):
 
 
         # Convert image to grayscale
-        self.np_img_grayscale = np.array(cv2.cvtColor(cv2.imread(self.filename), cv2.COLOR_BGR2GRAY))
+        self.np_img_grayscale = np.array(cv2.cvtColor(self.np_img, cv2.COLOR_BGR2GRAY))
 
         self.points = []
         self.cursor_oval_handles = []
