@@ -49,6 +49,12 @@ class Application(PipelinePhase):
         self.save_btn_bw["command"] = self.save_button_bw
         self.save_btn_bw.pack(side="left")
 
+        # Next Phase button
+        self.next_phase_btn = tk.Button(self)
+        self.next_phase_btn["text"] = "Next Phase"
+        self.next_phase_btn["command"] = self.next_phase_button
+        self.next_phase_btn.pack(side="right")
+
         # Quit Button
         self.quit = tk.Button(self, text="QUIT", fg="red", command=self.master.destroy)
         self.quit.pack(side="right")
@@ -62,6 +68,10 @@ class Application(PipelinePhase):
         # self.canvas.bind("<Motion>", self.canvas_mouseover)
 
         self.image_handle = None
+
+    def next_phase_button(self):
+        self.goto_next_phase_flag = True
+        command = self.master.destroy()
 
     def save_button_bw(self):
         """
