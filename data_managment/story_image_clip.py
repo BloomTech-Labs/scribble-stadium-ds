@@ -50,6 +50,7 @@ class Application(tk.Frame):
         self.state = set()
         self.state.add(States.specify_points)
         self.state.add(States.saved)
+        self.goto_next_phase_flag = None
         self.create_widgets()
 
     def create_widgets(self):
@@ -66,6 +67,11 @@ class Application(tk.Frame):
         self.quit = tk.Button(self, text="QUIT", fg="red", command=self.master.destroy)
         self.quit.pack(side="bottom")
 
+        self.next_phase_btn = tk.Button(self)
+        self.next_phase_btn["text"] = "Next Phase"
+        self.next_phase_btn["command"] = self.next_phase_button
+        self.next_phase_btn.pack(side="right")
+
         self.canvas = tk.Canvas()
         self.canvas.pack(fill="both", expand=True)
         self.canvas.create_image(8, 8, anchor=tk.NW, image=self.img)
@@ -77,6 +83,10 @@ class Application(tk.Frame):
         self.line_handles = [self.canvas.create_line([0,0,0,0], fill="#ffff00") for i in range(4)]
         self.cursor_oval_handles = [self.canvas.create_oval([-10,-10,10,10], fill="#ffff00") for i in range(4)]
         self.image_handle = None
+
+    def next_phase_button(self):
+        self.goto_next_phase_flag = True
+        command = self.master.destroy()
 
     def save_button(self):
         directory = path.dirname(self.filename)
