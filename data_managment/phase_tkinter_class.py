@@ -30,9 +30,12 @@ class PipelinePhase(tk.Frame):
             self.filename = fd.askopenfilename(
                 initialdir=path.join(path.dirname(__file__), "..", "data", "transcribed_stories", "51--", "5101"))
 
-            # correct path specifier
-            self.filename = os.path.join(*self.filename.split("/"))
-            self.filename = self.filename.replace(":", ":\\")
+            # Check if the OS is Windows or Linux based
+            if ':' in self.filename:
+                # correct path specifier
+                self.filename = os.path.join(*self.filename.split("/"))
+                self.filename = self.filename.replace(":", ":\\")
+
             self.photo_folder = os.path.dirname(self.filename)
             self.np_img = cv2.imread(self.filename, cv2.IMREAD_UNCHANGED - cv2.IMREAD_IGNORE_ORIENTATION)
 
