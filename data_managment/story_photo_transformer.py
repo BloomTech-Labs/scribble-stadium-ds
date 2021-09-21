@@ -9,23 +9,16 @@ image will be saved with _transformed appended before the file extension
 import numpy as np
 import os.path as path
 import tkinter as tk
-from tkinter import filedialog as fd
+
 import cv2
+from phase_tkinter_class import PipelinePhase
+from phase_tkinter_class import np_photo_image
 from enum import IntFlag, auto
 
 
-def np_photo_image(image: np.ndarray):
-    height, width, channels = image.shape
-    data = f'P6 {width} {height} 255 '.encode() + image.astype(np.uint8).tobytes()
-    return tk.PhotoImage(width=width, height=height, data=data, format='PPM')
-
-
-class Application(tk.Frame):
-    def __init__(self, next_phase, master=None):
-        super().__init__(master)
-        self.next_phase = next_phase
-        self.master = master
-        self.pack()
+class Application(PipelinePhase):
+    def __init__(self, next_phase, master=None, prev_phase: PipelinePhase = None):
+        super().__init__(next_phase, master=master, prev_phase=prev_phase)
 
         class States(IntFlag):
             choose_file = auto()
@@ -37,17 +30,13 @@ class Application(tk.Frame):
         self.states = States
         self.state = States.choose_file
 
-        self.filename = fd.askopenfilename(
-            initialdir=path.join(path.dirname(__file__), "..", "data", "transcribed_stories", "51--", "5101"))
-        self.np_img = np.array(cv2.cvtColor(cv2.imread(self.filename), cv2.COLOR_RGB2BGR))
-        self.img = np_photo_image(self.np_img)
         self.np_img_points = [[]] * 4
         self.current_np_img_point_idx = 0
 
         self.state = set()
         self.state.add(States.specify_points)
         self.state.add(States.saved)
-        self.goto_next_phase_flag = None
+
         self.create_widgets()
 
     def create_widgets(self):
@@ -71,7 +60,7 @@ class Application(tk.Frame):
 
         self.canvas = tk.Canvas()
         self.canvas.pack(fill="both", expand=True)
-        self.canvas.create_image(8, 8, anchor=tk.NW, image=self.img)
+        self.canvas.create_image(8, 8, anchor=tk.NW, image=self.photo_image)
 
         self.canvas.bind('<Configure>', self.resize)
         self.canvas.bind("<Button-1>", self.canvas_click)
@@ -88,9 +77,12 @@ class Application(tk.Frame):
     def save_button(self):
         directory = path.dirname(self.filename)
         filename, extension = path.basename(self.filename).split(".")
-        new_file_name = path.join(directory, filename + "-transformed" + "." + extension)
+        new_file_name = path.join(directory, filename + "-clipped" + "." + extension)
+        # convert before saving
         self.np_img = np.array(cv2.cvtColor(self.np_img, cv2.COLOR_BGR2RGB))
         cv2.imwrite(new_file_name, self.np_img)
+        # convert after saving so next phase gets correct image
+        self.np_img = np.array(cv2.cvtColor(self.np_img, cv2.COLOR_RGB2BGR))
         print(new_file_name)
 
     def transform_button(self):
@@ -109,7 +101,7 @@ class Application(tk.Frame):
         resized_photoimage = np_photo_image(resized)
 
         self.np_img = resized
-        self.img = resized_photoimage
+        self.photo_image = resized_photoimage
         self.canvas.create_image(0, 0, anchor=tk.NW, image=resized_photoimage)
         print(self.master.winfo_height())
 
@@ -185,13 +177,13 @@ class Application(tk.Frame):
     def resize(self, event):
         w = self.canvas.winfo_height()
         h = self.canvas.winfo_width()
-        self.img = np_photo_image(cv2.resize(self.np_img, (h, w)))
+        self.photo_image = np_photo_image(cv2.resize(self.np_img, (h, w)))
 
         if not self.image_handle:
-            self.image_handle = self.canvas.create_image(0, 0, anchor=tk.NW, image=self.img)
+            self.image_handle = self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo_image)
             self.canvas.tag_lower(self.image_handle)
         else:
-            self.canvas.itemconfig(self.image_handle, image=self.img)
+            self.canvas.itemconfig(self.image_handle, image=self.photo_image)
         pairs = [[0, 1], [1, 2], [2, 3], [3, 0]]
         for pt1_idx, pt2_idx in pairs:
             if (pt1_idx < self.current_np_img_point_idx) & (pt2_idx < self.current_np_img_point_idx):
@@ -219,8 +211,9 @@ if __name__ == "__main__":
     for app_to_run in phase_list:
         if app.goto_next_phase_flag or first:
             if not first:
+                last_phase=app
                 root = tk.Tk()
-                app = app_to_run.Application(master=root, next_phase=None)
+                app = app_to_run.Application(master=root, next_phase=None, prev_phase = last_phase)
                 # Resize the display window
                 root.geometry("800x1000")
 

@@ -10,33 +10,14 @@ image will be saved with _grayscale appended before the file extension
 import numpy as np
 import os.path as path
 import tkinter as tk
-from tkinter import filedialog as fd
 import cv2
+from phase_tkinter_class import PipelinePhase
+from phase_tkinter_class import np_photo_image
 
+class Application(PipelinePhase):
+    def __init__(self, next_phase, master=None, prev_phase: PipelinePhase = None):
+        super().__init__(next_phase, master=master, prev_phase=prev_phase)
 
-def np_photo_image(image: np.ndarray):
-    # This function creates the header information for PPM file format
-    # grayscale / RGB images have a differing "magic number" p5/p6
-
-    if len(image.shape) == 3:
-        height, width, channels = image.shape
-        data = f'P6 {width} {height} 255 '.encode() + image.astype(np.uint8).tobytes()
-    elif len(image.shape) == 2:
-        height, width = image.shape
-        data = f'P5 {width} {height} 255 '.encode() + image.astype(np.uint8).tobytes()
-    return tk.PhotoImage(width=width, height=height, data=data, format='PPM')
-
-
-class Application(tk.Frame):
-    def __init__(self,next_phase,master=None):
-        super().__init__(master)
-        self.master = master
-        self.pack()
-
-        self.filename = fd.askopenfilename(
-            initialdir=path.join(path.dirname(__file__), "..", "data", "transcribed_stories", "51--", "5101"))
-        self.np_img = np.array(cv2.cvtColor(cv2.imread(self.filename), cv2.COLOR_RGB2BGR))
-        self.img = np_photo_image(self.np_img)
 
         # Convert image to grayscale
         self.np_img_grayscale = np.array(cv2.cvtColor(cv2.imread(self.filename), cv2.COLOR_BGR2GRAY))
@@ -76,7 +57,7 @@ class Application(tk.Frame):
         # canvas
         self.canvas = tk.Canvas()
         self.canvas.pack(fill="both", expand=True)
-        self.canvas.create_image(8, 8, anchor=tk.NW, image=self.img)
+        self.canvas.create_image(8, 8, anchor=tk.NW, image=self.photo_image)
         self.canvas.bind('<Configure>', self.resize)
         # self.canvas.bind("<Button-1>", self.canvas_click)
         # self.canvas.bind("<Motion>", self.canvas_mouseover)
@@ -112,17 +93,17 @@ class Application(tk.Frame):
     def resize(self, event):
         w = self.canvas.winfo_height()
         h = self.canvas.winfo_width()
-        self.img = np_photo_image(cv2.resize(self.np_img, (h, w)))
+        self.photo_image = np_photo_image(cv2.resize(self.np_img, (h, w)))
 
         if not self.image_handle:
-            self.image_handle = self.canvas.create_image(0, 0, anchor=tk.NW, image=self.img)
+            self.image_handle = self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo_image)
         else:
-            self.canvas.itemconfig(self.image_handle, image=self.img)
+            self.canvas.itemconfig(self.image_handle, image=self.photo_image)
         self.canvas.update()
 
 if __name__ == "__main__":
     root = tk.Tk()
     # Resize the display window
     root.geometry("800x1000")
-    app = Application(master=root)
+    app = Application(master=root, next_phase=None)
     app.mainloop()

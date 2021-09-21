@@ -12,24 +12,15 @@ import os.path as path
 import tkinter as tk
 from tkinter import filedialog as fd
 import cv2
+from phase_tkinter_class import PipelinePhase
+from phase_tkinter_class import np_photo_image
 
 
-def np_photo_image(image: np.ndarray):
-    height, width, channels = image.shape
-    data = f'P6 {width} {height} 255 '.encode() + image.astype(np.uint8).tobytes()
-    return tk.PhotoImage(width=width, height=height, data=data, format='PPM')
+class Application(PipelinePhase):
+    def __init__(self, next_phase, master=None, prev_phase: PipelinePhase = None):
+        super().__init__(next_phase, master=master, prev_phase=prev_phase)
 
 
-class Application(tk.Frame):
-    def __init__(self, master=None):
-        super().__init__(master)
-        self.master = master
-        self.pack()
-
-        self.filename = fd.askopenfilename(
-            initialdir=path.join(path.dirname(__file__), "..", "data", "transcribed_stories", "51--", "5101"))
-        self.np_img = np.array(cv2.cvtColor(cv2.imread(self.filename), cv2.COLOR_RGB2BGR))
-        self.img = np_photo_image(self.np_img)
         self.points = []
         self.cursor_oval_handles = []
         self.line_handles = []
@@ -55,7 +46,7 @@ class Application(tk.Frame):
 
         self.canvas = tk.Canvas()
         self.canvas.pack(fill="both", expand=True)
-        self.canvas.create_image(8, 8, anchor=tk.NW, image=self.img)
+        self.canvas.create_image(8, 8, anchor=tk.NW, image=self.photo_image)
         self.canvas.bind('<Configure>', self.resize)
         # self.canvas.bind("<Button-1>", self.canvas_click)
         # self.canvas.bind("<Motion>", self.canvas_mouseover)
@@ -65,9 +56,14 @@ class Application(tk.Frame):
     def save_button(self):
         directory = path.dirname(self.filename)
         filename, extension = path.basename(self.filename).split(".")
-        new_file_name = path.join(directory, filename + "-template" + "." + extension)
+        new_file_name = path.join(directory, filename + "-clipped" + "." + extension)
+        # convert before saving
+        self.np_img = np.array(cv2.cvtColor(self.np_img, cv2.COLOR_BGR2RGB))
         cv2.imwrite(new_file_name, self.np_img)
+        # convert after saving so next phase gets correct image
+        self.np_img = np.array(cv2.cvtColor(self.np_img, cv2.COLOR_RGB2BGR))
         print(new_file_name)
+
 
     # def transform_button(self):
     #     can_h = self.canvas.winfo_height()
@@ -85,7 +81,7 @@ class Application(tk.Frame):
     #     resized_photoimage = np_photo_image(resized)
     #
     #     self.np_img = resized
-    #     self.img = resized_photoimage
+    #     self.photo_image = resized_photoimage
     #     self.canvas.create_image(0, 0, anchor=tk.NW, image=resized_photoimage)
     #     print(self.master.winfo_height())
     #
@@ -113,14 +109,14 @@ class Application(tk.Frame):
     #
     #     # will happen when len(self.points) >= 2
     #     if self.newest_pt_idx >= 0:
-    #         pt1 = self.img_2_canvas_pt(self.points[self.newest_pt_idx])
-    #         pt2 = self.img_2_canvas_pt(self.points[self.newest_pt_idx - 1])
+    #         pt1 = self.photo_image_2_canvas_pt(self.points[self.newest_pt_idx])
+    #         pt2 = self.photo_image_2_canvas_pt(self.points[self.newest_pt_idx - 1])
     #         if self.line_handles[self.newest_pt_idx] is None:
     #             # b,c,d,e =
     #             self.line_handles[self.newest_pt_idx] = self.canvas.create_line([pt1[0], pt1[1], pt2[0], pt2[1]],
     #                                                                             fill="#ffff00")
     #             if self.newest_pt_idx == 2:
-    #                 pt3 = self.img_2_canvas_pt(self.points[0])
+    #                 pt3 = self.photo_image_2_canvas_pt(self.points[0])
     #                 self.line_handles.append(self.canvas.create_line([pt1[0], pt1[1], pt3[0], pt3[1]], fill="#ffff00"))
 
     # def canvas_mouseover(self, event):
@@ -141,7 +137,7 @@ class Application(tk.Frame):
     #
     #     ## draw line to cursor if needed
     #     if (self.newest_pt_idx >= 0) and (self.newest_pt_idx < 2):
-    #         pt1 = self.img_2_canvas_pt(self.points[self.newest_pt_idx])
+    #         pt1 = self.photo_image_2_canvas_pt(self.points[self.newest_pt_idx])
     #         pt2 = [event.x, event.y]
     #         o_size = 5
     #         x = event.x
@@ -150,9 +146,9 @@ class Application(tk.Frame):
     #         self.canvas.coords(self.line_handles[self.newest_pt_idx], [pt1[0], pt1[1], pt2[0], pt2[1]])
     #
     #     elif self.newest_pt_idx == 2:
-    #         pt1 = self.img_2_canvas_pt(self.points[2])
+    #         pt1 = self.photo_image_2_canvas_pt(self.points[2])
     #         pt2 = [event.x, event.y]
-    #         pt3 = self.img_2_canvas_pt(self.points[0])
+    #         pt3 = self.photo_image_2_canvas_pt(self.points[0])
     #         o_size = 5
     #         x = event.x
     #         y = event.y
@@ -168,14 +164,14 @@ class Application(tk.Frame):
     #
     #     if len(self.points) == 1:
     #         pass
-    #         pt1 = self.img_2_canvas_pt(self.points[0])
+    #         pt1 = self.photo_image_2_canvas_pt(self.points[0])
     #         pt2 = [curosor_x, curosor_y]
     #         if self.line_handles.__len__() < 1:
     #             self.line_handles.append(self.canvas.create_line(pt1, pt2, fill="#ffff00"))
     #         self.canvas.coords(self.line_handles[0], [pt1[0], pt1[1], pt2[0], pt2[1]])
     #
     #     if len(self.points) == 2:
-    #         pt1 = self.img_2_canvas_pt(self.points[1])
+    #         pt1 = self.photo_image_2_canvas_pt(self.points[1])
     #         pt2 = [curosor_x, curosor_y]
     #         if self.line_handles.__len__() < 2:
     #             self.line_handles.append(self.canvas.create_line(pt1, pt2, fill="#ffff00"))
@@ -183,7 +179,7 @@ class Application(tk.Frame):
     #         self.canvas.coords(self.line_handles[0], [pt1[0], pt1[1], pt2[0], pt2[1]])
     #
     #     if len(self.points) == 3:
-    #         pt1 = self.img_2_canvas_pt(self.points[2])
+    #         pt1 = self.photo_image_2_canvas_pt(self.points[2])
     #         pt2 = [curosor_x, curosor_y]
     #         if self.line_handles.__len__() < 3:
     #             self.line_handles.append(self.canvas.create_line(pt1, pt2, fill="#ffff00"))
@@ -192,7 +188,7 @@ class Application(tk.Frame):
     #
     #     if len(self.points) == 4:
     #         for i, pt in enumerate(self.points):
-    #             pt = self.img_2_canvas_pt()
+    #             pt = self.photo_image_2_canvas_pt()
     #             self.canvas.coords(self.line_handles[i - 1], [pt1[i - 1], pt1[i], pt[i], pt[i]])
 
     # def img_2_canvas_pt(self, pt: list):
@@ -203,20 +199,21 @@ class Application(tk.Frame):
     def resize(self, event):
         w = self.canvas.winfo_height()
         h = self.canvas.winfo_width()
-        self.img = np_photo_image(cv2.resize(self.np_img, (h, w)))
+        self.photo_image = np_photo_image(cv2.resize(self.np_img, (h, w)))
 
         if not self.image_handle:
-            self.image_handle = self.canvas.create_image(0, 0, anchor=tk.NW, image=self.img)
+            self.image_handle = self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo_image)
         else:
-            # if (self.img.width() != w) or (self.img.height() != h):
-            # self.canvas.create_image(0, 0, anchor=tk.NW, image=self.img)
-            self.canvas.itemconfig(self.image_handle, image=self.img)
+            # if (self.photo_image.width() != w) or (self.photo_image.height() != h):
+            # self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo_image)
+            self.canvas.itemconfig(self.image_handle, image=self.photo_image)
         self.canvas.update()
         # self.paint()
 
 
-root = tk.Tk()
-# Resize the display window
-root.geometry("800x1000")
-app = Application(master=root)
-app.mainloop()
+if __name__ == "__main__":
+    root = tk.Tk()
+    # Resize the display window
+    root.geometry("800x1000")
+    app = Application(master=root, next_phase=None)
+    app.mainloop()
