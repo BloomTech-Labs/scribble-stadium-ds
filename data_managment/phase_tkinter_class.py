@@ -8,7 +8,7 @@ import os
 
 def np_photo_image(image: np.ndarray):
     # This function creates the header information for PPM file format
-    # grayscale / RGB images have a differing "magic number" p5/p6
+    # grayscale / RGB images have a digiffering "magic number" p5/p6
 
     if len(image.shape) == 3:
         height, width, channels = image.shape

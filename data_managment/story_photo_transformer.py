@@ -201,8 +201,10 @@ class Application(PipelinePhase):
 if __name__ == "__main__":
     import story_image_clip
     import story_photo_GUI_grayscale
+    import story_photo_GUI_backandwhite
+    import story_photo_removelines
 
-    phase_list = [Application, story_image_clip, story_photo_GUI_grayscale]
+    phase_list = [Application, story_image_clip, story_photo_GUI_grayscale,story_photo_GUI_backandwhite,story_photo_removelines]
 
     first = True
     root = tk.Tk()
