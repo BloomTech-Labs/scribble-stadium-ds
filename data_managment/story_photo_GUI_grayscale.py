@@ -78,6 +78,7 @@ class Application(PipelinePhase):
         if "jpg" in extension:
             extension="png"
         new_file_name = path.join(directory, filename + "-grayscale" + "." + extension)
+        self.filename = new_file_name
         cv2.imwrite(new_file_name, self.np_img_grayscale)
         print('File saved as grayscale, path -->', new_file_name)
 

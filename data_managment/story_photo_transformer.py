@@ -83,6 +83,7 @@ class Application(PipelinePhase):
         cv2.imwrite(new_file_name, self.np_img)
         # convert after saving so next phase gets correct image
         self.np_img = np.array(cv2.cvtColor(self.np_img, cv2.COLOR_RGB2BGR))
+        self.filename = new_file_name
         print(new_file_name)
 
     def transform_button(self):
