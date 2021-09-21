@@ -88,6 +88,7 @@ class Application(PipelinePhase):
             extension = "png"
         new_file_name = path.join(directory, filename + "-grayscale" + "." + extension)
         cv2.imwrite(new_file_name, self.np_img_grayscale)
+        self.filename = new_file_name
         print('File saved as grayscale, path -->', new_file_name)
 
     def show_as_grayscale_button(self):
@@ -110,6 +111,7 @@ class Application(PipelinePhase):
             extension = "png"
         new_file_name = path.join(directory, filename + "-bw" + "." + extension)
         cv2.imwrite(new_file_name, self.np_img_bw)
+        self.filename = new_file_name
         print('File saved as Black and White, path -->', new_file_name)
 
     def show_as_bw_button(self):
