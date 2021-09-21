@@ -28,7 +28,7 @@ def np_photo_image(image: np.ndarray):
 
 
 class Application(tk.Frame):
-    def __init__(self, master=None):
+    def __init__(self,next_phase,master=None):
         super().__init__(master)
         self.master = master
         self.pack()
@@ -44,6 +44,7 @@ class Application(tk.Frame):
         self.points = []
         self.cursor_oval_handles = []
         self.line_handles = []
+        self.goto_next_phase_flag = None
         self.create_widgets()
         self.newest_pt_idx = -1
         # self.cursor
@@ -66,6 +67,12 @@ class Application(tk.Frame):
         self.quit = tk.Button(self, text="QUIT", fg="red", command=self.master.destroy)
         self.quit.pack(side="bottom")
 
+        # Next Phase Button
+        self.next_phase_btn = tk.Button(self)
+        self.next_phase_btn["text"] = "Next Phase"
+        self.next_phase_btn["command"] = self.next_phase_button
+        self.next_phase_btn.pack(side="right")
+
         # canvas
         self.canvas = tk.Canvas()
         self.canvas.pack(fill="both", expand=True)
@@ -75,6 +82,10 @@ class Application(tk.Frame):
         # self.canvas.bind("<Motion>", self.canvas_mouseover)
 
         self.image_handle = None
+
+    def next_phase_button(self):
+        self.goto_next_phase_flag = True
+        command = self.master.destroy()
 
     def save_button_grayscale(self):
         """
