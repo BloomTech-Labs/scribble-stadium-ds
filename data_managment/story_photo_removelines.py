@@ -269,9 +269,9 @@ class Application(tk.Frame):
         self.canvas.update()
         # self.paint()
 
-
-root = tk.Tk()
-# Resize the display window
-root.geometry("800x1000")
-app = Application(master=root)
-app.mainloop()
+if __name__ == "__main__":
+    root = tk.Tk()
+    # Resize the display window
+    root.geometry("800x1000")
+    app = Application(master=root, next_phase=None)
+    app.mainloop()
