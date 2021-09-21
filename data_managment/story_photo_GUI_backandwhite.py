@@ -17,18 +17,14 @@ import cv2
 from phase_tkinter_class import PipelinePhase
 from phase_tkinter_class import np_photo_image
 
+
 class Application(PipelinePhase):
     def __init__(self, next_phase, master=None, prev_phase: PipelinePhase = None):
         super().__init__(next_phase, master=master, prev_phase=prev_phase)
 
-
-        # Convert image to grayscale
-        self.np_img_grayscale = np.array(cv2.cvtColor(cv2.imread(self.filename), cv2.COLOR_BGR2GRAY))
-
         # Convert image to Black and White
         self.im_gray = cv2.imread(self.filename, cv2.IMREAD_GRAYSCALE)
         (thresh, self.np_img_bw) = cv2.threshold(self.im_gray, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
-        # self.np_img_bw = cv2.threshold(self.im_gray, thresh, 255, cv2.THRESH_BINARY)[1]
 
         self.points = []
         self.cursor_oval_handles = []
@@ -40,22 +36,12 @@ class Application(PipelinePhase):
         print(self.filename)
 
     def create_widgets(self):
-        self.show_as_grayscale = tk.Button(self)
-        self.show_as_grayscale["text"] = "Show as Grayscale"
-        self.show_as_grayscale["command"] = self.show_as_grayscale_button
-        self.show_as_grayscale.pack(side="left")
 
         # Show button to convert to Black and White
         self.show_as_bw = tk.Button(self)
         self.show_as_bw["text"] = "Show as Black and White"
         self.show_as_bw["command"] = self.show_as_bw_button
         self.show_as_bw.pack(side="left")
-
-        # Save Button for Gray Scale
-        self.save_btn_grayscale = tk.Button(self)
-        self.save_btn_grayscale["text"] = "Save as GrayScale"
-        self.save_btn_grayscale["command"] = self.save_button_grayscale
-        self.save_btn_grayscale.pack(side="left")
 
         # Save Button for Black and White
         self.save_btn_bw = tk.Button(self)
@@ -76,29 +62,6 @@ class Application(PipelinePhase):
         # self.canvas.bind("<Motion>", self.canvas_mouseover)
 
         self.image_handle = None
-
-    def save_button_grayscale(self):
-        """
-        Save Button Grayscale to save file as Grayscale in file path directory
-        :return: None
-        """
-        directory = path.dirname(self.filename)
-        filename, extension = path.basename(self.filename).split(".")
-        if "jpg" in extension:
-            extension = "png"
-        new_file_name = path.join(directory, filename + "-grayscale" + "." + extension)
-        cv2.imwrite(new_file_name, self.np_img_grayscale)
-        self.filename = new_file_name
-        print('File saved as grayscale, path -->', new_file_name)
-
-    def show_as_grayscale_button(self):
-        """
-        Transform Button to open image as Grayscale
-        :return: None
-        """
-        print('Grayscale Button Pressed')
-        self.np_img = cv2.cvtColor(self.np_img, cv2.COLOR_BGR2GRAY)
-        self.resize(None)
 
     def save_button_bw(self):
         """
