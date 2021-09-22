@@ -149,14 +149,34 @@ class ImageSubmission(BaseModel):
 
 
 class LineGraphRequest(BaseModel):
-    """Model that handles LineGraph Request to API"""
+    """Model that handles LineGraph Requests to the API"""
 
     ScoreHistory: List[int] = Field(..., example=[1005, 1500, 9000, 789])
     StudentName: str = Field(..., example="Firstname")
 
+class CroppedWordsRequest(BaseModel):
+    """Model that handles CropCloud Requests to the API"""
+
+    user_id: str = Field(..., example="XiChi")
+    date_range: List[str] = Field(..., example=["2019-06-16","2020-10-23"])
+    complexity_metric: str = Field(..., example="syl")
+    image_format: str = Field(..., example=".webp")
+    canvas_area: int = Field(..., example=658560)
+    density: float = Field(..., example=0.40)
+
+class CropCloudRequest(BaseModel):
+    """Model that handles CropCloud Requests to the API"""
+
+    user_id: str = Field(..., example="XiChi")
+    date_range: List[str] = Field(..., example=["2019-06-16","2020-10-23"])
+    complexity_metric: str = Field(..., example="syl")
+    image_format: str = Field(..., example=".webp")
+    canvas_width: int = Field(..., example=960)
+    density: float = Field(..., example=0.40)
+    max_words: int = Field(..., example=200)
 
 class HistogramRequest(BaseModel):
-    """Model that handles Histogram Request to API"""
+    """Model that handles Histogram Requests to the API"""
 
     GradeList: List[int] = Field(..., example=[1005, 1500, 9000, 789])
     GradeLevel: int = Field(..., example=8)
