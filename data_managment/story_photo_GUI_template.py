@@ -44,12 +44,7 @@ class Application(PipelinePhase):
         self.quit = tk.Button(self, text="QUIT", fg="red", command=self.master.destroy)
         self.quit.pack(side="bottom")
 
-        self.canvas = tk.Canvas()
-        self.canvas.pack(fill="both", expand=True)
-        self.canvas.create_image(8, 8, anchor=tk.NW, image=self.photo_image)
-        self.canvas.bind('<Configure>', self.resize)
-        # self.canvas.bind("<Button-1>", self.canvas_click)
-        # self.canvas.bind("<Motion>", self.canvas_mouseover)
+
 
         self.image_handle = None
 
@@ -197,19 +192,7 @@ class Application(PipelinePhase):
     #     y = (pt[1] / self.np_img.shape[0]) * self.canvas.winfo_height()
     #     return ([x, y])
 
-    def resize(self, event):
-        w = self.canvas.winfo_height()
-        h = self.canvas.winfo_width()
-        self.photo_image = np_photo_image(cv2.resize(self.np_img, (h, w)))
 
-        if not self.image_handle:
-            self.image_handle = self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo_image)
-        else:
-            # if (self.photo_image.width() != w) or (self.photo_image.height() != h):
-            # self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo_image)
-            self.canvas.itemconfig(self.image_handle, image=self.photo_image)
-        self.canvas.update()
-        # self.paint()
 
 
 if __name__ == "__main__":
