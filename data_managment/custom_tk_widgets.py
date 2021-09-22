@@ -4,7 +4,7 @@ from tkinter import Canvas
 
 class Slider(Canvas):
     def __init__(self, master, handles: int, min: int, max: int,handle_width:int=5, **kwargs):
-        tk.Canvas.__init__(self, master, kwargs)
+        tk.Canvas.__init__(self, master, **kwargs)
         self.handles = handles
         self.max = max
         self.min = min
@@ -36,8 +36,9 @@ class Slider(Canvas):
     def canvas_drag(self, event):
         print("drag", event)
         if self.dragging_handle >= 0:
-            print("dragging handle", self.dragging_handle)
-            self.handles[self.dragging_handle] = event.x / self.pix_per_tick
+            #print("dragging handle", self.dragging_handle)
+            self.handles[self.dragging_handle] = event.x * self.value_per_pix
+            #print ("value: ",self.handles[self.dragging_handle],"value per pix:",self.value_per_pix)
             self.redraw()
 
     def canvas_click(self, event):
@@ -57,17 +58,24 @@ class Slider(Canvas):
 
         # slider
         self.coords(self.slide_line, [0, int(h / 2), w, int(h / 2)])
+        self.value_per_pix = self.value_range / w
 
         # ticks
         self.pix_per_tick = w / len(self.ticks)
         for i, tick in enumerate(self.ticks):
             self.coords(tick, [i * self.pix_per_tick, 0, i * self.pix_per_tick, h])
+
         # handles
         pix_per_value = w / (self.max - self.min)
-        for i, tick_handle in zip(range(len(self.handles)), self.handles.items()):
-            tick_value = tick_handle[1]
-            px = tick_value * pix_per_value
-            self.coords(tick_handle[0], [px - self.handle_width, 10, px + self.handle_width, h-10])
+        for handle in self.handles.items():
+            hndle,v= handle
+            px = v/self.value_per_pix
+            self.coords(hndle, [px - self.handle_width, 10, px + self.handle_width, h - 10])
+
+        #for i, tick_handle in zip(range(len(self.handles)), self.handles.items()):
+        #    tick_value = tick_handle[1]
+        #    px = tick_value * pix_per_value
+        #    self.coords(tick_handle[0], [px - self.handle_width, 10, px + self.handle_width, h-10])
 
         self.update()
 
