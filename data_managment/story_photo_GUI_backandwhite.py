@@ -1,21 +1,16 @@
 """
 This module's purpose is to open the image in it's original format and display through
 a tkinter application and further enable the user to see the same image in a
-grayscale format. Finally the image can be saved in the same directory
-as that of the image as grayscale.
+Black and White format. Finally the image can be saved in the same directory
+as that of the image as Black and White.
 
-image will be saved with _grayscale appended before the file extension
+image will be saved with _bw appended before the file extension
 """
 
-import numpy as np
 import os.path as path
 import tkinter as tk
-import os.path as path
-import tkinter as tk
-from tkinter import filedialog as fd
 import cv2
 from phase_tkinter_class import PipelinePhase
-from phase_tkinter_class import np_photo_image
 
 
 class Application(PipelinePhase):
@@ -36,7 +31,6 @@ class Application(PipelinePhase):
         print(self.filename)
 
     def create_widgets(self):
-
         # Show button to convert to Black and White
         self.show_as_bw = tk.Button(self)
         self.show_as_bw["text"] = "Show as Black and White"
@@ -59,7 +53,6 @@ class Application(PipelinePhase):
         self.quit = tk.Button(self, text="QUIT", fg="red", command=self.master.destroy)
         self.quit.pack(side="right")
 
-
         self.image_handle = None
 
     def next_phase_button(self):
@@ -68,7 +61,7 @@ class Application(PipelinePhase):
 
     def save_button_bw(self):
         """
-        Save Button Grayscale to save file as Grayscale in file path directory
+        Save Button to save file as Black and White in file path directory
         :return: None
         """
         directory = path.dirname(self.filename)
@@ -82,7 +75,7 @@ class Application(PipelinePhase):
 
     def show_as_bw_button(self):
         """
-        Transform Button to open image as Grayscale
+        Transform Button to open image as Black and White
         :return: None
         """
         print('Black and White Button Pressed')
@@ -92,7 +85,6 @@ class Application(PipelinePhase):
         # self.np_img = cv2.cvtColor(self.np_img, cv2.COLOR_BGR2GRAY)
         # self.np_img = cv2.cvtColor(self.np_img, cv2.THRESH_BINARY)
         self.canvas.update()
-
 
 
 if __name__ == "__main__":
