@@ -91,7 +91,7 @@ class Application(PipelinePhase):
 
         # self.np_img = cv2.cvtColor(self.np_img, cv2.COLOR_BGR2GRAY)
         # self.np_img = cv2.cvtColor(self.np_img, cv2.THRESH_BINARY)
-        self.resize(None)
+        self.canvas.update()
 
 
 
