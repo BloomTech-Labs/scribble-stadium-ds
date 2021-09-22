@@ -19,7 +19,7 @@ import os.path as path
 import tkinter as tk
 from tkinter import filedialog as fd
 import cv2
-
+from phase_tkinter_class import PipelinePhase
 
 def np_photo_image(image: np.ndarray):
     # This function creates the header information for PPM file format
@@ -34,17 +34,12 @@ def np_photo_image(image: np.ndarray):
     return tk.PhotoImage(width=width, height=height, data=data, format='PPM')
 
 
-class Application(tk.Frame):
-    def __init__(self, master=None):
-        super().__init__(master)
+class Application(PipelinePhase):
+    def __init__(self, next_phase, master=None, prev_phase: PipelinePhase = None):
+        super().__init__(next_phase, master=master, prev_phase=prev_phase)
+
         self.master = master
         self.pack()
-
-        self.filename = fd.askopenfilename(
-            initialdir=path.join(path.dirname(__file__), "..", "data", "transcribed_stories", "51--", "5101"))
-        self.np_img = np.array(cv2.imread(self.filename,cv2.IMREAD_UNCHANGED)) #removed cv2.color #added cv2 imread_unchanged
-        #self.np_img = np.array (cv2.cvtColor (cv2.imread (self.filename), cv2.COLOR_RGB2BGR))
-        self.img = np_photo_image(self.np_img)
         self.points = []
         self.cursor_oval_handles = []
         self.line_handles = []
@@ -76,7 +71,7 @@ class Application(tk.Frame):
 
         self.canvas = tk.Canvas()
         self.canvas.pack(fill="both", expand=True)
-        self.canvas.create_image(8, 8, anchor=tk.NW, image=self.img)
+        self.canvas.create_image(8, 8, anchor=tk.NW, image=self.photo_image)
         self.canvas.bind('<Configure>', self.resize)
         # self.canvas.bind("<Button-1>", self.canvas_click)
         # self.canvas.bind("<Motion>", self.canvas_mouseover)
@@ -268,14 +263,14 @@ class Application(tk.Frame):
     def resize(self, event):
         w = self.canvas.winfo_height()
         h = self.canvas.winfo_width()
-        self.img = np_photo_image(cv2.resize(self.np_img, (h, w)))
+        self.photo_image = np_photo_image(cv2.resize(self.np_img, (h, w)))
 
         if not self.image_handle:
-            self.image_handle = self.canvas.create_image(0, 0, anchor=tk.NW, image=self.img)
+            self.image_handle = self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo_image)
         else:
             # if (self.img.width() != w) or (self.img.height() != h):
             # self.canvas.create_image(0, 0, anchor=tk.NW, image=self.img)
-            self.canvas.itemconfig(self.image_handle, image=self.img)
+            self.canvas.itemconfig(self.image_handle, image=self.photo_image)
         self.canvas.update()
         # self.paint()
 
