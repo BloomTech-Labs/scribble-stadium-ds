@@ -73,21 +73,22 @@ class PipelinePhase(tk.Frame):
         # delta = abs(self.photo_image.width()* self.photo_image.height()) - (event.width *event.height)
         # if delta > 5:
         # print(event)
-        max_w = event.width
-        max_h = event.height
-        aspect = self.np_img.shape[0] / self.np_img.shape[1]
+        if event is not None:
+            max_w = event.width
+            max_h = event.height
+            aspect = self.np_img.shape[0] / self.np_img.shape[1]
 
-        desired_w = max_h / aspect
-        desired_h = max_w * aspect
+            desired_w = max_h / aspect
+            desired_h = max_w * aspect
 
-        if desired_w > max_w:
-            desired_w = max_w
+            if desired_w > max_w:
+                desired_w = max_w
 
-        if desired_h > max_h:
-            desired_h = max_h
+            if desired_h > max_h:
+                desired_h = max_h
 
-        self.canvas.config(width=desired_w, height=desired_h)
-        return ([int(desired_w), int(desired_h)])
+            self.canvas.config(width=desired_w, height=desired_h)
+            return ([int(desired_w), int(desired_h)])
 
     def resize(self, event):
 
@@ -112,4 +113,4 @@ class PipelinePhase(tk.Frame):
                     oval = [pt1[0] - o_size, pt1[1] - o_size, pt1[0] + o_size, pt1[1] + o_size]
                     self.canvas.coords(self.cursor_oval_handles[pt1_idx], oval)
 
-        # self.canvas.update()
+
