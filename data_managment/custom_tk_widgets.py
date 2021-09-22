@@ -3,13 +3,14 @@ from tkinter import Canvas
 
 
 class Slider(Canvas):
-    def __init__(self, master, handles: int, min: int, max: int,handle_width:int=5, **kwargs):
+    def __init__(self, master, handles: int, min: int, max: int,handle_width:int=5,command=None, **kwargs):
         tk.Canvas.__init__(self, master, **kwargs)
         self.handles = handles
         self.max = max
         self.min = min
         self.value_range = max - min
         self.handle_width = handle_width
+        self.command = command
         # set to > 0 when dragging a handle
         self.dragging_handle = -1
         # self.create_oval([0, 0, 10, 10])
@@ -40,6 +41,8 @@ class Slider(Canvas):
             self.handles[self.dragging_handle] = event.x * self.value_per_pix
             #print ("value: ",self.handles[self.dragging_handle],"value per pix:",self.value_per_pix)
             self.redraw()
+
+            self.command([v for h,v in self.handles.items()])
 
     def canvas_click(self, event):
         print("click", event)
