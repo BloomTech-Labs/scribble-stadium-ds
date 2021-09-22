@@ -81,7 +81,7 @@ class Application(PipelinePhase):
         """
         print('Button Pressed')
         self.np_img = cv2.cvtColor(self.np_img, cv2.COLOR_BGR2GRAY)
-        self.resize(None)
+        self.canvas.update()
 
 if __name__ == "__main__":
     root = tk.Tk()
