@@ -46,7 +46,7 @@ class Application(PipelinePhase):
         self.transform_btn.pack(side="top")
 
         self.save_btn = tk.Button(self)
-        self.save_btn["text"] = "save"
+        self.save_btn["text"] = "Save"
         self.save_btn["command"] = self.save_button
         self.save_btn.pack(side="top")
 
@@ -134,14 +134,14 @@ class Application(PipelinePhase):
 
     def canvas_mouseover(self, event):
 
-        ## move oval to cursor if needed
+        # move oval to cursor if needed
         if self.current_np_img_point_idx < 4:
             pt1 = [event.x, event.y]
             o_size = 5
             oval = [pt1[0] - o_size, pt1[1] - o_size, pt1[0] + o_size, pt1[1] + o_size]
             self.canvas.coords(self.cursor_oval_handles[self.current_np_img_point_idx], oval)
 
-        ## draw line to cursor if needed
+        # draw line to cursor if needed
         if (self.current_np_img_point_idx > 0) and (self.current_np_img_point_idx < 3):
             pt1 = self.img_2_canvas_pt(self.np_img_points[self.current_np_img_point_idx - 1])
             pt2 = [event.x, event.y]
@@ -168,15 +168,14 @@ class Application(PipelinePhase):
         return ([x, y])
 
 
-
-
 if __name__ == "__main__":
     import story_image_clip
     import story_photo_GUI_grayscale
     import story_photo_GUI_backandwhite
     import story_photo_removelines
 
-    phase_list = [Application, story_image_clip, story_photo_GUI_grayscale,story_photo_GUI_backandwhite,story_photo_removelines]
+    phase_list = [Application, story_image_clip, story_photo_GUI_grayscale, story_photo_GUI_backandwhite,
+                  story_photo_removelines]
 
     first = True
     root = tk.Tk()
@@ -186,9 +185,9 @@ if __name__ == "__main__":
     for app_to_run in phase_list:
         if app.goto_next_phase_flag or first:
             if not first:
-                last_phase=app
+                last_phase = app
                 root = tk.Tk()
-                app = app_to_run.Application(master=root, next_phase=None, prev_phase = last_phase)
+                app = app_to_run.Application(master=root, next_phase=None, prev_phase=last_phase)
                 # Resize the display window
                 root.geometry("800x1000")
 
