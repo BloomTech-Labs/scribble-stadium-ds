@@ -54,14 +54,6 @@ class Application(PipelinePhase):
         self.next_phase_btn["command"] = self.next_phase_button
         self.next_phase_btn.pack(side="right")
 
-        # canvas
-        self.canvas = tk.Canvas()
-        self.canvas.pack(fill="both", expand=True)
-        self.canvas.create_image(8, 8, anchor=tk.NW, image=self.photo_image)
-        self.canvas.bind('<Configure>', self.resize)
-        # self.canvas.bind("<Button-1>", self.canvas_click)
-        # self.canvas.bind("<Motion>", self.canvas_mouseover)
-
         self.image_handle = None
 
     def next_phase_button(self):
@@ -90,17 +82,6 @@ class Application(PipelinePhase):
         print('Button Pressed')
         self.np_img = cv2.cvtColor(self.np_img, cv2.COLOR_BGR2GRAY)
         self.resize(None)
-
-    def resize(self, event):
-        w = self.canvas.winfo_height()
-        h = self.canvas.winfo_width()
-        self.photo_image = np_photo_image(cv2.resize(self.np_img, (h, w)))
-
-        if not self.image_handle:
-            self.image_handle = self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo_image)
-        else:
-            self.canvas.itemconfig(self.image_handle, image=self.photo_image)
-        self.canvas.update()
 
 if __name__ == "__main__":
     root = tk.Tk()

@@ -56,14 +56,6 @@ class Application(PipelinePhase):
         self.next_phase_btn["command"] = self.next_phase_button
         self.next_phase_btn.pack(side="right")
 
-        self.canvas = tk.Canvas()
-        self.canvas.pack(fill="both", expand=True)
-        self.canvas.create_image(8, 8, anchor=tk.NW, image=self.photo_image)
-
-        self.canvas.bind('<Configure>', self.resize)
-        self.canvas.bind("<Button-1>", self.canvas_click)
-        self.canvas.bind("<Motion>", self.canvas_mouseover)
-
         self.line_handles = [self.canvas.create_line([0, 0, 0, 0], fill="#ffff00") for i in range(4)]
         self.cursor_oval_handles = [self.canvas.create_oval([-10, -10, 10, 10], fill="#ffff00") for i in range(4)]
         self.image_handle = None
@@ -215,27 +207,6 @@ class Application(PipelinePhase):
         y = (pt[1] / self.np_img.shape[0]) * self.canvas.winfo_height()
         return ([x, y])
 
-    def resize(self, event):
-        w = self.canvas.winfo_height()
-        h = self.canvas.winfo_width()
-        self.photo_image = np_photo_image(cv2.resize(self.np_img, (h, w)))
-
-        if not self.image_handle:
-            self.image_handle = self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo_image)
-            self.canvas.tag_lower(self.image_handle)
-        else:
-            self.canvas.itemconfig(self.image_handle, image=self.photo_image)
-        pairs = [[0, 1], [1, 2], [2, 3], [3, 0]]
-        for pt1_idx, pt2_idx in pairs:
-            if (pt1_idx < self.current_np_img_point_idx) & (pt2_idx < self.current_np_img_point_idx):
-                pt1 = self.img_2_canvas_pt(self.np_img_points[pt1_idx])
-                pt2 = self.img_2_canvas_pt(self.np_img_points[pt2_idx])
-                self.canvas.coords(self.line_handles[pt1_idx], *(pt1 + pt2))
-                o_size = 5
-                oval = [pt1[0] - o_size, pt1[1] - o_size, pt1[0] + o_size, pt1[1] + o_size]
-                self.canvas.coords(self.cursor_oval_handles[pt1_idx], oval)
-
-        self.canvas.update()
 
 
 if __name__ == "__main__":

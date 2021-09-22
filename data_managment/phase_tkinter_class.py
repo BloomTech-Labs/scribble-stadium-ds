@@ -51,3 +51,65 @@ class PipelinePhase(tk.Frame):
 
         self.photo_image = np_photo_image(self.np_img)
         self.goto_next_phase_flag = None
+
+        self.canvas = tk.Canvas()
+        self.canvas.pack()
+        self.canvas.create_image(8, 8, anchor=tk.NW, image=self.photo_image)
+
+        self.canvas.bind('<Configure>', self.resize)
+
+        try:
+            self.canvas.bind("<Button-1>", self.canvas_click)
+        except:
+            print("no canvas_click")
+
+        try:
+            self.canvas.bind("<Motion>", self.canvas_mouseover)
+        except:
+            print("no canvas_mouseover")
+
+
+    def find_new_canvas_size(self, event):
+        # delta = abs(self.photo_image.width()* self.photo_image.height()) - (event.width *event.height)
+        # if delta > 5:
+        # print(event)
+        max_w = event.width
+        max_h = event.height
+        aspect = self.np_img.shape[0] / self.np_img.shape[1]
+
+        desired_w = max_h / aspect
+        desired_h = max_w * aspect
+
+        if desired_w > max_w:
+            desired_w = max_w
+
+        if desired_h > max_h:
+            desired_h = max_h
+
+        self.canvas.config(width=desired_w, height=desired_h)
+        return ([int(desired_w), int(desired_h)])
+
+    def resize(self, event):
+
+        canvas_size = self.find_new_canvas_size(event)
+        w = canvas_size[0]
+        h = canvas_size[1]
+        self.photo_image = np_photo_image(cv2.resize(self.np_img, (w, h)))
+
+        if not self.image_handle:
+            self.image_handle = self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo_image)
+            self.canvas.tag_lower(self.image_handle)
+        else:
+            self.canvas.itemconfig(self.image_handle, image=self.photo_image)
+        if "current_np_img_point_idx" in locals().keys():
+            pairs = [[0, 1], [1, 2], [2, 3], [3, 0]]
+            for pt1_idx, pt2_idx in pairs:
+                if (pt1_idx < self.current_np_img_point_idx) & (pt2_idx < self.current_np_img_point_idx):
+                    pt1 = self.img_2_canvas_pt(self.np_img_points[pt1_idx])
+                    pt2 = self.img_2_canvas_pt(self.np_img_points[pt2_idx])
+                    self.canvas.coords(self.line_handles[pt1_idx], *(pt1 + pt2))
+                    o_size = 5
+                    oval = [pt1[0] - o_size, pt1[1] - o_size, pt1[0] + o_size, pt1[1] + o_size]
+                    self.canvas.coords(self.cursor_oval_handles[pt1_idx], oval)
+
+        # self.canvas.update()
