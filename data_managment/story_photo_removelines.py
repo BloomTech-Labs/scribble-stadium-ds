@@ -127,7 +127,7 @@ class Application(PipelinePhase):
         #cv2.imshow (result)
 
 
-        self.resize (None)
+        self.canvas.update()
 
     #
     #     pts1 = np.float32(self.points)

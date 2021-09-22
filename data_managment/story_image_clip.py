@@ -140,7 +140,7 @@ class Application(PipelinePhase):
 
         file_name = self.get_next_clip_filename()
         cv2.imwrite(file_name, new_img)
-        self.resize(None)
+        self.canvas.update()
 
     def canvas_2_img_pt(self, canvas_pt: list):
         img_x = canvas_pt[0] / self.canvas.winfo_width() * self.np_img.shape[1]
