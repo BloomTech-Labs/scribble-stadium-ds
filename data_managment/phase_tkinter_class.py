@@ -1,3 +1,5 @@
+import time
+
 import numpy as np
 import os.path as path
 import cv2
@@ -25,6 +27,7 @@ class PipelinePhase(tk.Frame):
         self.next_phase = next_phase
         self.master = master
         self.pack()
+        self.last_redraw=time.time()
 
         if prev_phase is None:
             self.filename = fd.askopenfilename(
@@ -69,39 +72,47 @@ class PipelinePhase(tk.Frame):
             print("no canvas_mouseover")
 
 
-    def find_new_canvas_size(self, event):
-        # delta = abs(self.photo_image.width()* self.photo_image.height()) - (event.width *event.height)
-        # if delta > 5:
-        # print(event)
-        if event is not None:
-            max_w = event.width
-            max_h = event.height
-            aspect = self.np_img.shape[0] / self.np_img.shape[1]
+    def _find_new_canvas_size(self):
+        max_w = self.master.winfo_width()
+        max_h = self.master.winfo_height()
+        aspect = self.np_img.shape[0] / self.np_img.shape[1]
 
-            desired_w = max_h / aspect
-            desired_h = max_w * aspect
+        desired_w = max_h / aspect
+        desired_h = max_w * aspect
 
-            if desired_w > max_w:
-                desired_w = max_w
+        if desired_w > max_w:
+            desired_w = max_w
 
-            if desired_h > max_h:
-                desired_h = max_h
+        if desired_h > max_h:
+            desired_h = max_h
+        if (self.canvas.winfo_height()!=desired_h) or(self.canvas.winfo_width()!=desired_w):
+            self.canvas.config(width=desired_w, height=desired_h,   )
 
-            self.canvas.config(width=desired_w, height=desired_h)
-            return ([int(desired_w), int(desired_h)])
+        return ([int(desired_w), int(desired_h)])
 
-    def resize(self, event):
-
-        canvas_size = self.find_new_canvas_size(event)
+    def redraw(self):
+        """
+        redraw the current canvas image based on self.np_img, use this for when self.np_img has changed and the view
+        should be updated.
+        """
+        print("redraw")
+        canvas_size = self._find_new_canvas_size()
         w = canvas_size[0]
         h = canvas_size[1]
-        self.photo_image = np_photo_image(cv2.resize(self.np_img, (w, h)))
+        self.photo_image = np_photo_image(self.np_img)
 
         if not self.image_handle:
             self.image_handle = self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo_image)
             self.canvas.tag_lower(self.image_handle)
         else:
             self.canvas.itemconfig(self.image_handle, image=self.photo_image)
+
+    def redraw_canvas_objects(self):
+        """
+        redraw object that are on the canvas besides the base photoimage, use this when you have changed things that are
+        drawn on the canvas, like lines ovals etc
+        """
+
         if "current_np_img_point_idx" in locals().keys():
             pairs = [[0, 1], [1, 2], [2, 3], [3, 0]]
             for pt1_idx, pt2_idx in pairs:
@@ -112,5 +123,29 @@ class PipelinePhase(tk.Frame):
                     o_size = 5
                     oval = [pt1[0] - o_size, pt1[1] - o_size, pt1[0] + o_size, pt1[1] + o_size]
                     self.canvas.coords(self.cursor_oval_handles[pt1_idx], oval)
+
+    def resize(self, event):
+        """
+        handles the fact that the window has been resized or that some other thing has caused the canvas to change
+        diminsions. Use this when the shape of the canvas/window/client area has changed
+        """
+        import time
+
+        #if True:
+        if time.time()-(1/60.0) > self.last_redraw:
+            self.last_redraw = time.time()
+            print("resize")
+            canvas_size = self._find_new_canvas_size()
+            w = canvas_size[0]
+            h = canvas_size[1]
+            self.photo_image = np_photo_image(cv2.resize(self.np_img, (w, h)))
+            self.image_handle = self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo_image)
+        else:
+            print("redraw to soon!")
+
+
+
+
+
 
 
