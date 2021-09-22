@@ -77,7 +77,8 @@ class Slider(Canvas):
 class Slider_with_Graph(Slider):
     pass
 
-root = tk.Tk()
-slider = Slider(root, 3, 0, 10, width=256, height=33, bg='#dddddd')
-slider.pack()
-root.mainloop()
+if __name__ == "__main__":
+    root = tk.Tk()
+    slider = Slider(root, 3, 0, 10, width=256, height=33, bg='#dddddd')
+    slider.pack()
+    root.mainloop()
