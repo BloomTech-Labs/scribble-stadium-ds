@@ -11,6 +11,7 @@ class Slider(Canvas):
         self.value_range = max - min
         self.handle_width = handle_width
         self.command = command
+        self.current_sorted_values=None
         # set to > 0 when dragging a handle
         self.dragging_handle = -1
         # self.create_oval([0, 0, 10, 10])
@@ -44,7 +45,8 @@ class Slider(Canvas):
 
             values = [ v for h, v in self.handles.items()]
             values.sort()
-            self.command(values)
+            self.current_sorted_values=values
+            self.command(self.current_sorted_values)
 
     def canvas_click(self, event):
         print("click", event)
