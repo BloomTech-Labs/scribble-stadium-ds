@@ -42,7 +42,9 @@ class Slider(Canvas):
             #print ("value: ",self.handles[self.dragging_handle],"value per pix:",self.value_per_pix)
             self.redraw()
 
-            self.command([v for h,v in self.handles.items()])
+            values = [ v for h, v in self.handles.items()]
+            values.sort()
+            self.command(values)
 
     def canvas_click(self, event):
         print("click", event)
