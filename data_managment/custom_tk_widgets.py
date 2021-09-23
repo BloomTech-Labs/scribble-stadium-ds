@@ -39,7 +39,16 @@ class Slider(Canvas):
         print("drag", event)
         if self.dragging_handle >= 0:
             #print("dragging handle", self.dragging_handle)
-            self.handles[self.dragging_handle] = event.x * self.value_per_pix
+            new_val = event.x * self.value_per_pix
+
+            if new_val <self.min:
+                new_val = self.min
+
+            if new_val > self.max:
+                new_val = self.max
+
+            self.handles[self.dragging_handle] = new_val
+
             #print ("value: ",self.handles[self.dragging_handle],"value per pix:",self.value_per_pix)
             self.redraw()
 
@@ -57,7 +66,8 @@ class Slider(Canvas):
             self.dragging_handle = clicked[0]
 
     def canvas_mouseover(self, event):
-        print("mouse over")
+        pass
+        #print("mouse over")
 
     def redraw(self):
         h = self.winfo_height()
