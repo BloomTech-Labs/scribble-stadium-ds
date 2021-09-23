@@ -32,6 +32,18 @@ class Slider(Canvas):
         self.handles = {self.create_rectangle([0, 0, 0, 0], width=1, fill='blue'): int(self.value_range / 2) for _ in
                         range(self.handles)}
 
+        if len(self.handles)>1:
+            stp = self.value_range / (len(self.handles)+1)
+            p = stp
+            for h,v in self.handles.items():
+                self.handles[h]=p
+                p=p+stp
+
+        values = [v for h, v in self.handles.items()]
+        values.sort()
+        self.current_sorted_values = values
+
+
     def canvas_button_up(self, event):
         print("mouse button up", event)
 
@@ -48,8 +60,6 @@ class Slider(Canvas):
                 new_val = self.max
 
             self.handles[self.dragging_handle] = new_val
-
-            #print ("value: ",self.handles[self.dragging_handle],"value per pix:",self.value_per_pix)
             self.redraw()
 
             values = [ v for h, v in self.handles.items()]
