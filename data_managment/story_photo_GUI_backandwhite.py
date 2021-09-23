@@ -35,23 +35,23 @@ class Application(PipelinePhase):
         self.show_as_bw = tk.Button(self)
         self.show_as_bw["text"] = "Show as Black and White"
         self.show_as_bw["command"] = self.show_as_bw_button
-        self.show_as_bw.pack(side="left")
+        self.show_as_bw.pack(side="top")
 
         # Save Button for Black and White
         self.save_btn_bw = tk.Button(self)
         self.save_btn_bw["text"] = "Save as Black and White"
         self.save_btn_bw["command"] = self.save_button_bw
-        self.save_btn_bw.pack(side="left")
+        self.save_btn_bw.pack(side="top")
 
         # Next Phase button
         self.next_phase_btn = tk.Button(self)
         self.next_phase_btn["text"] = "Next Phase"
         self.next_phase_btn["command"] = self.next_phase_button
-        self.next_phase_btn.pack(side="right")
+        self.next_phase_btn.pack(side="top")
 
         # Quit Button
         self.quit = tk.Button(self, text="QUIT", fg="red", command=self.master.destroy)
-        self.quit.pack(side="right")
+        self.quit.pack(side="bottom")
 
         self.image_handle = None
 
