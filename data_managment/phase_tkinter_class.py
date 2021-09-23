@@ -27,7 +27,7 @@ class PipelinePhase(tk.Frame):
         self.next_phase = next_phase
         self.master = master
         self.pack()
-        self.last_redraw=time.time()
+        self.last_redraw = time.time()
 
         if prev_phase is None:
             self.filename = fd.askopenfilename(
@@ -57,9 +57,13 @@ class PipelinePhase(tk.Frame):
 
         self.canvas = tk.Canvas()
         self.canvas.pack()
+
         self.canvas.create_image(8, 8, anchor=tk.NW, image=self.photo_image)
 
         self.canvas.bind('<Configure>', self.resize)
+
+        self.canvas.bind("<Motion>", self.redraw_canvas_objects)
+        self.canvas.bind("<Button-1>", self.redraw_canvas_objects)
 
         try:
             self.canvas.bind("<Button-1>", self.canvas_click)
@@ -67,10 +71,13 @@ class PipelinePhase(tk.Frame):
             print("no canvas_click")
 
         try:
-            self.canvas.bind("<Motion>", self.canvas_mouseover)
+            self.canvas.bind("<Motion>", self.motion_event)
         except:
             print("no canvas_mouseover")
 
+    def motion_event(self, event):
+        self.redraw_canvas_objects()
+        self.canvas_mouseover(event)
 
     def _find_new_canvas_size(self):
         max_w = self.master.winfo_width()
@@ -85,8 +92,8 @@ class PipelinePhase(tk.Frame):
 
         if desired_h > max_h:
             desired_h = max_h
-        if (self.canvas.winfo_height()!=desired_h) or(self.canvas.winfo_width()!=desired_w):
-            self.canvas.config(width=desired_w, height=desired_h,   )
+        if (self.canvas.winfo_height() != desired_h) or (self.canvas.winfo_width() != desired_w):
+            self.canvas.config(width=desired_w, height=desired_h, )
 
         return ([int(desired_w), int(desired_h)])
 
@@ -99,30 +106,32 @@ class PipelinePhase(tk.Frame):
         canvas_size = self._find_new_canvas_size()
         w = canvas_size[0]
         h = canvas_size[1]
-        self.photo_image = np_photo_image(self.np_img)
+        self.photo_image = np_photo_image(cv2.resize(self.np_img, (w, h)))
 
         if not self.image_handle:
             self.image_handle = self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo_image)
-            self.canvas.tag_lower(self.image_handle)
         else:
             self.canvas.itemconfig(self.image_handle, image=self.photo_image)
+
+        self.canvas.tag_lower(self.image_handle)
 
     def redraw_canvas_objects(self):
         """
         redraw object that are on the canvas besides the base photoimage, use this when you have changed things that are
         drawn on the canvas, like lines ovals etc
         """
-
-        if "current_np_img_point_idx" in locals().keys():
-            pairs = [[0, 1], [1, 2], [2, 3], [3, 0]]
-            for pt1_idx, pt2_idx in pairs:
-                if (pt1_idx < self.current_np_img_point_idx) & (pt2_idx < self.current_np_img_point_idx):
-                    pt1 = self.img_2_canvas_pt(self.np_img_points[pt1_idx])
-                    pt2 = self.img_2_canvas_pt(self.np_img_points[pt2_idx])
-                    self.canvas.coords(self.line_handles[pt1_idx], *(pt1 + pt2))
-                    o_size = 5
-                    oval = [pt1[0] - o_size, pt1[1] - o_size, pt1[0] + o_size, pt1[1] + o_size]
-                    self.canvas.coords(self.cursor_oval_handles[pt1_idx], oval)
+        self.canvas.tag_lower(self.image_handle)
+        # if "current_np_img_point_idx" in self.keys():
+        pairs = [[0, 1], [1, 2], [2, 3], [3, 0]]
+        for pt1_idx, pt2_idx in pairs:
+            if (pt1_idx < self.current_np_img_point_idx) & (pt2_idx < self.current_np_img_point_idx):
+                pt1 = self.img_2_canvas_pt(self.np_img_points[pt1_idx])
+                pt2 = self.img_2_canvas_pt(self.np_img_points[pt2_idx])
+                self.canvas.coords(self.line_handles[pt1_idx], *(pt1 + pt2))
+                o_size = 5
+                oval = [pt1[0] - o_size, pt1[1] - o_size, pt1[0] + o_size, pt1[1] + o_size]
+                self.canvas.coords(self.cursor_oval_handles[pt1_idx], oval)
+        self.canvas.update()
 
     def resize(self, event):
         """
@@ -131,8 +140,7 @@ class PipelinePhase(tk.Frame):
         """
         import time
 
-        #if True:
-        if time.time()-(1/60.0) > self.last_redraw:
+        if time.time() - (1 / 60.0) > self.last_redraw:
             self.last_redraw = time.time()
             print("resize")
             canvas_size = self._find_new_canvas_size()
@@ -142,10 +150,5 @@ class PipelinePhase(tk.Frame):
             self.image_handle = self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo_image)
         else:
             print("redraw to soon!")
-
-
-
-
-
-
-
+        if len(self.canvas.children) > 0:
+            self.redraw()
