@@ -14,30 +14,66 @@ from phase_tkinter_class import PipelinePhase
 from phase_tkinter_class import np_photo_image
 from custom_tk_widgets import Slider
 
+
 class Application(PipelinePhase):
     def __init__(self, next_phase, master=None, prev_phase: PipelinePhase = None):
         super().__init__(next_phase, master=master, prev_phase=prev_phase)
-
-
         self.points = []
         self.cursor_oval_handles = []
         self.line_handles = []
-        self.create_widgets()
+
         self.newest_pt_idx = -1
+        self.np_img_orig = self.np_img.copy()
+        self.invert_output = False
+        self.invert_red = tk.IntVar()
+        self.invert_green = tk.IntVar()
+        self.invert_blue = tk.IntVar()
+
+        self.create_widgets()
         # self.cursor
 
         print(self.filename)
 
     def create_widgets(self):
-        #self.transform_btn = tk.Button(self)
-        #self.transform_btn["text"] = "Transform"
-        #self.transform_btn["command"] = self.transform_button
-        #self.transform_btn.pack(side="top")
+        # self.transform_btn = tk.Button(self)
+        # self.transform_btn["text"] = "Transform"
+        # self.transform_btn["command"] = self.transform_button
+        # self.transform_btn.pack(side="top")
 
-        self.red_slider = Slider(self,handles=2,min=0,max=255,width =400,height =40)
-        self.red_slider.pack(fill="none",expand="false")
-        print(self.red_slider.config())
+        # red channel
+        self.red_frame = tk.Frame(self, borderwidth=1, relief=tk.SOLID);
+        self.red_frame.pack()
 
+        self.red_invert_check = tk.Checkbutton(self.red_frame, text="invert", variable=self.invert_red)
+        self.red_invert_check.pack(side="left")
+
+        self.red_slider = Slider(self.red_frame, handles=2, min=0, max=255, width=400, height=40,
+                                 command=lambda x: self.update_image("red", x))
+        self.red_slider.pack(fill="none", expand="false")
+
+        # green channel
+        self.green_frame = tk.Frame(self, borderwidth=1, relief=tk.SOLID)
+        self.green_frame.pack()
+
+        self.green_invert_check = tk.Checkbutton(self.green_frame, text="invert", variable=self.invert_green)
+        self.green_invert_check.pack(side="left")
+
+        self.green_slider = Slider(self.green_frame, handles=2, min=0, max=255, width=400, height=40,
+                                   command=lambda x: self.update_image("green", x))
+        self.green_slider.pack(fill="none", expand="false")
+
+        self.blue_frame = tk.Frame(self, borderwidth=1, relief=tk.SOLID)
+        self.blue_frame.pack()
+        self.blue_invert_check = tk.Checkbutton(self.blue_frame, text="invert", variable=self.invert_blue)
+        self.blue_invert_check.pack(side="left")
+
+        self.blue_slider = Slider(self.blue_frame, handles=2, min=0, max=255, width=400, height=40,
+                                  command=lambda x: self.update_image("blue", x))
+        self.blue_slider.pack(fill="none", expand="false")
+
+        self.invert_output = tk.Checkbutton(self, text="invert output")
+        self.invert_output.pack()
+        self.invert_output["command"] = self.invert_check_box
         self.save_btn = tk.Button(self)
         self.save_btn["text"] = "save"
         self.save_btn["command"] = self.save_button
@@ -46,9 +82,51 @@ class Application(PipelinePhase):
         self.quit = tk.Button(self, text="QUIT", fg="red", command=self.master.destroy)
         self.quit.pack(side="bottom")
 
-
-
         self.image_handle = None
+
+    def invert_check_box(self):
+        self.invert_output = not self.invert_output
+        self.update_image('red', self.red_slider.current_sorted_values)
+
+    def update_image(self, channel, values):
+
+        def normalize(C):
+            C = C - C.min()
+            C = C / C.max()
+            C = C * 255
+            return C
+
+        if channel == 'red':
+            position = 0
+
+        if channel == 'green':
+            position = 1
+
+        if channel == 'blue':
+            position = 2
+
+        r1, r2 = self.red_slider.current_sorted_values
+        g1, g2 = self.green_slider.current_sorted_values
+        b1, b2 = self.blue_slider.current_sorted_values
+
+        print(r1, r2, g1, g2, b1, b2)
+
+        selectionR = (self.np_img_orig[:, :, position] >= r1) * (self.np_img_orig[:, :, position] <= r2)
+        selectionG = (self.np_img_orig[:, :, position] >= g1) * (self.np_img_orig[:, :, position] <= g2)
+        selectionB = (self.np_img_orig[:, :, position] >= b1) * (self.np_img_orig[:, :, position] <= b2)
+
+        if self.invert_red == True:
+            selectionR = np.invert(selectionR                                   )
+        selection = selectionR * selectionG * selectionB
+
+        selection = np.reshape(selection, (self.np_img.shape[0], self.np_img.shape[1], 1)).astype('uint8')
+
+        if self.invert_output == True:
+            self.np_img = normalize(255 - np.multiply(self.np_img_orig, selection, dtype="uint8"))
+        else:
+            self.np_img = np.multiply(self.np_img_orig, selection, dtype="uint8")
+
+        self.redraw()
 
     def save_button(self):
         directory = path.dirname(self.filename)
@@ -61,7 +139,6 @@ class Application(PipelinePhase):
         self.np_img = np.array(cv2.cvtColor(self.np_img, cv2.COLOR_RGB2BGR))
         self.filename = new_file_name
         print(new_file_name)
-
 
     # def transform_button(self):
     #     can_h = self.canvas.winfo_height()
@@ -193,8 +270,6 @@ class Application(PipelinePhase):
     #     x = (pt[0] / self.np_img.shape[1]) * self.canvas.winfo_width()
     #     y = (pt[1] / self.np_img.shape[0]) * self.canvas.winfo_height()
     #     return ([x, y])
-
-
 
 
 if __name__ == "__main__":
