@@ -64,7 +64,7 @@ class Application(PipelinePhase):
         self.next_phase_btn = tk.Button(self)
         self.next_phase_btn["text"] = "Next Phase"
         self.next_phase_btn["command"] = self.next_phase_button
-        self.next_phase_btn.pack(side="right")
+        self.next_phase_btn.pack(side="top")
 
         self.quit = tk.Button(self, text="QUIT", fg="red", command=self.master.destroy)
         self.quit.pack(side="bottom")
