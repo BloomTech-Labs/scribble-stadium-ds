@@ -1,6 +1,6 @@
 """
 This module's purpose is to provide a UI to help with creating/expanding the dataset
-Specifically the story_photo_GUI_template.py script will allow the user to pick a photo and export a modified
+Specifically the story_photo_template.py script will allow the user to pick a photo and export a modified
 version of the photo used for further processing. This template will also act as a base template for other
 transformations required in the future.
 

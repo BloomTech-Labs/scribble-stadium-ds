@@ -29,16 +29,15 @@ class Slider(Canvas):
     def init_canvas(self):
         self.slide_line = self.create_line([0, 0, 0, 0], width=2, fill='black')
         self.ticks = [self.create_line([0, 0, 0, 0], fill='#999999') for _ in range(10)]
-        self.handles = {self.create_rectangle([0, 0, 0, 0], width=1, fill='blue'): int(self.value_range /2) for _ in
+        self.handles = {self.create_rectangle([0, 0, 0, 0], width=1, fill='blue'): int(self.value_range / 2) for _ in
                         range(self.handles)}
 
         if len(self.handles)>1:
-            stp = self.value_range / (len(self.handles))
-            p = stp + stp
+            stp = self.value_range / (len(self.handles)+1)
+            p = stp
             for h,v in self.handles.items():
                 self.handles[h]=p
-                p = stp - stp
-
+                p=p+stp
 
         values = [v for h, v in self.handles.items()]
         values.sort()
@@ -85,7 +84,6 @@ class Slider(Canvas):
         w = self.winfo_width()
 
         # slider
-        # This is the placement of the black line
         self.coords(self.slide_line, [0, int(h / 2), w, int(h / 2)])
         self.value_per_pix = self.value_range / w
 
@@ -95,16 +93,16 @@ class Slider(Canvas):
             self.coords(tick, [i * self.pix_per_tick, 0, i * self.pix_per_tick, h])
 
         # handles
-        #pix_per_value = w / (self.max - self.min)
+        pix_per_value = w / (self.max - self.min)
         for handle in self.handles.items():
             hndle,v= handle
             px = v/self.value_per_pix
             self.coords(hndle, [px - self.handle_width, 10, px + self.handle_width, h - 10])
 
         #for i, tick_handle in zip(range(len(self.handles)), self.handles.items()):
-         #   tick_value = tick_handle[1]
-          #  px = tick_value * pix_per_value
-           # self.coords(tick_handle[0], [px - self.handle_width, 10, px + self.handle_width, h-10])
+        #    tick_value = tick_handle[1]
+        #    px = tick_value * pix_per_value
+        #    self.coords(tick_handle[0], [px - self.handle_width, 10, px + self.handle_width, h-10])
 
         self.update()
 
