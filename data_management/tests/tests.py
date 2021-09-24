@@ -1,13 +1,14 @@
 import unittest
 import warnings
 
+from data_management.management_utils import management_utils
+
 
 class TestCpuLoader(unittest.TestCase):
 
     def test_data_path(self):
         import os
-        from cpudataloader import CPUDataLoader
-        cdl = CPUDataLoader()
+        cdl = management_utils.CPUDataLoader()
 
         f = lambda: os.path.exists(cdl.data_path)
         self.assertTrue(f(), "expected data directory does not exist: " + cdl.data_path)
@@ -28,8 +29,9 @@ class TestCpuLoader(unittest.TestCase):
         """
         import glob
         import os
-        from cpudataloader import CPUDataLoader
-        data_path = CPUDataLoader().data_path
+        from .. management_utils import management_utils
+
+        data_path = management_utils.CPUDataLoader().data_path
         storys = glob.glob(os.path.join(data_path, "*", "*", "Story*"))
         self.assertTrue(len(storys) > 3, "No storys found")
 
@@ -40,10 +42,10 @@ class TestCpuLoader(unittest.TestCase):
         import glob
         import os
         import cv2
-        from cpudataloader import CPUDataLoader
+        cdl = management_utils.CPUDataLoader()
 
         errors = []
-        data_path = CPUDataLoader().data_path
+        data_path = cdl.data_path
         storys = glob.glob(os.path.join(data_path, "*", "*", "Story*"))
 
         # Test stories are readable in ut8, this should throw an error if encountering binary file,

@@ -1,6 +1,3 @@
-These modules are currently not working as the directory structure has changed since they where created
-====
-
 Usage
 =====
 Before attempting to run these commands, please do the following
