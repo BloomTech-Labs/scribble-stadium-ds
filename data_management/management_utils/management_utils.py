@@ -7,4 +7,4 @@ import os.path as path
 
 class CPUDataLoader():
     def __init__(self):
-        self.data_path = path.join(path.dirname(__file__), "../../ocr_performance", "..", "data", "transcribed_stories")
+        self.data_path = path.join(path.dirname(__file__), "..", "..", "data", "transcribed_stories")
