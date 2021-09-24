@@ -4,16 +4,6 @@ import warnings
 from data_management.management_utils import management_utils
 
 
-class PipeLinePhases(unittest.TestCase):
-    def test_basic_properties(self):
-        from data_management.story_photo_transformer import phase_list
-        for i,cls in enumerate(phase_list):
-            print(cls)
-            a = cls(None)
-
-            self.assertTrue("phase" in a.__dir__(),"no phase name in "+str(cls)+" phase should be = phase"+str(i))
-
-
 class TestCpuLoader(unittest.TestCase):
 
     def test_data_path(self):
@@ -26,7 +16,7 @@ class TestCpuLoader(unittest.TestCase):
     def test_data_file_structure(self):
         """
         expecting structure like:
-        transcribed_stories
+        data_folder
           31--
             3101
               photo 3101.jpg
@@ -39,7 +29,7 @@ class TestCpuLoader(unittest.TestCase):
         """
         import glob
         import os
-        import data_management.management_utils
+        from .. management_utils import management_utils
 
         data_path = management_utils.CPUDataLoader().data_path
         storys = glob.glob(os.path.join(data_path, "*", "*", "Story*"))
