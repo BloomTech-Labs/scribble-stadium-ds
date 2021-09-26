@@ -73,3 +73,9 @@ def complexity_df(story_words):
     words = words.astype({"complexity": int})
 
     return words
+
+
+def story_word_count(story):
+    # counts all words per story submission
+    word_count = sum(story['word'].value_counts())
+    return word_count
