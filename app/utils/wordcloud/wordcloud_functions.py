@@ -75,7 +75,19 @@ def complexity_df(story_words):
     return words
 
 
-def story_word_count(story):
+def story_word_count(words_df):
+    # takes in the words df that is created
+    # with the complexity_df function
     # counts all words per story submission
-    word_count = sum(story['word'].value_counts())
+    word_count = sum(words_df['word'].value_counts())
     return word_count
+
+
+def get_top_complex_words(words_df, num_of_words):
+    # takes in the words df that is created
+    # with the complexity_df function
+    # and the amount of top words that are wanted
+    # returns the top complex words
+    words_df = words_df.sort_values(by=['complexity'], ascending=False)
+    most_complex = words_df[:num_of_words]
+    return most_complex
