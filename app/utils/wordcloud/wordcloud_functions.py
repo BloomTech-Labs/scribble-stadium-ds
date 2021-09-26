@@ -1,6 +1,9 @@
 import pandas as pd
 from collections import Counter
 
+complex_words = pd.read_csv('https://raw.githubusercontent.com/BritVandy/place_holder_csv_file/main/complex_words.csv')
+
+
 def count_syllables(word):
     word = word.lower()
     syllable_count = 0
@@ -26,10 +29,10 @@ def clean_text(story):
     whitelist = set("abcdefghijklmnopqrstuvwxyz' ABCDEFGHIJKLMNOPQRSTUVWXYZ")
     story = ''.join(filter(whitelist.__contains__, story))
 
-    #tokenize words
+    # tokenize words
     story = story.split()
 
-    #remove '' from list
+    # remove '' from list
     story = [x for x in story if x != '']
 
     return story
@@ -37,7 +40,7 @@ def clean_text(story):
 
 def complexity_df(story_words):
 
-    # Create a dictionary to count occurences of words
+    # Create a dictionary to count occurrences of words
     word_counts = Counter(story_words)
 
     # Convert the dictionary to a dataframe
@@ -57,7 +60,16 @@ def complexity_df(story_words):
     words['syllables'] = words['word'].apply(count_syllables)
     # https://medium.com/@mholtzscher/programmatically-counting-syllables-ca760435fab4
 
-    # make a column for how BIG a word is
-    words['complexity'] = words['syllables'] + words['len']
+    # make a column for how complex a word is
+
+    # first setting words that are in the complex_words with their
+    # set complexity these are words at higher grade levels, that
+    # don't work with the complexity metric
+    vdic = pd.Series(complex_words.complexity.values, index=complex_words.word).to_dict()
+    words.loc[words.word.isin(vdic.keys()), 'complexity'] = words.loc[words.word.isin(vdic.keys()), 'word'].map(vdic)
+
+    # then filling in the rest with the complexity metric
+    words['complexity'] = words['complexity'].fillna(words['syllables'] + words['len'])
+    words = words.astype({"complexity": int})
 
     return words
