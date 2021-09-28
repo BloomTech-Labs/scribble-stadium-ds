@@ -43,17 +43,23 @@ class Application(PipelinePhase):
         # red channel
         self.red_frame = tk.Frame(self, borderwidth=1, relief=tk.SOLID);
         self.red_frame.pack()
-
+        self.red_frame_label = tk.Label(self, borderwidth=1, relief=tk.SOLID, text='newlabel');
+        self.red_frame_label.pack()
         self.red_invert_check = tk.Checkbutton(self.red_frame, text="invert", variable=self.invert_red)
         self.red_invert_check.pack(side="left")
 
         self.red_slider = Slider(self.red_frame, handles=2, min=0, max=255, width=400, height=40,
                                  command=lambda x: self.update_image("red", x))
+        #self.red_slider.set(0)
         self.red_slider.pack(fill="none", expand="false")
+        #self.red_slider = tk.PanedWindow(handlepad=0)
+
 
         # green channel
         self.green_frame = tk.Frame(self, borderwidth=1, relief=tk.SOLID)
         self.green_frame.pack()
+        self.green_frame_label = tk.Label(self, borderwidth=1, relief=tk.SOLID, text='new_new_label');
+        self.green_frame_label.pack()
 
         self.green_invert_check = tk.Checkbutton(self.green_frame, text="invert", variable=self.invert_green)
         self.green_invert_check.pack(side="left")
@@ -63,7 +69,10 @@ class Application(PipelinePhase):
         self.green_slider.pack(fill="none", expand="false")
 
         self.blue_frame = tk.Frame(self, borderwidth=1, relief=tk.SOLID)
-        self.blue_frame.pack()
+        self.blue_frame.pack(anchor="w")
+        self.blue_frame_label = tk.Label(self, borderwidth=1, relief=tk.SOLID, text='new_new_label');
+        self.blue_frame_label.pack()
+
         self.blue_invert_check = tk.Checkbutton(self.blue_frame, text="invert", variable=self.invert_blue)
         self.blue_invert_check.pack(side="left")
 
@@ -116,7 +125,7 @@ class Application(PipelinePhase):
         selectionB = (self.np_img_orig[:, :, position] >= b1) * (self.np_img_orig[:, :, position] <= b2)
 
         if self.invert_red == True:
-            selectionR = np.invert(selectionR                                   )
+            selectionR = np.invert(selectionR                                  )
         selection = selectionR * selectionG * selectionB
 
         selection = np.reshape(selection, (self.np_img.shape[0], self.np_img.shape[1], 1)).astype('uint8')
@@ -194,44 +203,44 @@ class Application(PipelinePhase):
     #                 pt3 = self.photo_image_2_canvas_pt(self.points[0])
     #                 self.line_handles.append(self.canvas.create_line([pt1[0], pt1[1], pt3[0], pt3[1]], fill="#ffff00"))
 
-    # def canvas_mouseover(self, event):
-    #     ## create elements needed
-    #     if len(self.cursor_oval_handles) < len(self.points) + 1:
-    #         o_size = 5
-    #         x = event.x
-    #         y = event.y
-    #         oval = [x - o_size, y - o_size, x + o_size, y + o_size]
-    #         self.cursor_oval_handles.append(self.canvas.create_oval(*oval))
-    #
-    #     ## move oval to cursor if needed
-    #     if self.newest_pt_idx < 3:
-    #         pt1 = [event.x, event.y]
-    #         o_size = 5
-    #         oval = [pt1[0] - o_size, pt1[1] - o_size, pt1[0] + o_size, pt1[1] + o_size]
-    #         self.canvas.coords(self.cursor_oval_handles[-1], oval)
-    #
-    #     ## draw line to cursor if needed
-    #     if (self.newest_pt_idx >= 0) and (self.newest_pt_idx < 2):
-    #         pt1 = self.photo_image_2_canvas_pt(self.points[self.newest_pt_idx])
-    #         pt2 = [event.x, event.y]
-    #         o_size = 5
-    #         x = event.x
-    #         y = event.y
-    #         oval = [x - o_size, y - o_size, x + o_size, y + o_size]
-    #         self.canvas.coords(self.line_handles[self.newest_pt_idx], [pt1[0], pt1[1], pt2[0], pt2[1]])
-    #
-    #     elif self.newest_pt_idx == 2:
-    #         pt1 = self.photo_image_2_canvas_pt(self.points[2])
-    #         pt2 = [event.x, event.y]
-    #         pt3 = self.photo_image_2_canvas_pt(self.points[0])
-    #         o_size = 5
-    #         x = event.x
-    #         y = event.y
-    #         oval = [x - o_size, y - o_size, x + o_size, y + o_size]
-    #         self.canvas.coords(self.line_handles[2], [pt1[0], pt1[1], pt2[0], pt2[1]])
-    #         self.canvas.coords(self.line_handles[3], [pt3[0], pt3[1], pt2[0], pt2[1]])
+    #def canvas_mouseover(self, event):
+         ## create elements needed
+     #    if len(self.cursor_oval_handles) < len(self.points) + 1:
+      #       o_size = 5
+       #      x = event.x
+        #     y = event.y
+         #    oval = [x - o_size, y - o_size, x + o_size, y + o_size]
+          #   self.cursor_oval_handles.append(self.canvas.create_oval(*oval))
 
-    # def update_lines(self, curosor_x, curosor_y):
+         ## move oval to cursor if needed
+         #if self.newest_pt_idx < 3:
+          #   pt1 = [event.x, event.y]
+           #  o_size = 5
+            # oval = [pt1[0] - o_size, pt1[1] - o_size, pt1[0] + o_size, pt1[1] + o_size]
+             #self.canvas.coords(self.cursor_oval_handles[-1], oval)
+
+         ## draw line to cursor if needed
+         #if (self.newest_pt_idx >= 0) and (self.newest_pt_idx < 2):
+             # pt1 = self.photo_image_2_canvas_pt(self.points[self.newest_pt_idx])
+             # pt2 = [event.x, event.y]
+             # o_size = 5
+             # x = event.x
+             # y = event.y
+             # oval = [x - o_size, y - o_size, x + o_size, y + o_size]
+         #     self.canvas.coords(self.line_handles[self.newest_pt_idx], [pt1[0], pt1[1], pt2[0], pt2[1]])
+         #
+         # elif self.newest_pt_idx == 2:
+         #     pt1 = self.photo_image_2_canvas_pt(self.points[2])
+         #     pt2 = [event.x, event.y]
+         #     pt3 = self.photo_image_2_canvas_pt(self.points[0])
+         #     o_size = 5
+         #     x = event.x
+         #     y = event.y
+         #     oval = [x - o_size, y - o_size, x + o_size, y + o_size]
+         #     self.canvas.coords(self.line_handles[2], [pt1[0], pt1[1], pt2[0], pt2[1]])
+         #     self.canvas.coords(self.line_handles[3], [pt3[0], pt3[1], pt2[0], pt2[1]])
+
+    # def update_lines(self, cursor_x, cursor_y):
     #     last_point = self.points[-1]
     #
     #     if len(self.points) == 0:
