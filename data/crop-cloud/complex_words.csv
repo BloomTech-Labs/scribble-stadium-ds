@@ -1,0 +1,605 @@
+word,school level,complexity
+aback,high school,16.0
+abaft,post college,20.0
+abalone,high school,16.0
+abamp,post college,20.0
+abampere,post college,20.0
+abase,college,18.0
+abased,high school,16.0
+abash,post college,20.0
+abashed,college,18.0
+abasia,college,18.0
+abate,middle school,14.0
+abatis,college,18.0
+abaxial,post college,20.0
+abbacy,post college,20.0
+abbess,post college,20.0
+abbot,high school,16.0
+abduce,post college,20.0
+abducent,post college,20.0
+abduct,college,18.0
+abductee,post college,20.0
+abductor,post college,20.0
+abele,college,18.0
+abelmosk,post college,20.0
+abet,high school,16.0
+abettor,high school,16.0
+abeyance,high school,16.0
+abeyant,post college,20.0
+abhor,college,18.0
+abhorrent,high school,16.0
+abide,middle school,14.0
+abient,college,18.0
+abiosis,college,18.0
+abject,high school,16.0
+abjure,post college,20.0
+ablate,college,18.0
+ablaze,college,18.0
+abnegate,post college,20.0
+abode,middle school,14.0
+abrade,college,18.0
+abridge,high school,16.0
+abrogate,high school,16.0
+abrupt,middle school,14.0
+abscind,college,18.0
+abscond,post college,20.0
+absolve,college,18.0
+absorb,middle school,14.0
+abstain,middle school,14.0
+abstruse,high school,16.0
+absurd,middle school,14.0
+abyss,middle school,14.0
+acarid,high school,16.0
+accede,high school,16.0
+acclivity,post college,20.0
+accolade,high school,16.0
+accord,middle school,14.0
+accost,college,18.0
+accosted,college,18.0
+accredit,high school,16.0
+accroach,post college,20.0
+accrue,middle school,14.0
+accursed,high school,16.0
+accuser,high school,16.0
+accustom,post college,20.0
+acedia,post college,20.0
+acerbate,college,18.0
+acerbic,high school,16.0
+acerbity,post college,20.0
+acerose,college,18.0
+acerous,high school,16.0
+acetic,high school,16.0
+acetous,college,18.0
+achene,college,18.0
+acicular,post college,20.0
+aciculate,post college,20.0
+aciniform,college,18.0
+acme,high school,16.0
+acolyte,post college,20.0
+acquiesce,college,18.0
+acquit,post college,20.0
+acrid,high school,16.0
+acrostic,college,18.0
+acta,middle school,14.0
+acumen,high school,16.0
+adage,high school,16.0
+addend,college,18.0
+addle,post college,20.0
+adduce,high school,16.0
+adit,college,18.0
+adjoin,post college,20.0
+adjure,post college,20.0
+admonish,high school,16.0
+adulate,college,18.0
+adumbrate,post college,20.0
+aegis,high school,16.0
+aerate,college,18.0
+affix,college,18.0
+aft,middle school,14.0
+aggrandize,post college,20.0
+agog,post college,20.0
+airfoil,high school,16.0
+akin,middle school,14.0
+alacrity,high school,16.0
+alcove,high school,16.0
+alibi,high school,16.0
+allay,high school,16.0
+allude,high school,16.0
+alms,high school,16.0
+ambit,high school,16.0
+amble,high school,16.0
+amid,middle school,14.0
+amity,high school,16.0
+amuck,post college,20.0
+ana,middle school,14.0
+anathema,middle school,14.0
+ancon,high school,16.0
+anent,high school,16.0
+animus,high school,16.0
+annex,middle school,14.0
+antic,college,18.0
+aphid,high school,16.0
+apiary,post college,20.0
+appall,post college,20.0
+aptly,high school,16.0
+arboreal,high school,16.0
+arete,college,18.0
+argot,college,18.0
+arrogate,college,18.0
+ascetic,high school,16.0
+asp,middle school,14.0
+atone,high school,16.0
+aura,middle school,14.0
+avid,middle school,14.0
+avow,post college,20.0
+awe,middle school,14.0
+awry,high school,16.0
+balk,college,18.0
+bane,middle school,14.0
+bashful,college,18.0
+bask,high school,16.0
+bawl,post college,20.0
+beguile,post college,20.0
+bemoan,high school,16.0
+bequeath,college,18.0
+berate,high school,16.0
+bide,high school,16.0
+bilk,post college,20.0
+biome,high school,16.0
+boor,high school,16.0
+brash,high school,16.0
+brawl,high school,16.0
+brute,middle school,14.0
+bungle,college,18.0
+butte,high school,16.0
+bygone,high school,16.0
+cajole,post college,20.0
+callow,college,18.0
+calumny,post college,20.0
+captor,high school,16.0
+careen,college,18.0
+carouse,college,18.0
+cask,high school,16.0
+cavort,post college,20.0
+chaff,high school,16.0
+chard,high school,16.0
+chasm,high school,16.0
+chic,middle school,14.0
+chide,,
+chock,high school,16.0
+chortle,college,18.0
+chroma,high school,16.0
+clad,middle school,14.0
+clamor,high school,16.0
+cleave,high school,16.0
+clout,middle school,14.0
+coax,high school,16.0
+cobbler,high school,16.0
+cogent,middle school,14.0
+cohere,college,18.0
+collude,college,18.0
+comity,college,18.0
+conduit,middle school,14.0
+congruity,post college,20.0
+conjoin,post college,20.0
+conk,post college,20.0
+connive,college,18.0
+consign,high school,16.0
+contort,college,18.0
+contrite,high school,16.0
+contuse,college,18.0
+contusion,college,18.0
+coup,middle school,14.0
+couth,college,18.0
+covet,high school,16.0
+cower,high school,16.0
+cowl,college,18.0
+coy,high school,16.0
+crag,high school,16.0
+crass,middle school,14.0
+cupidity,post college,20.0
+curt,high school,16.0
+cyborg,college,18.0
+dactyl,,
+daft,middle school,14.0
+dais,high school,16.0
+dally,college,18.0
+dap,middle school,14.0
+dearth,middle school,14.0
+debacle,middle school,14.0
+debauch,post college,20.0
+debunk,college,18.0
+decoct,post college,20.0
+decry,college,18.0
+deft,high school,16.0
+defunct,middle school,14.0
+deify,post college,20.0
+delude,high school,16.0
+despot,high school,16.0
+didactic,high school,16.0
+dire,middle school,14.0
+dirge,high school,16.0
+discomfit,post college,20.0
+dispel,middle school,14.0
+disrepute,high school,16.0
+divvy,post college,20.0
+dogmatic,high school,16.0
+doily,post college,20.0
+dote,college,18.0
+dour,high school,16.0
+drab,high school,16.0
+drawl,college,18.0
+droll,high school,16.0
+duly,middle school,14.0
+dupe,high school,16.0
+duplicity,college,18.0
+dyad,college,18.0
+ebb,high school,16.0
+edict,middle school,14.0
+edify,post college,20.0
+effigy,,
+eke,high school,16.0
+elate,college,18.0
+elegy,college,18.0
+elicit,middle school,14.0
+elude,high school,16.0
+embroil,post college,20.0
+emend,college,18.0
+emollient,high school,16.0
+enervate,college,18.0
+enfranchise,post college,20.0
+eon,middle school,14.0
+ephemeral,high school,16.0
+equivocal,post college,20.0
+ergo,middle school,14.0
+espouse,high school,16.0
+espy,post college,20.0
+eve,middle school,14.0
+evince,high school,16.0
+execrable,post college,20.0
+exhort,college,18.0
+exigent,college,18.0
+expiate,post college,20.0
+expunge,college,18.0
+expurgate,post college,20.0
+extant,middle school,14.0
+extol,college,18.0
+exude,post college,20.0
+exult,college,18.0
+fallacious,high school,16.0
+fatuous,post college,20.0
+feign,high school,16.0
+fetter,college,18.0
+fickle,high school,16.0
+fipple,post college,20.0
+flagrant,high school,16.0
+flak,high school,16.0
+flay,post college,20.0
+fleck,post college,20.0
+flub,post college,20.0
+flux,middle school,14.0
+foil,middle school,14.0
+foiled,middle school,14.0
+forgo,high school,16.0
+fortuitous,high school,16.0
+fractious,high school,16.0
+frill,college,18.0
+furl,high school,16.0
+garish,high school,16.0
+garrulous,college,18.0
+gauche,high school,16.0
+ghee,high school,16.0
+gnash,college,18.0
+gnaw,college,18.0
+goad,high school,16.0
+gouge,high school,16.0
+gourmand,college,18.0
+gratuitous,high school,16.0
+grommet,high school,16.0
+gruff,college,18.0
+guck,post college,20.0
+gyre,post college,20.0
+gyro,college,18.0
+hapless,high school,16.0
+heed,middle school,14.0
+heft,high school,16.0
+helm,middle school,14.0
+hew,high school,16.0
+hex,middle school,14.0
+hind,,
+hoax,high school,16.0
+hovel,post college,20.0
+hubris,high school,16.0
+hue,middle school,14.0
+husk,college,18.0
+iconoclast,college,18.0
+illude,high school,16.0
+imbue,college,18.0
+impinge,high school,16.0
+impute,high school,16.0
+inane,middle school,14.0
+inapt,college,18.0
+inchoate,college,18.0
+ingot,high school,16.0
+inimical,high school,16.0
+inoculate,high school,16.0
+instigate,high school,16.0
+inure,high school,16.0
+invective,high school,16.0
+iota,high school,16.0
+ire,middle school,14.0
+irk,post college,20.0
+jeer,post college,20.0
+jibe,post college,20.0
+jinx,post college,20.0
+jive,high school,16.0
+jolt,high school,16.0
+jot,high school,16.0
+jowl,post college,20.0
+keen,middle school,14.0
+kiln,middle school,14.0
+knave,college,18.0
+knell,high school,16.0
+knoll,high school,16.0
+lank,college,18.0
+laud,high school,16.0
+lave,high school,16.0
+lax,high school,16.0
+laze,post college,20.0
+leer,middle school,14.0
+leery,high school,16.0
+lest,middle school,14.0
+licentious,college,18.0
+linchpin,high school,16.0
+liquefy,post college,20.0
+lithe,high school,16.0
+litigant,high school,16.0
+loath,,
+lob,high school,16.0
+lop,high school,16.0
+lug,middle school,14.0
+lunge,high school,16.0
+lurk,high school,16.0
+lush,middle school,14.0
+maelstrom,high school,16.0
+maim,high school,16.0
+malady,college,18.0
+maraud,college,18.0
+maudlin,high school,16.0
+maverick,high school,16.0
+maw,college,18.0
+mawkish,post college,20.0
+meek,high school,16.0
+mewl,post college,20.0
+miff,post college,20.0
+modicum,college,18.0
+moot,middle school,14.0
+mope,post college,20.0
+morass,high school,16.0
+mores,middle school,14.0
+morsel,high school,16.0
+mull,high school,16.0
+nadir,high school,16.0
+naught,high school,16.0
+nauseant,college,18.0
+neophyte,college,18.0
+noisome,college,18.0
+nook,high school,16.0
+obdurate,post college,20.0
+obtuse,high school,16.0
+ode,middle school,14.0
+officious,post college,20.0
+ombre,college,18.0
+omit,middle school,14.0
+opus,high school,16.0
+ostracism,college,18.0
+palliate,college,18.0
+panacea,high school,16.0
+pariah,college,18.0
+paucity,high school,16.0
+pejorative,college,18.0
+pellucid,post college,20.0
+penurious,college,18.0
+pernicious,high school,16.0
+perplex,post college,20.0
+pert,middle school,14.0
+phlegmatic,post college,20.0
+pilfer,post college,20.0
+pithy,college,18.0
+placid,high school,16.0
+plait,college,18.0
+platitude,college,18.0
+plaudit,college,18.0
+pleat,high school,16.0
+plenitude,college,18.0
+poise,middle school,14.0
+portent,high school,16.0
+posy,post college,20.0
+potentate,college,18.0
+pout,high school,16.0
+preen,college,18.0
+presage,college,18.0
+primp,post college,20.0
+privy,high school,16.0
+probity,college,18.0
+proclivity,college,18.0
+prod,middle school,14.0
+profligate,high school,16.0
+profuse,high school,16.0
+prone,middle school,14.0
+proscribe,post college,20.0
+protean,college,18.0
+prurient,high school,16.0
+pry,high school,16.0
+puerile,high school,16.0
+puny,high school,16.0
+putrid,high school,16.0
+pylon,college,18.0
+pyre,college,18.0
+quaint,middle school,14.0
+qualm,post college,20.0
+quandary,college,18.0
+quash,college,18.0
+quell,high school,16.0
+quip,post college,20.0
+quirk,post college,20.0
+quixotic,post college,20.0
+rancor,college,18.0
+rapt,high school,16.0
+rasp,college,18.0
+rebuff,post college,20.0
+recant,college,18.0
+redact,college,18.0
+reek,high school,16.0
+reel,middle school,14.0
+reform,high school,16.0
+refract,college,18.0
+reify,post college,20.0
+relegate,high school,16.0
+relent,high school,16.0
+remiss,high school,16.0
+rend,high school,16.0
+reprieve,high school,16.0
+reprobate,college,18.0
+repute,high school,16.0
+resile,college,18.0
+revile,college,18.0
+rife,middle school,14.0
+riff,middle school,14.0
+rile,college,18.0
+romp,middle school,14.0
+rout,middle school,14.0
+ruse,high school,16.0
+sanguine,high school,16.0
+sate,high school,16.0
+scant,middle school,14.0
+schlep,post college,20.0
+scoff,college,18.0
+scowl,college,18.0
+scurrilous,college,18.0
+sect,middle school,14.0
+seep,middle school,14.0
+seethe,college,18.0
+shard,high school,16.0
+sheen,middle school,14.0
+shirk,college,18.0
+shunt,middle school,14.0
+sidle,college,18.0
+sigil,high school,16.0
+silt,middle school,14.0
+sinew,college,18.0
+singe,college,18.0
+skew,middle school,14.0
+skirr,middle school,14.0
+skulk,post college,20.0
+slat,high school,16.0
+sleuth,high school,16.0
+slosh,college,18.0
+sly,middle school,14.0
+smelt,middle school,14.0
+smirk,high school,16.0
+snafu,high school,16.0
+snare,middle school,14.0
+sneer,high school,16.0
+snide,high school,16.0
+snub,high school,16.0
+sobriety,high school,16.0
+sod,middle school,14.0
+soiree,high school,16.0
+solicitous,high school,16.0
+solipsism,post college,20.0
+somber,high school,16.0
+sop,high school,16.0
+souse,college,18.0
+spew,high school,16.0
+spiel,middle school,14.0
+spire,high school,16.0
+splay,high school,16.0
+spry,post college,20.0
+squall,college,18.0
+staid,high school,16.0
+stasis,high school,16.0
+stern,middle school,14.0
+stifle,high school,16.0
+stint,middle school,14.0
+stoke,high school,16.0
+stolid,college,18.0
+stout,middle school,14.0
+stow,middle school,14.0
+strut,middle school,14.0
+suave,high school,16.0
+subjugate,college,18.0
+subtle,middle school,14.0
+sultry,high school,16.0
+sunder,college,18.0
+supine,high school,16.0
+surfeit,college,18.0
+surly,high school,16.0
+swarthy,high school,16.0
+swath,high school,16.0
+swathe,college,18.0
+sync,middle school,14.0
+​​stifle,,
+tacit,middle school,14.0
+tact,middle school,14.0
+tatter,college,18.0
+taut,middle school,14.0
+teem,college,18.0
+tepid,high school,16.0
+tether,middle school,14.0
+thwart,middle school,14.0
+tirade,high school,16.0
+toady,post college,20.0
+toil,middle school,14.0
+tome,middle school,14.0
+topple,high school,16.0
+torpid,college,18.0
+tousle,college,18.0
+travesty,high school,16.0
+trawl,high school,16.0
+trenchant,high school,16.0
+trice,high school,16.0
+trifle,high school,16.0
+trill,high school,16.0
+trite,middle school,14.0
+trope,high school,16.0
+truculent,college,18.0
+tuft,college,18.0
+turpitude,high school,16.0
+tutor,middle school,14.0
+umbrage,post college,20.0
+unapt,high school,16.0
+upbraid,post college,20.0
+usury,high school,16.0
+valor,high school,16.0
+vapid,college,18.0
+vat,middle school,14.0
+veracity,high school,16.0
+verve,high school,16.0
+vestige,high school,16.0
+vex,post college,20.0
+vie,middle school,14.0
+vigor,middle school,14.0
+vilify,post college,20.0
+vitriolic,high school,16.0
+vivid,middle school,14.0
+vouch,high school,16.0
+vying,middle school,14.0
+waft,post college,20.0
+wane,middle school,14.0
+wary,middle school,14.0
+weary,middle school,14.0
+welt,high school,16.0
+whim,middle school,14.0
+whirl,high school,16.0
+wield,high school,16.0
+wile,high school,16.0
+wily,high school,16.0
+winsome,high school,16.0
+wiry,college,18.0
+woe,middle school,14.0
+writhe,high school,16.0
+yoke,middle school,14.0
+yowl,post college,20.0
+zeal,middle school,14.0
+zephyr,high school,16.0
