@@ -27,6 +27,10 @@ if os.getenv("TESSERACT_BINARY") is not None:
     # and then `which tesseract` to find out where it went.
     # This is typically TESSERACT_BINARY = "/usr/bin/tesseract"
 
+    # on Mac, you can install Tesseract by running `brew install tesseract`
+    # and then `brew info tesseract` to find out where it went
+    # This is typically TESSERACT_BINARY = "/usr/local/Cellar/tesseract"
+
     # Other settings you can change
     # TESSERACT_ENV = os.getenv("TESSERACT_ENV")
     # TESSERACT_CONFIG = os.getenv("TESSERACT_CONFIG")

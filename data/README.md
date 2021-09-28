@@ -16,3 +16,6 @@
           5209, 5214, 5216, 5223, 5233, 5243, 5246, 5251, 5252, 5253, 5256, 5259, 5262, 5263
 
 - Use this link for instruction for preprocessing data which has been segmented (.tif & .gt.txt files) https://docs.google.com/document/d/18ivuF40EqTIzE-BJbbk-5Rmp7CFYZ2fp1Odow0wt2T4/edit?usp=sharing
+
+ As of 9/26/21
+ - The complex_words.csv was added to the crop-cloud folder. The csv contains words that do not work well with the complexity function that is currently being utilized. It also contains the grade level (Middle School, High School, College, or Post College) and set complexity scores for each word. This is used in the complexity_df function located in "app/utils/wordcloud/wordcloud_functions.py". This is meant to be a temporary location to store the dataset until a better solution is implemented.
