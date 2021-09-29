@@ -3,7 +3,7 @@
 - Each module should also be able to be launched seperatly and work on whatever input the user gives it
 - Each module should be one phase
 - The first module also includes code that sequentially runs the next phases
-- Each module will retain information about what paramaters and hyper-parameters the user used to create the output
+- Each module will retain information about what [paramaters](https://datascience.stackexchange.com/questions/14187/what-is-the-difference-between-model-hyperparameters-and-model-parameters) and [hyper-parameters](https://en.wikipedia.org/wiki/Hyperparameter_(machine_learning)) the user used to create the output
 
 
 These modules represent phases in the pipeline
