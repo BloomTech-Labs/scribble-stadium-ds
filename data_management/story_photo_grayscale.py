@@ -6,13 +6,16 @@ as that of the image as grayscale.
 
 image will be saved with _grayscale appended before the file extension
 """
-
+from os import path
+import cv2
+import numpy as np
+import tkinter as tk
 from data_management.phase_tkinter_class import PipelinePhase
 
 class Application(PipelinePhase):
     def __init__(self, next_phase, master=None, prev_phase: PipelinePhase = None):
         super().__init__(next_phase, master=master, prev_phase=prev_phase)
-
+        self.phase="phase2"
 
         # Convert image to grayscale
         self.np_img_grayscale = np.array(cv2.cvtColor(self.np_img, cv2.COLOR_BGR2GRAY))
@@ -40,7 +43,7 @@ class Application(PipelinePhase):
         self.save_btn_grayscale.pack(side="top")
 
         # Quit Button
-        self.quit = tk.Button(self, text="QUIT", fg="red", command=self.master.destroy)
+        self.quit = tk.Button(self, text="QUIT", fg="red", command=self.destroy)
         self.quit.pack(side="bottom")
 
         # Next Phase Button

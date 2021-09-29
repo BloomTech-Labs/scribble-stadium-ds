@@ -8,12 +8,15 @@ image will be saved with _bw appended before the file extension
 """
 
 from data_management.phase_tkinter_class import PipelinePhase
-
+from os import path
+import cv2
+import numpy as np
+import tkinter as tk
 
 class Application(PipelinePhase):
     def __init__(self, next_phase, master=None, prev_phase: PipelinePhase = None):
         super().__init__(next_phase, master=master, prev_phase=prev_phase)
-
+        self.phase ="phase3"
         # Convert image to Black and White
         self.im_gray = cv2.imread(self.filename, cv2.IMREAD_GRAYSCALE)
         (thresh, self.np_img_bw) = cv2.threshold(self.im_gray, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
@@ -47,7 +50,7 @@ class Application(PipelinePhase):
         self.next_phase_btn.pack(side="top")
 
         # Quit Button
-        self.quit = tk.Button(self, text="QUIT", fg="red", command=self.master.destroy)
+        self.quit = tk.Button(self, text="QUIT", fg="red", command=self.destroy)
         self.quit.pack(side="bottom")
 
         self.image_handle = None
