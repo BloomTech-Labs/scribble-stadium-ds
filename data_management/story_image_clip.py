@@ -37,20 +37,20 @@ class Application(PipelinePhase):
         self.create_widgets()
 
     def create_widgets(self):
-        self.transform_btn = tk.Button(self)
+        self.transform_btn = tk.Button(self.controls_frame)
         self.transform_btn["text"] = "Clip"
         self.transform_btn["command"] = self.clip_button
         self.transform_btn.pack(side="top")
 
-        self.save_btn = tk.Button(self)
+        self.save_btn = tk.Button(self.controls_frame)
         self.save_btn["text"] = "save"
         self.save_btn["command"] = self.save_button
         self.save_btn.pack(side="top")
 
-        self.quit = tk.Button(self, text="QUIT", fg="red", command=self.destroy)
+        self.quit = tk.Button(self.controls_frame, text="QUIT", fg="red", command=self.destroy)
         self.quit.pack(side="bottom")
 
-        self.next_phase_btn = tk.Button(self)
+        self.next_phase_btn = tk.Button(self.controls_frame)
         self.next_phase_btn["text"] = "Next Phase"
         self.next_phase_btn["command"] = self.next_phase_button
         self.next_phase_btn.pack(side="right")
@@ -129,23 +129,20 @@ class Application(PipelinePhase):
         cv2.imwrite(file_name, new_img)
         self.redraw()
 
-    def canvas_2_img_pt(self, canvas_pt: list):
-        img_x = canvas_pt[0] / self.canvas.winfo_width() * self.np_img.shape[1]
-        img_y = canvas_pt[1] / self.canvas.winfo_height() * self.np_img.shape[0]
-        return [img_x, img_y]
 
     def record_pt(self, canvas_pt: list):
         """
         Record points the user has specified to the
         """
-
-        print(self.np_img_points)
+        print("processing requested canvas space point:",canvas_pt)
         img_x, img_y = self.canvas_2_img_pt(canvas_pt)
         self.np_img_points[self.current_np_img_point_idx] = [img_x, img_y]
         self.current_np_img_point_idx = self.current_np_img_point_idx + 1
         if self.current_np_img_point_idx == 4:
             self.state.remove(self.states.specify_points)
             self.state.add(self.states.modify_points)
+
+        print(self.np_img_points)
 
     def canvas_click(self, event):
         if self.states.specify_points in self.state:
@@ -189,10 +186,7 @@ class Application(PipelinePhase):
             self.canvas.coords(self.line_handles[2], [pt1[0], pt1[1], pt2[0], pt2[1]])
             self.canvas.coords(self.line_handles[3], [pt3[0], pt3[1], pt2[0], pt2[1]])
 
-    def img_2_canvas_pt(self, pt: list):
-        x = (pt[0] / self.np_img.shape[1]) * self.canvas.winfo_width()
-        y = (pt[1] / self.np_img.shape[0]) * self.canvas.winfo_height()
-        return ([x, y])
+
 
 
 if __name__ == "__main__":

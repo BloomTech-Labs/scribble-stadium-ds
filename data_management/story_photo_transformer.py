@@ -98,10 +98,7 @@ class Application(PipelinePhase):
         self.cursor_oval_handles = []
         self.line_handles = []
 
-    def canvas_2_img_pt(self, canvas_pt: list):
-        img_x = canvas_pt[0] / self.canvas.winfo_width() * self.np_img.shape[1]
-        img_y = canvas_pt[1] / self.canvas.winfo_height() * self.np_img.shape[0]
-        return [img_x, img_y]
+
 
     def record_pt(self, canvas_pt: list):
         """
@@ -157,11 +154,6 @@ class Application(PipelinePhase):
             oval = [x - o_size, y - o_size, x + o_size, y + o_size]
             self.canvas.coords(self.line_handles[2], [pt1[0], pt1[1], pt2[0], pt2[1]])
             self.canvas.coords(self.line_handles[3], [pt3[0], pt3[1], pt2[0], pt2[1]])
-
-    def img_2_canvas_pt(self, pt: list):
-        x = (pt[0] / self.np_img.shape[1]) * self.canvas.winfo_width()
-        y = (pt[1] / self.np_img.shape[0]) * self.canvas.winfo_height()
-        return ([x, y])
 
 
 import data_management.story_image_clip as story_image_clip

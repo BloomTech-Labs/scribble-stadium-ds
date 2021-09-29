@@ -66,15 +66,21 @@ class PipelinePhase(tk.Frame):
         self.photo_image = np_photo_image(self.np_img)
         self.goto_next_phase_flag = None
 
-        self.canvas = tk.Canvas()
+        self.controls_frame = tk.Frame(master=self,borderwidth="2", relief="groove")
+        self.controls_frame.pack()
+
+        self.canvas_frame = tk.Frame(master=self,borderwidth="0", relief="groove")
+        self.canvas_frame.pack(expand=1,fill=tk.BOTH)
+
+        self.canvas = tk.Canvas(master=self.canvas_frame,borderwidth="0")
         self.canvas.pack()
 
         self.canvas.create_image(8, 8, anchor=tk.NW, image=self.photo_image)
 
-        self.canvas.bind('<Configure>', self.resize)
+        self.canvas_frame.bind('<Configure>', self.resize)
 
-        self.canvas.bind("<Motion>", self.redraw_canvas_objects)
-        self.canvas.bind("<Button-1>", self.redraw_canvas_objects)
+        #self.canvas.bind("<Motion>", self.redraw_canvas_objects)
+        #self.canvas.bind("<Button-1>", 3self.redraw_canvas_objects)
 
         try:
             self.canvas.bind("<Button-1>", self.canvas_click)
@@ -86,13 +92,25 @@ class PipelinePhase(tk.Frame):
         except:
             print("no canvas_mouseover")
 
+    def img_2_canvas_pt(self, pt: list):
+        x = (pt[0] / self.np_img.shape[1]) * self.canvas.winfo_width()
+        y = (pt[1] / self.np_img.shape[0]) * self.canvas.winfo_height()
+        print("img_2_canvas result: ",x,y)
+        return ([x, y])
+
+    def canvas_2_img_pt(self, canvas_pt: list):
+        img_x = (canvas_pt[0] / self.canvas.winfo_width()) * self.np_img.shape[1]
+        img_y = (canvas_pt[1] / self.canvas.winfo_height()) * self.np_img.shape[0]
+        print("canvas_2_img result: ",img_x, img_y)
+        return [img_x, img_y]
+
     def motion_event(self, event):
         self.redraw_canvas_objects()
         self.canvas_mouseover(event)
 
-    def _find_new_canvas_size(self):
-        max_w = self.master.winfo_width()
-        max_h = self.master.winfo_height()
+    def _find_new_canvas_size(self,event):
+        max_w = self.canvas_frame.winfo_width()
+        max_h = self.canvas_frame.winfo_height()
         aspect = self.np_img.shape[0] / self.np_img.shape[1]
 
         desired_w = max_h / aspect
@@ -103,6 +121,7 @@ class PipelinePhase(tk.Frame):
 
         if desired_h > max_h:
             desired_h = max_h
+
         if (self.canvas.winfo_height() != desired_h) or (self.canvas.winfo_width() != desired_w):
             self.canvas.config(width=desired_w, height=desired_h, )
 
@@ -114,9 +133,9 @@ class PipelinePhase(tk.Frame):
         should be updated.
         """
         print("redraw")
-        canvas_size = self._find_new_canvas_size()
-        w = canvas_size[0]
-        h = canvas_size[1]
+        #canvas_size = self._find_new_canvas_size()
+        w = self.canvas.winfo_width()
+        h = self.canvas.winfo_height()
         self.photo_image = np_photo_image(cv2.resize(self.np_img, (w, h)))
 
         if not self.image_handle:
@@ -131,7 +150,9 @@ class PipelinePhase(tk.Frame):
         redraw object that are on the canvas besides the base photoimage, use this when you have changed things that are
         drawn on the canvas, like lines ovals etc
         """
+        print(self.image_handle)
         self.canvas.tag_lower(self.image_handle)
+
         # if "current_np_img_point_idx" in self.keys():
         pairs = [[0, 1], [1, 2], [2, 3], [3, 0]]
         for pt1_idx, pt2_idx in pairs:
@@ -149,20 +170,22 @@ class PipelinePhase(tk.Frame):
         handles the fact that the window has been resized or that some other thing has caused the canvas to change
         diminsions. Use this when the shape of the canvas/window/client area has changed
         """
-        import time
 
-        if time.time() - (1 / 60.0) > self.last_redraw:
-            self.last_redraw = time.time()
-            canvas_size = self._find_new_canvas_size()
-            w = canvas_size[0]
-            h = canvas_size[1]
-            print("resize",w,h)
-            self.photo_image = np_photo_image(cv2.resize(self.np_img, (w, h)))
+        print(self.canvas.winfo_width(),self.canvas.winfo_height()," --> ",event.width,event.height)
+        self.last_redraw = time.time()
+        canvas_size = self._find_new_canvas_size(event)
+        w = canvas_size[0]
+        h = canvas_size[1]
+        print("resize",w,h)
+        self.photo_image = np_photo_image(cv2.resize(self.np_img, (w, h)))
+
+        if not self.image_handle:
             self.image_handle = self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo_image)
-            self.update()
-        else:
-            #print("redraw to soon!")
-            pass
+
+        self.canvas.itemconfig(self.image_handle,image=self.photo_image)
+        #self.canvas.update()
+        #self.update()
+
         if len(self.canvas.children) > 0:
             self.redraw()
 
