@@ -91,8 +91,8 @@ class PipelinePhase(tk.Frame):
         self.canvas_mouseover(event)
 
     def _find_new_canvas_size(self):
-        max_w = self.winfo_width()
-        max_h = self.winfo_height()
+        max_w = self.master.winfo_width()
+        max_h = self.master.winfo_height()
         aspect = self.np_img.shape[0] / self.np_img.shape[1]
 
         desired_w = max_h / aspect
@@ -153,12 +153,13 @@ class PipelinePhase(tk.Frame):
 
         if time.time() - (1 / 60.0) > self.last_redraw:
             self.last_redraw = time.time()
-            #print("resize")
             canvas_size = self._find_new_canvas_size()
             w = canvas_size[0]
             h = canvas_size[1]
+            print("resize",w,h)
             self.photo_image = np_photo_image(cv2.resize(self.np_img, (w, h)))
             self.image_handle = self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo_image)
+            self.update()
         else:
             #print("redraw to soon!")
             pass
