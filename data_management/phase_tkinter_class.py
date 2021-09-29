@@ -5,16 +5,12 @@ import os.path as path
 import cv2
 import tkinter as tk
 from tkinter import filedialog as fd
-import os
 import numpy as np
 import os.path as path
 import tkinter as tk
 import cv2
 import os
-import glob
-from enum import IntFlag, auto
-#from phase_tkinter_class import PipelinePhase
-#from phase_tkinter_class import np_photo_image
+
 
 def np_photo_image(image: np.ndarray):
     # This function creates the header information for PPM file format
@@ -30,9 +26,9 @@ def np_photo_image(image: np.ndarray):
 
 
 class PipelinePhase(tk.Frame):
-    import cv2
-    from enum import auto
-    def __init__(self, next_phase, master=None, prev_phase: tk.Frame = None):
+    def __init__(self, next_phase, master=None, prev_phase: tk.Frame = None, test: bool = False):
+        import cv2
+
         super().__init__(master)
         self.next_phase = next_phase
         self.master = master
@@ -54,8 +50,6 @@ class PipelinePhase(tk.Frame):
             # check if user opened a file in a "phase" folder
             if "phase" in self.story_folder:
                 pass
-
-
 
             self.np_img = cv2.imread(self.filename, cv2.IMREAD_UNCHANGED - cv2.IMREAD_IGNORE_ORIENTATION)
 
@@ -97,8 +91,8 @@ class PipelinePhase(tk.Frame):
         self.canvas_mouseover(event)
 
     def _find_new_canvas_size(self):
-        max_w = self.master.winfo_width()
-        max_h = self.master.winfo_height()
+        max_w = self.winfo_width()
+        max_h = self.winfo_height()
         aspect = self.np_img.shape[0] / self.np_img.shape[1]
 
         desired_w = max_h / aspect
@@ -159,14 +153,15 @@ class PipelinePhase(tk.Frame):
 
         if time.time() - (1 / 60.0) > self.last_redraw:
             self.last_redraw = time.time()
-            print("resize")
+            #print("resize")
             canvas_size = self._find_new_canvas_size()
             w = canvas_size[0]
             h = canvas_size[1]
             self.photo_image = np_photo_image(cv2.resize(self.np_img, (w, h)))
             self.image_handle = self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo_image)
         else:
-            print("redraw to soon!")
+            #print("redraw to soon!")
+            pass
         if len(self.canvas.children) > 0:
             self.redraw()
 
