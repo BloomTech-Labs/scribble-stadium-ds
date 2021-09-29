@@ -20,7 +20,8 @@ import os
 class Application(PipelinePhase):
     def __init__(self, next_phase, master=None, prev_phase: PipelinePhase = None):
         super().__init__(next_phase, master=master, prev_phase=prev_phase)
-        self.phase = "phase1"
+        print(__name__)
+        self.phase = "phase0"
 
         class States(IntFlag):
             choose_file = auto()
@@ -57,7 +58,7 @@ class Application(PipelinePhase):
         self.save_btn["command"] = self.save_button
         self.save_btn.pack(side="top")
 
-        self.quit = tk.Button(self, text="QUIT", fg="red", command=self.master.destroy)
+        self.quit = tk.Button(self, text="QUIT", fg="red", command=self.destroy)
         self.quit.pack(side="bottom")
 
         self.next_phase_btn = tk.Button(self)
@@ -168,8 +169,12 @@ import data_management.story_photo_grayscale as story_photo_grayscale
 import data_management.story_photo_backandwhite as story_photo_backandwhite
 import data_management.story_photo_removelines as story_photo_removelines
 
-phase_list = [Application, story_image_clip, story_photo_grayscale, story_photo_backandwhite,
-              story_photo_removelines]
+phase_list = [Application,
+              story_image_clip.Application,
+              story_photo_grayscale.Application,
+              story_photo_backandwhite.Application,
+              story_photo_removelines.Application
+              ]
 
 if __name__ == "__main__":
     first = True
@@ -182,7 +187,7 @@ if __name__ == "__main__":
             if not first:
                 last_phase = app
                 root = tk.Tk()
-                app = app_to_run.Application(master=root, next_phase=None, prev_phase=last_phase)
+                app = app_to_run(master=root, next_phase=None, prev_phase=last_phase)
                 # Resize the display window
                 root.geometry("800x1000")
 

@@ -14,18 +14,19 @@ image will be saved with _template appended before the file extension
 at the moment this phase is taking in a B&W image
 """
 
-#import numpy as np
-#import os.path as path
-#import tkinter as tk
+import numpy as np
+import os.path as path
+import tkinter as tk
 #from tkinter import filedialog as fd
-#import cv2
+import cv2
+
 from data_management.phase_tkinter_class import PipelinePhase
-from data_management.phase_tkinter_class import np_photo_image
+#from data_management.phase_tkinter_class import np_photo_image
 
 class Application(PipelinePhase):
     def __init__(self, next_phase, master=None, prev_phase: PipelinePhase = None):
         super().__init__(next_phase, master=master, prev_phase=prev_phase)
-
+        self.phase="phase4"
         self.master = master
         self.pack()
         self.points = []
@@ -54,7 +55,7 @@ class Application(PipelinePhase):
         self.next_phase_btn["command"] = self.next_phase_button
         self.next_phase_btn.pack(side="top")
 
-        self.quit = tk.Button(self, text="QUIT", fg="red", command=self.master.destroy)
+        self.quit = tk.Button(self, text="QUIT", fg="red", command=self.destroy)
         self.quit.pack(side="bottom")
 
 

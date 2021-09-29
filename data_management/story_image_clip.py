@@ -1,14 +1,21 @@
 """
 This modules purpose is to clip out inline images and other art surrounded by hand written text and save them
 """
-
+import glob
+import os
+from enum import auto, IntFlag
+import tkinter as tk
+import cv2
+import numpy as np
 
 from data_management.phase_tkinter_class import PipelinePhase
+
 
 class Application(PipelinePhase):
     def __init__(self, next_phase, master=None, prev_phase: PipelinePhase = None):
         super().__init__(next_phase, master=master, prev_phase=prev_phase)
-        self.phase = "phase2"
+        self.phase = "phase1"
+        print(__name__)
 
         class States(IntFlag):
             choose_file = auto()
@@ -40,7 +47,7 @@ class Application(PipelinePhase):
         self.save_btn["command"] = self.save_button
         self.save_btn.pack(side="top")
 
-        self.quit = tk.Button(self, text="QUIT", fg="red", command=self.master.destroy)
+        self.quit = tk.Button(self, text="QUIT", fg="red", command=self.destroy)
         self.quit.pack(side="bottom")
 
         self.next_phase_btn = tk.Button(self)
@@ -55,8 +62,6 @@ class Application(PipelinePhase):
     def next_phase_button(self):
         self.goto_next_phase_flag = True
         command = self.master.destroy()
-
-
 
     def get_next_clip_filename(self):
         tmp = os.path.join(self.story_folder, "*-clip-*")
@@ -190,10 +195,9 @@ class Application(PipelinePhase):
         return ([x, y])
 
 
-
 if __name__ == "__main__":
     root = tk.Tk()
     # Resize the display window
     root.geometry("800x1000")
-    app = Application(master=root,next_phase=None)
+    app = Application(master=root, next_phase=None)
     app.mainloop()
