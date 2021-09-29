@@ -14,25 +14,13 @@ image will be saved with _template appended before the file extension
 at the moment this phase is taking in a B&W image
 """
 
-import numpy as np
-import os.path as path
-import tkinter as tk
-from tkinter import filedialog as fd
-import cv2
-from phase_tkinter_class import PipelinePhase
-
-def np_photo_image(image: np.ndarray):
-    # This function creates the header information for PPM file format
-    # grayscale / RGB images have a differing "magic number" p5/p6
-
-    if len(image.shape) == 3:
-        height, width, channels = image.shape
-        data = f'P6 {width} {height} 255 '.encode() + image.astype(np.uint8).tobytes()
-    elif len(image.shape) == 2:
-        height, width = image.shape
-        data = f'P5 {width} {height} 255 '.encode() + image.astype(np.uint8).tobytes()
-    return tk.PhotoImage(width=width, height=height, data=data, format='PPM')
-
+#import numpy as np
+#import os.path as path
+#import tkinter as tk
+#from tkinter import filedialog as fd
+#import cv2
+from data_management.phase_tkinter_class import PipelinePhase
+from data_management.phase_tkinter_class import np_photo_image
 
 class Application(PipelinePhase):
     def __init__(self, next_phase, master=None, prev_phase: PipelinePhase = None):
