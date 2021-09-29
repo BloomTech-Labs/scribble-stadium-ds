@@ -7,12 +7,7 @@ as that of the image as grayscale.
 image will be saved with _grayscale appended before the file extension
 """
 
-import numpy as np
-import os.path as path
-import tkinter as tk
-import cv2
-from phase_tkinter_class import PipelinePhase
-from phase_tkinter_class import np_photo_image
+from data_management.phase_tkinter_class import PipelinePhase
 
 class Application(PipelinePhase):
     def __init__(self, next_phase, master=None, prev_phase: PipelinePhase = None):

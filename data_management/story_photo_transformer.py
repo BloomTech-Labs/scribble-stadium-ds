@@ -11,14 +11,16 @@ import os.path as path
 import tkinter as tk
 
 import cv2
-from phase_tkinter_class import PipelinePhase
-from phase_tkinter_class import np_photo_image
+from data_management.phase_tkinter_class import PipelinePhase
+from data_management.phase_tkinter_class import np_photo_image
 from enum import IntFlag, auto
+import os
 
 
 class Application(PipelinePhase):
     def __init__(self, next_phase, master=None, prev_phase: PipelinePhase = None):
         super().__init__(next_phase, master=master, prev_phase=prev_phase)
+        self.phase = "phase1"
 
         class States(IntFlag):
             choose_file = auto()
@@ -36,6 +38,11 @@ class Application(PipelinePhase):
         self.state = set()
         self.state.add(States.specify_points)
         self.state.add(States.saved)
+
+        try:
+            os.mkdir(path.join(self.story_folder, "phase1"))
+        except FileExistsError as e:
+            self.phase_data_exists = True
 
         self.create_widgets()
 
@@ -65,18 +72,6 @@ class Application(PipelinePhase):
     def next_phase_button(self):
         self.goto_next_phase_flag = True
         command = self.master.destroy()
-
-    def save_button(self):
-        directory = path.dirname(self.filename)
-        filename, extension = path.basename(self.filename).split(".")
-        new_file_name = path.join(directory, filename + "-transformed" + "." + extension)
-        # convert before saving
-        self.np_img = np.array(cv2.cvtColor(self.np_img, cv2.COLOR_BGR2RGB))
-        cv2.imwrite(new_file_name, self.np_img)
-        # convert after saving so next phase gets correct image
-        self.np_img = np.array(cv2.cvtColor(self.np_img, cv2.COLOR_RGB2BGR))
-        self.filename = new_file_name
-        print(new_file_name)
 
     def transform_button(self):
         can_h = self.canvas.winfo_height()
@@ -168,15 +163,15 @@ class Application(PipelinePhase):
         return ([x, y])
 
 
+import data_management.story_image_clip as story_image_clip
+import data_management.story_photo_grayscale as story_photo_grayscale
+import data_management.story_photo_backandwhite as story_photo_backandwhite
+import data_management.story_photo_removelines as story_photo_removelines
+
+phase_list = [Application, story_image_clip, story_photo_grayscale, story_photo_backandwhite,
+              story_photo_removelines]
+
 if __name__ == "__main__":
-    import story_image_clip
-    import story_photo_grayscale
-    import story_photo_backandwhite
-    import story_photo_removelines
-
-    phase_list = [Application, story_image_clip, story_photo_grayscale, story_photo_backandwhite,
-                  story_photo_removelines]
-
     first = True
     root = tk.Tk()
     root.geometry("800x1000")
