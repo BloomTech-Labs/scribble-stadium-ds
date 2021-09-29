@@ -7,10 +7,7 @@ as that of the image as Black and White.
 image will be saved with _bw appended before the file extension
 """
 
-import os.path as path
-import tkinter as tk
-import cv2
-from phase_tkinter_class import PipelinePhase
+from data_management.phase_tkinter_class import PipelinePhase
 
 
 class Application(PipelinePhase):

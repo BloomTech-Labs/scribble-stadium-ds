@@ -2,21 +2,13 @@
 This modules purpose is to clip out inline images and other art surrounded by hand written text and save them
 """
 
-import numpy as np
-import os.path as path
-import tkinter as tk
-import cv2
-import os
-import glob
-from enum import IntFlag, auto
-from phase_tkinter_class import PipelinePhase
-from phase_tkinter_class import np_photo_image
 
+from data_management.phase_tkinter_class import PipelinePhase
 
 class Application(PipelinePhase):
     def __init__(self, next_phase, master=None, prev_phase: PipelinePhase = None):
         super().__init__(next_phase, master=master, prev_phase=prev_phase)
-
+        self.phase = "phase2"
 
         class States(IntFlag):
             choose_file = auto()
@@ -64,25 +56,15 @@ class Application(PipelinePhase):
         self.goto_next_phase_flag = True
         command = self.master.destroy()
 
-    def save_button(self):
-        directory = path.dirname(self.filename)
-        filename, extension = path.basename(self.filename).split(".")
-        new_file_name = path.join(directory, filename + "-clipped" + "." + extension)
-        # convert before saving
-        self.np_img = np.array(cv2.cvtColor(self.np_img, cv2.COLOR_BGR2RGB))
-        cv2.imwrite(new_file_name, self.np_img)
-        # convert after saving so next phase gets correct image
-        self.np_img = np.array(cv2.cvtColor(self.np_img, cv2.COLOR_RGB2BGR))
-        self.filename=new_file_name
-        print(new_file_name)
+
 
     def get_next_clip_filename(self):
-        tmp = os.path.join(self.photo_folder, "*-clip-*")
+        tmp = os.path.join(self.story_folder, "*-clip-*")
         clips = glob.glob(tmp)
         name, ext = os.path.splitext(os.path.basename(self.filename))
 
         if clips == []:
-            ret_val = os.path.join(self.photo_folder, name + "-clip-00" + ext)
+            ret_val = os.path.join(self.story_folder, name + "-clip-00" + ext)
             print(ret_val)
             return ret_val
         else:
@@ -95,7 +77,7 @@ class Application(PipelinePhase):
             else:
                 num = str(num)
 
-            retval = os.path.join(self.photo_folder, name + "-clip-" + num + ext)
+            retval = os.path.join(self.story_folder, name + "-clip-" + num + ext)
             print(path, ext, num, retval)
             return retval
 

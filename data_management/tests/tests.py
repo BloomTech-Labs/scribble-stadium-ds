@@ -3,6 +3,13 @@ import warnings
 
 from data_management.management_utils import management_utils
 
+class PipeLinePhases(unittest.TestCase):
+    def test_basic_properties(self):
+        from data_management.story_photo_transformer import phase_list
+        for i in phase_list:
+            print(i)
+
+
 
 class TestCpuLoader(unittest.TestCase):
 
@@ -16,7 +23,7 @@ class TestCpuLoader(unittest.TestCase):
     def test_data_file_structure(self):
         """
         expecting structure like:
-        data_folder
+        transcribed_stories
           31--
             3101
               photo 3101.jpg
