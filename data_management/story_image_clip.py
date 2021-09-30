@@ -64,12 +64,19 @@ class Application(PipelinePhase):
         command = self.master.destroy()
 
     def get_next_clip_filename(self):
-        tmp = os.path.join(self.story_folder, "*-clip-*")
+
+        directory = self.story_folder
+        tmp = os.path.join(directory, self.phase, "*-clip-*")
         clips = glob.glob(tmp)
         name, ext = os.path.splitext(os.path.basename(self.filename))
 
         if clips == []:
-            ret_val = os.path.join(self.story_folder, name + "-clip-00" + ext)
+            try:
+                os.mkdir(os.path.join(self.story_folder, self.phase))
+            except FileExistsError as e:
+                self.phase_data_exists = True
+
+            ret_val = os.path.join(directory, self.phase, name + "-clip-00" + ext)
             print(ret_val)
             return ret_val
         else:
@@ -82,7 +89,7 @@ class Application(PipelinePhase):
             else:
                 num = str(num)
 
-            retval = os.path.join(self.story_folder, name + "-clip-" + num + ext)
+            retval = os.path.join(directory, self.phase, name + "-clip-" + num + ext)
             print(path, ext, num, retval)
             return retval
 
@@ -129,12 +136,11 @@ class Application(PipelinePhase):
         cv2.imwrite(file_name, new_img)
         self.redraw()
 
-
     def record_pt(self, canvas_pt: list):
         """
         Record points the user has specified to the
         """
-        print("processing requested canvas space point:",canvas_pt)
+        print("processing requested canvas space point:", canvas_pt)
         img_x, img_y = self.canvas_2_img_pt(canvas_pt)
         self.np_img_points[self.current_np_img_point_idx] = [img_x, img_y]
         self.current_np_img_point_idx = self.current_np_img_point_idx + 1
@@ -185,8 +191,6 @@ class Application(PipelinePhase):
             oval = [x - o_size, y - o_size, x + o_size, y + o_size]
             self.canvas.coords(self.line_handles[2], [pt1[0], pt1[1], pt2[0], pt2[1]])
             self.canvas.coords(self.line_handles[3], [pt3[0], pt3[1], pt2[0], pt2[1]])
-
-
 
 
 if __name__ == "__main__":
