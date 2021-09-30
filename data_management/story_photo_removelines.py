@@ -26,7 +26,7 @@ from data_management.phase_tkinter_class import PipelinePhase
 class Application(PipelinePhase):
     def __init__(self, next_phase, master=None, prev_phase: PipelinePhase = None):
         super().__init__(next_phase, master=master, prev_phase=prev_phase)
-        self.phase="phase4"
+        self.phase="phase5"
         self.master = master
         self.pack()
         self.points = []
@@ -34,28 +34,29 @@ class Application(PipelinePhase):
         self.line_handles = []
         self.create_widgets()
         self.newest_pt_idx = -1
+        self.np_img = self.np_img.astype("uint8")
         # self.cursor
 
         print(self.filename)
 
     def create_widgets(self):
-        self.transform_btn = tk.Button(self)
+        self.transform_btn = tk.Button(self.controls_frame)
         self.transform_btn["text"] = "lines_removed"
         self.transform_btn["command"] = self.removeLines_button
         self.transform_btn.pack(side="top")
 
-        self.save_btn = tk.Button(self)
+        self.save_btn = tk.Button(self.controls_frame)
         self.save_btn["text"] = "save"
         self.save_btn["command"] = self.save_button
         self.save_btn.pack(side="top")
 
         # Next Phase button
-        self.next_phase_btn = tk.Button(self)
+        self.next_phase_btn = tk.Button(self.controls_frame)
         self.next_phase_btn["text"] = "Next Phase"
         self.next_phase_btn["command"] = self.next_phase_button
         self.next_phase_btn.pack(side="top")
 
-        self.quit = tk.Button(self, text="QUIT", fg="red", command=self.destroy)
+        self.quit = tk.Button(self.controls_frame, text="QUIT", fg="red", command=self.destroy)
         self.quit.pack(side="bottom")
 
 
@@ -65,12 +66,12 @@ class Application(PipelinePhase):
         self.goto_next_phase_flag = True
         command = self.master.destroy()
 
-    def save_button(self):
-        directory = path.dirname(self.filename)
-        filename, extension = path.basename(self.filename).split(".")
-        new_file_name = path.join(directory, filename + "-template" + "." + extension)
-        cv2.imwrite(new_file_name, self.np_img)
-        print(new_file_name)
+    # def save_button(self):
+    #     directory = path.dirname(self.filename)
+    #     filename, extension = path.basename(self.filename).split(".")
+    #     new_file_name = path.join(directory, filename + "-template" + "." + extension)
+    #     cv2.imwrite(new_file_name, self.np_img)
+    #     print(new_file_name)
 
     def removeLines_button(self):
         can_h = self.canvas.winfo_height()
@@ -116,7 +117,7 @@ class Application(PipelinePhase):
         #cv2.imshow (result)
 
 
-        self.canvas.update()
+        self.redraw()
 
     #
     #     pts1 = np.float32(self.points)

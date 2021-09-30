@@ -39,29 +39,23 @@ class Application(PipelinePhase):
         self.state = set()
         self.state.add(States.specify_points)
         self.state.add(States.saved)
-
-        try:
-            os.mkdir(path.join(self.story_folder, "phase1"))
-        except FileExistsError as e:
-            self.phase_data_exists = True
-
         self.create_widgets()
 
     def create_widgets(self):
-        self.transform_btn = tk.Button(self)
+        self.transform_btn = tk.Button(self.controls_frame)
         self.transform_btn["text"] = "Transform"
         self.transform_btn["command"] = self.transform_button
         self.transform_btn.pack(side="top")
 
-        self.save_btn = tk.Button(self)
+        self.save_btn = tk.Button(self.controls_frame)
         self.save_btn["text"] = "Save"
         self.save_btn["command"] = self.save_button
         self.save_btn.pack(side="top")
 
-        self.quit = tk.Button(self, text="QUIT", fg="red", command=self.destroy)
+        self.quit = tk.Button(self.controls_frame, text="QUIT", fg="red", command=self.destroy)
         self.quit.pack(side="bottom")
 
-        self.next_phase_btn = tk.Button(self)
+        self.next_phase_btn = tk.Button(self.controls_frame)
         self.next_phase_btn["text"] = "Next Phase"
         self.next_phase_btn["command"] = self.next_phase_button
         self.next_phase_btn.pack(side="right")
@@ -157,12 +151,14 @@ class Application(PipelinePhase):
 
 
 import data_management.story_image_clip as story_image_clip
+import data_management.story_photo_color_transformations as story_photo_color_transformations
 import data_management.story_photo_grayscale as story_photo_grayscale
 import data_management.story_photo_backandwhite as story_photo_backandwhite
 import data_management.story_photo_removelines as story_photo_removelines
 
 phase_list = [Application,
               story_image_clip.Application,
+              story_photo_color_transformations.Application,
               story_photo_grayscale.Application,
               story_photo_backandwhite.Application,
               story_photo_removelines.Application
