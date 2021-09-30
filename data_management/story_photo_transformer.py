@@ -167,7 +167,7 @@ phase_list = [Application,
 if __name__ == "__main__":
     first = True
     root = tk.Tk()
-    root.geometry("800x1000")
+    root.geometry("800x1000") # this can be changed per your screen size
     app = Application(master=root, next_phase=None)
 
     for app_to_run in phase_list:
@@ -177,7 +177,7 @@ if __name__ == "__main__":
                 root = tk.Tk()
                 app = app_to_run(master=root, next_phase=None, prev_phase=last_phase)
                 # Resize the display window
-                root.geometry("800x1000")
+                root.geometry("800x1000") # this can be changed per your screen size
 
             app.mainloop()  # this call is "blocking"
             first = False
