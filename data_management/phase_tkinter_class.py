@@ -106,7 +106,12 @@ class PipelinePhase(tk.Frame):
 
     def motion_event(self, event):
         self.redraw_canvas_objects()
-        self.canvas_mouseover(event)
+
+        # need to find better way to resolve if the derived class has canvas_mouseover
+        try:
+            self.canvas_mouseover(event)
+        except:
+            pass
 
     def _find_new_canvas_size(self,event):
         max_w = self.canvas_frame.winfo_width()
@@ -153,17 +158,17 @@ class PipelinePhase(tk.Frame):
         print(self.image_handle)
         self.canvas.tag_lower(self.image_handle)
 
-        # if "current_np_img_point_idx" in self.keys():
-        pairs = [[0, 1], [1, 2], [2, 3], [3, 0]]
-        for pt1_idx, pt2_idx in pairs:
-            if (pt1_idx < self.current_np_img_point_idx) & (pt2_idx < self.current_np_img_point_idx):
-                pt1 = self.img_2_canvas_pt(self.np_img_points[pt1_idx])
-                pt2 = self.img_2_canvas_pt(self.np_img_points[pt2_idx])
-                self.canvas.coords(self.line_handles[pt1_idx], *(pt1 + pt2))
-                o_size = 5
-                oval = [pt1[0] - o_size, pt1[1] - o_size, pt1[0] + o_size, pt1[1] + o_size]
-                self.canvas.coords(self.cursor_oval_handles[pt1_idx], oval)
-        self.canvas.update()
+        if "current_np_img_point_idx" in locals():
+            pairs = [[0, 1], [1, 2], [2, 3], [3, 0]]
+            for pt1_idx, pt2_idx in pairs:
+                if (pt1_idx < self.current_np_img_point_idx) & (pt2_idx < self.current_np_img_point_idx):
+                    pt1 = self.img_2_canvas_pt(self.np_img_points[pt1_idx])
+                    pt2 = self.img_2_canvas_pt(self.np_img_points[pt2_idx])
+                    self.canvas.coords(self.line_handles[pt1_idx], *(pt1 + pt2))
+                    o_size = 5
+                    oval = [pt1[0] - o_size, pt1[1] - o_size, pt1[0] + o_size, pt1[1] + o_size]
+                    self.canvas.coords(self.cursor_oval_handles[pt1_idx], oval)
+            self.canvas.update()
 
     def resize(self, event):
         """
