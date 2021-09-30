@@ -35,11 +35,16 @@ class Application(PipelinePhase):
         self.create_widgets()
         self.newest_pt_idx = -1
         self.np_img = self.np_img.astype("uint8")
+        self.np_img_original = self.np_img.copy()
         # self.cursor
 
         print(self.filename)
 
     def create_widgets(self):
+        self.horz_kernal_width_widget = tk.Scale(self.controls_frame,from_=2,to=100)
+        self.horz_kernal_width_widget["command"] = self.removeLines_button
+        self.horz_kernal_width_widget.pack()
+
         self.transform_btn = tk.Button(self.controls_frame)
         self.transform_btn["text"] = "lines_removed"
         self.transform_btn["command"] = self.removeLines_button
@@ -60,6 +65,7 @@ class Application(PipelinePhase):
         self.quit.pack(side="bottom")
 
 
+
         self.image_handle = None
 
     def next_phase_button(self):
@@ -73,11 +79,14 @@ class Application(PipelinePhase):
     #     cv2.imwrite(new_file_name, self.np_img)
     #     print(new_file_name)
 
-    def removeLines_button(self):
+    def removeLines_button(self,event=None):
         can_h = self.canvas.winfo_height()
         can_w = self.canvas.winfo_width()
         img_w = self.np_img.shape[1]
         img_h = self.np_img.shape[0]
+
+        self.np_img=self.np_img_original
+
         print(self.np_img.shape, ":", img_w, img_h, can_w, can_h)
 
         #review grayscale and B&W scale parameters line 82, 85
@@ -97,7 +106,8 @@ class Application(PipelinePhase):
         thresh = cv2.threshold (self.np_img, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
 
         # Remove horizontal
-        horizontal_kernel = cv2.getStructuringElement (cv2.MORPH_RECT, (25, 1))
+        horz_kernel_size=(self.horz_kernal_width_widget.get(), 1)
+        horizontal_kernel = cv2.getStructuringElement (cv2.MORPH_RECT, horz_kernel_size)
         print (self.np_img.shape)
         detected_lines = cv2.morphologyEx (thresh, cv2.MORPH_OPEN, horizontal_kernel, iterations=2)
         cnts = cv2.findContours (detected_lines, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
