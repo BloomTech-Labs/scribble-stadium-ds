@@ -18,6 +18,7 @@ from custom_tk_widgets import Slider
 class Application(PipelinePhase):
     def __init__(self, next_phase, master=None, prev_phase: PipelinePhase = None):
         super().__init__(next_phase, master=master, prev_phase=prev_phase)
+        self.phase="phase2"
         self.points = []
         self.cursor_oval_handles = []
         self.line_handles = []
@@ -28,7 +29,7 @@ class Application(PipelinePhase):
         self.invert_red = tk.IntVar()
         self.invert_green = tk.IntVar()
         self.invert_blue = tk.IntVar()
-
+        self.controls_frame.pack(side="top")
         self.create_widgets()
         # self.cursor
 
@@ -41,9 +42,9 @@ class Application(PipelinePhase):
         # self.transform_btn.pack(side="top")
 
         # red channel
-        self.red_frame = tk.Frame(self, borderwidth=1, relief=tk.SOLID);
+        self.red_frame = tk.Frame(self.controls_frame, borderwidth=1, relief=tk.SOLID);
         self.red_frame.pack()
-        self.red_frame_label = tk.Label(self, borderwidth=1, relief=tk.SOLID, text='newlabel');
+        self.red_frame_label = tk.Label(self.controls_frame, borderwidth=1, relief=tk.SOLID, text='newlabel');
         self.red_frame_label.pack()
         self.red_invert_check = tk.Checkbutton(self.red_frame, text="invert", variable=self.invert_red)
         self.red_invert_check.pack(side="left")
@@ -56,9 +57,9 @@ class Application(PipelinePhase):
 
 
         # green channel
-        self.green_frame = tk.Frame(self, borderwidth=1, relief=tk.SOLID)
+        self.green_frame = tk.Frame(self.controls_frame, borderwidth=1, relief=tk.SOLID)
         self.green_frame.pack()
-        self.green_frame_label = tk.Label(self, borderwidth=1, relief=tk.SOLID, text='new_new_label');
+        self.green_frame_label = tk.Label(self.controls_frame, borderwidth=1, relief=tk.SOLID, text='new_new_label');
         self.green_frame_label.pack()
 
         self.green_invert_check = tk.Checkbutton(self.green_frame, text="invert", variable=self.invert_green)
@@ -68,9 +69,9 @@ class Application(PipelinePhase):
                                    command=lambda x: self.update_image("green", x))
         self.green_slider.pack(fill="none", expand="false")
 
-        self.blue_frame = tk.Frame(self, borderwidth=1, relief=tk.SOLID)
+        self.blue_frame = tk.Frame(self.controls_frame, borderwidth=1, relief=tk.SOLID)
         self.blue_frame.pack(anchor="w")
-        self.blue_frame_label = tk.Label(self, borderwidth=1, relief=tk.SOLID, text='new_new_label');
+        self.blue_frame_label = tk.Label(self.controls_frame, borderwidth=1, relief=tk.SOLID, text='new_new_label');
         self.blue_frame_label.pack()
 
         self.blue_invert_check = tk.Checkbutton(self.blue_frame, text="invert", variable=self.invert_blue)
@@ -80,18 +81,27 @@ class Application(PipelinePhase):
                                   command=lambda x: self.update_image("blue", x))
         self.blue_slider.pack(fill="none", expand="false")
 
-        self.invert_output = tk.Checkbutton(self, text="invert output")
+        self.invert_output = tk.Checkbutton(self.controls_frame, text="invert output")
         self.invert_output.pack()
         self.invert_output["command"] = self.invert_check_box
-        self.save_btn = tk.Button(self)
+        self.save_btn = tk.Button(self.controls_frame)
         self.save_btn["text"] = "save"
         self.save_btn["command"] = self.save_button
         self.save_btn.pack(side="top")
 
-        self.quit = tk.Button(self, text="QUIT", fg="red", command=self.master.destroy)
+        self.quit = tk.Button(self.controls_frame, text="QUIT", fg="red", command=self.master.destroy)
         self.quit.pack(side="bottom")
 
+        self.next_phase_btn = tk.Button(self.controls_frame)
+        self.next_phase_btn["text"] = "Next Phase"
+        self.next_phase_btn["command"] = self.next_phase_button
+        self.next_phase_btn.pack(side="right")
+
         self.image_handle = None
+
+    def next_phase_button(self):
+        self.goto_next_phase_flag = True
+        command = self.master.destroy()
 
     def invert_check_box(self):
         self.invert_output = not self.invert_output
@@ -137,17 +147,6 @@ class Application(PipelinePhase):
 
         self.redraw()
 
-    def save_button(self):
-        directory = path.dirname(self.filename)
-        filename, extension = path.basename(self.filename).split(".")
-        new_file_name = path.join(directory, filename + "-_colored" + "." + extension)
-        # convert before saving
-        self.np_img = np.array(cv2.cvtColor(self.np_img, cv2.COLOR_BGR2RGB))
-        cv2.imwrite(new_file_name, self.np_img)
-        # convert after saving so next phase gets correct image
-        self.np_img = np.array(cv2.cvtColor(self.np_img, cv2.COLOR_RGB2BGR))
-        self.filename = new_file_name
-        print(new_file_name)
 
     # def transform_button(self):
     #     can_h = self.canvas.winfo_height()
