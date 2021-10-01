@@ -71,7 +71,7 @@ class Application(PipelinePhase):
         :return: None
         """
         self.goto_next_phase_flag = True
-        command = self.master.destroy()
+        self.master.destroy()
 
     def get_next_clip_filename(self):
         """
