@@ -79,7 +79,7 @@ class Application (PipelinePhase):
         # thresh
         thresh = cv2.threshold(self.np_img, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
 
-        # Remove horizontal
+        # Remove horizontal lines
         horz_kernel_size = (self.horz_kernal_width_widget.get(), 1)
         horizontal_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, horz_kernel_size)
         print(self.np_img.shape)
