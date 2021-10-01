@@ -1,6 +1,4 @@
-"""
-This modules purpose is to clip out inline images and other art surrounded by hand written text and save them
-"""
+
 import glob
 import os
 from enum import auto, IntFlag
@@ -12,6 +10,10 @@ from data_management.phase_tkinter_class import PipelinePhase
 
 
 class Application(PipelinePhase):
+    """
+    This applications purpose is to clip out inline images and other art or writting errors surrounded by hand written
+    text and save them while removing them from tha photo of the text.
+    """
     def __init__(self, next_phase, master=None, prev_phase: PipelinePhase = None):
         super().__init__(next_phase, master=master, prev_phase=prev_phase)
         self.phase = "phase1"
@@ -37,6 +39,10 @@ class Application(PipelinePhase):
         self.create_widgets()
 
     def create_widgets(self):
+        """
+        This function creates the widgets for the UI and default canvas widgets
+        :return: None
+        """
         self.transform_btn = tk.Button(self.controls_frame)
         self.transform_btn["text"] = "Clip"
         self.transform_btn["command"] = self.clip_button
@@ -60,11 +66,18 @@ class Application(PipelinePhase):
         self.image_handle = None
 
     def next_phase_button(self):
+        """
+        Sets a flag that helps in advancing to the next phase
+        :return: None
+        """
         self.goto_next_phase_flag = True
         command = self.master.destroy()
 
     def get_next_clip_filename(self):
-
+        """
+        finds the next clip filename by searching for the last clip that was saved and incrementing the number on the
+        end of the file name.
+        """
         directory = self.story_folder
         tmp = os.path.join(directory, self.phase, "*-clip-*")
         clips = glob.glob(tmp)
@@ -94,7 +107,9 @@ class Application(PipelinePhase):
             return retval
 
     def clip_button(self):
-
+        """
+        creates an actual clip attempt to preserve transparency
+        """
         def bounding_box(points):
             x_coordinates, y_coordinates = zip(*points)
 
@@ -138,7 +153,8 @@ class Application(PipelinePhase):
 
     def record_pt(self, canvas_pt: list):
         """
-        Record points the user has specified to the
+        Record points and keep a track for the boundary box
+        :return: None
         """
         print("processing requested canvas space point:", canvas_pt)
         img_x, img_y = self.canvas_2_img_pt(canvas_pt)
@@ -151,6 +167,10 @@ class Application(PipelinePhase):
         print(self.np_img_points)
 
     def canvas_click(self, event):
+        """
+        Manages user input based on state
+        :return: None
+        """
         if self.states.specify_points in self.state:
             self.record_pt([event.x, event.y])
 
@@ -163,7 +183,10 @@ class Application(PipelinePhase):
                     self.canvas.coords(self.line_handles[pt1_idx], *(pt1 + pt2))
 
     def canvas_mouseover(self, event):
-
+        """
+        Provides the visual feedback to help user draw the boundary box around the text
+        :return: None
+        """
         ## move oval to cursor if needed
         if self.current_np_img_point_idx < 4:
             pt1 = [event.x, event.y]
@@ -194,6 +217,7 @@ class Application(PipelinePhase):
 
 
 if __name__ == "__main__":
+    """allows the phase to be ran in stand-alone mode or pipeline mode"""
     root = tk.Tk()
     # Resize the display window
     root.geometry("800x1000")

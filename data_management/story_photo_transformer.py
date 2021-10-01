@@ -41,7 +41,7 @@ class Application(PipelinePhase):
 
     def create_widgets(self):
         """
-        This function creates the widgets for the UI
+        This function creates the widgets for the UI and default canvas widgets
         :return: None
         """
         self.transform_btn = tk.Button(self.controls_frame)
