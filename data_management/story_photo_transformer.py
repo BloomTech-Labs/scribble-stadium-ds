@@ -72,7 +72,7 @@ class Application(PipelinePhase):
         :return: None
         """
         self.goto_next_phase_flag = True
-        command = self.master.destroy()
+        self.master.destroy()
 
     def transform_button(self):
         """
