@@ -1,23 +1,21 @@
-"""
-This module's purpose is to provide a UI to help with creating/expanding the dataset
-Specifically the story_photo_transformer.py script will allow the user to pick a photo and define where the corners of
-the body of text is, then the script will transform the image in preparation for further processing
-
-image will be saved with _transformed appended before the file extension
-"""
-
-import numpy as np
-import os.path as path
 import tkinter as tk
+from enum import IntFlag, auto
 
 import cv2
+import numpy as np
+
 from data_management.phase_tkinter_class import PipelinePhase
 from data_management.phase_tkinter_class import np_photo_image
-from enum import IntFlag, auto
-import os
 
 
 class Application(PipelinePhase):
+    """
+    This Class's purpose is to provide a UI to help with creating/expanding the dataset.
+    Specifically the story_photo_transformer.py script will allow the user to pick a photo and define where the corners
+    of the body of text are, then the script will transform the image in preparation for further processing
+    image will be saved in phase directory in the same location as the imported image.
+    """
+
     def __init__(self, next_phase, master=None, prev_phase: PipelinePhase = None):
         super().__init__(next_phase, master=master, prev_phase=prev_phase)
         print(__name__)
@@ -42,6 +40,10 @@ class Application(PipelinePhase):
         self.create_widgets()
 
     def create_widgets(self):
+        """
+        This function creates the widgets for the UI
+        :return: None
+        """
         self.transform_btn = tk.Button(self.controls_frame)
         self.transform_btn["text"] = "Transform"
         self.transform_btn["command"] = self.transform_button
@@ -65,10 +67,18 @@ class Application(PipelinePhase):
         self.image_handle = None
 
     def next_phase_button(self):
+        """
+        Sets a flag that helps in advancing to the next phase
+        :return: None
+        """
         self.goto_next_phase_flag = True
         command = self.master.destroy()
 
     def transform_button(self):
+        """
+        Transforms the image to the boundary box using the cv2 warped
+        :return: None
+        """
         can_h = self.canvas.winfo_height()
         can_w = self.canvas.winfo_width()
         img_w = self.np_img.shape[1]
@@ -92,13 +102,11 @@ class Application(PipelinePhase):
         self.cursor_oval_handles = []
         self.line_handles = []
 
-
-
     def record_pt(self, canvas_pt: list):
         """
-        Record points the user has specified to the
+        Record points and keep a track for the boundary box
+        :return: None
         """
-
         print(self.np_img_points)
         img_x, img_y = self.canvas_2_img_pt(canvas_pt)
         self.np_img_points[self.current_np_img_point_idx] = [img_x, img_y]
@@ -108,6 +116,10 @@ class Application(PipelinePhase):
             self.state.add(self.states.modify_points)
 
     def canvas_click(self, event):
+        """
+        Manages user input based on state
+        :return: None
+        """
         if self.states.specify_points in self.state:
             self.record_pt([event.x, event.y])
 
@@ -120,6 +132,10 @@ class Application(PipelinePhase):
                     self.canvas.coords(self.line_handles[pt1_idx], *(pt1 + pt2))
 
     def canvas_mouseover(self, event):
+        """
+        Provides the visual feedback to help user draw the boundary box around the text
+        :return: None
+        """
 
         # move oval to cursor if needed
         if self.current_np_img_point_idx < 4:
@@ -149,7 +165,7 @@ class Application(PipelinePhase):
             self.canvas.coords(self.line_handles[2], [pt1[0], pt1[1], pt2[0], pt2[1]])
             self.canvas.coords(self.line_handles[3], [pt3[0], pt3[1], pt2[0], pt2[1]])
 
-
+# The imports below help in create a list to help the UI advance to the next phase
 import data_management.story_image_clip as story_image_clip
 import data_management.story_photo_color_transformations as story_photo_color_transformations
 import data_management.story_photo_grayscale as story_photo_grayscale
@@ -167,7 +183,7 @@ phase_list = [Application,
 if __name__ == "__main__":
     first = True
     root = tk.Tk()
-    root.geometry("800x1000") # this can be changed per your screen size
+    root.geometry("800x1000")  # this can be changed per your screen size
     app = Application(master=root, next_phase=None)
 
     for app_to_run in phase_list:
@@ -177,7 +193,7 @@ if __name__ == "__main__":
                 root = tk.Tk()
                 app = app_to_run(master=root, next_phase=None, prev_phase=last_phase)
                 # Resize the display window
-                root.geometry("800x1000") # this can be changed per your screen size
+                root.geometry("800x1000")  # this can be changed per your screen size
 
             app.mainloop()  # this call is "blocking"
             first = False
