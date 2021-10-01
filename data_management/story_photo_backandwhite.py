@@ -62,7 +62,7 @@ class Application(PipelinePhase):
         :return: None
         """
         self.goto_next_phase_flag = True
-        self.master.destroy ()
+        self.master.destroy()
 
     def save_button_bw(self):
         """
