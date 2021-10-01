@@ -61,18 +61,12 @@ class Application (PipelinePhase):
 
     def next_phase_button(self):
         self.goto_next_phase_flag = True
-        command = self.master.destroy()
 
     def removeLines_button(self, event=None):
         """
         This function removes horizontal lines in the input image
         :return: modified image
         """
-        can_h = self.canvas.winfo_height()
-        can_w = self.canvas.winfo_width()
-        img_w = self.np_img.shape[1]
-        img_h = self.np_img.shape[0]
-
         self.np_img = self.np_img_original
         self.np_img = cv2.threshold(self.np_img, 127, 255, cv2.THRESH_BINARY)[1]
 
@@ -99,7 +93,7 @@ class Application (PipelinePhase):
 
 if __name__ == "__main__":
     root = tk.Tk()
-    #the user can modify window display parameters as needed
+    # the user can modify window display parameters as needed
     root.geometry("800x1000")
     app = Application(master=root, next_phase=None)
     app.mainloop()
