@@ -180,6 +180,7 @@ phase_list = [Application,
               story_photo_removelines.Application
               ]
 
+
 if __name__ == "__main__":
     first = True
     root = tk.Tk()
