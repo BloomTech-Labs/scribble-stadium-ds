@@ -61,6 +61,7 @@ class Application (PipelinePhase):
 
     def next_phase_button(self):
         self.goto_next_phase_flag = True
+        self.master.destroy ()
 
     def removeLines_button(self, event=None):
         """
