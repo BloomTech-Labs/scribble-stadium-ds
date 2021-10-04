@@ -1,0 +1,1 @@
+person say "Hello" a fellow said.
