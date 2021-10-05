@@ -40,13 +40,12 @@ class PipelinePhase(tk.Frame):
                 initialdir=path.join(path.dirname(__file__), "..", "data", "transcribed_stories", "51--", "5101"))
 
             # Check if the OS is Windows or Linux based
-            if ':' in self.filename:
+            if ':' in self.filename: # Windows
                 # correct path specifier
                 self.filename = os.path.join(*self.filename.split("/"))
                 self.filename = self.filename.replace(":", ":\\")
 
             self.story_folder = os.path.dirname(self.filename)
-
             # check if user opened a file in a "phase" folder
             if "phase" in self.story_folder:
                 pass
@@ -58,7 +57,7 @@ class PipelinePhase(tk.Frame):
             elif len(self.np_img.shape) == 2:  # Gray Scale
                 pass
 
-        else:
+        else: # there is no previous phase
             self.np_img = prev_phase.np_img
             self.story_folder = prev_phase.story_folder
             self.filename = prev_phase.filename
