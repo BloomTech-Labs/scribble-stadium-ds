@@ -46,6 +46,7 @@ class PipelinePhase(tk.Frame):
                 self.filename = self.filename.replace(":", ":\\")
 
             self.story_folder = os.path.dirname(self.filename)
+
             # check if user opened a file in a "phase" folder
             if "phase" in self.story_folder:
                 pass
