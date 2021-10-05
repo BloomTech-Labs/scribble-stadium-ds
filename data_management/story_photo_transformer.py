@@ -165,19 +165,22 @@ class Application(PipelinePhase):
             self.canvas.coords(self.line_handles[2], [pt1[0], pt1[1], pt2[0], pt2[1]])
             self.canvas.coords(self.line_handles[3], [pt3[0], pt3[1], pt2[0], pt2[1]])
 
+
 # The imports below help in create a list to help the UI advance to the next phase
 import data_management.story_image_clip as story_image_clip
 import data_management.story_photo_color_transformations as story_photo_color_transformations
 import data_management.story_photo_grayscale as story_photo_grayscale
 import data_management.story_photo_backandwhite as story_photo_backandwhite
 import data_management.story_photo_removelines as story_photo_removelines
+import data_management.story_photo_segment_writing as story_photo_segment_writing
 
 phase_list = [Application,
               story_image_clip.Application,
               story_photo_color_transformations.Application,
               story_photo_grayscale.Application,
               story_photo_backandwhite.Application,
-              story_photo_removelines.Application
+              story_photo_removelines.Application,
+              story_photo_segment_writing.Application
               ]
 
 
