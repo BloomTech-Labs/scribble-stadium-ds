@@ -1,7 +1,9 @@
 import pandas as pd
 from collections import Counter
 
-complex_words = pd.read_csv('https://raw.githubusercontent.com/BritVandy/place_holder_csv_file/main/complex_words.csv')
+complex_words = pd.read_csv(
+    'https://raw.githubusercontent.com/Lambda-School-Labs/scribble-stadium-ds/main/data/crop-cloud/complex_words.csv'
+    )
 
 
 def count_syllables(word):
