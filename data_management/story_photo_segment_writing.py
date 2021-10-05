@@ -7,7 +7,7 @@ import cv2
 import numpy as np
 
 from data_management.phase_tkinter_class import PipelinePhase
-import os
+
 
 class Application(PipelinePhase):
     """
@@ -67,16 +67,10 @@ class Application(PipelinePhase):
         self.image_handle = None
 
     def button_segment_save_function(self):
-        # create phase directory if it does not exist
-        try:
-            os.mkdir(path.join(self.story_folder, self.phase))
-        except FileExistsError as e:
-            self.phase_data_exists = True
-
         for i, line_np_img in enumerate(self.np_img_segmented_lines_list):
             fn, ext = path.splitext(self.photo_image_filename_only)
             save_file = path.join(self.story_folder, self.phase, fn + "-" + str(i) + ".png")
-            print(save_file)
+            #print(save_file)
             cv2.imwrite(save_file, line_np_img)
 
     def next_phase_button(self):
