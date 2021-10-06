@@ -186,8 +186,9 @@ class PipelinePhase(tk.Frame):
         #print("resize",w,h)
         self.photo_image = np_photo_image(cv2.resize(self.np_img, (w, h)))
 
-        if not self.image_handle:
-            self.image_handle = self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo_image)
+        if "image_handle" in dir():
+            if not self.image_handle:
+                self.image_handle = self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo_image)
 
         self.canvas.itemconfig(self.image_handle,image=self.photo_image)
         #self.canvas.update()
