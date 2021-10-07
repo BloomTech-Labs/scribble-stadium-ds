@@ -40,7 +40,7 @@ class PipelinePhase(tk.Frame):
                 initialdir=path.join(path.dirname(__file__), "..", "data", "transcribed_stories", "51--", "5101"))
 
             # Check if the OS is Windows or Linux based
-            if ':' in self.filename:
+            if ':' in self.filename: # Windows
                 # correct path specifier
                 self.filename = os.path.join(*self.filename.split("/"))
                 self.filename = self.filename.replace(":", ":\\")
@@ -58,11 +58,12 @@ class PipelinePhase(tk.Frame):
             elif len(self.np_img.shape) == 2:  # Gray Scale
                 pass
 
-        else:
+        else: # there is no previous phase
             self.np_img = prev_phase.np_img
             self.story_folder = prev_phase.story_folder
             self.filename = prev_phase.filename
 
+        self.photo_image_filename_only = path.basename(self.filename)
         self.photo_image = np_photo_image(self.np_img)
         self.goto_next_phase_flag = None
 
@@ -138,17 +139,18 @@ class PipelinePhase(tk.Frame):
         should be updated.
         """
         print("redraw")
-        #canvas_size = self._find_new_canvas_size()
-        w = self.canvas.winfo_width()
-        h = self.canvas.winfo_height()
-        self.photo_image = np_photo_image(cv2.resize(self.np_img, (w, h)))
+        if "image_handle" in self.__dir__():
+            #canvas_size = self._find_new_canvas_size()
+            w = self.canvas.winfo_width()
+            h = self.canvas.winfo_height()
+            self.photo_image = np_photo_image(cv2.resize(self.np_img, (w, h)))
 
-        if not self.image_handle:
-            self.image_handle = self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo_image)
-        else:
-            self.canvas.itemconfig(self.image_handle, image=self.photo_image)
+            if not self.image_handle:
+                self.image_handle = self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo_image)
+            else:
+                self.canvas.itemconfig(self.image_handle, image=self.photo_image)
 
-        self.canvas.tag_lower(self.image_handle)
+            self.canvas.tag_lower(self.image_handle)
 
     def redraw_canvas_objects(self):
         """

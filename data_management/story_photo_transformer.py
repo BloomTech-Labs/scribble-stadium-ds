@@ -171,13 +171,15 @@ import data_management.story_photo_color_transformations as story_photo_color_tr
 import data_management.story_photo_grayscale as story_photo_grayscale
 import data_management.story_photo_backandwhite as story_photo_backandwhite
 import data_management.story_photo_removelines as story_photo_removelines
+import data_management.story_photo_segment_writing as story_photo_segment_writing
 
 phase_list = [Application,
               story_image_clip.Application,
               story_photo_color_transformations.Application,
               story_photo_grayscale.Application,
               story_photo_backandwhite.Application,
-              story_photo_removelines.Application
+              story_photo_removelines.Application,
+              story_photo_segment_writing.Application
               ]
 
 
