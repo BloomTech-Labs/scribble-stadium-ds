@@ -20,4 +20,4 @@
  As of 9/26/21
  - The complex_words.csv was added to the crop-cloud folder. The csv contains words that do not work well with the complexity function that is currently being utilized. It also contains the grade level (Middle School, High School, College, or Post College) and set complexity scores for each word. This is used in the complexity_df function located in "app/utils/wordcloud/wordcloud_functions.py". This is meant to be a temporary location to store the dataset until a better solution is implemented.
 
-- The 10 files used to benchmark the ML models can be found in slack under the channel "Labspd_ds" in a zip file called "starysquad-ground-truth-10-documents-summary.zip". the names of the files can also be found in the ds repository under "scribble-stadium-ds\data\starysquad-ground-truth-10-documents-summary"
+- The 10 files used to benchmark the ML models can be found in slack under the channel "Labspd_ds" in a zip file called "starysquad-ground-truth-10-documents-summary.zip". the names of the files can also be found in the ds repository under "scribble-stadium-ds\data\starysquad-ground-truth-10-documents-summary".
