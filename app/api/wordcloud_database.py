@@ -19,12 +19,12 @@ DB_PASSWORD = os.getenv("RDS_PASSWORD", default="OOPS")
 DB_HOST = os.getenv("RDS_HOSTNAME", default="OOPS")
 DB_PORT = os.getenv("RDS_PORT", default="OOPS")
 
-DATABASE_URL = f'postg   resql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
+DATABASE_URL = f'postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 
 engine = create_engine(
     DATABASE_URL, pool_pre_ping=True
 )
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine
 
 Base = declarative_base()
 
