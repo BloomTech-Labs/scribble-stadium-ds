@@ -20,6 +20,7 @@ jobs:
         run: python -m pip install black pylint isort
       - name: Run linters
         run: |
+          pylint aloka
           black .
           isort .          
 
