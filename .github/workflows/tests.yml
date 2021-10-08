@@ -1,22 +1,110 @@
-name: CI
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
 
-on: [push]
+name: Python package
+
+on:
+  push:
+    branches: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [3.7, 3.8, 3.9]
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python 3.9
+    - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
-        python-version: 3.9
+        python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pylint
-    - name: Analysing the code with pylint
+        python -m pip install flake8 pytest
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Lint with flake8
       run: |
-        pylint `ls -R|grep .py$|xargs`
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Test with pytest
+      run: |
+        pytest
+
+# name: Test Suite
+
+# on: [pull_request, push]
+
+# jobs:
+#   linter:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Check out repository
+#         uses: actions/checkout@v2.3.4
+#       - name: Set up python
+#         uses: actions/setup-python@v2
+#       - name: Load cache (if exists)
+#         uses: actions/cache@v2.1.3
+#         with:
+#           path: ~/.cache/pip
+#           key: ${{ runner.os }}-pip
+#           restore-keys: ${{ runner.os }}-pip
+#       - name: Install Black, Pylint & iSort
+#         run: python -m pip install black pylint isort
+#       - name: Run linters
+#         run: |
+
+#           black .
+#           isort .          
+
+  # test:
+  #   needs: linter
+  #   strategy:
+  #     fail-fast: true
+  #     matrix:
+  #       os: ["ubuntu-latest", "macos-latest", "windows-latest"]
+  #       python-version: ["3.8", "3.9"]
+  #   defaults:
+  #     run:
+  #       shell: bash
+  #   runs-on: ${{ matrix.os }}
+  #   steps:
+  #     - name: Checkout Repository
+  #       uses: actions/checkout@v2.3.4
+  #     - name: Set up Python v${{matrix.python-version }}
+  #       uses: actions/setup-python@v2
+  #       with:
+  #         python-version: ${{ matrix.python-version}}
+  #     - name: Install Poetry
+  #       uses: snok/install-poetry@v1.1.1
+  #       with:
+  #         virtualenvs-create: true
+  #         virtualenvs-in-project: true
+  #     - name: Load Cached Virtualenv
+  #       id: cached-pip-wheels
+  #       uses: actions/cache@v2.1.3
+  #       with:
+  #         path: ~/.cache
+  #         key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+  #     - name: Install dependencies
+  #       run: poetry install --no-interaction --no-root -vvv
+  #     - name: Install Aurochs
+  #       run: poetry install --no-interaction
+  #     - name: Run tests
+  #       run: |
+  #         source $VENV
+  #         pytest -vvv --cov-report xml --cov=./          
+      # - name: Upload coverage
+      #   uses: codecov/codecov-action@v1.2.1
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     file: coverage.xml
+      #     fail_ci_if_error: true
