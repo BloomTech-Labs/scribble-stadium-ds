@@ -69,13 +69,13 @@ class PipelinePhase(tk.Frame):
         self.photo_image = np_photo_image(self.np_img)
         self.goto_next_phase_flag = None
 
-        self.controls_frame = tk.Frame(master=self,borderwidth="2", relief="groove")
+        self.controls_frame = tk.Frame(master=self, borderwidth="2", relief="groove")
         self.controls_frame.pack(side="left")
 
-        self.canvas_frame = tk.Frame(master=self,borderwidth="0", relief="groove")
-        self.canvas_frame.pack(expand=1,fill=tk.BOTH)
+        self.canvas_frame = tk.Frame(master=self, borderwidth="0", relief="groove")
+        self.canvas_frame.pack(expand=1, fill=tk.BOTH)
 
-        self.canvas = tk.Canvas(master=self.canvas_frame,borderwidth="0")
+        self.canvas = tk.Canvas(master=self.canvas_frame, borderwidth="0")
         self.canvas.pack()
 
         self.canvas.create_image(8, 8, anchor=tk.NW, image=self.photo_image)
@@ -111,7 +111,7 @@ class PipelinePhase(tk.Frame):
         except:
             pass
 
-    def _find_new_canvas_size(self,event):
+    def _find_new_canvas_size(self, event):
         max_w = self.canvas_frame.winfo_width()
         max_h = self.canvas_frame.winfo_height()
         aspect = self.np_img.shape[0] / self.np_img.shape[1]
@@ -187,9 +187,7 @@ class PipelinePhase(tk.Frame):
             if not self.image_handle:
                 self.image_handle = self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo_image)
 
-        self.canvas.itemconfig(self.image_handle,image=self.photo_image)
-        #self.canvas.update()
-        #self.update()
+        self.canvas.itemconfig(self.image_handle, image=self.photo_image)
 
         if len(self.canvas.children) > 0:
             self.redraw()
@@ -207,16 +205,16 @@ class PipelinePhase(tk.Frame):
 
 
         # convert before saving
-        self.np_img= self.np_img.astype("uint8")
+        self.np_img = self.np_img.astype("uint8")
 
-        if len(self.np_img.shape)==3:
+        if len(self.np_img.shape) == 3:
             self.np_img = np.array(cv2.cvtColor(self.np_img, cv2.COLOR_BGR2RGB))
 
         print(new_file_name)
         cv2.imwrite(new_file_name, self.np_img)
 
         # convert after saving so next phase gets correct image
-        if len(self.np_img.shape)==3:
+        if len(self.np_img.shape) == 3:
             self.np_img = np.array(cv2.cvtColor(self.np_img, cv2.COLOR_RGB2BGR))
 
         self.filename = new_file_name
