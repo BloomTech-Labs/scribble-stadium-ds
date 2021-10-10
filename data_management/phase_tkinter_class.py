@@ -48,8 +48,8 @@ class PipelinePhase(tk.Frame):
 
             self.story_folder = os.path.dirname(self.filename)
             # check if user opened a file in a "phase" folder
-            if "phase" in self.story_folder:
-                pass
+            while "phase" in self.story_folder:
+                self.story_folder = path.realpath(path.join(self.story_folder, ".."))
 
             self.np_img = cv2.imread(self.filename, cv2.IMREAD_UNCHANGED - cv2.IMREAD_IGNORE_ORIENTATION)
 
