@@ -33,9 +33,10 @@ class PipelinePhase(tk.Frame):
         self.next_phase = next_phase
         self.master = master
         self.pack()
-        self.last_redraw = time.time()
 
         if prev_phase is None:
+
+            # ask the user to specify a file
             self.filename = fd.askopenfilename(
                 initialdir=path.join(path.dirname(__file__), "..", "data", "transcribed_stories", "51--", "5101"))
 
@@ -53,12 +54,13 @@ class PipelinePhase(tk.Frame):
 
             self.np_img = cv2.imread(self.filename, cv2.IMREAD_UNCHANGED - cv2.IMREAD_IGNORE_ORIENTATION)
 
+            # do needed color conversion
             if len(self.np_img.shape) == 3:  # Color Image
                 self.np_img = np.array(cv2.cvtColor(self.np_img, cv2.COLOR_RGB2BGR))
             elif len(self.np_img.shape) == 2:  # Gray Scale
                 pass
 
-        else: # there is no previous phase
+        else:  # there is a previous phase
             self.np_img = prev_phase.np_img
             self.story_folder = prev_phase.story_folder
             self.filename = prev_phase.filename
@@ -80,9 +82,6 @@ class PipelinePhase(tk.Frame):
 
         self.canvas_frame.bind('<Configure>', self.resize)
 
-        #self.canvas.bind("<Motion>", self.redraw_canvas_objects)
-        #self.canvas.bind("<Button-1>", 3self.redraw_canvas_objects)
-
         try:
             self.canvas.bind("<Button-1>", self.canvas_click)
         except:
@@ -96,13 +95,11 @@ class PipelinePhase(tk.Frame):
     def img_2_canvas_pt(self, pt: list):
         x = (pt[0] / self.np_img.shape[1]) * self.canvas.winfo_width()
         y = (pt[1] / self.np_img.shape[0]) * self.canvas.winfo_height()
-        print("img_2_canvas result: ",x,y)
         return ([x, y])
 
     def canvas_2_img_pt(self, canvas_pt: list):
         img_x = (canvas_pt[0] / self.canvas.winfo_width()) * self.np_img.shape[1]
         img_y = (canvas_pt[1] / self.canvas.winfo_height()) * self.np_img.shape[0]
-        print("canvas_2_img result: ",img_x, img_y)
         return [img_x, img_y]
 
     def motion_event(self, event):
