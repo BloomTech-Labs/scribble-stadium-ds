@@ -179,13 +179,10 @@ class PipelinePhase(tk.Frame):
         handles the fact that the window has been resized or that some other thing has caused the canvas to change
         diminsions. Use this when the shape of the canvas/window/client area has changed
         """
-
-        #print(self.canvas.winfo_width(),self.canvas.winfo_height()," --> ",event.width,event.height)
         self.last_redraw = time.time()
         canvas_size = self._find_new_canvas_size(event)
         w = canvas_size[0]
         h = canvas_size[1]
-        #print("resize",w,h)
         self.photo_image = np_photo_image(cv2.resize(self.np_img, (w, h)))
 
         if not self.image_handle:
@@ -205,8 +202,6 @@ class PipelinePhase(tk.Frame):
         directory = self.story_folder
         filename, extension = path.basename(self.filename).split(".")
         new_file_name = path.join(directory, self.phase, filename + "." + extension)
-        #path.relpath()
-
 
         # convert before saving
         self.np_img = self.np_img.astype("uint8")
@@ -222,4 +217,3 @@ class PipelinePhase(tk.Frame):
             self.np_img = np.array(cv2.cvtColor(self.np_img, cv2.COLOR_RGB2BGR))
 
         self.filename = new_file_name
-
