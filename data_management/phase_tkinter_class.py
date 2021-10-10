@@ -34,6 +34,10 @@ class PipelinePhase(tk.Frame):
         self.master = master
         self.pack()
 
+        # set this to none so we know the photo image handle has not been initialized
+        self.image_handle = None
+
+        # if ran in stand-alone mode
         if prev_phase is None:
 
             # ask the user to specify a file
@@ -137,8 +141,8 @@ class PipelinePhase(tk.Frame):
         should be updated.
         """
         print("redraw")
-        if "image_handle" in self.__dir__():
-            #canvas_size = self._find_new_canvas_size()
+        if self.image_handle:
+            # canvas_size = self._find_new_canvas_size()
             w = self.canvas.winfo_width()
             h = self.canvas.winfo_height()
             self.photo_image = np_photo_image(cv2.resize(self.np_img, (w, h)))
@@ -155,8 +159,8 @@ class PipelinePhase(tk.Frame):
         redraw object that are on the canvas besides the base photoimage, use this when you have changed things that are
         drawn on the canvas, like lines ovals etc
         """
-        print(self.image_handle)
-        self.canvas.tag_lower(self.image_handle)
+        if self.image_handle:
+            self.canvas.tag_lower(self.image_handle)
 
         if "current_np_img_point_idx" in locals():
             pairs = [[0, 1], [1, 2], [2, 3], [3, 0]]
@@ -184,9 +188,8 @@ class PipelinePhase(tk.Frame):
         #print("resize",w,h)
         self.photo_image = np_photo_image(cv2.resize(self.np_img, (w, h)))
 
-        if "image_handle" in dir():
-            if not self.image_handle:
-                self.image_handle = self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo_image)
+        if not self.image_handle:
+            self.image_handle = self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo_image)
 
         self.canvas.itemconfig(self.image_handle, image=self.photo_image)
 
