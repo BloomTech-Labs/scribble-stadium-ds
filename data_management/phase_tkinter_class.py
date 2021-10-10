@@ -65,6 +65,8 @@ class PipelinePhase(tk.Frame):
             self.filename = prev_phase.filename
 
         self.photo_image_filename_only = path.basename(self.filename)
+        self.photo_image_folder = path.dirname(self.filename)
+
         self.photo_image = np_photo_image(self.np_img)
         self.goto_next_phase_flag = None
 
