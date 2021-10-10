@@ -40,6 +40,7 @@ class PipelinePhase(tk.Frame):
         # if ran in stand-alone mode
         if prev_phase is None:
 
+            master.update_idletasks()
             # ask the user to specify a file
             self.filename = fd.askopenfilename(
                 initialdir=path.join(path.dirname(__file__), "..", "data", "transcribed_stories", "51--", "5101"))
@@ -87,15 +88,11 @@ class PipelinePhase(tk.Frame):
 
         self.canvas_frame.bind('<Configure>', self.resize)
 
-        try:
+        if "canvas_click" in self.__dir__():
             self.canvas.bind("<Button-1>", self.canvas_click)
-        except:
-            print("no canvas_click")
 
-        try:
+        if "motion_event" in self.__dir__():
             self.canvas.bind("<Motion>", self.motion_event)
-        except:
-            print("no canvas_mouseover")
 
     def img_2_canvas_pt(self, pt: list):
         x = (pt[0] / self.np_img.shape[1]) * self.canvas.winfo_width()
@@ -110,11 +107,9 @@ class PipelinePhase(tk.Frame):
     def motion_event(self, event):
         self.redraw_canvas_objects()
 
-        # need to find better way to resolve if the derived class has canvas_mouseover
-        try:
+        if "canvas_mouseover" in self.__dir__():
             self.canvas_mouseover(event)
-        except:
-            pass
+
 
     def _find_new_canvas_size(self, event):
         max_w = self.canvas_frame.winfo_width()
