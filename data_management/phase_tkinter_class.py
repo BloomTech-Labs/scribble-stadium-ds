@@ -72,6 +72,20 @@ class PipelinePhase(tk.Frame):
         self.photo_image_filename_only = path.basename(self.filename)
         self.photo_image_folder = path.dirname(self.filename)
 
+        text_full_path = path.join(self.story_folder,self.photo_image_filename_only.split(".")[0])
+        text_full_path=text_full_path.replace("Photo","Story")
+
+        for _ in range(10):
+            try:
+                with open(text_full_path) as f:
+                    self.story_text =f.read()
+                    break
+            except FileNotFoundError as e:
+                pass
+            split = text_full_path.split("-")
+            text_full_path= "-".join(split[:-1])
+
+
         self.photo_image = np_photo_image(self.np_img)
         self.goto_next_phase_flag = None
 
