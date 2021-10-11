@@ -111,8 +111,76 @@ class Slider(Canvas):
     def resize(self, event):
         self.redraw()
 
-class Slider_with_Graph(Slider):
-    pass
+
+class GroundTruthWidget(tk.Frame):
+
+    def __init__(self, master, label_text: str = "written line number", image: str = "full path to image", **kwargs):
+        tk.Frame.__init__(self, master, **kwargs)
+        self.image = image
+        self.line_number_label = tk.Label(self, text=label_text, font=("Helvetica", 24))
+        self.line_number_label.pack(side=tk.LEFT)
+
+        self.frame1 = tk.Frame(self, background="#FFFFFF")
+        self.frame1.pack(side=tk.LEFT, expand=True)
+
+        # use opencv to load image
+        self.cv2_img = cv2.imread(self.image, cv2.IMREAD_UNCHANGED - cv2.IMREAD_IGNORE_ORIENTATION)
+        # convert to numpy array
+        self.np_img = np.array(self.cv2_img)
+        # convert it to a tk.photoimage
+        self.photo_img = phase_tkinter_class.np_photo_image(self.np_img)
+        # create canvas of correct diminsions
+        self.canvas = tk.Canvas(self.frame1, width=self.photo_img.width(), height=self.photo_img.height(), bg="#0000ff",
+                                bd=0, highlightthickness=0)
+        self.canvas.pack()
+        # create image on the canvas
+        self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo_img)
+
+        self.textbox = tk.Text(self.frame1, width=40, height=1, font=("Helvetica", 24))
+        self.textbox.pack()
+        self.update()
+
+        self.frame2 = tk.Frame(self)
+        self.frame2.pack(side=tk.LEFT, expand=True)
+
+
+        self.done_button = tk.Button(self.frame2, font=("Helvetica", 14), name="done_button")
+        self.done_button["text"] = "Done"
+        self.done_button.pack(expand=True, fill=tk.X)
+        self.done_button.setvar("pressed", False)
+
+
+        self.invalid_button = tk.Button(self.frame2, font=("Helvetica", 14), name="invalid_button")
+        self.invalid_button["text"] = "Invalid"
+        self.invalid_button.pack(expand=True, fill=tk.X)
+
+        self.invalid_button_pressed = tk.BooleanVar(master=self.invalid_button, name="pressed")
+        self.done_button_pressed    = tk.BooleanVar(master=self.done_button, name="pressed")
+
+        self.invalid_button.setvar("pressed", False)
+        self.invalid_button.setvar("pressed", False)
+
+
+class ScrollableFrame(tk.Frame):
+    def __init__(self, container, *args, **kwargs):
+        super().__init__(container, *args, **kwargs)
+        canvas = tk.Canvas(self)
+        scrollbar = tk.Scrollbar(self, orient="vertical", command=canvas.yview)
+        self.scrollable_frame = tk.Frame(canvas)
+
+        self.scrollable_frame.bind(
+            "<Configure>",
+            lambda e: canvas.configure(
+                scrollregion=canvas.bbox("all")
+            )
+        )
+
+        canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
+
+        canvas.configure(yscrollcommand=scrollbar.set)
+
+        canvas.pack(side="left", fill="both", expand=True)
+        scrollbar.pack(side="right", fill="y")
 
 if __name__ == "__main__":
     root = tk.Tk()
