@@ -6,8 +6,9 @@ from PIL import Image
 
 def full_essay_checker(directory, max_height):
     """
-    :param directory:
-    :param max_height:
+    :param directory: Directory of interest
+    :param max_height: Height threshold beyond which a file should be
+            flagged as a potential child essay.
     :return: None
     This function will generate and display the files in the directory
     passed in the arguments above by walking the tree and checking
