@@ -177,6 +177,13 @@ class ScrollableFrame(tk.Frame):
 
 if __name__ == "__main__":
     root = tk.Tk()
-    slider = Slider(root, 3, 0, 10, width=256, height=33, bg='#dddddd')
-    slider.pack()
+    file0 = r'E:\lambda\labs\ds-test-2\data\transcribed_stories\51--\5101\phase6\Photo 5101_test-0.png'
+    # slider = Slider(root, 3, 0, 10, width=256, height=33, bg='#dddddd')
+    # slider.pack()
+
+    gtw = GroundTruthWidget(root, label_text="test",
+                            image=file0,
+                            )
+    gtw.pack()
+
     root.mainloop()
