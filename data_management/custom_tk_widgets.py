@@ -7,7 +7,7 @@ from PIL import ImageTk, Image
 
 
 class Slider(Canvas):
-    def __init__(self, master, handles: int, min: int, max: int,handle_width:int=5,command=None, **kwargs):
+    def __init__(self, master, handles: int, min: int, max: int, handle_width: int = 5, command=None, **kwargs):
         tk.Canvas.__init__(self, master, **kwargs)
         self.handles = handles
         self.max = max
@@ -15,7 +15,7 @@ class Slider(Canvas):
         self.value_range = max - min
         self.handle_width = handle_width
         self.command = command
-        self.current_sorted_values=None
+        self.current_sorted_values = None
         # set to > 0 when dragging a handle
         self.dragging_handle = -1
         # self.create_oval([0, 0, 10, 10])
@@ -33,14 +33,14 @@ class Slider(Canvas):
     def init_canvas(self):
         self.slide_line = self.create_line([0, 0, 0, 0], width=2, fill='black')
         self.ticks = [self.create_line([0, 0, 0, 0], fill='#999999') for _ in range(10)]
-        self.handles = {self.create_rectangle([0, 0, 0, 0], width=1, fill='blue'): int(self.value_range /2) for _ in
+        self.handles = {self.create_rectangle([0, 0, 0, 0], width=1, fill='blue'): int(self.value_range / 2) for _ in
                         range(self.handles)}
 
-        if len(self.handles)>1:
+        if len(self.handles) > 1:
             stp = self.value_range / (len(self.handles))
             p = stp + stp
-            for h,v in self.handles.items():
-                self.handles[h]=p
+            for h, v in self.handles.items():
+                self.handles[h] = p
                 p = stp - stp
 
 
@@ -55,10 +55,10 @@ class Slider(Canvas):
     def canvas_drag(self, event):
         print("drag", event)
         if self.dragging_handle >= 0:
-            #print("dragging handle", self.dragging_handle)
+            # print("dragging handle", self.dragging_handle)
             new_val = event.x * self.value_per_pix
 
-            if new_val <self.min:
+            if new_val < self.min:
                 new_val = self.min
 
             if new_val > self.max:
@@ -67,9 +67,9 @@ class Slider(Canvas):
             self.handles[self.dragging_handle] = new_val
             self.redraw()
 
-            values = [ v for h, v in self.handles.items()]
+            values = [v for h, v in self.handles.items()]
             values.sort()
-            self.current_sorted_values=values
+            self.current_sorted_values = values
             self.command(self.current_sorted_values)
 
     def canvas_click(self, event):
@@ -82,7 +82,7 @@ class Slider(Canvas):
 
     def canvas_mouseover(self, event):
         pass
-        #print("mouse over")
+        # print("mouse over")
 
     def redraw(self):
         h = self.winfo_height()
@@ -99,16 +99,16 @@ class Slider(Canvas):
             self.coords(tick, [i * self.pix_per_tick, 0, i * self.pix_per_tick, h])
 
         # handles
-        #pix_per_value = w / (self.max - self.min)
+        # pix_per_value = w / (self.max - self.min)
         for handle in self.handles.items():
-            hndle,v= handle
-            px = v/self.value_per_pix
+            hndle, v = handle
+            px = v / self.value_per_pix
             self.coords(hndle, [px - self.handle_width, 10, px + self.handle_width, h - 10])
 
-        #for i, tick_handle in zip(range(len(self.handles)), self.handles.items()):
-         #   tick_value = tick_handle[1]
-          #  px = tick_value * pix_per_value
-           # self.coords(tick_handle[0], [px - self.handle_width, 10, px + self.handle_width, h-10])
+        # for i, tick_handle in zip(range(len(self.handles)), self.handles.items()):
+        #   tick_value = tick_handle[1]
+        #  px = tick_value * pix_per_value
+        # self.coords(tick_handle[0], [px - self.handle_width, 10, px + self.handle_width, h-10])
 
         self.update()
 
