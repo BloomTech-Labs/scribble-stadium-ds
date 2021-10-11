@@ -1,5 +1,9 @@
 import tkinter as tk
 from tkinter import Canvas
+import phase_tkinter_class
+import cv2
+import numpy as np
+from PIL import ImageTk, Image
 
 
 class Slider(Canvas):
