@@ -43,11 +43,9 @@ class Slider(Canvas):
                 self.handles[h] = p
                 p = stp - stp
 
-
         values = [v for h, v in self.handles.items()]
         values.sort()
         self.current_sorted_values = values
-
 
     def canvas_button_up(self, event):
         print("mouse button up", event)
