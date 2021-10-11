@@ -18,15 +18,13 @@ class Slider(Canvas):
         self.current_sorted_values = None
         # set to > 0 when dragging a handle
         self.dragging_handle = -1
-        # self.create_oval([0, 0, 10, 10])
+
 
         self.bind("<Button-1>", self.canvas_click)
         self.bind("<B1-Motion>", self.canvas_drag)
         self.bind("<ButtonRelease-1>", self.canvas_button_up)
         self.bind("<Motion>", self.canvas_mouseover)
         self.bind('<Configure>', self.resize)
-
-        #self.handle_values = [int((max - min) / 2) for i in range(handles)]
 
         self.init_canvas()
 
@@ -53,7 +51,6 @@ class Slider(Canvas):
     def canvas_drag(self, event):
         print("drag", event)
         if self.dragging_handle >= 0:
-            # print("dragging handle", self.dragging_handle)
             new_val = event.x * self.value_per_pix
 
             if new_val < self.min:
@@ -80,7 +77,6 @@ class Slider(Canvas):
 
     def canvas_mouseover(self, event):
         pass
-        # print("mouse over")
 
     def redraw(self):
         h = self.winfo_height()
@@ -102,11 +98,6 @@ class Slider(Canvas):
             hndle, v = handle
             px = v / self.value_per_pix
             self.coords(hndle, [px - self.handle_width, 10, px + self.handle_width, h - 10])
-
-        # for i, tick_handle in zip(range(len(self.handles)), self.handles.items()):
-        #   tick_value = tick_handle[1]
-        #  px = tick_value * pix_per_value
-        # self.coords(tick_handle[0], [px - self.handle_width, 10, px + self.handle_width, h-10])
 
         self.update()
 
