@@ -26,7 +26,7 @@ def np_photo_image(image: np.ndarray):
 
 
 class PipelinePhase(tk.Frame):
-    def __init__(self, next_phase, master=None, prev_phase: tk.Frame = None, test: bool = False):
+    def __init__(self, next_phase, master=None, prev_phase: tk.Frame = None, test: bool = False, *args, **kwargs):
         import cv2
 
         super().__init__(master, *args, **kwargs)
