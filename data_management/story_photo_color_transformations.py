@@ -25,6 +25,7 @@ class Application(PipelinePhase):
         self.invert_red = tk.IntVar()
         self.invert_green = tk.IntVar()
         self.invert_blue = tk.IntVar()
+        self.invert_output = tk.IntVar()
         self.controls_frame.pack(side="top")
         self.create_widgets()
 
@@ -42,7 +43,7 @@ class Application(PipelinePhase):
         self.red_invert_check.pack(side="left")
 
         self.red_slider = Slider(self.red_frame, handles=2, min=0, max=255, width=400, height=40,
-                                 command=lambda x: self.update_image("red", x))
+                                 command=self.update_image)
         self.red_slider.pack(fill="none", expand="false")
 
         # green channel
@@ -52,10 +53,11 @@ class Application(PipelinePhase):
         self.green_frame_label.pack()
 
         self.green_invert_check = tk.Checkbutton(self.green_frame, text="invert", variable=self.invert_green)
+        self.green_invert_check["command"] = self.update_image
         self.green_invert_check.pack(side="left")
 
         self.green_slider = Slider(self.green_frame, handles=2, min=0, max=255, width=400, height=40,
-                                   command=lambda x: self.update_image("green", x))
+                                   command=self.update_image)
         self.green_slider.pack(fill="none", expand="false")
 
         self.blue_frame = tk.Frame(self.controls_frame, borderwidth=1, relief=tk.SOLID)
@@ -67,12 +69,13 @@ class Application(PipelinePhase):
         self.blue_invert_check.pack(side="left")
 
         self.blue_slider = Slider(self.blue_frame, handles=2, min=0, max=255, width=400, height=40,
-                                  command=lambda x: self.update_image("blue", x))
+                                  command=self.update_image)
         self.blue_slider.pack(fill="none", expand="false")
 
-        self.invert_output = tk.Checkbutton(self.controls_frame, text="invert output")
-        self.invert_output.pack()
-        self.invert_output["command"] = self.invert_check_box
+        self.invert_output_check = tk.Checkbutton(self.controls_frame, text="invert output",variable=self.invert_output)
+        self.invert_output_check.pack()
+        self.invert_output_check["command"] = self.update_image
+
         self.save_btn = tk.Button(self.controls_frame)
         self.save_btn["text"] = "save"
         self.save_btn["command"] = self.save_button
@@ -96,14 +99,7 @@ class Application(PipelinePhase):
         self.goto_next_phase_flag = True
         self.master.destroy()
 
-    def invert_check_box(self):
-        """
-        Checking then unchecking this box results in an image with text and background colors inverted
-        """
-        self.invert_output = not self.invert_output
-        self.update_image('red', self.red_slider.current_sorted_values)
-
-    def update_image(self, channel, values):
+    def update_image(self,current_sorted_values=None):
         """
         This function updates the image based on user input from slider selections
         """
@@ -114,32 +110,30 @@ class Application(PipelinePhase):
             C = C * 255
             return C
 
-        if channel == 'red':
-            position = 0
-
-        if channel == 'green':
-            position = 1
-
-        if channel == 'blue':
-            position = 2
-
         r1, r2 = self.red_slider.current_sorted_values
         g1, g2 = self.green_slider.current_sorted_values
         b1, b2 = self.blue_slider.current_sorted_values
 
         print(r1, r2, g1, g2, b1, b2)
 
-        selectionR = (self.np_img_orig[:, :, position] >= r1) * (self.np_img_orig[:, :, position] <= r2)
-        selectionG = (self.np_img_orig[:, :, position] >= g1) * (self.np_img_orig[:, :, position] <= g2)
-        selectionB = (self.np_img_orig[:, :, position] >= b1) * (self.np_img_orig[:, :, position] <= b2)
+        selectionR = (self.np_img_orig[:, :, 0] >= r1) * (self.np_img_orig[:, :, 0] <= r2)
+        selectionG = (self.np_img_orig[:, :, 1] >= g1) * (self.np_img_orig[:, :, 1] <= g2)
+        selectionB = (self.np_img_orig[:, :, 2] >= b1) * (self.np_img_orig[:, :, 2] <= b2)
 
-        if self.invert_red == True:
+        if self.invert_red.get() == True:
             selectionR = np.invert(selectionR)
+
+        if self.invert_green.get() == True:
+            selectionG = np.invert(selectionG)
+
+        if self.invert_blue.get() == True:
+            selectionB = np.invert(selectionB)
+
         selection = selectionR * selectionG * selectionB
 
         selection = np.reshape(selection, (self.np_img.shape[0], self.np_img.shape[1], 1)).astype('uint8')
 
-        if self.invert_output == True:
+        if self.invert_output.get() == True:
             self.np_img = normalize(255 - np.multiply(self.np_img_orig, selection, dtype="uint8"))
         else:
             self.np_img = np.multiply(self.np_img_orig, selection, dtype="uint8")
