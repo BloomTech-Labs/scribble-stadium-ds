@@ -182,27 +182,36 @@ def scale_clips(boxes, canvas_area, density=0.40):
 
 
 # Collate all the requested pages into one words table, including the file path, date, and cropped words
-def get_user_words(user_id, date_range=None, complexity_metric="len_count"):
-    pages_data = get_pages(user_id=user_id, date_range=date_range)
-    if date_range is not None:
-        if len(pages_data) == 1:
-            plural = f'is {len(pages_data)} page'
-        else:
-            plural = f'are {len(pages_data)} pages'
-        print(f'There {plural} for {user_id} between {date_range[0]} and {date_range[1]}')
+def get_user_words(user_id, date_range=None):
+    conn = create_connection()
+    curs = conn.cursor()
+    if date_range[0] != 'None':
+        query = f"""SELECT * FROM images WHERE date BETWEEN '{date_range[0]}' and '{date_range[1]}' AND
+        username='{user_id}' LIMIT 200"""
+    else:
+        query = f"""SELECT * FROM images WHERE username='{user_id}' LIMIT 600"""
 
-    # load all pages and images into one table
-    user_words = pd.DataFrame()
-    for page_specs in pages_data.to_dict('records'):
-        # returns a table of words with cropped images in RGBA format
-        page_data = assemble_page_data(page_specs)
-        user_words = pd.concat([user_words, page_data])
-    user_words.drop(columns=['left', 'top', 'conf'], inplace=True, errors='ignore')
-
-    # add complexity
-    user_words["complexity"] = get_complexity(user_words, metric=complexity_metric)
+    curs.execute(query)
+    user_words = pd.DataFrame(columns=['width', 'height', 'text', 'page_uri', 'date', 'image', 'complexity'])
+    for row in curs.fetchall():
+        new_row = pd.DataFrame(columns=['width', 'height', 'text', 'page_uri', 'date', 'image', 'complexity'])
+        new_row['width'] = [row[0]]
+        new_row['height'] = [row[1]]
+        new_row['text'] = [row[2]]
+        new_row['page_uri'] = [row[3]]
+        new_row['date'] = [row[4]]
+        with open('here.png', 'wb') as fp:
+            fp.write(row[6])
+            fp.close()
+        image = cv2.imread('here.png')
+        image = get_clips(image)
+        new_row['image'] = [image]
+        new_row['complexity'] = [row[7]]
+        user_words = pd.concat([user_words, new_row], ignore_index=True)
     user_words.sort_values(by='complexity', ascending=False, inplace=True)
+
     return user_words
+
 
 
 # Map the dates to integers. returns a dictionary
