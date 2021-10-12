@@ -214,17 +214,6 @@ def get_user_words(user_id, date_range=None):
 
 
 
-# Map the dates to integers. returns a dictionary
-def map_dates(user_words):
-    dates = sorted(user_words.date.unique())
-    D = len(dates)
-    date_map = dict()
-    for i, date in enumerate(dates):
-        date = pd.to_datetime(date)
-        date_map[date] = i
-    return date_map
-
-
 # Picks a random horizontal location for a cropped word
 # This is the heart of arranging the words chronologically
 def pick_x(canvas_width, word_width, date_number=None, total_dates=None):
