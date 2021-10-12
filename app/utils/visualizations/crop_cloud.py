@@ -180,16 +180,6 @@ def scale_clips(boxes, canvas_area, density=0.40):
     return scaled_clips
 
 
-# Converts an image to base64 for a given image format
-def img_to_base64(image, format='.png'):
-    retval, buffer = cv2.imencode(format, image)
-    b64_bytes = base64.b64encode(buffer)
-    b64_string = b64_bytes.decode()
-    return b64_string
-    # There are many flags you can use to configure the compression, but they are different for each image format
-    # https://docs.opencv.org/4.5.2/d8/d6a/group__imgcodecs__flags.html#ga292d81be8d76901bff7988d18d2b42ac
-
-
 # Filters the dataframe of whole-page metadata for a given user and date range
 # replace this with a SQL query that pulls from a database
 def get_pages(user_id, date_range=None):
