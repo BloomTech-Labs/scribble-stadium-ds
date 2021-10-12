@@ -28,48 +28,6 @@ def create_connection():
 
     return pg_connection
 
-
-# Create a random database for all the story images
-def create_random_database(db_filename):
-    import datetime
-    import re
-
-    def get_random_name():
-        return random.choice(["Chickpea","Holmes","XiChi","YoungBlood","PenDragon","Frogurt"])
-
-    def get_random_date():
-        start_date = datetime.datetime(2015, 1, 1, 0, 0, 0)
-        end_date = datetime.datetime(2021, 12, 31, 23, 59, 59)
-        total_seconds = (end_date - start_date).total_seconds()
-
-        random_seconds = random.randrange(total_seconds)
-        random_date = start_date + datetime.timedelta(seconds=random_seconds)
-        return random_date
-
-    page_filenames = get_filenames(zip_filename="./data/story_images.zip")
-
-    names = []
-    dates = []
-    for filename in page_filenames:
-        names.append(get_random_name())
-        dates.append(get_random_date())
-        # match = re.search("Photo (\d{4})",filename)
-        # if match:
-        #     pass
-        #     # print(match[1])
-        #     story_id = match[1]
-        #     transcripts.append(transcript)
-        # else:
-        #     print(f"can't find {filename}'s story_id")
-
-    user_stories = pd.DataFrame({
-        'username':names,
-        'submission_datetime':dates,
-        'image_url':page_filenames,
-    })
-    user_stories.to_csv(open(db_filename,'w'), index=False)
-    user_stories.head()
-
 # resize so the longest side is max_length
 def load_image(filename, max_length=None):
     image = cv2.imread(filename)
