@@ -298,14 +298,6 @@ def make_crop_cloud(canvas, boxes):
                 placed += 1
                 break
 
-    # print(f'placed {placed}/{total} words')
-    # print(f'there were {collisions} total collisions')
-    # canvas_area = canvas.shape[0] * canvas.shape[1]
-    # print(f'bounding box density =  {word_area/canvas_area:.2f}')
-    # print(f'occupied density = {occupied.sum() / canvas_area:.2f}')
-
-    # cv2.imshow(canvas)
-    # cv2.imshow(occupied*255)
     return canvas
 
 
@@ -388,23 +380,6 @@ def get_crop_cloud(user_id, date_range=None, complexity_metric="len_count", imag
 
 
 if __name__ == "__main__":
-    # `user_id` can be "Chickpea", "Holmes", "XiChi", "YoungBlood", "PenDragon", "Frogurt"
-    # `date_range` - Dates were randomly generated between 2015-01-01 and 2021-12-31
-
-    # # Test GET viz/cropped_words, which calls get_cropped_words()
-    # words_json = get_cropped_words(
-    #     user_id="PenDragon",
-    #     date_range=("2019-10-01", "2020-10-31"),
-    #     complexity_metric="len",
-    #     image_format=".webp",
-    #     canvas_area=658560,  # 960*686
-    #     density=0.40,
-    #     )
-    # print(f"words_json is {len(words_json)/1024:,.0f} KB")
-
-    # # Save the json to a sample response
-    # with open("cropped_words.json", mode='w') as file:
-    #   file.write(words_json)
 
     # Test GET viz/crop_cloud, which calls get_crop_cloud()
     crop_cloud_json = get_crop_cloud(
