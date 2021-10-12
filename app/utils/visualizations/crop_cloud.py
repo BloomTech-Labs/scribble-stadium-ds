@@ -86,6 +86,15 @@ def markup(page, boxes):
         page = cv2.rectangle(page, (left, top), (left + width, top + height), color, 2)
     return page
 
+# Converts an image to base64 for a given image format
+def img_to_base64(image, format='.png'):
+    retval, buffer = cv2.imencode(format, image)
+    b64_bytes = base64.b64encode(buffer)
+    b64_string = b64_bytes.decode()
+    return b64_string
+    # There are many flags you can use to configure the compression, but they are different for each image format
+    # https://docs.opencv.org/4.5.2/d8/d6a/group__imgcodecs__flags.html#ga292d81be8d76901bff7988d18d2b42ac
+
 
 # Computes the complexity of all words in the 'text' column of a DataFrame
 def get_complexity(words, metric='len_count'):
