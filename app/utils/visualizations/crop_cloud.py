@@ -353,7 +353,8 @@ def get_crop_cloud(user_id, date_range=None, complexity_metric="len_count", imag
         json(image_base64) - a rendered crop cloud as an image
     """
 
-    user_words = get_user_words(user_id, date_range, complexity_metric)
+    user_words = get_user_words(user_id, date_range)
+    user_words['complexity'] = get_complexity(user_words, 'len_count')
 
     # load the canvas
     canvas = load_image("./data/crop-cloud/cream_paper.jpg", max_length=canvas_width)
