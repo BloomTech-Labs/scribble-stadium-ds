@@ -158,7 +158,7 @@ def get_clips(image, blur=1):
 
 # Resizes the cropped words for a given canvas area and density
 def scale_clips(boxes, canvas_area, density=0.40):
-    master_scale = get_scale(boxes, canvas_area, density=0.40)
+    master_scale = get_scale(boxes, canvas_area, density=density)
 
     scaled_clips = []
     for row in boxes.to_dict('records'):
