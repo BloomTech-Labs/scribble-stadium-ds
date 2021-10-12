@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 import numpy as np
 import pandas as pd
 import cv2
-import pytesseract
+import psycopg2
 
 
 load_dotenv()
