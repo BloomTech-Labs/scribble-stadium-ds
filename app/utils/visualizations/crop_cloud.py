@@ -17,14 +17,7 @@ import pytesseract
 
 load_dotenv()
 
-# Load the filenames inside a given zip file
-def get_filenames(zip_filename):
-    with zipfile.ZipFile(zip_filename, 'r') as zip_file:
-        files_in_zip = zip_file.filelist
-    for i, fileinfo in enumerate(files_in_zip):
-        files_in_zip[i] = fileinfo.filename
-    return files_in_zip
-# Working with Zip Files  https://www.geeksforgeeks.org/working-zip-files-python/
+
 
 # Create a random database for all the story images
 def create_random_database(db_filename):
