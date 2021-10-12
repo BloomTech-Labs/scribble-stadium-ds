@@ -96,7 +96,7 @@ class Application(PipelinePhase):
         self.goto_next_phase_flag = True
         self.master.destroy()
 
-    def smooth(self,y, box_pts=3):
+    def smooth(self, y, box_pts=3):
         box = np.ones(box_pts) / box_pts
         y_smooth = np.convolve(y, box, mode='same')
         return y_smooth
@@ -144,7 +144,7 @@ class Application(PipelinePhase):
         p1 = np.percentile(gradient_y_smoothed, alpha1)
         p2 = np.percentile(gradient_y_smoothed, alpha2)
         if debug:
-            print (np.percentile(gradient_y_smoothed,50))
+            print(np.percentile(gradient_y_smoothed, 50))
 
         # finally both conditions must be true in order to be considered as a segmenting row
         segments = (gradient_y_smoothed > p1) & (gradient_y_smoothed < p2) & segments
@@ -255,6 +255,7 @@ class Application(PipelinePhase):
                 logging.warning("tried to write a background line past end of array")
 
         self.redraw()
+
 
 if __name__ == "__main__":
     """allows the phase to be ran in stand-alone mode or pipeline mode"""
