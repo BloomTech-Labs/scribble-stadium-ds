@@ -17,6 +17,16 @@ import pytesseract
 
 load_dotenv()
 
+def create_connection():
+    """RDS connection"""
+    # connect to ElephantSQL-hosted PostgreSQL
+    DB_NAME = os.getenv("RDS_DB_NAME", default="OOPS")
+    DB_USER = os.getenv("RDS_USERNAME", default="OOPS")
+    DB_PASSWORD = os.getenv("RDS_PASSWORD", default="OOPS")
+    DB_HOST = os.getenv("RDS_HOSTNAME", default="OOPS")
+    pg_connection = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASSWORD, host=DB_HOST)
+
+    return pg_connection
 
 
 # Create a random database for all the story images
