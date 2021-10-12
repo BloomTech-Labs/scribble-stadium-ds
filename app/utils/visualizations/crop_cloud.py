@@ -180,23 +180,6 @@ def scale_clips(boxes, canvas_area, density=0.40):
     return scaled_clips
 
 
-# Filters the dataframe of whole-page metadata for a given user and date range
-# replace this with a SQL query that pulls from a database
-def get_pages(user_id, date_range=None):
-    pages = pd.read_csv("./data/crop-cloud/stories_db.csv")
-    pages["submission_datetime"] = pd.to_datetime(pages["submission_datetime"], infer_datetime_format=True)
-    pages = pages[pages["username"] == user_id]
-    if date_range is not None:
-        start_date, end_date = date_range
-        start_date = pd.to_datetime(start_date, infer_datetime_format=True)
-        end_date = pd.to_datetime(end_date, infer_datetime_format=True)
-        end_date += pd.DateOffset(1)  # so this whole day is included
-
-        pages = pages[pages["submission_datetime"] >= start_date]
-        pages = pages[pages["submission_datetime"] <= end_date]
-    return pages  # a subset of the pages metadata database
-
-
 # Creates a table of metadata for the words on a page (without adding cropped words to the table)
 # This is the slow step, taking 3-5 seconds per page
 # One idea is to put this step in the submission pipeline, and cache this page_data
