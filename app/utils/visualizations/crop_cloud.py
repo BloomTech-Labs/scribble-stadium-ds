@@ -16,28 +16,6 @@ import pytesseract
 
 
 load_dotenv()
-if os.getenv("TESSERACT_BINARY") is not None:
-    TESSERACT_BINARY = os.getenv("TESSERACT_BINARY")
-    pytesseract.pytesseract.tesseract_cmd = TESSERACT_BINARY
-    # on Windows, you can install Tesseract from https://github.com/UB-Mannheim/tesseract/wiki
-    # then add the install path to your .env file.
-    # This is typically TESSERACT_BINARY = "C:/Program Files/Tesseract-OCR/tesseract.exe"
-    
-    # on Ubuntu, you can install Tesseract by running `sudo apt install tesseract-ocr` 
-    # and then `which tesseract` to find out where it went.
-    # This is typically TESSERACT_BINARY = "/usr/bin/tesseract"
-
-    # on Mac, you can install Tesseract by running `brew install tesseract`
-    # and then `brew info tesseract` to find out where it went
-    # This is typically TESSERACT_BINARY = "/usr/local/Cellar/tesseract"
-
-    # Other settings you can change
-    # TESSERACT_ENV = os.getenv("TESSERACT_ENV")
-    # TESSERACT_CONFIG = os.getenv("TESSERACT_CONFIG")
-    # pytesseract.pytesseract.tesseract_env = TESSERACT_ENV
-    # pytesseract.pytesseract.tesseract_config = TESSERACT_CONFIG
-else:
-    raise RuntimeError("The Tesseract install path is missing from the .env file.")
 
 # Load the filenames inside a given zip file
 def get_filenames(zip_filename):
