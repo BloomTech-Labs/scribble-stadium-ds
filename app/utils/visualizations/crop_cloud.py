@@ -318,7 +318,8 @@ def get_cropped_words(user_id, date_range=None, complexity_metric="len_count", i
     Output:
         json(csv([width, height, text, page_uri, date, complexity, image_base64])) - a table of the cropped words
     """
-    user_words = get_user_words(user_id, date_range, complexity_metric)
+    user_words = get_user_words(user_id, date_range)
+    user_words['complexity'] = get_complexity(user_words, 'len_count')
 
     # scale the word images
     user_words['image'] = scale_clips(user_words, canvas_area, density)
