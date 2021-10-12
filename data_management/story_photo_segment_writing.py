@@ -75,7 +75,14 @@ class Application(PipelinePhase):
 
         for i, line_np_img in enumerate(self.np_img_segmented_lines_list):
             fn, ext = path.splitext(self.photo_image_filename_only)
-            save_file = path.join(self.story_folder, self.phase, fn + "-" + str(i) + ".png")
+            if len(str(i)) == 1:
+                clip_num = "00" + str(i)
+            elif len(str(i)) == 2:
+                clip_num = "0" + str(i)
+            else:
+                clip_num = str(i)
+
+            save_file = path.join(self.story_folder, self.phase, fn + "-" + clip_num + ".png")
             print(save_file)
             cv2.imwrite(save_file, line_np_img)
 
