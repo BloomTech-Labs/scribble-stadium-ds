@@ -86,6 +86,8 @@ class Application(PipelinePhase):
             print(save_file)
             cv2.imwrite(save_file, line_np_img)
 
+        self.filename = save_file
+
     def next_phase_button(self):
         """
         Sets a flag that helps in advancing to the next phase
