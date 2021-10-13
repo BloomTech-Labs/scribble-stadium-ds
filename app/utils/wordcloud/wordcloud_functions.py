@@ -3,7 +3,7 @@ from collections import Counter
 import re
 
 complex_words = pd.read_csv(
-    'https://raw.githubusercontent.com/Lambda-School-Labs/scribble-stadium-ds/main/data/crop-cloud/complex_words.csv'
+    '../../../data/crop-cloud/complex_words.csv'
     )
 
 
