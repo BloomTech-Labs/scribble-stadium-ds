@@ -26,16 +26,22 @@ def np_photo_image(image: np.ndarray):
 
 
 class PipelinePhase(tk.Frame):
-    def __init__(self, next_phase, master=None, prev_phase: tk.Frame = None, test: bool = False):
+    def __init__(self, next_phase, master=None, prev_phase: tk.Frame = None, test: bool = False, *args, **kwargs):
         import cv2
 
-        super().__init__(master)
+        super().__init__(master, *args, **kwargs)
         self.next_phase = next_phase
         self.master = master
         self.pack()
-        self.last_redraw = time.time()
 
+        # set this to none so we know the photo image handle has not been initialized
+        self.image_handle = None
+
+        # if ran in stand-alone mode
         if prev_phase is None:
+
+            master.update_idletasks()
+            # ask the user to specify a file
             self.filename = fd.askopenfilename(
                 initialdir=path.join(path.dirname(__file__), "..", "data", "transcribed_stories", "51--", "5101"))
 
@@ -46,75 +52,80 @@ class PipelinePhase(tk.Frame):
                 self.filename = self.filename.replace(":", ":\\")
 
             self.story_folder = os.path.dirname(self.filename)
-
             # check if user opened a file in a "phase" folder
-            if "phase" in self.story_folder:
-                pass
+            while "phase" in self.story_folder:
+                self.story_folder = path.realpath(path.join(self.story_folder, ".."))
 
             self.np_img = cv2.imread(self.filename, cv2.IMREAD_UNCHANGED - cv2.IMREAD_IGNORE_ORIENTATION)
 
+            # do needed color conversion
             if len(self.np_img.shape) == 3:  # Color Image
                 self.np_img = np.array(cv2.cvtColor(self.np_img, cv2.COLOR_RGB2BGR))
             elif len(self.np_img.shape) == 2:  # Gray Scale
                 pass
 
-        else: # there is no previous phase
+        else:  # there is a previous phase
             self.np_img = prev_phase.np_img
             self.story_folder = prev_phase.story_folder
             self.filename = prev_phase.filename
 
         self.photo_image_filename_only = path.basename(self.filename)
+        self.photo_image_folder = path.dirname(self.filename)
+
+        text_full_path = path.join(self.story_folder,self.photo_image_filename_only.split(".")[0])
+        text_full_path=text_full_path.replace("Photo","Story")
+
+        for _ in range(10):
+            try:
+                with open(text_full_path) as f:
+                    self.story_text =f.read()
+                    break
+            except FileNotFoundError as e:
+                pass
+            split = text_full_path.split("-")
+            text_full_path= "-".join(split[:-1])
+
+
         self.photo_image = np_photo_image(self.np_img)
         self.goto_next_phase_flag = None
 
-        self.controls_frame = tk.Frame(master=self,borderwidth="2", relief="groove")
+        self.controls_frame = tk.Frame(master=self, borderwidth="2", relief="groove")
         self.controls_frame.pack(side="left")
 
-        self.canvas_frame = tk.Frame(master=self,borderwidth="0", relief="groove")
-        self.canvas_frame.pack(expand=1,fill=tk.BOTH)
+        self.canvas_frame = tk.Frame(master=self, borderwidth="0", relief="groove")
+        self.canvas_frame.pack(expand=1, fill=tk.BOTH)
 
-        self.canvas = tk.Canvas(master=self.canvas_frame,borderwidth="0")
+        self.canvas = tk.Canvas(master=self.canvas_frame, borderwidth="0")
         self.canvas.pack()
 
         self.canvas.create_image(8, 8, anchor=tk.NW, image=self.photo_image)
 
         self.canvas_frame.bind('<Configure>', self.resize)
 
-        #self.canvas.bind("<Motion>", self.redraw_canvas_objects)
-        #self.canvas.bind("<Button-1>", 3self.redraw_canvas_objects)
-
-        try:
+        if "canvas_click" in self.__dir__():
             self.canvas.bind("<Button-1>", self.canvas_click)
-        except:
-            print("no canvas_click")
 
-        try:
+        if "motion_event" in self.__dir__():
             self.canvas.bind("<Motion>", self.motion_event)
-        except:
-            print("no canvas_mouseover")
 
     def img_2_canvas_pt(self, pt: list):
         x = (pt[0] / self.np_img.shape[1]) * self.canvas.winfo_width()
         y = (pt[1] / self.np_img.shape[0]) * self.canvas.winfo_height()
-        print("img_2_canvas result: ",x,y)
         return ([x, y])
 
     def canvas_2_img_pt(self, canvas_pt: list):
         img_x = (canvas_pt[0] / self.canvas.winfo_width()) * self.np_img.shape[1]
         img_y = (canvas_pt[1] / self.canvas.winfo_height()) * self.np_img.shape[0]
-        print("canvas_2_img result: ",img_x, img_y)
         return [img_x, img_y]
 
     def motion_event(self, event):
         self.redraw_canvas_objects()
 
-        # need to find better way to resolve if the derived class has canvas_mouseover
-        try:
+        if "canvas_mouseover" in self.__dir__():
             self.canvas_mouseover(event)
-        except:
-            pass
 
-    def _find_new_canvas_size(self,event):
+
+    def _find_new_canvas_size(self, event):
         max_w = self.canvas_frame.winfo_width()
         max_h = self.canvas_frame.winfo_height()
         aspect = self.np_img.shape[0] / self.np_img.shape[1]
@@ -139,8 +150,8 @@ class PipelinePhase(tk.Frame):
         should be updated.
         """
         print("redraw")
-        if "image_handle" in self.__dir__():
-            #canvas_size = self._find_new_canvas_size()
+        if self.image_handle:
+            # canvas_size = self._find_new_canvas_size()
             w = self.canvas.winfo_width()
             h = self.canvas.winfo_height()
             self.photo_image = np_photo_image(cv2.resize(self.np_img, (w, h)))
@@ -157,8 +168,8 @@ class PipelinePhase(tk.Frame):
         redraw object that are on the canvas besides the base photoimage, use this when you have changed things that are
         drawn on the canvas, like lines ovals etc
         """
-        print(self.image_handle)
-        self.canvas.tag_lower(self.image_handle)
+        if self.image_handle:
+            self.canvas.tag_lower(self.image_handle)
 
         if "current_np_img_point_idx" in locals():
             pairs = [[0, 1], [1, 2], [2, 3], [3, 0]]
@@ -177,21 +188,16 @@ class PipelinePhase(tk.Frame):
         handles the fact that the window has been resized or that some other thing has caused the canvas to change
         diminsions. Use this when the shape of the canvas/window/client area has changed
         """
-
-        #print(self.canvas.winfo_width(),self.canvas.winfo_height()," --> ",event.width,event.height)
         self.last_redraw = time.time()
         canvas_size = self._find_new_canvas_size(event)
         w = canvas_size[0]
         h = canvas_size[1]
-        #print("resize",w,h)
         self.photo_image = np_photo_image(cv2.resize(self.np_img, (w, h)))
 
         if not self.image_handle:
             self.image_handle = self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo_image)
 
-        self.canvas.itemconfig(self.image_handle,image=self.photo_image)
-        #self.canvas.update()
-        #self.update()
+        self.canvas.itemconfig(self.image_handle, image=self.photo_image)
 
         if len(self.canvas.children) > 0:
             self.redraw()
@@ -205,21 +211,18 @@ class PipelinePhase(tk.Frame):
         directory = self.story_folder
         filename, extension = path.basename(self.filename).split(".")
         new_file_name = path.join(directory, self.phase, filename + "." + extension)
-        #path.relpath()
-
 
         # convert before saving
-        self.np_img= self.np_img.astype("uint8")
+        self.np_img = self.np_img.astype("uint8")
 
-        if len(self.np_img.shape)==3:
+        if len(self.np_img.shape) == 3:
             self.np_img = np.array(cv2.cvtColor(self.np_img, cv2.COLOR_BGR2RGB))
 
         print(new_file_name)
         cv2.imwrite(new_file_name, self.np_img)
 
         # convert after saving so next phase gets correct image
-        if len(self.np_img.shape)==3:
+        if len(self.np_img.shape) == 3:
             self.np_img = np.array(cv2.cvtColor(self.np_img, cv2.COLOR_RGB2BGR))
 
         self.filename = new_file_name
-

@@ -75,9 +75,18 @@ class Application(PipelinePhase):
 
         for i, line_np_img in enumerate(self.np_img_segmented_lines_list):
             fn, ext = path.splitext(self.photo_image_filename_only)
-            save_file = path.join(self.story_folder, self.phase, fn + "-" + str(i) + ".png")
+            if len(str(i)) == 1:
+                clip_num = "00" + str(i)
+            elif len(str(i)) == 2:
+                clip_num = "0" + str(i)
+            else:
+                clip_num = str(i)
+
+            save_file = path.join(self.story_folder, self.phase, fn + "-" + clip_num + ".png")
             print(save_file)
             cv2.imwrite(save_file, line_np_img)
+
+        self.filename = save_file
 
     def next_phase_button(self):
         """
@@ -87,7 +96,7 @@ class Application(PipelinePhase):
         self.goto_next_phase_flag = True
         self.master.destroy()
 
-    def smooth(self,y, box_pts=3):
+    def smooth(self, y, box_pts=3):
         box = np.ones(box_pts) / box_pts
         y_smooth = np.convolve(y, box, mode='same')
         return y_smooth
@@ -135,7 +144,7 @@ class Application(PipelinePhase):
         p1 = np.percentile(gradient_y_smoothed, alpha1)
         p2 = np.percentile(gradient_y_smoothed, alpha2)
         if debug:
-            print (np.percentile(gradient_y_smoothed,50))
+            print(np.percentile(gradient_y_smoothed, 50))
 
         # finally both conditions must be true in order to be considered as a segmenting row
         segments = (gradient_y_smoothed > p1) & (gradient_y_smoothed < p2) & segments
@@ -246,6 +255,7 @@ class Application(PipelinePhase):
                 logging.warning("tried to write a background line past end of array")
 
         self.redraw()
+
 
 if __name__ == "__main__":
     """allows the phase to be ran in stand-alone mode or pipeline mode"""
