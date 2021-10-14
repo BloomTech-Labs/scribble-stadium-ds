@@ -1,10 +1,10 @@
-from json import loads, dumps
+
 import pandas as pd
-from profanity_word_phrase_filters import ProfanityFilter
-from profanity_check import predict, predict_prob
+import readFile as readFile
+
 
 #global variables
-filepath = 'profanity_word_phrase_filter/full_text.txt'
+filepath = '..\profanity_word_phrase_filter\full_text.txt'
 transcriptions = {'images': [],
           'metadata': []}
 transcriptions['images'].append(readFile(filepath))
