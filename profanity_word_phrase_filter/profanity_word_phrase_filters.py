@@ -1,22 +1,20 @@
 
 import pandas as pd
-import readFile as readFile
-
+from json import loads, dumps
 
 #global variables
-filepath = '..\profanity_word_phrase_filter\full_text.txt'
+filepath = '../profanity_word_phrase_filter/full_text.txt'
 transcriptions = {'images': [],
           'metadata': []}
-transcriptions['images'].append(readFile(filepath))
+flagged_list = []
 df = pd.read_csv('bad_single.csv', usecols=[0], names=None)
-# load in bad phrasesprofanity_filter/full_text.txt
+# load in bad phrases
 df2 = pd.read_csv('bad_phrases.csv', usecols=[0], names=None)
 # convert to list
 bad_words = df['Bad_words'].to_list()
 bad_phrases = df2['Bad_phrases'].to_list()
 # combine lists
 bad_words_combined = bad_words + bad_phrases
-flagged_list = []
 
 
 def readFile(filepath):
@@ -24,6 +22,36 @@ def readFile(filepath):
     words = fileObj.read().replace('\n', ' ')  # puts the file into an array
     fileObj.close()
     return words
+
+transcriptions['images'].append(readFile(filepath))
+
+# Function that removes punctuation from story
+def remove_punctuation(transcriptions):
+    parsed_string = dumps(transcriptions)
+    punctuations = '''[],!.'"\\?'''
+    for char in parsed_string:
+        if char in punctuations:
+            parsed_string = parsed_string.replace(char, '')
+    return parsed_string
+
+
+# Function that looks for bad phrases in story
+def return_bad_phrases(transcriptions):
+    # Convert dict to str using dumps to keep phrases in tact
+    parsed_string = dumps(transcriptions)
+    # Lowercase to match list of bad phrases
+    parsed_string = parsed_string.lower()
+    # Remove punctuation
+    parsed_string = remove_punctuation(parsed_string)
+
+    # Returns list of matching words and puts in flagged_list global variable
+    for word in bad_phrases:
+        if word in parsed_string:
+            flagged_list.append(word)
+    # Returns dictionary with list of matches
+    dict = {'possible_words' : flagged_list}
+    return transcriptions.update(dict)
+
 
 # Function that looks for single bad words in story
 def return_bad_words(transcriptions):
@@ -54,7 +82,7 @@ def flag_bad_words(transcriptions):
         return transcriptions.update(dict)
 
 # call functions on transcriptions
-print(return_bad_phrases(transcriptions))
-print(return_bad_words(transcriptions))
+return_bad_phrases(transcriptions)
+return_bad_words(transcriptions)
 # Scunthorpe Problem solved!
 print(transcriptions)
