@@ -4,12 +4,12 @@ from profanity_filters import ProfanityFilter
 from profanity_check import predict, predict_prob
 
 #global variables
-filepath = 'profanity_filter/full_text.txt'
+filepath = 'profanity_word_phrase_filter/full_text.txt'
 transcriptions = {'images': [],
           'metadata': []}
 transcriptions['images'].append(readFile(filepath))
 df = pd.read_csv('bad_single.csv', usecols=[0], names=None)
-# load in bad phrases
+# load in bad phrasesprofanity_filter/full_text.txt
 df2 = pd.read_csv('bad_phrases.csv', usecols=[0], names=None)
 # convert to list
 bad_words = df['Bad_words'].to_list()
