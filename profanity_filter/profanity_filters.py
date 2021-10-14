@@ -7,7 +7,7 @@ from profanity_check import predict, predict_prob
 filepath = 'profanity_filter/full_text.txt'
 transcriptions = {'images': [],
           'metadata': []}
-transcriptions['images'].append(readFile(filename))
+transcriptions['images'].append(readFile(filepath))
 df = pd.read_csv('bad_single.csv', usecols=[0], names=None)
 # load in bad phrases
 df2 = pd.read_csv('bad_phrases.csv', usecols=[0], names=None)
