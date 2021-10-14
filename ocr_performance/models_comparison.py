@@ -30,7 +30,7 @@ METADATA_DIR = DATA_DIR + 'metadata/'
 GOOGLE = 'google'
 TESS = 'tess'
 
-os.environ["TESSDATA_PREFIX"] = '/Users/rob/GitHubProjects/scribble-stadium-ds/models/'
+os.environ["TESSDATA_PREFIX"] = '/home/ubuntu/tesseract/tessdata/'
 
 gt_directory = 'data/gt_storysquad_transcripts/'
 GV_directory = 'data/tess_storysquad_transcripts/'
@@ -195,7 +195,8 @@ if __name__ == '__main__':
         trans_dir += f'_{args.language}'
     trans_dir += '_transcripts/'
 
-    print(trans_dir, engine)
+    print("Transcript dir:",trans_dir)
+    print("Engine: ",engine)
 
     makedirs(trans_dir, exist_ok=True)
 
