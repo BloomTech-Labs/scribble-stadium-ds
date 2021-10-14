@@ -1,6 +1,6 @@
 from json import loads, dumps
 import pandas as pd
-from profanity_filters import ProfanityFilter
+from profanity_word_phrase_filters import ProfanityFilter
 from profanity_check import predict, predict_prob
 
 #global variables
