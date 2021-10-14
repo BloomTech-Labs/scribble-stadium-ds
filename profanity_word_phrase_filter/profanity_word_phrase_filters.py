@@ -13,8 +13,7 @@ df2 = pd.read_csv('bad_phrases.csv', usecols=[0], names=None)
 # convert to list
 bad_words = df['Bad_words'].to_list()
 bad_phrases = df2['Bad_phrases'].to_list()
-# combine lists
-bad_words_combined = bad_words + bad_phrases
+
 
 
 def readFile(filepath):
