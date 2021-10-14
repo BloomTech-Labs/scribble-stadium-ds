@@ -4,8 +4,7 @@ from json import dumps
 
 #global variables
 filepath = '../profanity_word_phrase_filter/full_text.txt'
-transcriptions = {'images': [],
-          'metadata': []}
+transcriptions = {'images': []}
 flagged_list = []
 df = pd.read_csv('bad_single.csv', usecols=[0], names=None)
 # load in bad phrases
