@@ -97,7 +97,12 @@ def img_to_base64(image, format='.png'):
 
 
 # Computes the complexity of all words in the 'text' column of a DataFrame
-def get_complexity(words, metric='len_count'):
+def get_complexity(words, num_of_words_needed=50):
+    # Import the csv file of words that don't fit into the complexity metric
+    complex_words = pd.read_csv(
+        '../../../data/crop-cloud/complex_words.csv'
+    )
+
     # https://medium.com/@mholtzscher/programmatically-counting-syllables-ca760435fab4
     def count_syllables(word):
         word = word.lower()
@@ -118,29 +123,31 @@ def get_complexity(words, metric='len_count'):
             syllable_count = 1
         return syllable_count
 
-    metrics = ['len', 'syl', 'len_count', 'syl_count']
-    if metric == 'len':
-        words['complexity'] = words['text'].apply(len)
+    words['count'] = words.groupby('text')['text'].transform('size')
 
-    elif metric == 'syl':
-        words['complexity'] = words['text'].apply(count_syllables)
+    # make a column for letter counts
+    words['len'] = words['text'].apply(len)
 
-    elif metric == 'len_count':
-        length = words['text'].apply(len)
-        count = words.groupby('text')['text'].transform('size')
-        words['complexity'] = length / count
+    # column for syllable count
+    words['syllables'] = words['text'].apply(count_syllables)
 
-    elif metric == 'syl_count':
-        syl = words['text'].apply(count_syllables)
-        count = words.groupby('text')['text'].transform('size')
-        words['complexity'] = syl / count
+    # make a column for how complex a word is
 
-    else:
-        raise ValueError(f"metric must be one of {['len', 'syl', 'len_count', 'syl_count']} but got '{metric}'")
+    # first setting words that are in the complex_words with their set complexity
+    # these are words at higher grade levels, that don't work with the complexity metric
+    vdic = pd.Series(complex_words.complexity.values, index=complex_words.word).to_dict()
+    words.loc[words.text.isin(vdic.keys()), 'complexity'] = words.loc[words.text.isin(vdic.keys()), 'text'].map(vdic)
 
-    # scale the complexities so the sum is 1000
-    # words['complexity'] = words['complexity'] / words['complexity'].sum()
-    return words['complexity']
+    # then filling in the rest with the complexity metric
+    words['complexity'] = words['complexity'].fillna(words['syllables'] + words['len'])
+    words = words.astype({"complexity": int})
+
+    # Dividing the complexity by how many times the word appears in the story
+    words['complexity'] = words['complexity'] / words['count']
+    words = words.sort_values(by=['complexity'], ascending=False)
+
+    # Returns the words df columns 'word' and 'complexity' and rows up to how many are selected (default=20)
+    return words['complexity'][:num_of_words_needed]
 
 
 # Compute the master scale needed to hit a certain density
