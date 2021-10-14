@@ -1,6 +1,6 @@
 
 import pandas as pd
-from json import loads, dumps
+from json import dumps
 
 #global variables
 filepath = '../profanity_word_phrase_filter/full_text.txt'
@@ -13,7 +13,6 @@ df2 = pd.read_csv('bad_phrases.csv', usecols=[0], names=None)
 # convert to list
 bad_words = df['Bad_words'].to_list()
 bad_phrases = df2['Bad_phrases'].to_list()
-
 
 
 def readFile(filepath):
