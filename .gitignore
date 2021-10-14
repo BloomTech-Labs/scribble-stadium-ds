@@ -147,3 +147,6 @@ cython_debug/
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 /data/transcribed_stories/
+
+# data
+/data/story_images.zip
