@@ -14,8 +14,8 @@ def readFile(filepath):
     :returns: a string of words
     This function opens the file in read mode, removes \n, which is created
     when a string is created from text, and puts the file into an array"""
-    fileObj = open(filepath, "r")
-    words = fileObj.read().replace('\n', ' ')
+    fileObj = open(filepath, "r") #opens the file in read mode
+    words = fileObj.read().replace('\n', ' ') #put words in an array and remove \n
     fileObj.close()
     return words
 
@@ -43,11 +43,15 @@ def return_bad_phrases(transcriptions):
     phrases are lowercased to match the list of bad phrases.the
     punctuation is then removed. """
 
+    # Convert dict to str using dumps to keep phrases in tact
     parsed_string = dumps(transcriptions)
+    # Lowercase to match list of bad phrases
     parsed_string = parsed_string.lower()
+    # Remove punctuation
     parsed_string = remove_punctuation(parsed_string)
     df2 = pd.read_csv('bad_phrases.csv', usecols=[0], names=None)
     bad_phrases = df2['Bad_phrases'].to_list()
+    # Returns list of matching words and puts in flagged_list global variable
     for word in bad_phrases:
         if word in parsed_string:
             flagged_list.append(word)
@@ -63,15 +67,20 @@ def return_bad_words(transcriptions):
     :return: updated transcriptions dictionary
     This function searches for bad words in the story. It converts
     a dictionary to str using dumps to keep words in tact. The
-    phrases are lowercased to match the list of bad phrases.the
-    punctuation is then removed. """
+    phrases are lowercased to match the list of bad phrases.
+    punctuations then removed. """
 
+    # Parsing out just the story string from dict to avoid conflicts
     parsed_string = list(transcriptions.values())[0][0]
+    # Lowercase to match list of bad words
     parsed_string = parsed_string.lower()
+    # Remove punctuation
     parsed_string = remove_punctuation(parsed_string)
+    # Splitting into list of strings to detect exact matches
     parsed_string = parsed_string.split()
     df = pd.read_csv('bad_single.csv', usecols=[0], names=None)
     bad_words = df['Bad_words'].to_list()
+    # Finding matches and appending them to flagged_list
     for word in bad_words:
         if word in parsed_string:
             flagged_list.append(word)
@@ -93,7 +102,7 @@ def flag_bad_words(transcriptions):
         dict_flagged = {'flagged': [False]}
         return transcriptions.update(dict_flagged)
 
-#return updated dictionary and check if it the document has been flagged for profanity
+#return updated dictionary and check if the document has been flagged for profanity
 transcriptions['images'].append(readFile(filepath))
 return_bad_phrases(transcriptions)
 return_bad_words(transcriptions)
