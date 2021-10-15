@@ -97,7 +97,7 @@ def img_to_base64(image, format='.png'):
 
 
 # Computes the complexity of all words in the 'text' column of a DataFrame
-def get_complexity(words, num_of_words_needed=50):
+def get_complexity(words):
     # Import the csv file of words that don't fit into the complexity metric
     complex_words = pd.read_csv(
         '../../../data/crop-cloud/complex_words.csv'
@@ -147,7 +147,7 @@ def get_complexity(words, num_of_words_needed=50):
     words = words.sort_values(by=['complexity'], ascending=False)
 
     # Returns the words df columns 'word' and 'complexity' and rows up to how many are selected (default=20)
-    return words['complexity'][:num_of_words_needed]
+    return words['complexity']
 
 
 # Compute the master scale needed to hit a certain density
@@ -326,7 +326,7 @@ def get_cropped_words(user_id, date_range=None, complexity_metric="len_count", i
         json(csv([width, height, text, page_uri, date, complexity, image_base64])) - a table of the cropped words
     """
     user_words = get_user_words(user_id, date_range)
-    user_words['complexity'] = get_complexity(user_words, 'len_count')
+    user_words['complexity'] = get_complexity(user_words)
 
     # scale the word images
     user_words['image'] = scale_clips(user_words, canvas_area, density)
@@ -362,7 +362,7 @@ def get_crop_cloud(user_id, date_range=None, complexity_metric="len_count", imag
     """
 
     user_words = get_user_words(user_id, date_range)
-    user_words['complexity'] = get_complexity(user_words, 'len_count')
+    user_words['complexity'] = get_complexity(user_words)
 
     # load the canvas
     canvas = load_image("./data/crop-cloud/cream_paper.jpg", max_length=canvas_width)
