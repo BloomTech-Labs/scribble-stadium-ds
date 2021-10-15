@@ -33,7 +33,6 @@ def remove_punctuation(transcriptions):
     return parsed_string
 
 
-# Function that looks for bad phrases in story
 def return_bad_phrases(transcriptions):
     """
     :params transcriptions:transcriptions is the dictionary
