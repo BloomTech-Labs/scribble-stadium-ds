@@ -1,15 +1,13 @@
+from json import dumps
 
 import pandas as pd
-from json import dumps
 
 # global variables
 filepath = '../profanity_word_phrase_filter/full_text.txt'
 transcriptions = {'images': []}
 flagged_list = []
 df = pd.read_csv('bad_single.csv', usecols=[0], names=None)
-# load in bad phrases
 df2 = pd.read_csv('bad_phrases.csv', usecols=[0], names=None)
-# convert to list
 bad_words = df['Bad_words'].to_list()
 bad_phrases = df2['Bad_phrases'].to_list()
 
@@ -25,7 +23,6 @@ def readFile(filepath):
     fileObj.close()
     return words
 
-# Function that removes punctuation from story
 def remove_punctuation(transcriptions):
     """
     :param: transcriptions is the dictionary containing text file that has been
@@ -57,7 +54,7 @@ def return_bad_phrases(transcriptions):
     for word in bad_phrases:
         if word in parsed_string:
             flagged_list.append(word)
-    dict_words = {'possible_words' : flagged_list}
+    dict_words = {'possible_words': flagged_list}
     return transcriptions.update(dict_words)
 
 
@@ -79,11 +76,10 @@ def return_bad_words(transcriptions):
     for word in bad_words:
         if word in parsed_string:
             flagged_list.append(word)
-    dict = {'possible_words' : flagged_list}
+    dict = {'possible_words': flagged_list}
     return transcriptions.update(dict)
 
 
-# Checks to see if any words have been added to the flagged_list
 def flag_bad_words(transcriptions):
     """
     :params transcriptions:transcriptions is the dictionary
@@ -92,13 +88,13 @@ def flag_bad_words(transcriptions):
     This function checks to see if any words have been added to the flagged_list. """
 
     if any(flagged_list):
-        dict = {'flagged' : [True]}
+        dict_flagged = {'flagged': [True]}
         return transcriptions.update(dict)
     else:
-        dict = {'flagged' : [False]}
-        return transcriptions.update(dict)
+        dict_flagged = {'flagged': [False]}
+        return transcriptions.update(dict_flagged)
 
-
+#return updated dictionary and check if it the document has been flagged for profanity
 transcriptions['images'].append(readFile(filepath))
 return_bad_phrases(transcriptions)
 return_bad_words(transcriptions)
