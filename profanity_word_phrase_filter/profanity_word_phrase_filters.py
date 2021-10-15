@@ -2,7 +2,7 @@
 import pandas as pd
 from json import dumps
 
-#global variables
+# global variables
 filepath = '../profanity_word_phrase_filter/full_text.txt'
 transcriptions = {'images': []}
 flagged_list = []
@@ -57,8 +57,8 @@ def return_bad_phrases(transcriptions):
     for word in bad_phrases:
         if word in parsed_string:
             flagged_list.append(word)
-    dict = {'possible_words' : flagged_list}
-    return transcriptions.update(dict)
+    dict_words = {'possible_words' : flagged_list}
+    return transcriptions.update(dict_words)
 
 
 # Function that looks for single bad words in story
