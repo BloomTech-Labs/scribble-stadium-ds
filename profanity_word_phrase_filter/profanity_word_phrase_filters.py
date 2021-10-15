@@ -89,7 +89,7 @@ def flag_bad_words(transcriptions):
 
     if any(flagged_list):
         dict_flagged = {'flagged': [True]}
-        return transcriptions.update(dict)
+        return transcriptions.update(dict_flagged)
     else:
         dict_flagged = {'flagged': [False]}
         return transcriptions.update(dict_flagged)
@@ -98,5 +98,5 @@ def flag_bad_words(transcriptions):
 transcriptions['images'].append(readFile(filepath))
 return_bad_phrases(transcriptions)
 return_bad_words(transcriptions)
-print(flag_bad_words(transcriptions))
+flag_bad_words(transcriptions)
 print(transcriptions)
