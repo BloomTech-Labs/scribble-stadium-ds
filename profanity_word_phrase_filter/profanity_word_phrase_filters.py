@@ -8,8 +8,8 @@ transcriptions = {'images': []}
 flagged_list = []
 df = pd.read_csv('bad_single.csv', usecols=[0], names=None)
 df2 = pd.read_csv('bad_phrases.csv', usecols=[0], names=None)
-bad_words = df['Bad_words'].to_list()
-bad_phrases = df2['Bad_phrases'].to_list()
+# bad_words = df['Bad_words'].to_list()
+# bad_phrases = df2['Bad_phrases'].to_list()
 
 
 def readFile(filepath):
@@ -51,6 +51,7 @@ def return_bad_phrases(transcriptions):
     parsed_string = dumps(transcriptions)
     parsed_string = parsed_string.lower()
     parsed_string = remove_punctuation(parsed_string)
+    bad_phrases = df2['Bad_phrases'].to_list()
     for word in bad_phrases:
         if word in parsed_string:
             flagged_list.append(word)
@@ -73,6 +74,7 @@ def return_bad_words(transcriptions):
     parsed_string = parsed_string.lower()
     parsed_string = remove_punctuation(parsed_string)
     parsed_string = parsed_string.split()
+    bad_words = df['Bad_words'].to_list()
     for word in bad_words:
         if word in parsed_string:
             flagged_list.append(word)
