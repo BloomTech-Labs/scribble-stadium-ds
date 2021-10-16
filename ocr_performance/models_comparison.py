@@ -33,7 +33,7 @@ TESS = 'tess'
 os.environ["TESSDATA_PREFIX"] = '/Users/rob/GitHubProjects/scribble-stadium-ds/models/'
 
 gt_directory = 'data/gt_storysquad_transcripts/'
-GV_directory = 'data/tess_storysquad_transcripts/'
+GV_directory = 'data/google_transcripts/'
 
 directory = 'data/photos/'
 # get the files in the directory to iterate through
@@ -179,7 +179,7 @@ if __name__ == '__main__':
     # Google Vision Transcription Code
     parser = ArgumentParser()
     parser.add_argument('-e', '--engine', choices=[GOOGLE, TESS],
-                        default=TESS,
+                        default=GOOGLE,
                         help='Specify transcribe engine')
     parser.add_argument('-l', '--language', choices=['ssq', 'storysquad'],
                         default='storysquad',
