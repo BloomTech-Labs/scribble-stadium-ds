@@ -94,17 +94,22 @@ def trancribe_w_tesseract(directory, filenames):
 
         # calculate the accuracy of the model with respect to the ratio of
         # sequences matched in between the predicted and ground-truth labels
-        def model_accuracy(model_name, target, type):
+        def model_accuracy_local(model_name, target, type):
             accuracyScore = SQ(None, target, model_name).ratio() * 100
             accuracyScore = round(accuracyScore, 2)
-            print("[ACCURACY_SCORE] Accuracy of {} model: {}%...".format(type, accuracyScore))
+            print("[ACCURACY_SCORE] Accuracy of Tesseract {} model: {}%...".format(type, accuracyScore))
 
-        model_accuracy(default, target, 'default')
-        model_accuracy(custom, target, 'custom')
-        model_accuracy(customnewdata, target, 'customnewdata')
+        model_accuracy_local(default, target, 'default')
+        model_accuracy_local(custom, target, 'custom')
+        model_accuracy_local(customnewdata, target, 'customnewdata')
+
+        gt_transcription_file = gt_directory + file.split(".")[0:-1][0]
+        gv_transcription_file = GV_directory + file.split(".")[0:-1][0]
         print(
-            f'[INFO] Comparing files GroundTruth:{gt_directory + file.split(".")[0:-1][0]} vs GoogleVision:{GV_directory + file.split(".")[0:-1][0]}')
-        model_accuracy(file, gt_directory + file.split(".")[0:-1][0], GV_directory + file.split(".")[0:-1][0])
+            f'[INFO] Comparing files GroundTruth:{gt_transcription_file} vs GoogleVision:{gv_transcription_file}')
+        gt_transcription = gt_directory + file.split(".")[0:-1][0]
+        gv_transcription = GV_directory + file.split(".")[0:-1][0]
+        model_accuracy(file, gt_transcription, gv_transcription)
 
 
 async def transcribe(page_image_file, ocr, trans_dir):
