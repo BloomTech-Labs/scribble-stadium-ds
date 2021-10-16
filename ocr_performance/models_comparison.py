@@ -30,7 +30,7 @@ METADATA_DIR = DATA_DIR + 'metadata/'
 GOOGLE = 'google'
 TESS = 'tess'
 
-os.environ["TESSDATA_PREFIX"] = '/home/ubuntu/tesseract/tessdata/'
+os.environ["TESSDATA_PREFIX"] = '../models/'
 
 gt_directory = 'data/gt_storysquad_transcripts/'
 GV_directory = 'data/google_transcripts/'
