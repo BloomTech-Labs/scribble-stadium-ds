@@ -2,7 +2,7 @@ from os import getenv, environ, path
 
 from dotenv import load_dotenv
 from google.cloud import vision
-from google.cloud.vision import types
+from google.cloud.vision_v1 import types
 
 from app.utils.moderation.text_moderation import BadWordTextModerator
 
