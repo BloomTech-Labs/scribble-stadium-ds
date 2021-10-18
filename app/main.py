@@ -14,7 +14,7 @@ app = FastAPI(
     description="A RESTful API for the Story Squad Project",
     version="0.1",
     docs_url="/"
-)
+
 
 app.include_router(submission.router, tags=['Submission'], dependencies=[Security(get_api_key)])
 app.include_router(visualization.router, tags=['Visualization'], dependencies=[Security(get_api_key)])
