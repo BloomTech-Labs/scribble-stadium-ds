@@ -11,13 +11,13 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v2
 
-      - name: Super Linter
-        uses: github/super-linter@v3
-      # - name: Install Black
-      #   run: python -m pip install black    
-      # - name: Run linters
-      #   run: |
-      #     black .
+      # - name: Super Linter
+      #   uses: github/super-linter@v3
+      - name: Install Black
+        run: python -m pip install black    
+      - name: Run linters
+        run: |
+          black .
 
   # test:
   #   needs: linter
