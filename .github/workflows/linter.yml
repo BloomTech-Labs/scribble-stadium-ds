@@ -24,5 +24,5 @@ jobs:
     # False will only check new/changed files, True will check all files in the repo
     #WARNING!! If set to true will take about 2.5 hours to run.
           VALIDATE_ALL_CODEBASE: false
-          DEFAULT_BRANCH: main
+          DEFAULT_BRANCH: features/cicd
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
