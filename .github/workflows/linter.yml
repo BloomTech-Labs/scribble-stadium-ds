@@ -12,6 +12,8 @@ jobs:
     # Checkout the repo.
       - name: Checkout Repo
         uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth = 0
     
     # Setup Python
       - name: Set up python
@@ -21,8 +23,9 @@ jobs:
       - name: Use SuperLinter
         uses: github/super-linter@v4
         env:
-    # Configured to only check python files regardless of new/changed
+    # Only check files that are new or have been changed. Set to true to check entire codebase
           VALIDATE_ALL_CODEBASE: false
+    # Only check python files
           VALIDATE_PYTHON: true
           VALIDATE_PYTHON_BLACK: true
           VALIDATE_PYTHON_FLAKE8: true
