@@ -13,7 +13,7 @@ load_dotenv()
 router = APIRouter()
 
 
-#connect to ElephantSQL-hosted PostgreSQL
+# connect to ElephantSQL-hosted PostgreSQL
 DB_NAME = os.getenv("RDS_DB_NAME", default="OOPS")
 DB_USER = os.getenv("RDS_USERNAME", default="OOPS")
 DB_PASSWORD = os.getenv("RDS_PASSWORD", default="OOPS")
@@ -31,11 +31,13 @@ Base = declarative_base()
 
 Base.metadata.create_all(bind=engine)
 
+
 class Stories(Base):
     __tablename__ = "stories"
 
     id = Column(Integer, primary_key=True, index=True)
     story = Column(String, index=True)
+
 
 def get_db():
     try:
@@ -44,8 +46,10 @@ def get_db():
     finally:
         db.close()
 
+
 def get_story(db: Session, id: int):
     return db.query(Stories).filter(Stories.id == id).first()
+
 
 @router.get('/storytext')
 def show_story(id: int = 1, db: Session = Depends(get_db)):
@@ -59,7 +63,7 @@ def show_story(id: int = 1, db: Session = Depends(get_db)):
 
     words = complexity_df(story_words)
 
-    #Use length count metric=
+    # Use length count metric=
     words['len'] = words['word'].apply(len)
     words['complexity'] = words['len'] / words['count']
 
@@ -67,10 +71,4 @@ def show_story(id: int = 1, db: Session = Depends(get_db)):
     words['complexity'] = words['complexity'] / words['complexity'].sum()
     word_complexities = dict(zip(words.word, words.complexity))
 
-    wordcomplexitiresasdfasdj; = afasdfkj
-    absdiffads
-    asdfs
-
-    ddd
     return word_complexities
-
