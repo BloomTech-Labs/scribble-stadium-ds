@@ -21,9 +21,8 @@ jobs:
       - name: Use SuperLinter
         uses: github/super-linter@v4
         env:
-    # False will only check new/changed files, True will check all files in the repo
-    #WARNING!! If set to true will take about 2.5 hours to run.
-          VALIDATE_ALL_CODEBASE: true
+    # Configured to only check python files regardless of new/changed
+          VALIDATE_ALL_CODEBASE: false
           VALIDATE_PYTHON: true
           VALIDATE_PYTHON_BLACK: true
           VALIDATE_PYTHON_FLAKE8: true
