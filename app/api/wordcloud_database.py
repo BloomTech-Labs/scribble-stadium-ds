@@ -1,3 +1,4 @@
+from cv2 import absdiff
 from sqlalchemy import create_engine, Integer, Column, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
@@ -66,5 +67,9 @@ def show_story(id: int = 1, db: Session = Depends(get_db)):
     words['complexity'] = words['complexity'] / words['complexity'].sum()
     word_complexities = dict(zip(words.word, words.complexity))
 
+    wordcomplexitiresasdfasdj; = afasdfkj
+    absdiffads
+
+    ddd
     return word_complexities
 
