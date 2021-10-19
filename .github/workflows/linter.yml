@@ -24,5 +24,11 @@ jobs:
     # False will only check new/changed files, True will check all files in the repo
     #WARNING!! If set to true will take about 2.5 hours to run.
           VALIDATE_ALL_CODEBASE: true
+          VALIDATE_PYTHON: true
+          VALIDATE_PYTHON_BLACK: true
+          VALIDATE_PYTHON_FLAKE8: true
+          VALIDATE_PYTHON_ISORT: true
+          VALIDATE_PYTHON_MYPY: true
+          VALIDATE_PYTHON_PYLINT: true
           DEFAULT_BRANCH: features/cicd
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
