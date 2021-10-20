@@ -245,9 +245,9 @@ def pick_y(canvas_height, word_height):
     return int(y_float * available_room)
 
 
-# bungie function
+# bungie movement function
 # takes current array, current frame, pic width and pic height
-def wiggler_function(arr, frame, pic_width, pic_height):
+def bungie(arr, frame, pic_width, pic_height):
     # determines new coordinates of positive array for pixel placement
     x_pos = frame
     frame = ((2 * np.pi) / 12) * frame
@@ -270,7 +270,7 @@ def wiggler_function(arr, frame, pic_width, pic_height):
 
 # animation function for one of the wiggle style sequences
 # first wiggle function
-def wiggler_function2(arr, frame, pic_width, pic_height):
+def wiggle(arr, frame, pic_width, pic_height):
     # determines new coordinates of positive array for pixel placement
     # second wiggle function
     frame = ((2 * np.pi) / 12) * frame
@@ -351,7 +351,7 @@ def spinner(arr1, frame, img):
 # canvas: blank canvas loaded from cream_paper, in numpy array format
 # static_arrays: images to be redrawn but not moved
 # static_positives: positive arrays for reference to static_images
-def wiggle(positive_arrays, moving_images, canvas, static_arrays, static_positives):
+def render_movement(positive_arrays, moving_images, canvas, static_arrays, static_positives):
     # creates series of canvases to render movement
 
     # target for progress tally to hit
@@ -415,9 +415,9 @@ def wiggle(positive_arrays, moving_images, canvas, static_arrays, static_positiv
                     # for bungee movement
                     coord_ind2 = coord[1] + x1
                     if i % 2 == 0:
-                        coord_ind1 = wiggler_function(coord[1], frame, image.shape[1], image.shape[0]) + y1 + coord[0]
+                        coord_ind1 = bungie(coord[1], frame, image.shape[1], image.shape[0]) + y1 + coord[0]
                     else:
-                        coord_ind1 = -wiggler_function(coord[1], frame, image.shape[1], image.shape[0]) + y1 + coord[0]
+                        coord_ind1 = -bungie(coord[1], frame, image.shape[1], image.shape[0]) + y1 + coord[0]
 
                     if 0 < coord_ind1 < canvas_to_app.shape[0]:
                         canvas_to_app[coord_ind1][coord_ind2] = image[coord[0]][coord[1]] * coord[2] + (
@@ -426,7 +426,7 @@ def wiggle(positive_arrays, moving_images, canvas, static_arrays, static_positiv
                 for coord in pos[0]:
                     # for bungee movement
                     coord_ind2 = coord[1] + x1
-                    coord_ind1 = wiggler_function2(coord[1], frame, image.shape[1], image.shape[0]) + y1 + coord[0]
+                    coord_ind1 = wiggle(coord[1], frame, image.shape[1], image.shape[0]) + y1 + coord[0]
                     if 0 < coord_ind1 < canvas_to_app.shape[0]:
                         canvas_to_app[coord_ind1][coord_ind2] = image[coord[0]][coord[1]] * coord[2] + (
                                 (1 - coord[2]) * canvas_to_app[coord_ind1][coord_ind2])
@@ -582,7 +582,7 @@ def get_crop_cloud(user_id, date_range=None, complexity_metric="len_count", imag
     canvas = load_image("data/crop-cloud/cream_paper.jpg", max_length=canvas_width)
     # canvas_set, pencil_set = wiggle(positive_arrays, moving_images, canvas, static_arrays, static_positives, pencil,
     #                                 canvas_blank)
-    canvas_set = wiggle(positive_arrays, moving_images, canvas, static_arrays, static_positives)
+    canvas_set = render_movement(positive_arrays, moving_images, canvas, static_arrays, static_positives)
 
     imageio.mimsave('giffy.gif', canvas_set, fps=15)
 
@@ -600,8 +600,3 @@ if __name__ == "__main__":
         density=0.40,
         max_words=200,
     )
-    print(f"crop_cloud_json is {len(crop_cloud_json) / 1024:,.0f} KB")
-
-    # Save the json to a sample response
-    with open("crop_cloud.json", mode='w') as file:
-        file.write(crop_cloud_json)
