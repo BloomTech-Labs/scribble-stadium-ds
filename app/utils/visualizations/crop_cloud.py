@@ -466,9 +466,13 @@ def make_crop_cloud(canvas, boxes):
 
     occupied = np.zeros(shape=(canvas.shape[:2]), dtype=bool)
     placed = 0
+    switch = 0
     collisions = 0
-    total = len(boxes)
     word_area = 0
+    moving_images = []
+    positive_arrays = []
+    static_arrays = []
+    static_positives = []
     for row in boxes.to_dict('records'):
         image = row['image']
 
@@ -506,9 +510,28 @@ def make_crop_cloud(canvas, boxes):
                 occupied[y1:y2, x1:x2] = np.logical_or(mask_bool, occupied[y1:y2, x1:x2])
                 word_area += (x2 - x1) * (y2 - y1)
                 placed += 1
+                if switch < 10:
+                    moving_images.append(color)
+                    alt_arr = []
+                    for i in range(mask.shape[0]):
+                        for j in range(mask.shape[1]):
+                            if mask[i][j] != 0:
+                                alt_arr.append([i, j, mask[i][j][0]])
+                    positive_arrays.append([alt_arr, y1, x1])
+                else:
+                    static_arrays.append(color)
+                    alt_arr = []
+                    for i in range(mask.shape[0]):
+                        for j in range(mask.shape[1]):
+                            if mask[i][j] != 0:
+                                alt_arr.append([i, j, mask[i][j][0]])
+                    static_positives.append([alt_arr, y1, x1])
+                switch += 1
                 break
+        if placed == 100:
+            break
 
-    return canvas
+    return canvas, moving_images, positive_arrays, static_arrays, static_positives
 
 
 # Scaled Multipage Word Data
