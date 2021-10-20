@@ -150,7 +150,7 @@ async def transcribe_all(engine, trans_dir):
     Scans through the image files in PHOTOS_DIR and invokes the
     transcribe() function on each
     '''
-    image_files = [x for x in listdir(PHOTOS_DIR) if x.endswith('.jpg')]
+    image_files = [x for x in listdir(PHOTOS_DIR) if x.endswith('.jpg') or x.endswith('.png') or x.endswith('.tif')]
     image_files.sort()
 
     for idx, image_file in enumerate(image_files):
