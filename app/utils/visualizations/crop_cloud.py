@@ -1,6 +1,3 @@
-# Function to produce a json file for web to display a Plotly line graph that
-# maps the history of a specific student's submission scores
-
 # Imports
 import os
 import base64
@@ -18,7 +15,7 @@ load_dotenv()
 
 def create_connection():
     """RDS connection"""
-    # connect to ElephantSQL-hosted PostgreSQL
+
     DB_NAME = os.getenv("RDS_DB_NAME", default="OOPS")
     DB_USER = os.getenv("RDS_USERNAME", default="OOPS")
     DB_PASSWORD = os.getenv("RDS_PASSWORD", default="OOPS")
@@ -28,8 +25,17 @@ def create_connection():
     return pg_connection
 
 
-# resize so the longest side is max_length
 def load_image(filename, max_length=None):
+    """
+    Loads and resizes canvas so the longest side is max_length
+
+    Input:
+        `filename` file uri
+        `max_length` desired longest size
+
+    Output:
+        returns resized canvas
+    """
     image = cv2.imread(filename)
     if max_length:
         original_length = max(image.shape[:2])
@@ -38,11 +44,19 @@ def load_image(filename, max_length=None):
     return image
 
 
-# Convert the image into black and white, separating the text from the background
 def make_monochrome(image, blur=1, block_size=31, c=13):
-    # blur must be an odd number >= 1
-    # block_size is for smoothing out a varying exposure. too small etches out text. must be an odd number > 1
-    # c is for denoising. too small and you have noise. too big erodes text.
+    """
+    Convert the image into black and white, seperating the text from the background
+
+    Input:
+        `image` numpy array
+        `blur` integer -> for additional smoothing of cropped word array - must be an odd number >= 1
+        `block_size` odd sized integer > 1 -> block_size is for smoothing out a varying exposure. too small etches out text. must be an odd number
+        `c` integer -> for de-noising. too small and you have noise. too big erodes text
+
+    Output:
+        returns numpy grayscale array
+    """
 
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  # convert to grayscale
     image = cv2.adaptiveThreshold(
@@ -57,8 +71,16 @@ def make_monochrome(image, blur=1, block_size=31, c=13):
     return image
 
 
-# Implementation of simple de-lining algorithm, performed cropped word by cropped word
 def deline(image):
+    """
+    Produces a de-lined image, performed cropped word by cropped word
+
+    Input:
+        `image` numpy array
+
+    Output:
+        de-lined cropped word image
+    """
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
 
@@ -79,8 +101,17 @@ def deline(image):
     return result
 
 
-# Converts an image to base64 for a given image format
 def img_to_base64(image, format='.png'):
+    """
+    Converts an image to base64 for a given image format
+
+    Inputs:
+        `image` numpy dataframe
+        `format` - refer to acceptable image formats for base64 encoder
+
+    Output:
+        base64 string
+    """
     retval, buffer = cv2.imencode(format, image)
     b64_bytes = base64.b64encode(buffer)
     b64_string = b64_bytes.decode()
@@ -89,8 +120,17 @@ def img_to_base64(image, format='.png'):
     # https://docs.opencv.org/4.5.2/d8/d6a/group__imgcodecs__flags.html#ga292d81be8d76901bff7988d18d2b42ac
 
 
-# Computes the complexity of all words in the 'text' column of a DataFrame
 def get_complexity(words):
+    """
+    Computes the complexity of all words in the text column of a given dataframe
+
+    Input:
+        `words` pandas dataframe of words
+
+    Output:
+        complexity column of given pandas dataframe
+    """
+
     # Import the csv file of words that don't fit into the complexity metric
     complex_words = pd.read_csv(
         '../../../data/crop-cloud/complex_words.csv'
@@ -139,12 +179,21 @@ def get_complexity(words):
     words['complexity'] = words['complexity'] / words['count']
     words = words.sort_values(by=['complexity'], ascending=False)
 
-    # Returns the words df columns 'word' and 'complexity' and rows up to how many are selected (default=20)
     return words['complexity']
 
 
-# Compute the master scale needed to hit a certain density
 def get_scale(boxes, canvas_area, density):
+    """
+    Compute the master scale needed to hit a certain density
+
+    Input:
+        `boxes` pandas dataframe of user words
+        `canvas_area` total area of canvas image
+        `density` desired area to fill on canvas
+
+    Output:
+        float -- see 'scale_clips' function
+    """
     desired_area = canvas_area * density
     complexity_word_area = sum(boxes.width * boxes.height * boxes.complexity ** 2)
     scale = sqrt(desired_area / complexity_word_area)
@@ -152,9 +201,18 @@ def get_scale(boxes, canvas_area, density):
     return scale
 
 
-# Crop the words out of the page and return them as a list of images in RGBA format
 def get_clips(image, blur=1):
-    """splits, then rejoins into png"""
+    """
+    Splits, then rejoins given jpg image into png
+    Alpha channel generated using make_monochrome function above
+
+    Input:
+        `image` numpy 3 dimensional array
+        `blur` odd integer...
+
+    Output:
+        `Reformed cropped word with alpha channel`
+    """
 
     B, G, R = cv2.split(image)
     A = make_monochrome(image)
@@ -167,6 +225,18 @@ def get_clips(image, blur=1):
 
 # Resizes the cropped words for a given canvas area and density
 def scale_clips(boxes, canvas_area, density=0.40):
+    """
+    Resizes and returns cropped words based on canvas area, density, and word complexity
+
+    Input:
+        `boxes` user words pandas dataframe
+        `canvas_area` total area of canvas
+        `density` float of desired area to fill on canvas
+
+    Output:
+        returns list of cropped words
+    """
+
     master_scale = get_scale(boxes, canvas_area, density=density)
 
     scaled_clips = []
@@ -189,8 +259,15 @@ def scale_clips(boxes, canvas_area, density=0.40):
     return scaled_clips
 
 
-# Collate all the requested pages into one words table, including the file path, date, and cropped words
 def get_user_words(user_id, date_range=None):
+    """
+    Produces table of cropped words and word data including:
+    image width, height, text and more.
+
+    Input:
+        `user_id` string username, select from api listed names
+        `date_range` currently not in use.... leave blank
+    """
     conn = create_connection()
     curs = conn.cursor()
     if date_range[0] != 'None':
@@ -221,12 +298,24 @@ def get_user_words(user_id, date_range=None):
     return user_words
 
 
-# Picks a random horizontal location for a cropped word
-# This is the heart of arranging the words chronologically
 def pick_x(canvas_width, word_width, date_number=None, total_dates=None):
+    """
+    For now... picks random x coordinate for cropped word placement
+
+    Input:
+        `canvas_width` canvas.shape[1]
+        `word_width` canvas.shape[1]
+        `date_number` (not yet used, leave blank)
+        `total_dates` (not yet used, leave blank)
+
+    Output:
+        random x coordinate integer
+
+    """
     if total_dates:  # this is untested and may need to be debugged
         # for now, this divides the space into even fractions
-        # I had wanted to use arc cosine waves to give a fuzzy distribution, but never finished the function bending
+        # I had wanted to use arc cosine waves to give a fuzzy distribution,
+        # but never finished the function bending
         x_float = np.random.uniform(
             low=date_number / total_dates,
             high=(date_number + 1) / total_dates,
@@ -237,18 +326,40 @@ def pick_x(canvas_width, word_width, date_number=None, total_dates=None):
     return int(x_float * available_room)
 
 
-# Picks a random vertical location for a cropped word
-# This uses a triangular distribution which biases the words towards the midline, where your eyes will start
 def pick_y(canvas_height, word_height):
+    """
+    Picks random y coordinate for cropped word placement in 'make_word_cloud'
+
+    Input:
+        `canvas_height` canvas.shape[0]
+        `word_height` word.shape[0]
+
+    Output:
+        random integer
+    """
+
+    # Picks a random vertical location for a cropped word
+    # This uses a triangular distribution which biases the words towards the midline,
+    # where your eyes will start
     y_float = np.random.triangular(0, 0.5, 1)
     available_room = canvas_height - word_height
     return int(y_float * available_room)
 
 
-# bungie movement function
-# takes current array, current frame, pic width and pic height
 def bungie(arr, frame, pic_width, pic_height):
-    # determines new coordinates of positive array for pixel placement
+    """
+    Produces animation for a wiggle style of movement
+
+    Input:
+        `arr` array of single x and y coordinate
+        `frame` frame number for positional reference
+        `pic_width` image.shape[1]
+        `pic_height` image.shape[0]
+
+    Output:
+        returns pixel adjustment for y coordinate
+    """
+    # function math below
     x_pos = frame
     frame = ((2 * np.pi) / 12) * frame
     b = np.pi / pic_width
@@ -268,11 +379,19 @@ def bungie(arr, frame, pic_width, pic_height):
     return int(pixel_position)
 
 
-# animation function for one of the wiggle style sequences
-# first wiggle function
 def wiggle(arr, frame, pic_width, pic_height):
-    # determines new coordinates of positive array for pixel placement
-    # second wiggle function
+    """
+    Produces animation for a wiggle style of movement
+
+    Input:
+        `arr` array of single x and y coordinate
+        `frame` frame number for positional reference
+        `pic_width` image.shape[1]
+        `pic_height` image.shape[0]
+
+    Output:
+        returns pixel adjustment for y coordinate
+    """
     frame = ((2 * np.pi) / 12) * frame
     b = (8 * np.pi) / pic_width
     x = b * arr
@@ -282,13 +401,22 @@ def wiggle(arr, frame, pic_width, pic_height):
     return int(pixel_position)
 
 
-# animation for one of the wiggle style sequences
-# inputs are the specific array, current frame, pic width and pic height
 def boogie(arr, frame, pic_width, pic_height):
-    # determines new coordinates of positve array for pixel placement
+    """
+    Produces animation for a wiggle style of movement
+
+    Input:
+        `arr` array of single x and y coordinate
+        `frame` frame number for positional reference
+        `pic_width` image.shape[1]
+        `pic_height` image.shape[0]
+
+    Output:
+        returns fully adjusted coordinates
+    """
     # boogie function math below:
     frame = ((2 * np.pi) / 12) * frame
-    frame = np.sin(frame)/5
+    frame = np.sin(frame) / 5
     height = pic_height / 2
     width = pic_width / 10
 
@@ -296,16 +424,25 @@ def boogie(arr, frame, pic_width, pic_height):
     sin = np.sin(to_be_sin)
     final_y = height * frame * sin
 
-    to_be_cos = arr[0] *np.pi / pic_height
+    to_be_cos = arr[0] * np.pi / pic_height
     cos = np.cos(to_be_cos)
     final_x = width * frame * cos
 
     return [final_y + arr[0], final_x + arr[1]]
 
 
-# function handling spinning movement back and forth
-# takes array, current frame, and image array
 def spinner(arr1, frame, img):
+    """
+    Produces spinning movement canvas by canvas
+
+    Input:
+        'arr1' array of single x and y coordinate
+        'frame' frame number for positional reference
+
+    Output:
+        'x and y adjustment for cropping'
+    """
+
     def formula(frame):
         numerator = (frame - 6) ** 2
         denominator = 2 * 2 * 2
@@ -345,14 +482,20 @@ def spinner(arr1, frame, img):
     return new_coords
 
 
-# function creates a set of canvases to make up final gif, inputs include
-# positive arrays: arrays that point to specifically occupied locations on image arrays, used for moving images
-# moving_images: set of images that are designated for some kind of movement
-# canvas: blank canvas loaded from cream_paper, in numpy array format
-# static_arrays: images to be redrawn but not moved
-# static_positives: positive arrays for reference to static_images
 def render_movement(positive_arrays, moving_images, canvas, static_arrays, static_positives):
-    # creates series of canvases to render movement
+    """
+    Function creates a set of canvases to make up final gif
+
+    Input:
+        `positive arrays` arrays that point to specifically occupied locations on image arrays, used for moving images
+        `moving_images` set of images that are designated for some kind of movement
+        `canvas` blank canvas loaded from cream_paper, in numpy array format
+        `static_arrays` images to be redrawn but not moved
+        `static_positives` positive arrays for reference to static_images
+
+    Output:
+        canvas_set -> array of filled in canvases
+    """
 
     # target for progress tally to hit
     target = len(moving_images)
@@ -457,12 +600,21 @@ def render_movement(positive_arrays, moving_images, canvas, static_arrays, stati
     return canvas_set
 
 
-# Constructs and renders a crop cloud. Returns an image
 def make_crop_cloud(canvas, boxes):
-    # propose a location for the word
-    # does this location collide with anything already placed?
-    # if not, then place the word
-    # OpenCV uses [y:x] coordinates for images
+    """
+    Propose a location for the word
+    does this location collide with anything already placed?
+    if not, then place the word
+    OpenCV uses [y:x] coordinates for images
+
+    Input:
+        `canvas`: numpy array read from cream_paper.jpg
+        `boxes`: user word pandas dataframe containing image column (full of numpy arrays)
+
+    Output:
+        list of arrays -> canvas, moving_images, positive_arrays, static_arrays, static_positives
+        necessary for crop-cloud animation
+    """
 
     occupied = np.zeros(shape=(canvas.shape[:2]), dtype=bool)
     placed = 0
