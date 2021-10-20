@@ -80,8 +80,6 @@ def deline(image):
     return result
 
 
-
-
 # Converts an image to base64 for a given image format
 def img_to_base64(image, format='.png'):
     retval, buffer = cv2.imencode(format, image)
@@ -246,6 +244,118 @@ def pick_y(canvas_height, word_height):
     y_float = np.random.triangular(0, 0.5, 1)
     available_room = canvas_height - word_height
     return int(y_float * available_room)
+
+
+# function creates a set of canvases to make up final gif, inputs include
+# positive arrays: arrays that point to specifically occupied locations on image arrays, used for moving images
+# moving_images: set of images that are designated for some kind of movement
+# canvas: blank canvas loaded from cream_paper, in numpy array format
+# static_arrays: images to be redrawn but not moved
+# static_positives: positive arrays for reference to static_images
+def wiggle(positive_arrays, moving_images, canvas, static_arrays, static_positives):
+    # creates series of canvases to render movement
+
+    # target for progress tally to hit
+    target = len(moving_images)
+    # progress tally (see implementation below)
+    progress = 0
+    # canvas set to be returned
+    canvas_set = []
+    # word croppings currently in motion
+    in_motion = []
+    # positives for word croppings in motion
+    in_motion_positives = []
+    # counter is dummy variable to decide when image should begin moving... creates sense of asynchronicity
+    counter = 0
+    # move_type (below) rotates through 4 numbers [0 - 3]; used for animation type selection
+    move_type = 0
+    while True:
+        canvas_to_app = canvas.copy()
+        # place statics first, then moving images that arent currently in motion:
+        for i, image in enumerate(static_arrays):
+            pos = static_positives[i]
+            y1 = pos[1]
+            x1 = pos[2]
+            for coord in pos[0]:
+                canvas_to_app[coord[0] + y1][coord[1] + x1] = image[coord[0]][coord[1]] * coord[2] + (
+                        (1 - coord[2]) * canvas_to_app[coord[0] + y1][coord[1] + x1])
+        for i, image in enumerate(moving_images):
+            pos = positive_arrays[i]
+            y1 = pos[1]
+            x1 = pos[2]
+            for coord in pos[0]:
+                canvas_to_app[coord[0] + y1][coord[1] + x1] = image[coord[0]][coord[1]] * coord[2] + (
+                        (1 - coord[2]) * canvas_to_app[coord[0] + y1][coord[1] + x1])
+        # now place the moving images:
+        # if counter indicates, start animating new image
+        if counter % 17 == 0 or counter % 29 == 0:
+            if len(moving_images) != 0:
+                begin_moving = moving_images.pop()
+                begin_moving_also = positive_arrays.pop()
+                in_motion.append([begin_moving, move_type, 0])
+                in_motion_positives.append(begin_moving_also)
+        counter += 1
+        for i, temp in enumerate(in_motion):
+            pos = in_motion_positives[i]
+            image = temp[0]
+            move_type_ind = temp[1]
+            # total animation canvas length is 12 frames for each animation.. Once that number is hit
+            # animation frame is hard set to 0
+            if temp[2] == 12:
+                frame = 0
+                progress += 1
+            else:
+                frame = temp[2]
+                temp[2] += 1
+            # these variables are extracted to configure arrays to appropriate location, decided in
+            # 'make_crop_cloud'.
+            y1 = pos[1]
+            x1 = pos[2]
+            if move_type_ind == 1:
+                for coord in pos[0]:
+                    # for bungee movement
+                    coord_ind2 = coord[1] + x1
+                    if i % 2 == 0:
+                        coord_ind1 = wiggler_function(coord[1], frame, image.shape[1], image.shape[0]) + y1 + coord[0]
+                    else:
+                        coord_ind1 = -wiggler_function(coord[1], frame, image.shape[1], image.shape[0]) + y1 + coord[0]
+
+                    if 0 < coord_ind1 < canvas_to_app.shape[0]:
+                        canvas_to_app[coord_ind1][coord_ind2] = image[coord[0]][coord[1]] * coord[2] + (
+                                (1 - coord[2]) * canvas_to_app[coord_ind1][coord_ind2])
+            elif move_type_ind == 0:
+                for coord in pos[0]:
+                    # for bungee movement
+                    coord_ind2 = coord[1] + x1
+                    coord_ind1 = wiggler_function2(coord[1], frame, image.shape[1], image.shape[0]) + y1 + coord[0]
+                    if 0 < coord_ind1 < canvas_to_app.shape[0]:
+                        canvas_to_app[coord_ind1][coord_ind2] = image[coord[0]][coord[1]] * coord[2] + (
+                                (1 - coord[2]) * canvas_to_app[coord_ind1][coord_ind2])
+            elif move_type_ind == 2:
+                for coord in pos[0]:
+                    coords = spinner(coord[:2], frame, image)
+                    coord_ind2 = int(coords[1] + x1)
+                    coord_ind1 = int(coords[0] + y1)
+                    if 0 < coord_ind1 < canvas_to_app.shape[0] and 0 < coord_ind2 < canvas_to_app.shape[1]:
+                        canvas_to_app[coord_ind1][coord_ind2] = image[coord[0]][coord[1]] * coord[2] + (
+                                (1 - coord[2]) * canvas_to_app[coord_ind1][coord_ind2])
+            elif move_type_ind == 1:
+                for coord in pos[0]:
+                    coords = boogie(coord[:2], frame, image.shape[1], image.shape[0])
+                    coord_ind1 = int(coords[0] + y1)
+                    coord_ind2 = int(coords[1] + x1)
+                    if 0 < coord_ind1 < canvas_to_app.shape[0] and 0 < coord_ind2 < canvas_to_app.shape[1]:
+                        canvas_to_app[coord_ind1][coord_ind2] = image[coord[0]][coord[1]] * coord[2] + (
+                                (1 - coord[2]) * canvas_to_app[coord_ind1][coord_ind2])
+        canvas_set.append(canvas_to_app)
+        # if target is hit: function returns completed canvas set.
+        # if not, progress is set to 0
+        if progress == target:
+            break
+        else:
+            progress = 0
+        move_type = (move_type + 1) % 4
+    return canvas_set
 
 
 # Constructs and renders a crop cloud. Returns an image
