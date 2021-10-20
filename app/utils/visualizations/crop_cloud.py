@@ -80,20 +80,6 @@ def deline(image):
     return result
 
 
-# Visualize the segmented words on a page by drawing the bounding boxes
-def markup(page, boxes):
-    for row in boxes.to_dict('records'):
-        left = row['left']  # 224
-        top = row['top']  # 132
-        width = row['width']  # 234
-        height = row['height']  # 50
-        conf = row['conf'] / 100  # 52 / 100
-        max = 255
-        green = max * conf
-        red = max * (1 - conf)
-        color = (0, green, red)
-        page = cv2.rectangle(page, (left, top), (left + width, top + height), color, 2)
-    return page
 
 
 # Converts an image to base64 for a given image format
