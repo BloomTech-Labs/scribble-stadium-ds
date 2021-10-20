@@ -5,14 +5,13 @@
 import os
 import base64
 from math import sqrt
-import random
 import json
-import zipfile
 from dotenv import load_dotenv
 import numpy as np
 import pandas as pd
 import cv2
 import psycopg2
+import imageio
 
 load_dotenv()
 
@@ -566,28 +565,28 @@ def get_crop_cloud(user_id, date_range=None, complexity_metric="len_count", imag
     """
 
     user_words = get_user_words(user_id, date_range)
-    user_words['complexity'] = get_complexity(user_words)
 
     # load the canvas
-    canvas = load_image("./data/crop-cloud/cream_paper.jpg", max_length=canvas_width)
+    canvas = load_image("data/crop-cloud/cream_paper.jpg", max_length=canvas_width)
     canvas_area = canvas.shape[0] * canvas.shape[1]
-
     # scale the word images
     user_words['image'] = scale_clips(user_words, canvas_area, density)
+    user_words.sort_values(by='complexity', ascending=False, inplace=True)
     # images which would be smaller than 3 pixels wide are set to None
     user_words = user_words[user_words.image.notnull()]
+    user_words['image'].apply(deline)
 
-    # display(user_words)
+    crop_cloud, moving_images, positive_arrays, static_arrays, static_positives = make_crop_cloud(canvas, user_words)
 
-    crop_cloud = make_crop_cloud(canvas, user_words[:max_words])
-    # cv2.imshow("crop cloud", crop_cloud)
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
+    # return set of canvases rendering movement
+    canvas = load_image("data/crop-cloud/cream_paper.jpg", max_length=canvas_width)
+    # canvas_set, pencil_set = wiggle(positive_arrays, moving_images, canvas, static_arrays, static_positives, pencil,
+    #                                 canvas_blank)
+    canvas_set = wiggle(positive_arrays, moving_images, canvas, static_arrays, static_positives)
 
-    # package into json
-    crop_cloud_base64 = img_to_base64(crop_cloud, format=image_format)
-    crop_cloud_json = json.dumps(crop_cloud_base64)
-    return crop_cloud_json
+    imageio.mimsave('giffy.gif', canvas_set, fps=15)
+
+    return 'success'
 
 
 if __name__ == "__main__":
