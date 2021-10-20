@@ -687,7 +687,6 @@ def make_crop_cloud(canvas, boxes):
     return canvas, moving_images, positive_arrays, static_arrays, static_positives
 
 
-# Scaled Multipage Word Data
 def get_cropped_words(user_id, date_range=None, complexity_metric="len_count", image_format=".webp",
                       canvas_area=960 * 686, density=0.40):
     """
