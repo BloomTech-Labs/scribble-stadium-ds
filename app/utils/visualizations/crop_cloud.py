@@ -246,6 +246,41 @@ def pick_y(canvas_height, word_height):
     return int(y_float * available_room)
 
 
+# bungie function
+# takes current array, current frame, pic width and pic height
+def wiggler_function(arr, frame, pic_width, pic_height):
+    # determines new coordinates of positive array for pixel placement
+    x_pos = frame
+    frame = ((2 * np.pi) / 12) * frame
+    b = np.pi / pic_width
+    x = b * arr
+    pre = np.sin(x)
+    a = 1 / (pic_width * .15)
+    pixel_position = (pre / a)
+    factor = np.sin(frame)
+
+    x_pos = (1 / 12) * x_pos
+    eulers = np.e ** -((9 * x_pos) - 5)
+    eulers += 1
+    eulers = 1 / eulers
+    factor = factor - (eulers * factor)
+
+    pixel_position = pixel_position * factor
+    return int(pixel_position)
+
+
+# animation function for one of the wiggle style sequences
+# first wiggle function
+def wiggler_function2(arr, frame, pic_width, pic_height):
+    # determines new coordinates of positive array for pixel placement
+    # second wiggle function
+    frame = ((2 * np.pi) / 12) * frame
+    b = (8 * np.pi) / pic_width
+    x = b * arr
+    pre = np.sin(x)
+    a = 1 / (pic_width * pic_height * .0005)
+    pixel_position = (pre / a) * np.sin(frame)
+    return int(pixel_position)
 
 
 # animation for one of the wiggle style sequences
