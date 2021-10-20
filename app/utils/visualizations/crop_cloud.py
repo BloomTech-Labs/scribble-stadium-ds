@@ -226,7 +226,6 @@ def get_clips(image, blur=1):
     return BGRA
 
 
-# Resizes the cropped words for a given canvas area and density
 def scale_clips(boxes, canvas_area, density=0.40):
     """
     Resizes and returns cropped words based on canvas area, density, and word complexity
@@ -341,7 +340,6 @@ def pick_y(canvas_height, word_height):
         random integer
     """
 
-    # Picks a random vertical location for a cropped word
     # This uses a triangular distribution which biases the words towards the midline,
     # where your eyes will start
     y_float = np.random.triangular(0, 0.5, 1)
