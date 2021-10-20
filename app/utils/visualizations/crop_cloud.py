@@ -160,7 +160,7 @@ def get_clips(image, blur=1):
     A = make_monochrome(image)
     A = cv2.GaussianBlur(A, (blur, blur), 0)
     A = 255 - A
-    BGRA = cv2.merge((B, G, R, A))
+    BGRA = cv2.merge((R, G, B, A))
 
     return BGRA
 
