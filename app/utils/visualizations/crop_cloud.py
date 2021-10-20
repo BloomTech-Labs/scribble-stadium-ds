@@ -160,7 +160,7 @@ def get_clips(image, blur=1):
     A = make_monochrome(image)
     A = cv2.GaussianBlur(A, (blur, blur), 0)
     A = 255 - A
-    BGRA = cv2.merge((R, G, B, A))
+    BGRA = cv2.merge((B, G, R, A))
 
     return BGRA
 
@@ -584,7 +584,7 @@ def get_crop_cloud(user_id, date_range=None, complexity_metric="len_count", imag
         `max_words` int - the max number of words to include in the cloud
 
     Output:
-        json(image_base64) - a rendered crop cloud as an image
+        saves 'giffy.gif' to local directory
     """
 
     user_words = get_user_words(user_id, date_range)
