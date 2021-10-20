@@ -1,47 +1,42 @@
 import pandas as pd
 from collections import Counter
+import re
 
-complex_words = pd.read_csv('https://raw.githubusercontent.com/BritVandy/place_holder_csv_file/main/complex_words.csv')
+complex_words = pd.read_csv(
+    '../../../data/crop-cloud/complex_words.csv'
+    )
 
 
-def count_syllables(word):
-    word = word.lower()
-    syllable_count = 0
-    vowels = 'aeiouy'
-    if len(word) == 0:
-        return 0
-    if word[0] in vowels:
-        syllable_count += 1
-    for index in range(1, len(word)):
-        if word[index] in vowels and word[index - 1] not in vowels:
+# Takes in the story and how many words needed
+# Creates a dataframe of the story and calculates complexity
+# Returns a list of the top complex words
+def complexity_df(story_string, num_of_words_needed=20):
+
+    # Counts syllables for each word
+    def count_syllables(word):
+        word = word.lower()
+        syllable_count = 0
+        vowels = 'aeiouy'
+        if len(word) == 0:
+            return 0
+        if word[0] in vowels:
             syllable_count += 1
-    if word.endswith('e'):
-        syllable_count -= 1
-    if word.endswith('le') and len(word) > 2 and word[-3] not in vowels:
-        syllable_count += 1
-    if syllable_count == 0:
-        syllable_count = 1
-    return syllable_count
-    
+        for index in range(1, len(word)):
+            if word[index] in vowels and word[index - 1] not in vowels:
+                syllable_count += 1
+        if word.endswith('e'):
+            syllable_count -= 1
+        if word.endswith('le') and len(word) > 2 and word[-3] not in vowels:
+            syllable_count += 1
+        if syllable_count == 0:
+            syllable_count = 1
+        return syllable_count
 
-def clean_text(story):
-    # remove weird characters
-    whitelist = set("abcdefghijklmnopqrstuvwxyz' ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-    story = ''.join(filter(whitelist.__contains__, story))
+    # Clean the story
+    cleaned = re.sub("[^-9A-Za-z ]", "", story_string).lower()
+    cleaned_words = cleaned.split()
 
-    # tokenize words
-    story = story.split()
-
-    # remove '' from list
-    story = [x for x in story if x != '']
-
-    return story
-
-
-def complexity_df(story_words):
-
-    # Create a dictionary to count occurrences of words
-    word_counts = Counter(story_words)
+    word_counts = Counter(cleaned_words)
 
     # Convert the dictionary to a dataframe
     word_list = []
@@ -62,9 +57,8 @@ def complexity_df(story_words):
 
     # make a column for how complex a word is
 
-    # first setting words that are in the complex_words with their
-    # set complexity these are words at higher grade levels, that
-    # don't work with the complexity metric
+    # first setting words that are in the complex_words with their set complexity
+    # these are words at higher grade levels, that don't work with the complexity metric
     vdic = pd.Series(complex_words.complexity.values, index=complex_words.word).to_dict()
     words.loc[words.word.isin(vdic.keys()), 'complexity'] = words.loc[words.word.isin(vdic.keys()), 'word'].map(vdic)
 
@@ -72,22 +66,22 @@ def complexity_df(story_words):
     words['complexity'] = words['complexity'].fillna(words['syllables'] + words['len'])
     words = words.astype({"complexity": int})
 
-    return words
+    # Dividing the complexity of each word by how many times
+    # the word is used in the story
+    words['complexity'] = words['complexity'] / words['count']
+    # Sorting the words so that the most complex are at the top
+    words = words.sort_values(by=['complexity'], ascending=False)
+
+    # can return the df to look at the words and their scores
+    # return words[['word', 'complexity']][:num_of_words_needed]
+
+    # Returns the selected number of words in a list
+    return words['word'][:num_of_words_needed].tolist()
 
 
-def story_word_count(words_df):
-    # takes in the words df that is created
-    # with the complexity_df function
+def story_word_count(story_string):
+    # takes in the story as a string
     # counts all words per story submission
-    word_count = sum(words_df['word'].value_counts())
-    return word_count
-
-
-def get_top_complex_words(words_df, num_of_words):
-    # takes in the words df that is created
-    # with the complexity_df function
-    # and the amount of top words that are wanted
-    # returns the top complex words
-    words_df = words_df.sort_values(by=['complexity'], ascending=False)
-    most_complex = words_df[:num_of_words]
-    return most_complex
+    cleaned = re.sub("[^-9A-Za-z ]", "", story_string).lower()
+    cleaned_words_count = len(cleaned.split())
+    return cleaned_words_count
