@@ -246,6 +246,71 @@ def pick_y(canvas_height, word_height):
     return int(y_float * available_room)
 
 
+
+
+# animation for one of the wiggle style sequences
+# inputs are the specific array, current frame, pic width and pic height
+def boogie(arr, frame, pic_width, pic_height):
+    # determines new coordinates of positve array for pixel placement
+    # boogie function math below:
+    frame = ((2 * np.pi) / 12) * frame
+    frame = np.sin(frame)/5
+    height = pic_height / 2
+    width = pic_width / 10
+
+    to_be_sin = arr[1] * (4 * np.pi) / pic_width
+    sin = np.sin(to_be_sin)
+    final_y = height * frame * sin
+
+    to_be_cos = arr[0] *np.pi / pic_height
+    cos = np.cos(to_be_cos)
+    final_x = width * frame * cos
+
+    return [final_y + arr[0], final_x + arr[1]]
+
+
+# function handling spinning movement back and forth
+# takes array, current frame, and image array
+def spinner(arr1, frame, img):
+    def formula(frame):
+        numerator = (frame - 6) ** 2
+        denominator = 2 * 2 * 2
+        exp = -(numerator / denominator)
+        eul = 3 * (np.e ** exp)
+        frame = ((3 * np.pi) / 12) * eul
+        return frame
+
+    # spins word in place
+    angle = formula(frame) - formula(frame - 1)
+    arr = arr1.copy()
+    arr = np.array(arr, np.float64)
+    a = np.cos(angle)
+    b = -np.sin(angle)
+    c = np.sin(angle)
+    d = np.cos(angle)
+    arr[0] -= (img.shape[0] // 2)
+    arr[1] -= (img.shape[1] // 2)
+    if frame != 0:
+        prev_angle = formula(frame - 1) - formula(frame - 2)
+        if frame == 1:
+            if prev_angle > angle:
+                arr[0] -= ((arr[1] / ((img.shape[1] / 4) - (2 * (abs(angle) - abs(prev_angle))))) ** 3) / 2
+            else:
+                arr[0] += ((arr[1] / ((img.shape[1] / 4) - (2 * (abs(angle) - abs(prev_angle))))) ** 3) / 2
+        else:
+            if prev_angle > angle:
+                arr[0] -= (arr[1] / ((img.shape[1] / 5.4) - (5 * (abs(angle) - abs(prev_angle))))) ** 3
+            else:
+                arr[0] += (arr[1] / ((img.shape[1] / 5.4) - (5 * (abs(angle) - abs(prev_angle))))) ** 3
+    rotation_matrix = np.array([[a, b],
+                                [c, d]])
+    new_coords = np.array(arr) * rotation_matrix
+    new_coords = np.sum(new_coords, 1)
+
+    new_coords += np.array(((img.shape[0] // 2), (img.shape[1] // 2)))
+    return new_coords
+
+
 # function creates a set of canvases to make up final gif, inputs include
 # positive arrays: arrays that point to specifically occupied locations on image arrays, used for moving images
 # moving_images: set of images that are designated for some kind of movement
