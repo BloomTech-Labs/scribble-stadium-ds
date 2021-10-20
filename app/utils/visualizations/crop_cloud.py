@@ -58,17 +58,26 @@ def make_monochrome(image, blur=1, block_size=31, c=13):
     return image
 
 
-# Test preprocessing on page 3
-def test_exposure():
-    stories_archive = "./data/story_images.zip"
-    page_filenames = get_filenames(stories_archive)
-    with zipfile.ZipFile(stories_archive, 'r') as zip_file:
-        page_filename = page_filenames[2]
-        raw_data = zip_file.read(page_filename)
-        original = cv2.imdecode(np.frombuffer(raw_data, np.uint8), 1)
-        mono = make_monochrome(original, block_size=30, c=11, blur=3)  # convert to black and white
-        print(page_filename)
-        cv2.imshow(mono)
+# Implementation of simple de-lining algorithm, performed cropped word by cropped word
+def deline(image):
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
+
+    # Remove horizontal
+    horizontal_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (40, 1))
+    detected_lines = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, horizontal_kernel, iterations=1)
+    cnts = cv2.findContours(detected_lines, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    cnts = cnts[0] if len(cnts) == 2 else cnts[1]
+    for c in cnts:
+        cv2.drawContours(image, [c], -1, (255, 255, 255), 2)
+
+    # Repair image (this part doesnt seem to be doing its job as well...)
+    repair_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 8))
+    result = 255 - cv2.morphologyEx(255 - image, cv2.MORPH_OPEN, repair_kernel, iterations=2)
+    for i in range(result.shape[0]):
+        for j in range(result.shape[1]):
+            image[i][j][0], image[i][j][2] = image[i][j][2], image[i][j][0]
+    return result
 
 
 # Visualize the segmented words on a page by drawing the bounding boxes
@@ -85,6 +94,7 @@ def markup(page, boxes):
         color = (0, green, red)
         page = cv2.rectangle(page, (left, top), (left + width, top + height), color, 2)
     return page
+
 
 # Converts an image to base64 for a given image format
 def img_to_base64(image, format='.png'):
@@ -196,7 +206,6 @@ def scale_clips(boxes, canvas_area, density=0.40):
     return scaled_clips
 
 
-
 # Collate all the requested pages into one words table, including the file path, date, and cropped words
 def get_user_words(user_id, date_range=None):
     conn = create_connection()
@@ -227,7 +236,6 @@ def get_user_words(user_id, date_range=None):
     user_words.sort_values(by='complexity', ascending=False, inplace=True)
 
     return user_words
-
 
 
 # Picks a random horizontal location for a cropped word
@@ -387,7 +395,6 @@ def get_crop_cloud(user_id, date_range=None, complexity_metric="len_count", imag
 
 
 if __name__ == "__main__":
-
     # Test GET viz/crop_cloud, which calls get_crop_cloud()
     crop_cloud_json = get_crop_cloud(
         user_id="PenDragon",
@@ -403,5 +410,3 @@ if __name__ == "__main__":
     # Save the json to a sample response
     with open("crop_cloud.json", mode='w') as file:
         file.write(crop_cloud_json)
-
-
