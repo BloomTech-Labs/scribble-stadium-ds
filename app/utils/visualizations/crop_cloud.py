@@ -14,7 +14,10 @@ load_dotenv()
 
 
 def create_connection():
-    """RDS connection"""
+    """
+    RDS connection
+    returns connection
+    """
 
     DB_NAME = os.getenv("RDS_DB_NAME", default="OOPS")
     DB_USER = os.getenv("RDS_USERNAME", default="OOPS")
@@ -750,13 +753,10 @@ def get_crop_cloud(user_id, date_range=None, complexity_metric="len_count", imag
     # images which would be smaller than 3 pixels wide are set to None
     user_words = user_words[user_words.image.notnull()]
     user_words['image'].apply(deline)
-
     crop_cloud, moving_images, positive_arrays, static_arrays, static_positives = make_crop_cloud(canvas, user_words)
 
     # return set of canvases rendering movement
     canvas = load_image("data/crop-cloud/cream_paper.jpg", max_length=canvas_width)
-    # canvas_set, pencil_set = wiggle(positive_arrays, moving_images, canvas, static_arrays, static_positives, pencil,
-    #                                 canvas_blank)
     canvas_set = render_movement(positive_arrays, moving_images, canvas, static_arrays, static_positives)
 
     imageio.mimsave('giffy.gif', canvas_set, fps=15)
