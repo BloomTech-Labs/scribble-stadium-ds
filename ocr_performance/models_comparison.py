@@ -1,10 +1,10 @@
 '''
-This python scripts tries to bring in the various metrics in a single run. i.e.
+This python scripts tries to bring in the various comparison metrics in a single run. i.e.
 from the tesseract base model {eng.trainedata}, custom model {storysquad.traineddata},
 the custom model trained with new data {storysquadwnewdata.traineddata} and the google
-vision model.
-All the different models are picked from models directory of the repo.
-
+vision model. All the different models are picked from models directory of the repo
+(scribble-stadium-ds/models). Additionally this script provides the transcriptions
+from various models in respective directories under scribble-stadium-ds/ocr_performance/data
 '''
 
 import os
