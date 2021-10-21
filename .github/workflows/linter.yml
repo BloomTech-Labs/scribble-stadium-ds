@@ -33,5 +33,5 @@ jobs:
           VALIDATE_PYTHON_ISORT: true
           VALIDATE_PYTHON_MYPY: true
           VALIDATE_PYTHON_PYLINT: true
-          DEFAULT_BRANCH: features/cicd
+          DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
