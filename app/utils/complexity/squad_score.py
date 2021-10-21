@@ -3,6 +3,8 @@ from os import path
 import joblib
 import nltk
 import pandas as pd
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
 
 PICKLE_PATH = path.join(path.dirname(__file__), "", "MinMaxScaler.pkl")
 scaler = joblib.load(PICKLE_PATH)
