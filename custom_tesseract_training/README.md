@@ -68,7 +68,8 @@ Custom Model with new data	2.03%	5.62%	1.88%	6.15%	0.00%
     - create more training data
     - build a preprocessing pipeline
     - hyperparameter tuning
-    - automate the OCR_performance record process and connect the 
+    - automate the OCR_performance record process and connect the it an database
+
   
   
   
