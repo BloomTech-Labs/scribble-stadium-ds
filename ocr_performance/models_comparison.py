@@ -40,15 +40,29 @@ directory = 'data/photos/'
 filenames = []
 
 
-# Function to get the accuracy scores from GoogleVision translation only
 def model_accuracy(filename, gt, GoogleVisionDocument):
+    """
+    This function gets the accuracy scores from GoogleVision transcription only.
+    :param filename: Image file name ex. "Photo 3121.png"
+    :param gt: Ground truth file. This text file must be exact match of the image name with NO extension
+    ex. "Photo 3121"
+    :param GoogleVisionDocument:
+    :return: None
+    """
+    # TODO: Remove this function and use only one function for Accuracy Score all across.
     accuracyScore = SQ(None, gt, GoogleVisionDocument).ratio() * 100
     accuracyScore = round(accuracyScore, 2)
     print(f"[ACCURACY_SCORE] Accuracy of document {filename} GoogleVision vs GroundTruth is : {accuracyScore}%")
 
 
-# Function to transcribe using tesseract
 def trancribe_w_tesseract(directory, filenames):
+    """
+    This function takes in the directory and the filesnames and provide the transcriptions from various tesseract
+    models
+    :param directory: directory from where the images are populated
+    :param filenames: filenames
+    :return: None
+    """
     for file in filenames:
         full_image = directory + file
         print('Opening file :', full_image)
@@ -164,17 +178,13 @@ async def transcribe_all(engine, trans_dir):
             gv_file = f.read()
         print('[INFO] GroundTruth version is \n', gt_file)
         print('[INFO] GoogleVision Transcribed version is \n', gv_file)
-        # print(
-        #     f'[INFO] Comparing files GroundTruth:{gt_directory + image_file} vs GoogleVision:{GV_directory + image_file}')
-        # model_accuracy(image_file, gt_directory + image_file, GV_directory + image_file)
-
         # Uncomment the row below if you want to stop to review the outputs
         # input("Please see outputs above and Press Enter to continue when ready to progress further...")
 
 
 if __name__ == '__main__':
 
-    # Populating files
+    # Crawl through the directory and populate files
     for root, directories, files in os.walk(directory):
         for filename in files:
             if filename.endswith(".png") or filename.endswith(".tif") or filename.endswith(".jpg"):
@@ -200,15 +210,13 @@ if __name__ == '__main__':
         trans_dir += f'_{args.language}'
     trans_dir += '_transcripts/'
 
-    print("Transcript dir:",trans_dir)
-    print("Engine: ",engine)
+    print("Transcript dir:", trans_dir)
+    print("Engine: ", engine)
 
     makedirs(trans_dir, exist_ok=True)
 
     loop = get_event_loop()
     loop.run_until_complete(transcribe_all(engine, trans_dir))
 
-    # ------------------
     # Code for tesseract transcription
     trancribe_w_tesseract(directory, filenames)
-    # ------------------

@@ -1,11 +1,13 @@
 from os import getenv, environ, path
-from pathlib import Path
 from os import makedirs
+from pathlib import Path
+
 from dotenv import load_dotenv
 from google.cloud import vision
 from google.cloud.vision_v1 import types
 
 from app.utils.moderation.text_moderation import BadWordTextModerator
+
 
 # XXX: Documentation parses to Markdown on FastAPI Swagger UI
 # Attribution: Most of this code is from transcription.py and
