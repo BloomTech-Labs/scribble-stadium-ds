@@ -23,6 +23,7 @@
   * [Deployment](#deployment)
     + [**How to Deploy locally on a Windows Machine**](#how-to-deploy-locally-on-a-windows-machine)
     + [**Infrastructure**](#infrastructure)
+    + [**Infrastructure for Training Tesseract**](#infrastructure-for-training-tesseract)
     + [**API Endpoints**](#api-endpoints)
     + [**Security**](#security)
     + [**Wordcloud Feature**](#wordcloud-feature)
@@ -196,6 +197,45 @@ These links were important to learn where to start with `AWS`:
 - [The Official labs guide for DS](https://docs.labs.lambdaschool.com/data-science/)
 - [A guide to setting up HTTPS on Route 53 (may require APL)](https://docs.labs.lambdaschool.com/guides/aws/elastic-beanstalk/elastic-beanstalk-dns)
 - [AWS EBS Dashboard](https://console.aws.amazon.com/elasticbeanstalk/home?region=us-east-1#/environments)
+
+### **Infrastructure for Training Tesseract**
+This infrastructure is suited for Tesseract training on a local machine using Docker container.
+To build a docker container to improve the Tesseract OCR model run the following command after cloning this repo from within the repo.
+
+`docker-compose -f docker.dev.yml up -d`
+
+Once the docker completes making the image run the container using the following command:-
+
+`docker exec -ti scribble-ocr bash`
+
+The directory structure for important directories of the container from **root** is shown below:-
+
+------------
+
+    ├── app                <- directory contains all the scribble-stadium-ds repo.
+    │
+    └── train              <- directory with tools to train the tesseract ocr
+        │
+        ├── 4.1.1.zip      <- tesseract 4.1.1.zip downloaded to unzip
+        │
+        ├── tessdata       <-  directory that house all the models. Currently only
+        │                      eng.trainedata is available. The trained models are placed here. 
+        │
+        ├── tesstrain      <- tesstrain directory through which the training will be
+        │                     run. Always run the `source ocr/bin/activate` to activate 
+        │                     `ocr` venv before doing any training. Make sure to install 
+        │                     all dependencies using `pip install -r requirements.txt` for 
+        │                     initial run. For training use 
+        │                     `make training MODEL_NAME=storysquad START_MODEL=eng 
+        │                     TESSDATA=/train/tessdata`. For hyperparameter tuning refer 
+        │                     https://tesseract-ocr.github.io/tessdoc/tess4/TrainingTesseract-4.00.html#lstmtraining-command-line
+        │                   
+        └── data           <- house `storysquad-ground-truth` which has all the training
+                              material for tesseract to learn from. This directory is copied 
+                              from `scribble-stadium-ds/data`. More data can be uploaded if 
+                              it becomes available.
+     
+--------
 
 ### **API Endpoints**
 <img src="assets/endpoints.png" alt="arch diagram"/>

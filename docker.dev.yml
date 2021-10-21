@@ -5,7 +5,7 @@ services:
     container_name: scribble-ocr
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile_tesseract_training
     ports:
       - 8000:8000
     volumes:
