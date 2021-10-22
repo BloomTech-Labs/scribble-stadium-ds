@@ -28,7 +28,7 @@ from app.utils.img_processing.google_api import GoogleAPI, NoTextFoundException
 from app.utils.img_processing.tesseract_api import TesseractAPI
 # global variables and services
 DIR = dirname(__file__)
-DATA_DIR = DIR + '/../data/'
+DATA_DIR = DIR + '/data/'
 PHOTOS_DIR = DATA_DIR + 'photos/'
 TRANSCRIPTS_DIR = DATA_DIR + 'transcripts/'
 METADATA_DIR = DATA_DIR + 'metadata/'

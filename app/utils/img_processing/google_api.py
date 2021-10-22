@@ -1,10 +1,13 @@
 from os import getenv, environ, path
+from os import makedirs
+from pathlib import Path
 
 from dotenv import load_dotenv
 from google.cloud import vision
-from google.cloud.vision import types
+from google.cloud.vision_v1 import types
 
 from app.utils.moderation.text_moderation import BadWordTextModerator
+
 
 # XXX: Documentation parses to Markdown on FastAPI Swagger UI
 # Attribution: Most of this code is from transcription.py and
@@ -28,8 +31,10 @@ class GoogleAPI:
         """
         # TODO: Refactor into separate function
         load_dotenv()
+        home = str(Path.home())
+        makedirs(home + '/tmp', exist_ok=True)
         if getenv("GOOGLE_CREDS") is not None:
-            with open("/tmp/google.json", "wt") as fp:
+            with open(home + "/tmp/google.json", "w") as fp:
                 # write file to /tmp containing all of the cred info
                 fp.write(getenv("GOOGLE_CREDS"))
                 # make extra sure that the changes get flushed on to the disk
@@ -38,7 +43,7 @@ class GoogleAPI:
                 fp.close()
             # update the environment with the environment variable that google
             # sdk is looking for
-            environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/tmp/google.json"
+            environ["GOOGLE_APPLICATION_CREDENTIALS"] = home + "/tmp/google.json"
         else:
             raise RuntimeError("Missing Google Credentials, Exiting app")
 
