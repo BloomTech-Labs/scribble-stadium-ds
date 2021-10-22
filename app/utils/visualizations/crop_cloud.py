@@ -352,13 +352,15 @@ def bungie(arr, frame, pic_width, pic_height):
     Produces animation for a wiggle style of movement
 
     Input:
-        `arr` array of single x and y coordinate
+        `arr` int of single 'x' coordinate
         `frame` frame number for positional reference
         `pic_width` image.shape[1]
         `pic_height` image.shape[0]
 
     Output:
         returns pixel adjustment for y coordinate
+
+    See footnotes below for documentation on effects on graphing calculator
     """
     # function math below
     x_pos = frame
@@ -772,3 +774,20 @@ if __name__ == "__main__":
         density=0.40,
         max_words=200,
     )
+
+# copy paste below text into https://www.desmos.com/calculator to observe bungie effect on graphing calculator:
+# \left(\sin\left(\frac{\pi}{w}\ \cdot\ x\right)\ \cdot\ .15w\right)\ \cdot\ \left(\sin\left(f\cdot\frac{2\pi}{12}\right)-\left(\sin\left(f\cdot\frac{2\pi}{12}\right)\cdot\frac{1}{1+e^{-\left(9\cdot\frac{f}{12}-5\right)}}\right)\right)
+# where w > 0 width of image and 0 <= f <= 12 (frame)
+
+# copy paste below text into https://www.desmos.com/calculator to observe boogie effect on graphing calculator:
+# \frac{\sin\left(f\ \cdot\ \frac{2\pi}{12}\right)}{5}\cdot\frac{h}{2}\cdot\sin\left(\frac{\left(x\cdot\pi\right)}{w}\right)
+# where 0 <= f <= 12 (frame), w > 0 (width of image) and h > 0 (height of image)
+
+# copy paste below text into https://www.desmos.com/calculator to observe wiggle effect on graphing calculator:
+# \sin\left(\frac{2\pi}{12}\cdot f\right)\ \cdot\left(\sin\left(\frac{\left(\ 8\cdot\pi\right)}{w}\cdot x\right)\ \cdot\ \left(w\cdot h\cdot.0005\right)\right)#
+# where h>0 (height), w > 0 (width), 0 <= f <=12 (frame)
+
+# I did not use desmos for spinner.... lookup rotation matrixes for info on that -
+# it uses a normal distribution to determine position sequence
+# this function may have to be retooled or deprecated as it causes a slight glitch.
+# Please reach out to Peter Geraghty for any additional questions, Ill be in slack!
