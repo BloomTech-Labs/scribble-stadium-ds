@@ -582,7 +582,7 @@ def render_movement(positive_arrays, moving_images, canvas, static_arrays, stati
                     if 0 < coord_ind1 < canvas_to_app.shape[0] and 0 < coord_ind2 < canvas_to_app.shape[1]:
                         canvas_to_app[coord_ind1][coord_ind2] = image[coord[0]][coord[1]] * coord[2] + (
                                 (1 - coord[2]) * canvas_to_app[coord_ind1][coord_ind2])
-            elif move_type_ind == 1:
+            elif move_type_ind == 3:
                 for coord in pos[0]:
                     coords = boogie(coord[:2], frame, image.shape[1], image.shape[0])
                     coord_ind1 = int(coords[0] + y1)
@@ -721,7 +721,7 @@ def get_cropped_words(user_id, date_range=None, complexity_metric="len_count", i
     return words_json
 
 
-def get_crop_cloud(user_id, date_range=None, complexity_metric="len_count", image_format=".webp", canvas_width=1024,
+def get_crop_cloud(user_id, date_range=None, complexity_metric="len_count", image_format=".webp", canvas_width=500,
                    density=0.40, max_words=None):
     """
     Renders and returns a whole crop cloud for a user's submissions over a given date range
