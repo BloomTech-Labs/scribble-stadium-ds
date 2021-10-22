@@ -21,3 +21,13 @@
  - The complex_words.csv was added to the crop-cloud folder. The csv contains words that do not work well with the complexity function that is currently being utilized. It also contains the grade level (Middle School, High School, College, or Post College) and set complexity scores for each word. This is used in the complexity_df function located in "app/utils/wordcloud/wordcloud_functions.py". This is meant to be a temporary location to store the dataset until a better solution is implemented.
 
 - The 10 files used to benchmark the ML models can be found in slack under the channel "Labspt_ds" in a zip file called "starysquad-ground-truth-10-documents-summary.zip". the names of the files can also be found in the ds repository under "scribble-stadium-ds\data\starysquad-ground-truth-10-documents-summary".
+
+ AS of 10/20/2021
+-It is important to understand how data labelling was done for files in order to keep track of the model
+performance. 
+- Folder 32 and 52 were cleaned in 03/21. They binarized (B&W) the images and segmented them into snippets
+using a script in command line. Here is the link for the resources they used. https://dabordel.medium.com/if-i-cant-read-children-s-handwriting-how-can-an-ocr-3f5edcdcfd7b
+
+- Folders 31 and part of 51 were cleaned and labelled. Folder 31 was not preprocessed before clipping the images
+into snippets. For folder 51 only (5125, 5126, 5129, 5130, 5131, 5132) images were cleaned. Please note files
+5127 and 5128 were not available.   
