@@ -60,6 +60,11 @@ async def submission_text(sub: Submission):
     # score the transcription using SquadScore algorithm
     score = await squad_score(transcriptions, scaler)
 
+    # # takes in the story as a string
+    # # counts all words per story submission
+    cleaned = re.sub("[^-9A-Za-z ]", "", transcriptions).lower()
+    cleaned_words_count = len(cleaned.split())
+    
     # return the complexity score to the web team with the SubmissionID
     return JSONResponse(
         status_code=200,
@@ -68,6 +73,7 @@ async def submission_text(sub: Submission):
             "IsFlagged": flagged,
             "LowConfidence": True in confidence_flags,
             "Complexity": score,
+            "WordCount": cleaned_words_count  
         },
     )
 
