@@ -27,6 +27,7 @@
     + [**API Endpoints**](#api-endpoints)
     + [**Security**](#security)
     + [**Wordcloud Feature**](#wordcloud-feature)
+  * [Crop Cloud](#cropcloud setup)  
 #### - [Meet the Team](#meet-the-team)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
@@ -268,6 +269,18 @@ The directory structure for important directories of the container from **root**
 - API
    - app/api/wordcloud_database.py is an endpoint that works with the front end to create a word cloud from the most complex words in a story submission. app/utils/wordcloud contains the algorithms used to determine complex words. This API fetches demo data from an RDS database that holds 167 stories. The endpoint requires the user to choose the story ID (1-167), and then returns all the words in the story, along with the weight of the words according to how complex it is (all the weights of the document added together equals 1). Front end takes the words and weights and creates an animated word cloud with it.
 
+### **Crop Cloud Local Deployment**
+
+- Crop Cloud animation deployment
+  - Whitelist your IP on the relevant RDS database -> (crop-cloud-database)
+  - Fast API should be up and deployable, ready to provide gif with default values
+  - Input correct username, data-base name, and other credentials for access in .env 
+
+- Static picture Deployment (located in crop_cloud_original.py)
+  - Obtain story_images.zip file from instructors
+  - Place zip file in the '/data/' folder
+  - Install Tesseract Binary
+  - make sure your program can find where tesseract has been installed, and you should be good to go.   
 
 # Meet the Team
 Feel free to reach out to anyone on the team with any questions about the project!
