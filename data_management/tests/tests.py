@@ -7,11 +7,12 @@ from data_management.management_utils import management_utils
 class PipeLinePhases(unittest.TestCase):
     def test_basic_properties(self):
         from data_management.story_photo_transformer import phase_list
-        for i,cls in enumerate(phase_list):
+        for i, cls in enumerate(phase_list):
             print(cls)
             a = cls(None)
 
-            self.assertTrue("phase" in a.__dir__(),"no phase name in "+str(cls)+" phase should be = phase"+str(i))
+            self.assertTrue("phase" in a.__dir__(),
+                            "no phase name in " + str(cls) + " phase should be = phase" + str(i))
 
 
 class TestCpuLoader(unittest.TestCase):
@@ -58,7 +59,7 @@ class TestCpuLoader(unittest.TestCase):
         data_path = cdl.data_path
         storys = glob.glob(os.path.join(data_path, "*", "*", "Story*"))
 
-        # Test stories are readable in ut8, this should throw an error if encountering binary file,
+        # Test stories are readable in utf8, this should throw an error if encountering binary file,
         # exceptions need researched
         for fname in storys:
             try:
@@ -74,9 +75,11 @@ class TestCpuLoader(unittest.TestCase):
         for fname in storys:
             story_name = fname
             fname = fname.replace("Story", "Photo")
-            image_names = [fname + ".jpg", fname + " pg1.jpg", fname + " pg2.jpg"]
+            page_types = ["", " pg1", " pg2", " pg3"]
+            extensions = [".jpg", ".tif", ",png"]
+            image_names = [fname + pt + ex for ex in extensions for pt in page_types]
 
-            # Some typos occured during transcription, these patterns will generate a warning
+            # Some typos occurred during transcription, these patterns will generate a warning
             image_names_warning = [fname + " .jpg", fname + " pg1 .jpg", fname + " pg2 .jpg"]
 
             image_names_to_check = image_names + image_names_warning
