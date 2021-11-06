@@ -1,6 +1,6 @@
 import unittest
 import warnings
-
+from PIL import ImageFile
 from data_management.management_utils import management_utils
 
 
@@ -72,7 +72,7 @@ class TestCpuLoader(unittest.TestCase):
         self.assertTrue(errors == [], "\n".join(errors))
 
         # test that all images are loadable
-
+        found_names = []
         for fname in storys:
             story_name = fname
             fname = fname.replace("Story", "Photo")
@@ -95,6 +95,7 @@ class TestCpuLoader(unittest.TestCase):
                 if cv2.haveImageReader(image_name):
                     found_valid = True
                     found_name = image_name
+                    found_names.append(found_name)
                 else:
                     pass
 
@@ -113,6 +114,26 @@ class TestCpuLoader(unittest.TestCase):
                         str(found_name)
                         + " has a file name format that is on the warning list"
                     )
+
+        # test that all images are of sufficient resolution
+        sizes = set()
+        for fname in found_names:
+            with open(fname, "rb") as f:
+                ImPar = ImageFile.Parser()
+                chunk = f.read(2048)
+                count = 2048
+                while not ImPar.image:
+                    ImPar.feed(chunk)
+                    chunk = f.read(2048)
+                    count += 2048
+                sz = ImPar.image.size
+                sz = list(sz)
+                sz.sort()
+                sizes.add((sz[1], sz[0]))
+
+        print("found image sizes", sizes)
+        for size in sizes:
+            self.assertTrue((size[0] * size[1]) >= (640 * 480))
 
 
 if __name__ == '__main__':
