@@ -1,9 +1,6 @@
-import glob
-import os
 import unittest
 import warnings
 
-import cv2
 from data_management.management_utils import management_utils
 
 
@@ -14,22 +11,20 @@ class PipeLinePhases(unittest.TestCase):
         for i, cls in enumerate(phase_list):
             print(cls)
             a = cls(None)
-            self.assertTrue(
-                "phase" in a.__dir__(),
-                "no phase name in " + str(cls) + " phase should be = phase" + str(i),
+
+            self.assertTrue("phase" in a.__dir__(),
+                            "no phase name in " + str(cls) + " phase should be = phase" + str(i),
             )
 
 
 class TestCpuLoader(unittest.TestCase):
+
     def test_data_path(self):
+        import os
         cdl = management_utils.CPUDataLoader()
 
-        def check_path():
-            return os.path.exists(cdl.data_path)
-
-        self.assertTrue(
-            check_path(), "expected data directory does not exist: " + cdl.data_path
-        )
+        f = lambda: os.path.exists(cdl.data_path)
+        self.assertTrue(f(), "expected data directory does not exist: " + cdl.data_path)
 
     def test_data_file_structure(self):
         """
@@ -45,6 +40,9 @@ class TestCpuLoader(unittest.TestCase):
               story 3101
         ...
         """
+        import glob
+        import os
+        import data_management.management_utils
 
         data_path = management_utils.CPUDataLoader().data_path
         storys = glob.glob(os.path.join(data_path, "*", "*", "Story*"))
@@ -54,6 +52,9 @@ class TestCpuLoader(unittest.TestCase):
         """
         Tests the actual contents of the images and transcriptions
         """
+        import glob
+        import os
+        import cv2
         cdl = management_utils.CPUDataLoader()
 
         errors = []
@@ -96,8 +97,10 @@ class TestCpuLoader(unittest.TestCase):
                     found_name = image_name
                 else:
                     pass
+
             if not found_valid:
                 errors.append("error in : " + story_name)
+
             if found_name in image_names_warning:
                 with self.assertWarns(ResourceWarning):
                     warnings.simplefilter("always")
@@ -112,5 +115,5 @@ class TestCpuLoader(unittest.TestCase):
                     )
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()
