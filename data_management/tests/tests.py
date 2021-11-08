@@ -3,29 +3,34 @@ import warnings
 import glob
 import os
 import cv2
-from data_management.story_photo_transformer import phase_list
+
 
 from data_management.management_utils import management_utils
 
 
 class PipeLinePhases(unittest.TestCase):
     def test_basic_properties(self):
+        from data_management.story_photo_transformer import phase_list
         for i, cls in enumerate(phase_list):
             print(cls)
             a = cls(None)
 
-            self.assertTrue("phase" in a.__dir__(),
-                            "no phase name in " + str(cls) + " phase should be = phase" + str(i))
+            self.assertTrue(
+                "phase" in a.__dir__(),
+                "no phase name in " + str(cls) + " phase should be = phase" + str(i),
+            )
 
 
 class TestCpuLoader(unittest.TestCase):
-
     def test_data_path(self):
         cdl = management_utils.CPUDataLoader()
 
         def check_path():
-            os.path.exists(cdl.data_path)
-        self.assertTrue(check_path(), "expected data directory does not exist: " + cdl.data_path)
+            return os.path.exists(cdl.data_path)
+
+        self.assertTrue(
+            check_path(), "expected data directory does not exist: " + cdl.data_path
+        )
 
     def test_data_file_structure(self):
         """
@@ -63,8 +68,7 @@ class TestCpuLoader(unittest.TestCase):
                 with open(fname, encoding="utf8") as file:
                     file.readlines()
             except Exception as e:
-                errors.append("error in transcription: " + fname+" "+str(e))
-
+                errors.append("error in transcription: " + fname + " " + str(e))
         self.assertTrue(errors == [], "\n".join(errors))
 
         # test that all images are loadable
@@ -77,7 +81,11 @@ class TestCpuLoader(unittest.TestCase):
             image_names = [fname + pt + ex for ex in extensions for pt in page_types]
 
             # Some typos occurred during transcription, these patterns will generate a warning
-            image_names_warning = [fname + " .jpg", fname + " pg1 .jpg", fname + " pg2 .jpg"]
+            image_names_warning = [
+                fname + " .jpg",
+                fname + " pg1 .jpg",
+                fname + " pg2 .jpg",
+            ]
 
             image_names_to_check = image_names + image_names_warning
 
@@ -89,17 +97,21 @@ class TestCpuLoader(unittest.TestCase):
                     found_name = image_name
                 else:
                     pass
-
             if not found_valid:
                 errors.append("error in : " + story_name)
-
             if found_name in image_names_warning:
                 with self.assertWarns(ResourceWarning):
                     warnings.simplefilter("always")
-                    warnings.warn(str(found_name) + " has a file name format that is on the warning list",
-                                  ResourceWarning)
-                    print(str(found_name) + " has a file name format that is on the warning list")
+                    warnings.warn(
+                        str(found_name)
+                        + " has a file name format that is on the warning list",
+                        ResourceWarning,
+                    )
+                    print(
+                        str(found_name)
+                        + " has a file name format that is on the warning list"
+                    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
