@@ -23,8 +23,9 @@ class TestCpuLoader(unittest.TestCase):
         import os
         cdl = management_utils.CPUDataLoader()
 
-        f = lambda: os.path.exists(cdl.data_path)
-        self.assertTrue(f(), "expected data directory does not exist: " + cdl.data_path)
+        def check_path():
+            os.path.exists(cdl.data_path)
+        self.assertTrue(check_path(), "expected data directory does not exist: " + cdl.data_path)
 
     def test_data_file_structure(self):
         """
@@ -68,7 +69,7 @@ class TestCpuLoader(unittest.TestCase):
                 with open(fname, encoding="utf8") as file:
                     file.readlines()
             except Exception as e:
-                errors.append("error in transcription: " + fname + " " + str(e))
+                errors.append("error in transcription: " + fname +" "+str(e))
         self.assertTrue(errors == [], "\n".join(errors))
 
         # test that all images are loadable
