@@ -1,10 +1,9 @@
 import unittest
 import warnings
-from PIL import ImageFile
 import glob
 import os
 import cv2
-from data_management.story_photo_transformer import phase_list
+
 
 from data_management.management_utils import management_utils
 
@@ -12,25 +11,26 @@ from data_management.management_utils import management_utils
 class PipeLinePhases(unittest.TestCase):
     def test_basic_properties(self):
         from data_management.story_photo_transformer import phase_list
-
         for i, cls in enumerate(phase_list):
             print(cls)
             a = cls(None)
 
-            self.assertTrue("phase" in a.__dir__(),
-                            "no phase name in " + str(cls) + " phase should be = phase" + str(i),
+            self.assertTrue(
+                "phase" in a.__dir__(),
+                "no phase name in " + str(cls) + " phase should be = phase" + str(i),
             )
 
 
 class TestCpuLoader(unittest.TestCase):
-
     def test_data_path(self):
-        import os
         cdl = management_utils.CPUDataLoader()
 
         def check_path():
-            os.path.exists(cdl.data_path)
-        self.assertTrue(check_path(), "expected data directory does not exist: " + cdl.data_path)
+            return os.path.exists(cdl.data_path)
+
+        self.assertTrue(
+            check_path(), "expected data directory does not exist: " + cdl.data_path
+        )
 
     def test_data_file_structure(self):
         """
@@ -46,9 +46,6 @@ class TestCpuLoader(unittest.TestCase):
               story 3101
         ...
         """
-        import glob
-        import os
-        import data_management.management_utils
 
         data_path = management_utils.CPUDataLoader().data_path
         storys = glob.glob(os.path.join(data_path, "*", "*", "Story*"))
@@ -58,9 +55,6 @@ class TestCpuLoader(unittest.TestCase):
         """
         Tests the actual contents of the images and transcriptions
         """
-        import glob
-        import os
-        import cv2
         cdl = management_utils.CPUDataLoader()
 
         errors = []
@@ -74,11 +68,11 @@ class TestCpuLoader(unittest.TestCase):
                 with open(fname, encoding="utf8") as file:
                     file.readlines()
             except Exception as e:
-                errors.append("error in transcription: " + fname +" "+str(e))
+                errors.append("error in transcription: " + fname + " " + str(e))
         self.assertTrue(errors == [], "\n".join(errors))
 
         # test that all images are loadable
-        found_names = []
+
         for fname in storys:
             story_name = fname
             fname = fname.replace("Story", "Photo")
@@ -101,13 +95,10 @@ class TestCpuLoader(unittest.TestCase):
                 if cv2.haveImageReader(image_name):
                     found_valid = True
                     found_name = image_name
-                    found_names.append(found_name)
                 else:
                     pass
-
             if not found_valid:
                 errors.append("error in : " + story_name)
-
             if found_name in image_names_warning:
                 with self.assertWarns(ResourceWarning):
                     warnings.simplefilter("always")
@@ -121,26 +112,6 @@ class TestCpuLoader(unittest.TestCase):
                         + " has a file name format that is on the warning list"
                     )
 
-        # test that all images are of sufficient resolution
-        sizes = set()
-        for fname in found_names:
-            with open(fname, "rb") as f:
-                ImPar = ImageFile.Parser()
-                chunk = f.read(2048)
-                count = 2048
-                while not ImPar.image:
-                    ImPar.feed(chunk)
-                    chunk = f.read(2048)
-                    count += 2048
-                sz = ImPar.image.size
-                sz = list(sz)
-                sz.sort()
-                sizes.add((sz[1], sz[0]))
 
-        print("found image sizes", sizes)
-        for size in sizes:
-            self.assertTrue((size[0] * size[1]) >= (640 * 480))
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
