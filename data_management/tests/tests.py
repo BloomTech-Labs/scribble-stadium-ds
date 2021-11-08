@@ -3,8 +3,6 @@ import warnings
 import glob
 import os
 import cv2
-
-
 from data_management.management_utils import management_utils
 
 
@@ -14,7 +12,6 @@ class PipeLinePhases(unittest.TestCase):
         for i, cls in enumerate(phase_list):
             print(cls)
             a = cls(None)
-
             self.assertTrue(
                 "phase" in a.__dir__(),
                 "no phase name in " + str(cls) + " phase should be = phase" + str(i),
