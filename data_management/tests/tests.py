@@ -1,7 +1,8 @@
-import unittest
-import warnings
 import glob
 import os
+import unittest
+import warnings
+
 import cv2
 from data_management.management_utils import management_utils
 
@@ -9,6 +10,7 @@ from data_management.management_utils import management_utils
 class PipeLinePhases(unittest.TestCase):
     def test_basic_properties(self):
         from data_management.story_photo_transformer import phase_list
+
         for i, cls in enumerate(phase_list):
             print(cls)
             a = cls(None)
