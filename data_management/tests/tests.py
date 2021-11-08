@@ -1,6 +1,6 @@
 import unittest
 import warnings
-from PIL import ImageFile
+
 from data_management.management_utils import management_utils
 
 
@@ -21,8 +21,9 @@ class TestCpuLoader(unittest.TestCase):
         import os
         cdl = management_utils.CPUDataLoader()
 
-        f = lambda: os.path.exists(cdl.data_path)
-        self.assertTrue(f(), "expected data directory does not exist: " + cdl.data_path)
+        def check_path():
+            os.path.exists(cdl.data_path)
+        self.assertTrue(check_path(), "expected data directory does not exist: " + cdl.data_path)
 
     def test_data_file_structure(self):
         """
@@ -40,7 +41,6 @@ class TestCpuLoader(unittest.TestCase):
         """
         import glob
         import os
-        import data_management.management_utils
 
         data_path = management_utils.CPUDataLoader().data_path
         storys = glob.glob(os.path.join(data_path, "*", "*", "Story*"))
@@ -65,13 +65,13 @@ class TestCpuLoader(unittest.TestCase):
             try:
                 with open(fname, encoding="utf8") as file:
                     file.readlines()
-            except:
-                errors.append("error in transcription: " + fname)
+            except Exception as e:
+                errors.append("error in transcription: " + fname+" "+str(e))
 
         self.assertTrue(errors == [], "\n".join(errors))
 
         # test that all images are loadable
-        found_names = []
+
         for fname in storys:
             story_name = fname
             fname = fname.replace("Story", "Photo")
@@ -90,7 +90,6 @@ class TestCpuLoader(unittest.TestCase):
                 if cv2.haveImageReader(image_name):
                     found_valid = True
                     found_name = image_name
-                    found_names.append(found_name)
                 else:
                     pass
 
@@ -98,29 +97,11 @@ class TestCpuLoader(unittest.TestCase):
                 errors.append("error in : " + story_name)
 
             if found_name in image_names_warning:
-                with self.assertWarns(UserWarning) as cm:
-                    warnings.warn(cm)
-                    print(found_name + " has a file name format that is on the warning list")
-
-        # test that all images are of sufficient resolution
-        sizes = set()
-        for fname in found_names:
-            with open(fname, "rb") as f:
-                ImPar = ImageFile.Parser()
-                chunk = f.read(2048)
-                count = 2048
-                while not ImPar.image:
-                    ImPar.feed(chunk)
-                    chunk = f.read(2048)
-                    count += 2048
-                sz = ImPar.image.size
-                sz = list(sz)
-                sz.sort()
-                sizes.add((sz[1], sz[0]))
-
-        print("found image sizes", sizes)
-        for size in sizes:
-            self.assertTrue((size[0] * size[1]) >= (640 * 480))
+                with self.assertWarns(ResourceWarning):
+                    warnings.simplefilter("always")
+                    warnings.warn(str(found_name) + " has a file name format that is on the warning list",
+                                  ResourceWarning)
+                    print(str(found_name) + " has a file name format that is on the warning list")
 
 
 if __name__ == '__main__':
