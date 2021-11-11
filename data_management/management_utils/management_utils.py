@@ -32,10 +32,11 @@ class PrePipelineDatasetRef:
         return "Pre Pipeline Dataset reference object, containing: " + str(len(self.story_refs)) + " stories."
 
     def get_tf_dataset(self) -> tf.data.Dataset:
-        photos_tensor = tf.keras.preprocessing.image_dataset_from_directory(self.base_directory,label_mode=None,color_mode="rgb",image_size=(1600,1200))
-        labels_tensor =""
+        photos_tensor = tf.keras.preprocessing.image_dataset_from_directory(self.base_directory, label_mode=None,
+                                                                            color_mode="rgb", image_size=(1600, 1200))
+        labels_tensor = ""
 
-        return (photos_tensor,labels_tensor)
+        return (photos_tensor, labels_tensor)
 
 
 class CPUDataLoader:
@@ -43,7 +44,7 @@ class CPUDataLoader:
     def __init__(self):
         self.data_path = path.abspath(path.join(path.dirname(__file__), "..", "..", "data", "transcribed_stories"))
 
-    def get_file_structure(self) -> (list[PrePipelineStoryRef],str):
+    def get_file_structure(self) -> (list[PrePipelineStoryRef], str):
         # get the basic directory list
         directory_list = glob.glob(path.join(self.data_path, "*", "*"))
 
@@ -83,15 +84,18 @@ class CPUDataLoader:
             else:
                 print("error: invalid structure, no story found: ", check_path)
 
-        return valid_story_paths,self.data_path
+        return valid_story_paths, self.data_path
 
 
 if __name__ == "__main__":
     CDL = CPUDataLoader()
-    file_structure=CDL.get_file_structure()
+    file_structure = CDL.get_file_structure()
+    print(file_structure)
     ref_dataset = PrePipelineDatasetRef(*file_structure)
-    ids = ref_dataset.get_tf_dataset()
-    print(ids)
-    #print(ref_dataset)
-    #for d in ref_dataset.story_refs:
-    #    print(d)
+    print(ref_dataset)
+    for a in ref_dataset.story_refs:
+        print(a)
+    #tf_dataset = ref_dataset.get_tf_dataset()
+    #print(tf_dataset)
+    #for id in tf_dataset:
+    #    print(id)
