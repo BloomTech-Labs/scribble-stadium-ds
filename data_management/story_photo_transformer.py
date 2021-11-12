@@ -3,6 +3,7 @@ from enum import IntFlag, auto
 
 import cv2
 import numpy as np
+import json
 
 from data_management.phase_tkinter_class import PipelinePhase
 from data_management.phase_tkinter_class import np_photo_image
@@ -51,7 +52,7 @@ class Application(PipelinePhase):
 
         self.save_btn = tk.Button(self.controls_frame)
         self.save_btn["text"] = "Save"
-        self.save_btn["command"] = self.save_button
+        self.save_btn["command"] = self.save_results
         self.save_btn.pack(side="top")
 
         self.quit = tk.Button(self.controls_frame, text="QUIT", fg="red", command=self.destroy)
@@ -65,6 +66,11 @@ class Application(PipelinePhase):
         self.line_handles = [self.canvas.create_line([0, 0, 0, 0], fill="#ffff00") for i in range(4)]
         self.cursor_oval_handles = [self.canvas.create_oval([-10, -10, 10, 10], fill="#ffff00") for i in range(4)]
         self.image_handle = None
+
+    def save_results(self):
+        #with open(file_name_data, 'w') as f:
+        #    json.dump(pts.tolist(), f)
+        self.save_button()
 
     def next_phase_button(self):
         """
