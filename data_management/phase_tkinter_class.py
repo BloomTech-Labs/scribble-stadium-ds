@@ -107,6 +107,7 @@ class PipelinePhase(tk.Frame):
 
         if "motion_event" in self.__dir__():
             self.canvas.bind("<Motion>", self.motion_event)
+        self.np_img_orig = self.np_img.copy()
 
     def img_2_canvas_pt(self, pt: list):
         x = (pt[0] / self.np_img.shape[1]) * self.canvas.winfo_width()
