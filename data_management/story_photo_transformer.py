@@ -1,7 +1,5 @@
 import tkinter as tk
 from enum import IntFlag, auto
-from os import path
-import hashlib
 
 import cv2
 import numpy as np
@@ -9,7 +7,6 @@ import json
 
 from data_management.phase_tkinter_class import PipelinePhase
 from data_management.phase_tkinter_class import np_photo_image
-from models.synthetic_data.synthetic_data_for_pipeline_transform.generate import input_size as model_input_size
 
 
 class Application(PipelinePhase):
@@ -71,42 +68,8 @@ class Application(PipelinePhase):
         self.image_handle = None
 
     def save_results(self):
-        file_name_data = path.join(self.os_story_folder, self.phase, self.os_photo_image_filename_only) + ".json"
-        file_name_X_input = path.join(self.os_story_folder, self.phase,
-                                      self.os_photo_image_filename_only) + ".X_input.png"
-        file_name_y_label = path.join(self.os_story_folder, self.phase,
-                                      self.os_photo_image_filename_only) + ".y_label.png"
-        print(file_name_data)
-
-        x_ratio = model_input_size[0] / self.np_img_orig.shape[1]
-        y_ratio = model_input_size[1] / self.np_img_orig.shape[0]
-        out_pts = []
-        for pt in self.np_img_points:
-            new_pt = (pt[0] * x_ratio, pt[1] * y_ratio)
-            out_pts.append(new_pt)
-            print(pt, new_pt, x_ratio, y_ratio, self.np_img.shape)
-
-        X_img = cv2.resize(self.np_img_orig, model_input_size, interpolation=cv2.INTER_AREA)
-        y_img = cv2.resize(self.np_img, model_input_size, interpolation=cv2.INTER_AREA)
-
-        X_img = cv2.cvtColor(X_img, cv2.COLOR_BGR2RGB)
-        y_img = cv2.cvtColor(y_img, cv2.COLOR_BGR2RGB)
-
-        cv2.imwrite(file_name_X_input, X_img)
-        cv2.imwrite(file_name_y_label, y_img)
-
-        img_hash = hashlib.md5(open(file_name_X_input, 'rb').read()).hexdigest()
-
-        data = {"y_label_points": out_pts,
-                "y_label_image_file": path.basename(file_name_y_label),
-                "X_input_image_file": path.basename(file_name_X_input),
-                "X_input_file_hash": img_hash
-                }
-
-        with open(file_name_data, 'w') as f:
-            json.dump(data, f)
-
-        self.np_img_points = []
+        #with open(file_name_data, 'w') as f:
+        #    json.dump(pts.tolist(), f)
         self.save_button()
 
     def next_phase_button(self):
@@ -141,6 +104,7 @@ class Application(PipelinePhase):
         self.canvas.create_image(0, 0, anchor=tk.NW, image=resized_photoimage)
         print(self.master.winfo_height())
 
+        self.np_img_points = []
         self.cursor_oval_handles = []
         self.line_handles = []
 
@@ -226,6 +190,7 @@ phase_list = [Application,
               story_photo_segment_writing.Application,
               story_photo_ground_truth.Application
               ]
+
 
 if __name__ == "__main__":
     first = True
