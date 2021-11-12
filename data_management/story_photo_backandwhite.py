@@ -16,7 +16,7 @@ class Application(PipelinePhase):
         super().__init__(next_phase, master=master, prev_phase=prev_phase)
         self.phase = "phase4"
         # Convert image to Black and White
-        self.im_gray = cv2.imread(self.filename, cv2.IMREAD_GRAYSCALE)
+        self.im_gray = cv2.imread(self.os_filename, cv2.IMREAD_GRAYSCALE)
         (thresh, self.np_img_bw) = cv2.threshold(self.im_gray, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
 
         self.points = []
@@ -25,7 +25,7 @@ class Application(PipelinePhase):
         self.create_widgets()
         self.newest_pt_idx = -1
 
-        print(self.filename)
+        print(self.os_filename)
 
     def create_widgets(self):
         """
@@ -78,7 +78,7 @@ class Application(PipelinePhase):
         :return: None
         """
         print('Black and White Button Pressed')
-        self.im_gray = cv2.imread(self.filename, cv2.IMREAD_GRAYSCALE)
+        self.im_gray = cv2.imread(self.os_filename, cv2.IMREAD_GRAYSCALE)
         (thresh, self.np_img) = cv2.threshold(self.im_gray, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
         self.redraw()
 

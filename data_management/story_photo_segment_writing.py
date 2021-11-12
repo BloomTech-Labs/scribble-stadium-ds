@@ -69,12 +69,12 @@ class Application(PipelinePhase):
     def button_segment_save_function(self):
         # create phase directory if it does not exist
         try:
-            os.mkdir(path.join(self.story_folder, self.phase))
+            os.mkdir(path.join(self.os_story_folder, self.phase))
         except FileExistsError as e:
             self.phase_data_exists = True
 
         for i, line_np_img in enumerate(self.np_img_segmented_lines_list):
-            fn, ext = path.splitext(self.photo_image_filename_only)
+            fn, ext = path.splitext(self.os_photo_image_filename_only)
             if len(str(i)) == 1:
                 clip_num = "00" + str(i)
             elif len(str(i)) == 2:
@@ -82,7 +82,7 @@ class Application(PipelinePhase):
             else:
                 clip_num = str(i)
 
-            save_file = path.join(self.story_folder, self.phase, fn + "-" + clip_num + ".png")
+            save_file = path.join(self.os_story_folder, self.phase, fn + "-" + clip_num + ".png")
             print(save_file)
             cv2.imwrite(save_file, line_np_img)
 
