@@ -30,7 +30,7 @@ class Application(PipelinePhase):
         self.newest_pt_idx = -1
         # self.cursor
 
-        print(self.filename)
+        print(self.os_filename)
 
     def create_widgets(self):
         """
