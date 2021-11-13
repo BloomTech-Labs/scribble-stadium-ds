@@ -25,11 +25,37 @@ def create_fake_photo_unmodified(pix_per_mm: float, lines: int, red: [] = [255, 
                                  ink: [] = [32, 32, 96], noise: float = 1):
     """Creates an image that is much like written words on ruled paper"""
 
+    def get_rnd_col(col=[128, 128, 128], noise: int = 128):
+        for i in range(len(col)):
+            if (noise / 2) + col[i] > 255:
+                col[i] = 255 - (noise / 2)
+
+            if (noise / 2) + col[i] < 0:
+                col[i] = (noise / 2)
+
+        for i in range(len(col)):
+            if (noise / 2) + col[i] > 255:
+                raise ValueError
+            if (noise / 2) + col[i] < 0:
+                raise ValueError
+            mod = random.randint(-int(noise / 2), int(noise / 2))
+            col[i] = col[i] + mod
+        return col
+
+    # randomize colors
+    per_random = min(noise / 50.0, 1)
+    red = get_rnd_col(col=red, noise=int(32 * per_random))
+    ink = get_rnd_col(col=ink, noise=int(64 * per_random))
+    blue = get_rnd_col(col=blue, noise=int(64 * per_random))
+    white = get_rnd_col(col=[255, 255, 255], noise=int(32 * per_random))
+
     # Standard 8.5" x 11" paper
     paper_width_mm = 215.9
     paper_height_mm = 279.4
 
-    img = np.ones((round(paper_height_mm * pix_per_mm), round(paper_width_mm * pix_per_mm), 3), dtype="uint8") * 255
+    img = np.ones((round(paper_height_mm * pix_per_mm), round(paper_width_mm * pix_per_mm), 3),
+                  dtype="uint8") * np.array(white).astype("uint8")
+    print(img.shape)
 
     def draw_box(box_corners, color: []):
         """given the opposite corners of a box, draws a box in img of the specified color"""
@@ -157,11 +183,24 @@ def create_one(noise: float = 1, set_name: str = ""):
         json.dump(data, f)
 
 
-def create_bunch(how_many: int, noise: float = 1, cores: int = 4):
+def create_bunch(how_many: int, noise: float = 1, cores: int = 4, noise_start: int = -1, noise_end: int = -1,
+                 noise_step: int = -1):
     """function to create many synthetic samples, given a noise level and how many to create."""
     # creates a list of processes waiting to be started and completed.
-    processes = [Process(target=create_one, args=(noise, "" + str(noise))) for i in
-                 range(0, how_many)]
+    if noise_start == -1:
+        processes = [Process(target=create_one, args=(noise, "" + str(noise))) for i in
+                     range(0, how_many)]
+    else:
+        processes = []
+        noise_range = noise_end - noise_start
+        samples_per_step = how_many
+        how_many = (noise_range / noise_step) * how_many
+
+        for current_noise in range(noise_start, noise_end, noise_step):
+            for sample_i in range(samples_per_step):
+                processes.append(
+                    Process(target=create_one, args=(current_noise, "" + str(current_noise)))
+                )
 
     # start the initial group
     for i in range(cores):
