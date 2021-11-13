@@ -12,6 +12,8 @@ import os
 import os.path
 import typer
 import time
+from os import path
+import hashlib
 
 # exepected input size of model
 input_size = (256 - 64, 256)
@@ -124,10 +126,11 @@ def create_one(noise: float = 1, set_name: str = ""):
         set_name = set_name + "\\"
 
     file_name_base = str(uuid.uuid4())
-    file_name_img = os.path.dirname(__file__) + "\\data\\" + set_name + file_name_base + ".png"
+    file_name_img_X_input = os.path.dirname(__file__) + "\\data\\" + set_name + file_name_base + ".X_input.png"
     file_name_data = os.path.dirname(__file__) + "\\data\\" + set_name + file_name_base + ".json"
+    file_name_img_y_label = os.path.dirname(__file__) + "\\data\\" + set_name + file_name_base + ".y_label.png"
 
-    os.makedirs(os.path.dirname(file_name_img), exist_ok=True)
+    os.makedirs(os.path.dirname(file_name_img_X_input), exist_ok=True)
 
     img = create_fake_photo_unmodified(5, 25, noise=noise)
     img2, pts = randomize_photo_transform(img, photo_sizes[0], noise=noise)
@@ -137,10 +140,21 @@ def create_one(noise: float = 1, set_name: str = ""):
     pts[:, 0] = pts[:, 0] * scaleX
     pts[:, 1] = pts[:, 1] * scaleY
     img3 = cv2.cvtColor(img3, cv2.COLOR_RGB2BGR)
-    cv2.imwrite(file_name_img, img3)
+
+    cv2.imwrite(file_name_img_X_input, img3)
+    img_hash = hashlib.md5(open(file_name_img_X_input, 'rb').read()).hexdigest()
+
+    img_y_label = cv2.resize(img, input_size, interpolation=cv2.INTER_AREA)
+    cv2.imwrite(file_name_img_y_label, cv2.cvtColor(img_y_label, cv2.COLOR_RGB2BGR))
+
+    data = {"y_label_points": pts.tolist(),
+            "y_label_image_file": path.basename(file_name_img_y_label),
+            "X_input_image_file": path.basename(file_name_img_X_input),
+            "X_input_file_hash": img_hash
+            }
 
     with open(file_name_data, 'w') as f:
-        json.dump(pts.tolist(), f)
+        json.dump(data, f)
 
 
 def create_bunch(how_many: int, noise: float = 1, cores: int = 4):
