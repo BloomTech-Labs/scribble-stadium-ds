@@ -74,6 +74,8 @@ class PipelinePhase(tk.Frame):
 
         text_full_path = path.join(self.os_story_folder, self.os_photo_image_filename_only.split(".")[0])
         text_full_path=text_full_path.replace("Photo","Story")
+        text_full_path= text_full_path.replace(" pg1","")
+        text_full_path = text_full_path.replace(" pg2", "")
 
         for _ in range(10):
             try:
