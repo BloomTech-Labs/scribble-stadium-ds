@@ -8,7 +8,7 @@ import numpy
 import numpy as np
 import cv2
 import json
-from multiprocessing import Process, Value, Array
+from multiprocessing import Process
 import os
 import os.path
 import typer
@@ -16,7 +16,7 @@ import time
 from os import path
 import hashlib
 
-# exepected input size of model
+# expected input size of model
 input_size = (256 - 64, 256)
 # list of photograph sizes found in current data
 photo_sizes = [(2016, 1512, 3), (4032, 3024, 3), (640, 480, 3)]
@@ -27,20 +27,20 @@ def create_fake_paper_with_writing(pix_per_mm: float, lines: int = 25, red: [] =
                                    ink: [] = [32, 32, 96], noise: float = 1):
     """Creates an image that is much like written words on ruled paper, also returns a dict of important information"""
 
-    def get_rnd_col(col=[128, 128, 128], noise: int = 128):
+    def get_rnd_col(col=[128, 128, 128], c_noise: int = 128):
         for i in range(len(col)):
-            if (noise / 2) + col[i] > 255:
-                col[i] = 255 - (noise / 2)
+            if (c_noise / 2) + col[i] > 255:
+                col[i] = 255 - (c_noise / 2)
 
-            if (noise / 2) + col[i] < 0:
-                col[i] = (noise / 2)
+            if (c_noise / 2) + col[i] < 0:
+                col[i] = (c_noise / 2)
 
         for i in range(len(col)):
-            if (noise / 2) + col[i] > 255:
+            if (c_noise / 2) + col[i] > 255:
                 raise ValueError
-            if (noise / 2) + col[i] < 0:
+            if (c_noise / 2) + col[i] < 0:
                 raise ValueError
-            mod = random.randint(-int(noise / 2), int(noise / 2))
+            mod = random.randint(-int(c_noise / 2), int(c_noise / 2))
             col[i] = col[i] + mod
         return col
 
@@ -64,10 +64,10 @@ def create_fake_paper_with_writing(pix_per_mm: float, lines: int = 25, red: [] =
 
     # randomize colors
     per_random = min(noise / 50.0, 1)
-    red = get_rnd_col(col=red, noise=int(32 * per_random))
-    ink = get_rnd_col(col=ink, noise=int(64 * per_random))
-    blue = get_rnd_col(col=blue, noise=int(64 * per_random))
-    white = get_rnd_col(col=[255, 255, 255], noise=int(32 * per_random))
+    red = get_rnd_col(col=red, c_noise=int(32 * per_random))
+    ink = get_rnd_col(col=ink, c_noise=int(64 * per_random))
+    blue = get_rnd_col(col=blue, c_noise=int(64 * per_random))
+    white = get_rnd_col(col=[255, 255, 255], c_noise=int(32 * per_random))
 
     # Standard 8.5" x 11" paper
     paper_width_mm = 215.9
@@ -75,9 +75,8 @@ def create_fake_paper_with_writing(pix_per_mm: float, lines: int = 25, red: [] =
 
     img = np.ones((round(paper_height_mm * pix_per_mm), round(paper_width_mm * pix_per_mm), 3),
                   dtype="uint8") * np.array(white).astype("uint8")
-    print(img.shape)
 
-    def draw_box(box_corners, color: [],scale=True):
+    def draw_box(box_corners, color: [], scale=True):
         """given the opposite corners of a box, draws a box in img of the specified color"""
         tmp = [box_corners[1], box_corners[3], box_corners[0], box_corners[2]]
         tmp = numpy.array(tmp)
@@ -89,7 +88,6 @@ def create_fake_paper_with_writing(pix_per_mm: float, lines: int = 25, red: [] =
         img[tmp[0]:tmp[1], tmp[2]:tmp[3]] = color
 
     # draw blue lines, about 7.1 mm spacing between horizontal
-    #
     blue_lines_spacing = (out_dict["writing_area"]["bottom_edge"] - out_dict["writing_area"]["top_edge"]) / lines
     for bl in range(lines):
         noise_val = random.random() * (noise / 200)
@@ -98,10 +96,10 @@ def create_fake_paper_with_writing(pix_per_mm: float, lines: int = 25, red: [] =
         offset = out_dict["writing_area"]["top_edge"] + (bl * blue_lines_spacing)
         blue_line_box = [0,
                          offset - blue_lines_thickness_half,
-                         paper_width_mm*pix_per_mm,
+                         paper_width_mm * pix_per_mm,
                          offset + blue_lines_thickness_half
                          ]
-        draw_box(blue_line_box, blue,scale=False)
+        draw_box(blue_line_box, blue, scale=False)
 
     # draw ink, this simulates where writing is on the paper
     ink_lines_spacing = (out_dict["writing_area"]["bottom_edge"] - out_dict["writing_area"]["top_edge"]) / lines
@@ -110,23 +108,21 @@ def create_fake_paper_with_writing(pix_per_mm: float, lines: int = 25, red: [] =
         ink_lines_offset = out_dict["writing_area"]["top_edge"] + (il * ink_lines_spacing) + (.5 * ink_lines_spacing)
         noise_val = (random.random() - .5) * noise
         for x in range(int(32 * pix_per_mm), int(paper_width_mm * pix_per_mm)):
-            # print("x: ", x, "/", int(paper_width_mm))
-            ymax = int((ink_lines_spacing + (ink_lines_spacing / 2.5)) )
-            for y in range(ymax):
+            y_max = int((ink_lines_spacing + (ink_lines_spacing / 2.5)))
+            for y in range(y_max):
 
-                yy = (ink_lines_offset)
-                probability_of_ink = (1 - (abs((y / ymax) - .5) * 2)) ** 8
+                yy = ink_lines_offset
+                probability_of_ink = (1 - (abs((y / y_max) - .5) * 2)) ** 8
                 probability_of_ink = probability_of_ink * .5 * ((1 - (noise / 100)) + (noise_val * .01))
                 if random.random() < probability_of_ink:
                     xx = x
                     tx = int(xx)
-                    ty = int(yy + y - (ink_lines_spacing  / 2))
+                    ty = int(yy + y - (ink_lines_spacing / 2))
                     if ty < img.shape[0]:
                         img[ty, tx] = ink
 
     # draw red lines, about 32mm in from left
     num_red_lines = random.randint(1, 3)
-    # print(num_red_lines)
     red_line_thickness_half = .5
     for rl in range(num_red_lines):
         offset = rl * 1.25
@@ -172,7 +168,7 @@ def randomize_photo_transform(img, img_info, photo_size, noise=1):
     out_writing_pts = []
     for pt in writing_pts:
         src = np.array([[[pt[0], pt[1]]]]).astype("float32")
-        out_writing_pts.append( (cv2.perspectiveTransform(src, matrix) - 1).reshape((2)))
+        out_writing_pts.append((cv2.perspectiveTransform(src, matrix) - 1).reshape((2)))
 
     return photo_img, out_writing_pts
 
@@ -197,7 +193,7 @@ def create_one_and_save_it(noise: float = 1, set_name: str = ""):
     img3 = cv2.resize(img2, input_size, interpolation=cv2.INTER_AREA)
     scaleX = input_size[0] / photo_sizes[0][1]
     scaleY = input_size[1] / photo_sizes[0][0]
-    typer.echo(pts)
+
     pts = np.array(pts)
     pts[:, 0] = pts[:, 0] * scaleX
     pts[:, 1] = pts[:, 1] * scaleY
@@ -253,14 +249,13 @@ def create_bunch(how_many: int, noise: float = 1, cores: int = 4, noise_start: i
                 if p.exitcode is None:
                     todo += 1
                 if p.is_alive():
-                    # print ("is alive")
                     pass
                 if p.exitcode == 0:
                     free += 1
                     processes[i] = None
         started = []
 
-        for i in range(free):
+        for _ in range(free):
             for i, p in enumerate(processes):
                 if p is not None:
                     if p.exitcode is None:
