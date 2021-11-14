@@ -71,6 +71,7 @@ class Application(PipelinePhase):
         self.image_handle = None
 
     def save_results(self):
+        self.save_button()
         file_name_data = path.join(self.os_story_folder, self.phase, self.os_photo_image_filename_only) + ".json"
         file_name_X_input = path.join(self.os_story_folder, self.phase,
                                       self.os_photo_image_filename_only) + ".X_input.png"
@@ -107,7 +108,7 @@ class Application(PipelinePhase):
             json.dump(data, f)
 
         self.np_img_points = []
-        self.save_button()
+
 
     def next_phase_button(self):
         """
