@@ -168,7 +168,7 @@ def randomize_photo_transform(img, img_info, photo_size, noise=1):
     out_writing_pts = []
     for pt in writing_pts:
         src = np.array([[[pt[0], pt[1]]]]).astype("float32")
-        out_writing_pts.append((cv2.perspectiveTransform(src, matrix) - 1).reshape((2)))
+        out_writing_pts.append((cv2.perspectiveTransform(src, matrix) - 1).reshape(2))
 
     return photo_img, out_writing_pts
 
@@ -267,9 +267,6 @@ def create_bunch(how_many: int, noise: float = 1, cores: int = 4, noise_start: i
                                 break
         print(todo)
         time.sleep(.10)
-
-
-# when executed this will be ran, currently creates 10 different noise value sets of 50 each.
 
 
 if __name__ == "__main__":
