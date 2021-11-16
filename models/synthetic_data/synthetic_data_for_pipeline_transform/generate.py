@@ -1,5 +1,12 @@
 """This module will generate data that can be used for pre-training the model used for the transform phase of the
 training data pipeline. """
+# Ideas from Jeannine
+# no lines, colored construction paper, inverse color intensity, paragraph structure of ink, maybe rotated paper,
+# writing on the bottom that curves up because they ran out of space. Also writing may take a shape like a diamond, or
+# an animal etc. Maybe BOLD writing needs to be represented. intersperse art work in the page? Glued on shapes?
+# News clipping cut outs.. can a GAN create samples? Eizibeth did something similar?
+
+# Elizibeth created handwriting based custom fonts..
 
 import random
 import sys
