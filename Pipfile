@@ -33,6 +33,7 @@ scikit-learn = "==0.23.2"
 sqlalchemy = "*"
 uvicorn = "*"
 wordcloud = "*"
+numpy = "*"
 
 [requires]
 python_version = "3"
