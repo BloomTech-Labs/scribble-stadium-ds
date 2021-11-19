@@ -84,8 +84,8 @@ class Application(PipelinePhase):
         self.current_np_img_point_idx=0
         for pt in pts:
             #convert from prediction space to image space
-            pt_y = (pt[0]/network_input.shape[0]) * self.np_img_orig.shape[0]
-            pt_x = (pt[1]/network_input.shape[1]) * self.np_img_orig.shape[1]
+            pt_y = (pt[1]/network_input.shape[0]) * self.np_img_orig.shape[0]
+            pt_x = (pt[0]/network_input.shape[1]) * self.np_img_orig.shape[1]
             self.np_img_points[self.current_np_img_point_idx] = [pt_x, pt_y]
             self.current_np_img_point_idx = self.current_np_img_point_idx + 1
 
