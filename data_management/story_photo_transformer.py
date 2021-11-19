@@ -11,7 +11,7 @@ from data_management.phase_tkinter_class import PipelinePhase
 from data_management.phase_tkinter_class import np_photo_image
 from models.synthetic_data.synthetic_data_for_pipeline_transform.generate import input_size as model_input_size
 
-from data_management.story_photo_transformer_model import predict
+from data_management.story_photo_transformer_model import predict_pts
 
 
 class Application(PipelinePhase):
@@ -79,7 +79,8 @@ class Application(PipelinePhase):
 
     def auto_button(self):
         network_input = self.get_X_input_img(self.np_img_orig)
-        pts = predict()
+        pts = predict_pts(network_input)
+        print(pts)
         self.current_np_img_point_idx=0
         for pt in pts:
             #convert from prediction space to image space
@@ -88,11 +89,16 @@ class Application(PipelinePhase):
             self.np_img_points[self.current_np_img_point_idx] = [pt_x, pt_y]
             self.current_np_img_point_idx = self.current_np_img_point_idx + 1
 
+        pairs = [[0, 1], [1, 2], [2, 3], [3, 0]]
+        for pt1_idx, pt2_idx in pairs:
+            if (pt1_idx < self.current_np_img_point_idx) & (pt2_idx < self.current_np_img_point_idx):
+                pt1 = self.img_2_canvas_pt(self.np_img_points[pt1_idx])
+                pt2 = self.img_2_canvas_pt(self.np_img_points[pt2_idx])
+                self.canvas.coords(self.line_handles[pt1_idx], *(pt1 + pt2))
         self.update()
 
     def get_X_input_img(self, np_img) -> np.array:
         X_img = cv2.resize(np_img, model_input_size, interpolation=cv2.INTER_AREA)
-        X_img = cv2.cvtColor(X_img, cv2.COLOR_BGR2RGB)
         return X_img
 
     def save_results(self):
