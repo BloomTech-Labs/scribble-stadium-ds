@@ -11,6 +11,8 @@ from data_management.phase_tkinter_class import PipelinePhase
 from data_management.phase_tkinter_class import np_photo_image
 from models.synthetic_data.synthetic_data_for_pipeline_transform.generate import input_size as model_input_size
 
+from data_management.story_photo_transformer_model import predict
+
 
 class Application(PipelinePhase):
     """
@@ -48,6 +50,11 @@ class Application(PipelinePhase):
         This function creates the widgets for the UI and default canvas widgets
         :return: None
         """
+        self.auto_btn = tk.Button(self.controls_frame)
+        self.auto_btn["text"] = "Auto"
+        self.auto_btn["command"] = self.auto_button
+        self.auto_btn.pack(side="top")
+
         self.transform_btn = tk.Button(self.controls_frame)
         self.transform_btn["text"] = "Transform"
         self.transform_btn["command"] = self.transform_button
@@ -69,6 +76,24 @@ class Application(PipelinePhase):
         self.line_handles = [self.canvas.create_line([0, 0, 0, 0], fill="#ffff00") for i in range(4)]
         self.cursor_oval_handles = [self.canvas.create_oval([-10, -10, 10, 10], fill="#ffff00") for i in range(4)]
         self.image_handle = None
+
+    def auto_button(self):
+        network_input = self.get_X_input_img(self.np_img_orig)
+        pts = predict()
+        self.current_np_img_point_idx=0
+        for pt in pts:
+            #convert from prediction space to image space
+            pt_y = (pt[0]/network_input.shape[0]) * self.np_img_orig.shape[0]
+            pt_x = (pt[1]/network_input.shape[1]) * self.np_img_orig.shape[1]
+            self.np_img_points[self.current_np_img_point_idx] = [pt_x, pt_y]
+            self.current_np_img_point_idx = self.current_np_img_point_idx + 1
+
+        self.update()
+
+    def get_X_input_img(self, np_img) -> np.array:
+        X_img = cv2.resize(np_img, model_input_size, interpolation=cv2.INTER_AREA)
+        X_img = cv2.cvtColor(X_img, cv2.COLOR_BGR2RGB)
+        return X_img
 
     def save_results(self):
         self.save_button()
