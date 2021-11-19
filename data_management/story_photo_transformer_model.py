@@ -1,3 +1,5 @@
+import logging
+
 import cv2
 import glob
 from os.path import relpath
@@ -11,30 +13,21 @@ import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
-import matplotlib.pyplot as plt
 
 
-import joblib
+def load_data(path: str):
+    files = glob.glob(path)
 
+    lX = np.array([cv2.cvtColor(cv2.imread(x), cv2.COLOR_RGB2BGR) for x in files if "X_input" in x])
+    ly = [json.loads(open(y, 'rb').read())["y_label_points"] for y in files if ".json" in y]
+    ly = np.array(ly).reshape((lX.shape[0], 8))
+    return lX, ly
 
-def load_data(dir):
-    path_real = dir
-    real_set=glob.glob(path_real)
-
-    X_real =np.array([ cv2.cvtColor(cv2.imread(x),cv2.COLOR_RGB2BGR) for x in real_set if "X_input" in x ])
-    y_real =[ json.loads(open(y,'rb').read() )["y_label_points"] for y in real_set if ".json" in y ]
-    y_real = np.array(y_real).reshape((X_real.shape[0],8))
-    return (X_real, y_real)
-    print(dir)
-    print(y_real)
-
-  
 
 def create_model():
-        
-    img_inputs = keras.Input(shape=(256, 256-64, 3))
-    x=img_inputs
-    
+    img_inputs = keras.Input(shape=(256, 256 - 64, 3))
+    x = img_inputs
+
     x = layers.Flatten()(x)
 
     x = layers.Dense(64, activation="relu")(x)
@@ -43,41 +36,54 @@ def create_model():
     x = layers.Dense(32, activation="relu")(x)
     x = layers.Dense(24, activation="relu")(x)
     x = layers.Dense(16, activation="relu")(x)
-    outputs = layers.Dense(8,)(x)
-    
-    model = keras.Model(inputs=img_inputs, outputs=outputs, name="FC_Model")
-    return model
+    outputs = layers.Dense(8, )(x)
 
-def train_model(dir, model):
-    examples = glob.glob(dir)
-    records = {join(dirname(fn),basename(fn).split(".")[0]) for fn in examples}
-    X_train =[ cv2.cvtColor(cv2.imread(x),cv2.COLOR_RGB2BGR) for x in examples if "X_input" in x ]
-    y_train =[ json.loads( open(y,'rb').read() )["y_label_points"] for y in examples if ".json" in y ]
-    X_train = np.array(X_train)
-    y_train = np.array(y_train).reshape((X_train.shape[0],8))
-    model.compile(loss="MAE",optimizer=tf.keras.optimizers.Adam(learning_rate=.0001))
-    model.fit(X_train,y_train)
-    model.save('dtp_phase1_model.tf', save_format="tf")
-    return model
+    l_model = keras.Model(inputs=img_inputs, outputs=outputs, name="FC_Model")
+    return l_model
 
-def predict_pts(X_input : np.array) -> list:
-    assert len(X_input.shape) == 3
-    X_input = np.expand_dims(X_input, axis = 0) # to add a bacth diminsion
-    pred =  model.predict(X_input)
-    return pred.reshape(4,2).tolist()
+
+def train_model(l_model, X, y):
+    l_model.compile(loss="MAE", optimizer=tf.keras.optimizers.Adam(learning_rate=.0001))
+    l_model.fit(X, y,epochs=100,batch_size=3)
+    l_model.save('dtp_phase1_model.tf', save_format="tf")
+    return l_model
+
+
+def predict_pts(x: np.array) -> list:
+    assert len(x.shape) == 3
+    x = np.expand_dims(x, axis=0)  # to add a bacth diminsion
+    pred = model.predict(x)
+    return pred.reshape(4, 2).tolist()
+
+
+def load_model():
+    try:
+        global model
+        model_file_name = data_dir = join(dirname(__file__), 'dtp_phase1_model.tf')
+        new_model = tf.keras.models.load_model(model_file_name)
+        print("loaded existing model")
+        new_model.summary()
+        model = new_model
+
+    except OSError as e:
+        logging.exception(
+            f"no model was found for DTP phase 1, execute python {__file__} to auto generate a new model ")
+        raise e
 
 
 if __name__ == "__main__":
-
-    data_dir = join(dirname(__file__),"..","models","synthetic_data","synthetic_data_for_pipeline_transform","data","*","*")
-    X_real, y_real = load_data(data_dir)  
-    model = train_model(data_dir, create_model())
-
-'''
-for loading the model)
-'''
-# new_model = tf.keras.models.load_model('dtp_phase1_model.tf')
-# new_model.summary()
-# print(predict_pts(X_real[0]))##
-
+    model = None
+    print("Would you like to overwrite/create a new model?")
+    yn = input()
+    if "yes" in yn:
+        print("okay.. creating..")
+        data_dir = join(dirname(__file__), "..", "models", "synthetic_data", "synthetic_data_for_pipeline_transform",
+                        "data", "*", "*")
+        X, y = load_data(data_dir)
+        model = train_model(create_model(), X, y)
+        model_file_name = data_dir = join(dirname(__file__), 'dtp_phase1_model.tf')
+        model.save(model_file_name)
+else:
+    model = None
+    load_model()
 
