@@ -1,7 +1,11 @@
 Google Vision to Tesseract transition
 
+Objective: Prepare the groundwork for integrating a custom Tesseract model when it is ready.
+Note: This only relates to NLP, not Google Vision used for the drawings. 
 
-Main files used:
+
+Main files used by Google Vision:
+
 app/api/models.py
     Purpose: 
         Defines “Submission” class: submission ID, story ID, pages (pg#: URL)

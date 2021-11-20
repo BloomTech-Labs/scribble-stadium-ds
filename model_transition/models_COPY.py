@@ -1,0 +1,213 @@
+"""
+This was copied from app/api/models.py
+The goal is to identify code that needs to be changed to make it work with the Tesseract model.
+
+Main purpose of this file: 
+        Defines the “Submission” class: submission ID, story ID, pages (pg#: URL)
+
+Assessment: 
+        Does not need to be modified to handle Tesseract output. 
+"""
+
+import sys
+from typing import List
+
+from pydantic import BaseModel, Field, validator
+
+
+class Submission(BaseModel):
+    """# Model that handles text submissions to the API `submission/text` endpoint
+
+    ## **Fields:**
+
+    ### SubmissionID - `int`
+    <p>
+        SubmissionID used to index the unique student submission to StoryID
+        prompt
+    </p>
+
+    ### StoryId - `int`
+    <p>
+        StoryID used to index the writing prompt given to the students
+    </p>
+
+    ### Pages - `dict`
+    <p>
+        A dictionary containing page number keys and value dictionaries with the
+        following keys:
+    </p>
+
+    ```python3
+    {
+        "URL": # The url to the file that will be downloaded for transcription
+        "Checksum": # Checksum for the file that is downloaded to verify its file integrity
+    }
+    ```
+
+    ## **Validation Functions:**
+
+    ### **check_valid_subid(cls, value)** uses `SubmissionID`
+
+    `Asserts that: 0 < SubmissionID < sys.maxsize`
+    <p>
+        Function is used to make sure that the passed value for SubmissionID
+        is not negative and does not cause an integer overflow.
+    </p>
+
+    ### **check_sha_len(cls, value)** uses `Pages`
+
+    <p>
+        Function that takes the value of checksum and assert that it's 128
+        characters long to ensure that it's the proper length for a SHA512
+        checksum.
+    </p>
+    """
+
+    SubmissionID: int = Field(..., example=123564)
+    StoryId: int = Field(..., example=154478)
+    Pages: dict = Field(
+        ...,
+        example={
+            "1": {
+                "URL": "https://test-image-bucket-14579.s3.amazonaws.com/bucketFolder/1600554345008-lg.png",
+                "Checksum": "edbd2c0cd247bda620f9a0a3fe5553fb19606929d686ed3440742b1a25df426a8e6d3188b7eec163488764cc72d8cee67faba47e29f7744871d94d2a19dc70de",
+            },
+            "2": {
+                "URL": "https://test-image-bucket-14579.s3.amazonaws.com/bucketFolder/1600554345008-lg.png",
+                "Checksum": "edbd2c0cd247bda620f9a0a3fe5553fb19606929d686ed3440742b1a25df426a8e6d3188b7eec163488764cc72d8cee67faba47e29f7744871d94d2a19dc70de",
+            },
+        },
+    )
+
+    @validator("SubmissionID")
+    def check_valid_subid(cls, value):
+        # no neg numbers and no int overflows
+        assert value >= 0
+        assert value < sys.maxsize
+        return value
+
+    @validator("Pages")
+    def check_sha_len(cls, value):
+        for page in value:
+            assert len(value[page]["Checksum"]) == 128
+        return value
+
+
+class ImageSubmission(BaseModel):
+    """# Model that handles illustration submissions to the API `submission/illustration` endpoint
+
+    ## **Fields:**
+
+    ### SubmissionID -
+    <p>
+        Submission id that is passed to identify the illustration
+        for moderation purposes
+    </p>
+
+    ### URL -
+    <p>
+        Url to the file that is going to be submitted to Google API
+    </p>
+
+    ### Checksum -
+    <p>
+        SHA512 checksum of the file to verify the integrity of the
+        downloaded file
+    </p>
+
+    ## **Validation Functions:**
+
+    ### **check_valid_subid(cls, value)** uses `SubmissionID`
+
+    `Asserts that: 0 < SubmissionID < sys.maxsize`
+
+    <p>
+        Function is used to make sure that the passed value for SubmissionID
+        is not negative and does not cause an integer overflow.
+    </p>
+    <br>
+
+    ### **check_sha_len(cls, value)** uses `Checksum`
+
+    <p>
+        Function that takes the value of checksum and assert that it's 128
+        characters long to ensure that it's the proper length for a SHA512
+        checksum.
+    </p>
+    """
+
+    SubmissionID: int = Field(..., example=265458)
+    URL: str = Field(
+        ...,
+        example="https://test-image-bucket-14579.s3.amazonaws.com/bucketFolder/1600554345008-lg.png",
+    )
+    Checksum: str = Field(
+        ...,
+        example="edbd2c0cd247bda620f9a0a3fe5553fb19606929d686ed3440742b1a25df426a8e6d3188b7eec163488764cc72d8cee67faba47e29f7744871d94d2a19dc70de",
+    )
+
+    @validator("SubmissionID")
+    def check_valid_subid(cls, value):
+        # no neg numbers and no int overflows
+        assert value >= 0
+        assert value < sys.maxsize
+        return value
+
+    @validator("Checksum")
+    def check_sha_len(cls, value):
+        assert len(value) == 128
+        return value
+
+
+class LineGraphRequest(BaseModel):
+    """Model that handles LineGraph Requests to the API"""
+
+    ScoreHistory: List[int] = Field(..., example=[1005, 1500, 9000, 789])
+    StudentName: str = Field(..., example="Firstname")
+
+class CroppedWordsRequest(BaseModel):
+    """Model that handles CropCloud Requests to the API"""
+
+    user_id: str = Field(..., example="XiChi")
+    date_range: List[str] = Field(..., example=["2019-06-16","2020-10-23"])
+    complexity_metric: str = Field(..., example="syl")
+    image_format: str = Field(..., example=".webp")
+    canvas_area: int = Field(..., example=658560)
+    density: float = Field(..., example=0.40)
+
+class CropCloudRequest(BaseModel):
+    """Model that handles CropCloud Requests to the API"""
+
+    user_id: str = Field(..., example="XiChi")
+    date_range: List[str] = Field(..., example=["2019-06-16","2020-10-23"])
+    complexity_metric: str = Field(..., example="syl")
+    image_format: str = Field(..., example=".webp")
+    canvas_width: int = Field(..., example=960)
+    density: float = Field(..., example=0.40)
+    max_words: int = Field(..., example=200)
+
+class HistogramRequest(BaseModel):
+    """Model that handles Histogram Requests to the API"""
+
+    GradeList: List[int] = Field(..., example=[1005, 1500, 9000, 789])
+    GradeLevel: int = Field(..., example=8)
+    StudentName: str = Field(..., example="Firstname")
+    StudentScore: int = Field(..., example=1058)
+
+
+class ClusterSubmission(BaseModel):
+    """Model used to psudocode request body"""
+
+    Image: str = Field(..., example="http://lorempixel.com/640/480/abstract")
+    Inappropriate: bool = Field(..., example=False)
+    Sensitive: bool = Field(..., example=False)
+    Status: str = Field(..., example="APPROVED")
+    Complexity: int = Field(..., example=123)
+    Pages: dict = Field(
+        ...,
+        example={
+            "1": "http://lorempixel.com/640/480/abstract",
+            "2": "http://lorempixel.com/640/480/abstract",
+        },
+        description="A dictionary with page number as keys and url for values",
+    )
