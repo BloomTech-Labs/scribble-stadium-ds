@@ -10,7 +10,7 @@ To see the action in progress click on the actions tab from the branch homepage.
 If any files cause a flag the test will fail and the name of the files will show along with the recommended changes.
 
 ### Decoding Error Messages ###
-The lines that are needing to be changed will have a - next to them the following lines with the + are what should replace it.
+The lines that are needing to be changed will have a '-' next to them the following lines with the '+' are what should replace it.
 
 This is an example of a linting error:
 ![Example code](./linter-example.png)
