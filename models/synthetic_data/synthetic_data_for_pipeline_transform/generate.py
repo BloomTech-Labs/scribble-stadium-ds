@@ -248,6 +248,7 @@ def create_bunch(how_many: int, noise: float = 1, cores: int = 4, noise_start: i
 
     # monitor list of processes to find opportunities to start no processes and start them, while removing old procs
     todo = how_many
+    started = []
     while todo != 0:
         todo = 0
         free = 0
@@ -260,7 +261,7 @@ def create_bunch(how_many: int, noise: float = 1, cores: int = 4, noise_start: i
                 if p.exitcode == 0:
                     free += 1
                     processes[i] = None
-        started = []
+
 
         for _ in range(free):
             for i, p in enumerate(processes):
@@ -268,7 +269,7 @@ def create_bunch(how_many: int, noise: float = 1, cores: int = 4, noise_start: i
                     if p.exitcode is None:
                         if not p.is_alive():
                             if i not in started:
-                                print("starting: ", i, "<->", started)
+                                #print("starting: ", i, "<->", started)
                                 started.append(i)
                                 p.start()
                                 break
