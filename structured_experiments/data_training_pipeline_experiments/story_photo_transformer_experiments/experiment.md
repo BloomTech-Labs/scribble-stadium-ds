@@ -1,13 +1,13 @@
 #Research question: 
 Is it possible to design a model to replace user input in [story_photo_transformer.py](../../../data_management/story_photo_transformer.py) and result in comparable transformed image quality?
 is it possible using the sythetic dataset provided by generate.py and samples of user input provided by
-story_photo_transformer.py to generate coordinates with less than 8pix mean average error.
+story_photo_transformer.py to generate coordinates with less than 8pix mean average error?
 
 ##Assumptions:
 (these should be tested but time does not allow)
 1) A 3 layer fully connected network of 32 neurons each will not provide a low enough MAE
 2) training on less than 1000 samples without synthetic data on any architecture will not provide low enough MAE
-##Hypthoses:
+##Hyptheses:
 1) Training a 3 layer fully connected network on synthetic data first will improve MAE on user generated data.
 2) Adding convolution layers to the beginning of the model will improve MAE to below baseline levels
 3) converting the input to grayscale and providing x and y axis value distribution information will lower MAE
@@ -45,3 +45,6 @@ possess the following basic structure.
    1) this notebook will convert the dataset to black and white first and then test vrs the baseline model
 4) sliceing_will_improve_mae.ipynb will test, "Slicing the image into slices of 1/3 and only giving the model the corners will lower MAE of the baseline."
    1) this notebook will provide a model that slices the input up and and test it against the baseline model
+
+
+---=== link to results
