@@ -31,4 +31,14 @@ These modules represent phases in the pipeline
 
 - Updated: 12/06/2021
 - Using OpenCV and related libraries to automate the above tasks.
-- The manual option might be good to keep around for cases of flagged projects.
+- Full documentation will be updated as code is built. Current functions so far:
+    - greyscale image
+    - noise removal
+    - threshold
+    - dilation
+    - erosion
+    - opening (erosion -> dilation)
+    - edge detection (canny)
+    - deskew
+    - match template
+    - bounding boxes for individual words
