@@ -6,8 +6,7 @@ from cv2 import imdecode, cvtColor, IMREAD_COLOR, COLOR_BGR2RGB
 from pytesseract import image_to_string
 import numpy as np
 
-# Get the name of the directory where this file
-# is located.
+# Get name of directory where this file is located
 DIR = dirname(__file__)
 
 # Setup globals
@@ -15,64 +14,104 @@ BAD_WORDS_CSV = DIR + '/../moderation/bad_single.csv'
 MODEL_DIR = DIR + '/../../../models/'
 TESSDATA_DIR = MODEL_DIR
 
-# Tell tesseract to look in the TESSDATA_DIR dir for
-# lang trainedata files.
+# Tell tesseract to look in TESSDATA_DIR for lang trainedata files
 TESS_CONFIG = f'--tessdata-dir "{TESSDATA_DIR}"'
 
 
 class TesseractAPI:
-    """# An Interface to the Tesseract OCR Engine"""
+    """
+    Interface to Tesseract OCR engine
+    Takes single image page and returns transcribed text
+    """
 
     def __init__(self, lang='storysquad'):
-        """function that prepares the TesseractAPI to handle requests from the
-        endpoints.
-
         """
-        load_dotenv()
+        Arguments:
+        Tesseract model (default is 'storysquad')
+        
+        Actions:
+        Prepares TesseractAPI to handle requests from the endpoints
+        """
 
+        load_dotenv() 
         self.text_moderator = BadWordTextModerator(BAD_WORDS_CSV)
         self.lang = lang
 
-    def img_preprocess(self, img):
-        ret = []
+    def img_preprocess(self, image):
+        """
+        Arguments:
+        Single full-page image
 
-        img = cvtColor(img, COLOR_BGR2RGB)
+        Actions:
+        1. Convert image data bytestring to image object
+        2. Convert order of image colors from BGR to RGB
 
-        ret.append(img)
-
-        # Return processed image
-        return ret
-
-    async def transcribe(self, document):
-        """Detects document features in images and returns extracted text
-        Input:
-        --------
-        `document`: bytes - The file object to be sent to Tesseract OCR Engine
-
-        Output:
-        --------
-        `transcribed_text`: str - Transcribed text from Tesseract OCR Engine
-
+        Returns:
+        Full-page processed image
         """
 
-        # Convert image data bytestring to image object
-        nparr = np.fromstring(document, np.uint8)
-        img = imdecode(nparr, IMREAD_COLOR)
+        # 1. Convert bytestring to image object
+        nparr = np.fromstring(image, np.uint8)
+        processed_img = imdecode(nparr, IMREAD_COLOR)
 
-        img_blocks = self.img_preprocess(img)
-        flagged = False
+        # 2. Convert image from BGR to RGB
+        processed_img = cvtColor(image, COLOR_BGR2RGB)
 
-        transcribed_text = []
+        # Return processed image
+        return processed_img
 
-        for img_block in img_blocks:
-            ttext = image_to_string(
-                img_block, lang=self.lang, config=TESS_CONFIG)
+    def extract_text(self, image):
+        """
+        Arguments:
+        Single full-page image
 
-            for word in ttext:
-                # check moderation status of word in paragraph
-                if self.text_moderator.check_word(str(word).lower()):
-                    flagged = True
+        Actions:
+        1. Extract text from image with Tesseract OCR
+        2. Moderate content
+        3. Calculate confidence (not implemented)
+        
+        Returns:
+        1. Transcribed text (string)
+        2. Bad content flag (T/F)
+        3. Low confidence flag (T/F) (currently False as not implemented)
+        """
 
-            transcribed_text.append(ttext)
+        # 1. Extract text from image using Tesseract OCR
+        text = image_to_string(
+            image, lang=self.lang, config=TESS_CONFIG)
 
-        return False, flagged, ' '.join(transcribed_text)
+        # 2. Moderate content by checking all words in text
+        content_flagged = False
+        for word in text:
+            if self.text_moderator.check_word(str(word).lower()):
+                content_flagged = True
+
+        # 3. Calculate confidence
+        # NOT IMPLEMENTED
+        low_confidnce = False
+
+        # Return confidence flag, moderation flag, text
+        return low_confidnce, content_flagged, text
+
+    async def transcribe(self, image):
+        """
+        Arguments:
+        Single full-page image
+
+        Actions:
+        1. Preprocesses image
+        2. Extract text, moderate content, get confidence
+
+        Returns:
+        1. Transcribed text (string)
+        2. Bad content flag (T/F)
+        3. Low confidence flag (T/F)
+        """
+        
+        # Preprocess image
+        features = self.img_preprocess(image)
+        # Extract text, moderate content, get confidence
+        text, content_flagged, low_confidnce = self.extract_text(features)
+        
+        # Return confidence flag, moderation flag, text
+        return low_confidnce, content_flagged, text

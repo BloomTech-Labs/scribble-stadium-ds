@@ -33,6 +33,11 @@ class Submission(BaseModel):
     }
     ```
 
+    ### Model - `str`
+    <p>
+        The model to be used for OCR (defaults to Google Vision)
+    </p>
+
     ## **Validation Functions:**
 
     ### **check_valid_subid(cls, value)** uses `SubmissionID`
@@ -67,6 +72,7 @@ class Submission(BaseModel):
             },
         },
     )
+    Model: str = Field(..., example="tesseract")
 
     @validator("SubmissionID")
     def check_valid_subid(cls, value):
