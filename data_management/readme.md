@@ -26,3 +26,9 @@ These modules represent phases in the pipeline
 - Allow user to translate the line of text
 ### Phase 8 - Test and review entire story
 - Run tests on the data that all other phases have created
+
+## Current automation attempts are being implemented
+
+- Updated: 12/06/2021
+- Using OpenCV and related libraries to automate the above tasks.
+- The manual option might be good to keep around for cases of flagged projects.
