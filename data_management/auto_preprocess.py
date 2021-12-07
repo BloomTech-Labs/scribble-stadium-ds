@@ -54,11 +54,14 @@ def deskew(image):
 def match_template(image, template):
     return cv2.matchTemplate(image, template, cv2.TM_CCOEFF_NORMED) 
 
-# h, w, c = img.shape
-# boxes = pytesseract.image_to_boxes(img) 
-# for b in boxes.splitlines():
-#     b = b.split(' ')
-#     img = cv2.rectangle(img, (int(b[1]), h - int(b[2])), (int(b[3]), h - int(b[4])), (0, 255, 0), 2)
+# wrapping individual words
+def bounding_boxes(image):
+    n_boxes = len(d['text'])
+    for i in range(n_boxes):
+        if int(d['conf'][i]) > 60:
+            (x, y, w, h) = (d['left'][i], d['top'][i], d['width'][i], d['height'][i])
+            img = cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
+    return n_boxes
 
 cv2.imshow('img', img)
 cv2.waitKey(0)
