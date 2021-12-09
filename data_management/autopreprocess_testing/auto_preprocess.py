@@ -4,6 +4,7 @@ import numpy as np
 from pytesseract import Output
 
 img = cv2.imread('image.jpg')
+d = pytesseract.image_to_data(img, output_type=Output.DICT)
 
 # get grayscale image
 def get_grayscale(image):
@@ -61,7 +62,7 @@ def bounding_boxes(image):
         if int(d['conf'][i]) > 60:
             (x, y, w, h) = (d['left'][i], d['top'][i], d['width'][i], d['height'][i])
             img = cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
-    return n_boxes
+    return img
 
 cv2.imshow('img', img)
 cv2.waitKey(0)
