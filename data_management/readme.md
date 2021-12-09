@@ -1,3 +1,23 @@
+## Current automation attempts are being implemented
+
+- Updated: 12/06/2021
+- Using OpenCV and related libraries to automate the above tasks.
+- Full documentation will be updated as code is built. Current functions so far:
+    - greyscale image
+    - noise removal
+    - threshold
+    - dilation
+    - erosion
+    - opening (erosion -> dilation)
+    - edge detection (canny)
+    - deskew
+    - match template
+    - bounding boxes for individual words
+
+**These features are currently undergoing testing. Using previous preprocessing methods as a guide and the information found [here](https://nanonets.com/blog/ocr-with-tesseract/), it is the goal to have at least half of the below steps automized by the deadline (12/23/2021).**
+
+# The below steps will become obsolete by the end of this project:
+
 ## Phases / Modules to manage and import new training data for tesseract
 - Each module should by default take as input the output of the previous phase/module
 - Each module should also be able to be launched seperatly and work on whatever input the user gives it
@@ -26,19 +46,3 @@ These modules represent phases in the pipeline
 - Allow user to translate the line of text
 ### Phase 8 - Test and review entire story
 - Run tests on the data that all other phases have created
-
-## Current automation attempts are being implemented
-
-- Updated: 12/06/2021
-- Using OpenCV and related libraries to automate the above tasks.
-- Full documentation will be updated as code is built. Current functions so far:
-    - greyscale image
-    - noise removal
-    - threshold
-    - dilation
-    - erosion
-    - opening (erosion -> dilation)
-    - edge detection (canny)
-    - deskew
-    - match template
-    - bounding boxes for individual words
