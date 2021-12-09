@@ -2,6 +2,7 @@ import os
 from hashlib import sha512
 import logging
 from app.utils.img_processing.tesseract_api import TesseractAPI
+import re
 
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
@@ -21,9 +22,8 @@ log = logging.getLogger(__name__)
 google_vision = GoogleAPI() 
 
 
-
 @router.post("/submission/text")
-async def submission_text(sub: Submission):
+def submission_text(sub: Submission):
     """
     Takes a Submission Object and calls the API (Google or Tesseract) to text annotate
     the passed s3 link, then passes those concatenated transcriptions to the SquadScore
@@ -71,7 +71,7 @@ async def submission_text(sub: Submission):
             )
         
         # Execute OCR to obtain text, confidence flag, moderation flag for page
-        conf_flag, content_flagged, trans = await vision.transcribe(r.content)
+        conf_flag, content_flagged, trans = vision.transcribe(r.content)
         # Add text to transcription
         transcriptions += trans + "\n"
         # Add confidence to list of confidence flags
@@ -80,7 +80,7 @@ async def submission_text(sub: Submission):
         # NOT IMPLEMENTED / NEEDED?? / SEE BELOW
 
     # Score transcription using SquadScore algorithm
-    score = await squad_score(transcriptions, scaler)
+    score = squad_score(transcriptions, scaler)
 
     # Count words in entire submission
     cleaned = re.sub("[^-9A-Za-z ]", "", transcriptions).lower()
@@ -125,7 +125,7 @@ async def submission_illustration(sub: ImageSubmission):
         # return bad hash error with the status_code to an ill-formed request
         return JSONResponse(status_code=422, content={"ERROR": "BAD CHECKSUM"})
     # pass file to the GoogleAPI object to safe search filter the file
-    response = await google_vision.detect_safe_search(r.content)
+    response = google_vision.detect_safe_search(r.content)
     # respond with the output dictionary that is returned from
     # GoogleAPI.transcribe() method
     return JSONResponse(status_code=200, content=response)
