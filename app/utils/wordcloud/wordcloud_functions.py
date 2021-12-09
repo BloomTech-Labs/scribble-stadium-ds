@@ -3,7 +3,7 @@ from collections import Counter
 import re
 
 complex_words = pd.read_csv(
-    '../../../data/crop-cloud/complex_words.csv'
+    '/home/afroman/scribble_stadium/scribble-stadium-ds/data/crop-cloud/complex_words.csv'
     )
 
 
@@ -69,14 +69,18 @@ def complexity_df(story_string, num_of_words_needed=20):
     # Dividing the complexity of each word by how many times
     # the word is used in the story
     words['complexity'] = words['complexity'] / words['count']
+    
     # Sorting the words so that the most complex are at the top
     words = words.sort_values(by=['complexity'], ascending=False)
 
     # can return the df to look at the words and their scores
     # return words[['word', 'complexity']][:num_of_words_needed]
 
-    # Returns the selected number of words in a list
-    return words['word'][:num_of_words_needed].tolist()
+    # returns the selected number of words and their complexities
+    temp = words[['word', 'complexity']][:num_of_words_needed]
+    word_complexities = dict(zip(temp.word, temp.complexity))
+
+    return word_complexities
 
 
 def story_word_count(story_string):
