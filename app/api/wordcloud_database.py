@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker, Session
 from fastapi import APIRouter, Depends, HTTPException
 import os
 from dotenv import load_dotenv
-from app.utils.wordcloud.wordcloud_functions import complexity_df #, clean_text
+from app.utils.wordcloud.wordcloud_functions import complexity_df
 
 
 load_dotenv()
@@ -54,6 +54,7 @@ def show_story(id: int = 1, numWords: int = 20, db: Session = Depends(get_db)):
 
     story_string = db_story.story
 
+    # sends the string of the story and the number of words we want the complexity for
     words = complexity_df(story_string, numWords)
 
     return words
