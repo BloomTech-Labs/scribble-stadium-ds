@@ -76,7 +76,6 @@ def complexity_df(story_string, num_of_words_needed=20):
     # Dividing the complexity of each word by how many times
     # the word is used in the story
     words["complexity"] = words["complexity"] / words["count"]
-    
 
     # Sorting the words so that the most complex are at the top
     words = words.sort_values(by=["complexity"], ascending=False)
