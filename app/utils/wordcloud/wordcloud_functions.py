@@ -4,8 +4,8 @@ import re
 from os import path
 
 filepath = path.join(
-                path.dirname(__file__), "..", "..", "..", "data", "crop-cloud", "complex_words.csv"
-            )
+    path.dirname(__file__), "..", "..", "..", "data", "crop-cloud", "complex_words.csv"
+)
 
 complex_words = pd.read_csv(filepath)
 
@@ -77,6 +77,7 @@ def complexity_df(story_string, num_of_words_needed=20):
     # the word is used in the story
     words["complexity"] = words["complexity"] / words["count"]
     
+
     # Sorting the words so that the most complex are at the top
     words = words.sort_values(by=["complexity"], ascending=False)
 
