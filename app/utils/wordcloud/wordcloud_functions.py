@@ -1,8 +1,13 @@
 import pandas as pd
 from collections import Counter
 import re
+from os import path
 
-complex_words = pd.read_csv("../../../data/crop-cloud/complex_words.csv")
+filepath = path.join(
+                path.dirname(__file__), "..", "..", "..", "data", "crop-cloud", "complex_words.csv"
+            )
+
+complex_words = pd.read_csv(filepath)
 
 
 # Takes in the story and how many words needed
@@ -59,10 +64,10 @@ def complexity_df(story_string, num_of_words_needed=20):
     # these are words at higher grade levels, that don't work with the complexity metric
     vdic = pd.Series(
         complex_words.complexity.values, index=complex_words.word
-        ).to_dict()
+    ).to_dict()
     words.loc[words.word.isin(vdic.keys()), "complexity"] = words.loc[
         words.word.isin(vdic.keys()), "word"
-        ].map(vdic)
+    ].map(vdic)
 
     # then filling in the rest with the complexity metric
     words["complexity"] = words["complexity"].fillna(words["syllables"] + words["len"])
