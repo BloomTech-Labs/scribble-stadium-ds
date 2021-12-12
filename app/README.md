@@ -50,4 +50,6 @@ These endpoints are then used by `api/submission.py` to calculate the SquadScore
 
 -----------
 ### Functionality notes:
-* Make sure to have the correct environmental variables. These include `DS_SECRET_TOKEN` and `GOOGLE_CREDS`.
+* Make sure to have the correct environmental variables. These include `DS_SECRET_TOKEN` and `GOOGLE_CREDS`. `DS_SECRET_TOKEN` may need to be entered manually in the API.
+* Windows users should add the Tesseract path in tesseract_api.py (see comment in file).
+* Local environment variables can be used to substitute a different Tesseract model (see `api/submission.py`).  

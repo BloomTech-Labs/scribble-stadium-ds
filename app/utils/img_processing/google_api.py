@@ -56,7 +56,7 @@ class GoogleAPI:
             )
         )
 
-    async def transcribe(self, document):
+    def transcribe(self, document):
         """Detects document features in images and returns extracted text
         Input:
         --------
