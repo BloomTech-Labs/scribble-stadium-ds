@@ -20,6 +20,8 @@ TESS_CONFIG = f'--tessdata-dir "{TESSDATA_DIR}"'
 # Windows users: add local Tesseract path, example below
 # This should not be necessary if running through Docker
 # pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
+pytesseract.tesseract_cmd = "/opt/homebrew/bin/tesseract"
+
 
 class TesseractAPI:
     """
