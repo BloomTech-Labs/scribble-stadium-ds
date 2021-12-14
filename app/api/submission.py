@@ -20,7 +20,7 @@ router = APIRouter()
 log = logging.getLogger(__name__)
 # Google Vision is used for drawings so is needed regardless if Tesseract is used for OCR
 google_vision = GoogleAPI() 
-
+tesseract_vision = TesseractAPI(OCR_MODEL)
 
 @router.post("/submission/text")
 def submission_text(sub: Submission):
@@ -41,7 +41,7 @@ def submission_text(sub: Submission):
     """
     # Set model for OCR, defaults to Google Vision
     if sub.Model == "tesseract":
-        vision = TesseractAPI(OCR_MODEL)
+        vision = tesseract_vision
     else:
         vision = google_vision
 
