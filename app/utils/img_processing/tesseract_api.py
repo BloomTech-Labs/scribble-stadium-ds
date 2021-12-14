@@ -54,14 +54,11 @@ class TesseractAPI:
         Full-page processed image
         """
 
-        # 1. Convert bytestring to image object
         nparr = np.fromstring(image, np.uint8)
         image_array = imdecode(nparr, IMREAD_COLOR)
 
-        # 2. Convert image from BGR to RGB
         processed_img = cvtColor(image_array, COLOR_BGR2RGB)
 
-        # Return processed image
         return processed_img
     
     def extract_data(self, image):
@@ -151,16 +148,11 @@ class TesseractAPI:
         2. Bad content flag (T/F)
         3. Low confidence flag (T/F)
         """
-        # Preprocess image
+        
         features = self.img_preprocess(image)
-        # Extract text
         text = self.extract_text(features)
-        # Extract data
         data_dict = self.extract_data(features)
-        # Moderate content
         content_flagged = self.word_moderation(data_dict)
-        # Get confidence
         low_confidence = self.confidence_flag(data_dict)
         
-        # Return confidence flag, moderation flag, text
         return low_confidence, content_flagged, text
