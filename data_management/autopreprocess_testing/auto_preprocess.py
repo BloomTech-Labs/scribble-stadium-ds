@@ -3,7 +3,7 @@ import pytesseract
 import numpy as np
 from pytesseract import Output
 
-img = cv2.imread('image.jpg')
+img = cv2.imread('/home/cwhyse/BloomProj/scribble-stadium-ds/data_management/autopreprocess_testing/data/Photo 3130 .jpg')
 d = pytesseract.image_to_data(img, output_type=Output.DICT)
 
 # get grayscale image
@@ -41,7 +41,7 @@ def canny(image):
 def deskew(image):
     coords = np.column_stack(np.where(image > 0))
     angle = cv2.minAreaRect(coords)[-1]
-     if angle < -45:
+    if angle < -45:
         angle = -(90 + angle)
     else:
         angle = -angle
