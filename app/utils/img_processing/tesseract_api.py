@@ -1,11 +1,10 @@
 from os.path import dirname
 
 import numpy as np
+from app.utils.moderation.text_moderation import BadWordTextModerator
 from cv2 import COLOR_BGR2RGB, IMREAD_COLOR, cvtColor, imdecode
 from dotenv import load_dotenv
 from pytesseract import image_to_data, image_to_string
-
-from app.utils.moderation.text_moderation import BadWordTextModerator
 
 # Windows users: uncomment and add local Tesseract path, example below
 # This should not be necessary if running through Docker (or for Mac users)
