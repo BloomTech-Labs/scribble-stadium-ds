@@ -1,5 +1,8 @@
+import os
 from hashlib import sha512
 import logging
+from app.utils.img_processing.tesseract_api import TesseractAPI
+import re
 
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
@@ -9,68 +12,86 @@ from app.utils.complexity.squad_score import squad_score, scaler
 from app.utils.img_processing.google_api import GoogleAPI, NoTextFoundException
 from app.api.models import Submission, ImageSubmission
 
-# global variables and services
+# Allows user to set environment variable to use different Tesseract model
+OCR_MODEL = os.getenv("OCR_MODEL", default="storysquad")
+
+# Global variables and services
 router = APIRouter()
 log = logging.getLogger(__name__)
-vision = GoogleAPI()
-
+# Google Vision is used for drawings so is needed regardless if Tesseract is used for OCR
+google_vision = GoogleAPI() 
+tesseract_vision = TesseractAPI(OCR_MODEL)
 
 @router.post("/submission/text")
-async def submission_text(sub: Submission):
-    """Takes a Submission Object and calls the Google Vision API to text annotate
+def submission_text(sub: Submission):
+    """
+    Takes a Submission Object and calls the API (Google or Tesseract) to text annotate
     the passed s3 link, then passes those concatenated transcriptions to the SquadScore
     method, returns:
 
     Arguments:
     ---
     `sub`: Submission - Submission object **see `help(Submission)` for more info**
+    
     Returns:
     ---
     ```
-    {"SubmissionID": int, "IsFlagged": boolean,"LowConfidence": boolean, "Complexity": int}
+    {"SubmissionID": int, "IsFlagged": boolean, "LowConfidence": boolean, "Complexity": int}
     ```
     """
+    # Set model for OCR, defaults to Google Vision
+    if sub.Model == "tesseract":
+        vision = tesseract_vision
+    else:
+        vision = google_vision
+
+    # Empty variables for transcription, confidence flags
+    # QUESTION: Also need for moderation flags? 
     transcriptions = ""
     confidence_flags = []
-    # unpack links for files in submission object
+
+    # Use OCR engine on each page in submission
     for page_num in sub.Pages:
-        # re-init the sha algorithm every file that is processed
+        
+        # Verify validity of page link:
+        # Re-init sha algorithm for every file 
         hash = sha512()
-        # fetch file from s3 bucket
+        # Fetch file from s3 bucket
         r = get(sub.Pages[page_num]["URL"])
-        # update the hash with the file's content
+        # Update the hash with the file's content
         hash.update(r.content)
         try:
-            # assert that the hash is the same as the one passed with the file
-            # link
+            # Assert hash is same as the one passed with the file link
             assert hash.hexdigest() == sub.Pages[page_num]["Checksum"]
         except AssertionError:
-            # return some useful information about the error including what
-            # caused it and the file affected
+            # Return some info on error including cause and file affected
             return JSONResponse(
                 status_code=422,
                 content={"ERROR": "BAD CHECKSUM", "file": sub.Pages[page_num]},
             )
-        # unpack response from GoogleAPI
-        conf_flag, flagged, trans = await vision.transcribe(r.content)
-        # concat transcriptions togeather
+        
+        # Execute OCR to obtain text, confidence flag, moderation flag for page
+        conf_flag, content_flagged, trans = vision.transcribe(r.content)
+        # Add text to transcription
         transcriptions += trans + "\n"
-        # add page to list of confidence flags
+        # Add confidence to list of confidence flags
         confidence_flags.append(conf_flag)
-    # score the transcription using SquadScore algorithm
-    score = await squad_score(transcriptions, scaler)
+        # Add moderation flag to list of moderation flags
+        # NOT IMPLEMENTED / NEEDED?? / SEE BELOW
 
-    # # takes in the story as a string
-    # # counts all words per story submission
+    # Score transcription using SquadScore algorithm
+    score = squad_score(transcriptions, scaler)
+
+    # Count words in entire submission
     cleaned = re.sub("[^-9A-Za-z ]", "", transcriptions).lower()
     cleaned_words_count = len(cleaned.split())
     
-    # return the complexity score to the web team with the SubmissionID
+    # Return complexity score, other data to web team with the SubmissionID
     return JSONResponse(
         status_code=200,
         content={
             "SubmissionID": sub.SubmissionID,
-            "IsFlagged": flagged,
+            "IsFlagged": content_flagged, #QUESTION: Is this returning only the flag for the last page? (see above)
             "LowConfidence": True in confidence_flags,
             "Complexity": score,
             "WordCount": cleaned_words_count  
@@ -104,7 +125,7 @@ async def submission_illustration(sub: ImageSubmission):
         # return bad hash error with the status_code to an ill-formed request
         return JSONResponse(status_code=422, content={"ERROR": "BAD CHECKSUM"})
     # pass file to the GoogleAPI object to safe search filter the file
-    response = await vision.detect_safe_search(r.content)
+    response = google_vision.detect_safe_search(r.content)
     # respond with the output dictionary that is returned from
     # GoogleAPI.transcribe() method
     return JSONResponse(status_code=200, content=response)
