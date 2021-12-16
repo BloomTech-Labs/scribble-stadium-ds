@@ -81,7 +81,7 @@ def metrics(document: str):
     return df
 
 
-async def squad_score(document: str, scaler):
+def squad_score(document: str, scaler):
     """
     Generates a complexity metric, Squad Score, for a given transcription.
 
