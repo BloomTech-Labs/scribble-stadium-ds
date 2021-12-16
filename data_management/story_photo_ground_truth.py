@@ -61,7 +61,7 @@ class Application(PipelinePhase):
                                                                                             relief='sunken',
                                                                                             bg="#000000")
         # get every file in the phase folder and filter out any ground truth files
-        path_to_clips = self.photo_image_folder
+        path_to_clips = self.os_photo_image_folder
         tmp = glob.glob(path.join(path_to_clips, "*.*"))
         tmp = [fn for fn in tmp if "gt.txt" not in fn]
 

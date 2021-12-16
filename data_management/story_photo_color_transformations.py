@@ -29,7 +29,7 @@ class Application(PipelinePhase):
         self.controls_frame.pack(side="top")
         self.create_widgets()
 
-        print(self.filename)
+        print(self.os_filename)
 
     def create_widgets(self):
 

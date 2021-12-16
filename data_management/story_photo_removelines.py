@@ -27,7 +27,7 @@ class Application (PipelinePhase):
         self.np_img = self.np_img.astype("uint8")
         self.np_img_original = self.np_img.copy()
 
-        print(self.filename)
+        print(self.os_filename)
 
     def create_widgets(self):
         """

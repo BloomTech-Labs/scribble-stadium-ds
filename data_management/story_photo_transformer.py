@@ -1,11 +1,17 @@
 import tkinter as tk
 from enum import IntFlag, auto
+from os import path
+import hashlib
 
 import cv2
 import numpy as np
+import json
 
 from data_management.phase_tkinter_class import PipelinePhase
 from data_management.phase_tkinter_class import np_photo_image
+from models.synthetic_data.synthetic_data_for_pipeline_transform.generate import input_size as model_input_size
+
+from data_management.story_photo_transformer_model import predict_pts
 
 
 class Application(PipelinePhase):
@@ -44,6 +50,11 @@ class Application(PipelinePhase):
         This function creates the widgets for the UI and default canvas widgets
         :return: None
         """
+        self.auto_btn = tk.Button(self.controls_frame)
+        self.auto_btn["text"] = "Auto"
+        self.auto_btn["command"] = self.auto_button
+        self.auto_btn.pack(side="top")
+
         self.transform_btn = tk.Button(self.controls_frame)
         self.transform_btn["text"] = "Transform"
         self.transform_btn["command"] = self.transform_button
@@ -51,7 +62,7 @@ class Application(PipelinePhase):
 
         self.save_btn = tk.Button(self.controls_frame)
         self.save_btn["text"] = "Save"
-        self.save_btn["command"] = self.save_button
+        self.save_btn["command"] = self.save_results
         self.save_btn.pack(side="top")
 
         self.quit = tk.Button(self.controls_frame, text="QUIT", fg="red", command=self.destroy)
@@ -65,6 +76,70 @@ class Application(PipelinePhase):
         self.line_handles = [self.canvas.create_line([0, 0, 0, 0], fill="#ffff00") for i in range(4)]
         self.cursor_oval_handles = [self.canvas.create_oval([-10, -10, 10, 10], fill="#ffff00") for i in range(4)]
         self.image_handle = None
+
+    def auto_button(self):
+        network_input = self.get_X_input_img(self.np_img_orig)
+        pts = predict_pts(network_input)
+        print(pts)
+        self.current_np_img_point_idx=0
+        for pt in pts:
+            #convert from prediction space to image space
+            pt_y = (pt[1]/network_input.shape[0]) * self.np_img_orig.shape[0]
+            pt_x = (pt[0]/network_input.shape[1]) * self.np_img_orig.shape[1]
+            self.np_img_points[self.current_np_img_point_idx] = [pt_x, pt_y]
+            self.current_np_img_point_idx = self.current_np_img_point_idx + 1
+
+        pairs = [[0, 1], [1, 2], [2, 3], [3, 0]]
+        for pt1_idx, pt2_idx in pairs:
+            if (pt1_idx < self.current_np_img_point_idx) & (pt2_idx < self.current_np_img_point_idx):
+                pt1 = self.img_2_canvas_pt(self.np_img_points[pt1_idx])
+                pt2 = self.img_2_canvas_pt(self.np_img_points[pt2_idx])
+                self.canvas.coords(self.line_handles[pt1_idx], *(pt1 + pt2))
+        self.update()
+
+    def get_X_input_img(self, np_img) -> np.array:
+        X_img = cv2.resize(np_img, model_input_size, interpolation=cv2.INTER_AREA)
+        return X_img
+
+    def save_results(self):
+        self.save_button()
+        file_name_data = path.join(self.os_story_folder, self.phase, self.os_photo_image_filename_only) + ".json"
+        file_name_X_input = path.join(self.os_story_folder, self.phase,
+                                      self.os_photo_image_filename_only) + ".X_input.png"
+        file_name_y_label = path.join(self.os_story_folder, self.phase,
+                                      self.os_photo_image_filename_only) + ".y_label.png"
+        print(file_name_data)
+
+        x_ratio = model_input_size[0] / self.np_img_orig.shape[1]
+        y_ratio = model_input_size[1] / self.np_img_orig.shape[0]
+        out_pts = []
+        for pt in self.np_img_points:
+            new_pt = (pt[0] * x_ratio, pt[1] * y_ratio)
+            out_pts.append(new_pt)
+            print(pt, new_pt, x_ratio, y_ratio, self.np_img.shape)
+
+        X_img = cv2.resize(self.np_img_orig, model_input_size, interpolation=cv2.INTER_AREA)
+        y_img = cv2.resize(self.np_img, model_input_size, interpolation=cv2.INTER_AREA)
+
+        X_img = cv2.cvtColor(X_img, cv2.COLOR_BGR2RGB)
+        y_img = cv2.cvtColor(y_img, cv2.COLOR_BGR2RGB)
+
+        cv2.imwrite(file_name_X_input, X_img)
+        cv2.imwrite(file_name_y_label, y_img)
+
+        img_hash = hashlib.md5(open(file_name_X_input, 'rb').read()).hexdigest()
+
+        data = {"y_label_points": out_pts,
+                "y_label_image_file": path.basename(file_name_y_label),
+                "X_input_image_file": path.basename(file_name_X_input),
+                "X_input_file_hash": img_hash
+                }
+
+        with open(file_name_data, 'w') as f:
+            json.dump(data, f)
+
+        self.np_img_points = []
+
 
     def next_phase_button(self):
         """
@@ -98,7 +173,6 @@ class Application(PipelinePhase):
         self.canvas.create_image(0, 0, anchor=tk.NW, image=resized_photoimage)
         print(self.master.winfo_height())
 
-        self.np_img_points = []
         self.cursor_oval_handles = []
         self.line_handles = []
 
@@ -184,7 +258,6 @@ phase_list = [Application,
               story_photo_segment_writing.Application,
               story_photo_ground_truth.Application
               ]
-
 
 if __name__ == "__main__":
     first = True
