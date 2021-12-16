@@ -42,21 +42,21 @@ class PipelinePhase(tk.Frame):
 
             master.update_idletasks()
             # ask the user to specify a file
-            self.filename = fd.askopenfilename(
+            self.os_filename = fd.askopenfilename(
                 initialdir=path.join(path.dirname(__file__), "..", "data", "transcribed_stories", "51--", "5101"))
 
             # Check if the OS is Windows or Linux based
-            if ':' in self.filename: # Windows
+            if ':' in self.os_filename: # Windows
                 # correct path specifier
-                self.filename = os.path.join(*self.filename.split("/"))
-                self.filename = self.filename.replace(":", ":\\")
+                self.os_filename = os.path.join(*self.os_filename.split("/"))
+                self.os_filename = self.os_filename.replace(":", ":\\")
 
-            self.story_folder = os.path.dirname(self.filename)
+            self.os_story_folder = os.path.dirname(self.os_filename)
             # check if user opened a file in a "phase" folder
-            while "phase" in self.story_folder:
-                self.story_folder = path.realpath(path.join(self.story_folder, ".."))
+            while "phase" in self.os_story_folder:
+                self.os_story_folder = path.realpath(path.join(self.os_story_folder, ".."))
 
-            self.np_img = cv2.imread(self.filename, cv2.IMREAD_UNCHANGED - cv2.IMREAD_IGNORE_ORIENTATION)
+            self.np_img = cv2.imread(self.os_filename, cv2.IMREAD_UNCHANGED - cv2.IMREAD_IGNORE_ORIENTATION)
 
             # do needed color conversion
             if len(self.np_img.shape) == 3:  # Color Image
@@ -66,14 +66,16 @@ class PipelinePhase(tk.Frame):
 
         else:  # there is a previous phase
             self.np_img = prev_phase.np_img
-            self.story_folder = prev_phase.story_folder
-            self.filename = prev_phase.filename
+            self.os_story_folder = prev_phase.story_folder
+            self.os_filename = prev_phase.filename
 
-        self.photo_image_filename_only = path.basename(self.filename)
-        self.photo_image_folder = path.dirname(self.filename)
+        self.os_photo_image_filename_only = path.basename(self.os_filename)
+        self.os_photo_image_folder = path.dirname(self.os_filename)
 
-        text_full_path = path.join(self.story_folder,self.photo_image_filename_only.split(".")[0])
+        text_full_path = path.join(self.os_story_folder, self.os_photo_image_filename_only.split(".")[0])
         text_full_path=text_full_path.replace("Photo","Story")
+        text_full_path= text_full_path.replace(" pg1","")
+        text_full_path = text_full_path.replace(" pg2", "")
 
         for _ in range(10):
             try:
@@ -107,6 +109,7 @@ class PipelinePhase(tk.Frame):
 
         if "motion_event" in self.__dir__():
             self.canvas.bind("<Motion>", self.motion_event)
+        self.np_img_orig = self.np_img.copy()
 
     def img_2_canvas_pt(self, pt: list):
         x = (pt[0] / self.np_img.shape[1]) * self.canvas.winfo_width()
@@ -204,12 +207,12 @@ class PipelinePhase(tk.Frame):
 
     def save_button(self):
         try:
-            os.mkdir(path.join(self.story_folder, self.phase))
+            os.mkdir(path.join(self.os_story_folder, self.phase))
         except FileExistsError as e:
             self.phase_data_exists = True
 
-        directory = self.story_folder
-        filename, extension = path.basename(self.filename).split(".")
+        directory = self.os_story_folder
+        filename, extension = path.basename(self.os_filename).split(".")
         new_file_name = path.join(directory, self.phase, filename + "." + extension)
 
         # convert before saving
@@ -225,4 +228,4 @@ class PipelinePhase(tk.Frame):
         if len(self.np_img.shape) == 3:
             self.np_img = np.array(cv2.cvtColor(self.np_img, cv2.COLOR_RGB2BGR))
 
-        self.filename = new_file_name
+        self.os_filename = new_file_name

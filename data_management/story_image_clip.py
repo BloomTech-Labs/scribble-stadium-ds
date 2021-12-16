@@ -78,14 +78,14 @@ class Application(PipelinePhase):
         finds the next clip filename by searching for the last clip that was saved and incrementing the number on the
         end of the file name.
         """
-        directory = self.story_folder
+        directory = self.os_story_folder
         tmp = os.path.join(directory, self.phase, "*-clip-*")
         clips = glob.glob(tmp)
-        name, ext = os.path.splitext(os.path.basename(self.filename))
+        name, ext = os.path.splitext(os.path.basename(self.os_filename))
 
         if clips == []:
             try:
-                os.mkdir(os.path.join(self.story_folder, self.phase))
+                os.mkdir(os.path.join(self.os_story_folder, self.phase))
             except FileExistsError as e:
                 self.phase_data_exists = True
 
