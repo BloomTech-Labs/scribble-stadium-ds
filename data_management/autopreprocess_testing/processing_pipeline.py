@@ -1,17 +1,21 @@
-import cv2
+from auto_preprocess import *
 
 def processing_pipeline(img):
     """
-    Adds contour to image 
-    TESTING PURPOSES ONLY
+    Takes and image and passes the image through a series of pre-processing steps
+
+    Arguments:
+    ___
+    A .png or .jpg image
+
+    Returns:
+    ___
+    A preprocessed image
+
     """
     newImage = img.copy()
-    gray = cv2.cvtColor(newImage, cv2.COLOR_BGR2GRAY)
-    blur = cv2.GaussianBlur(gray, (9, 9), 0)
-    thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
-    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (15, 1))
-    dilate = cv2.dilate(thresh, kernel, iterations=5)
-    contours, hierarchy = cv2.findContours(dilate, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
-    contours = sorted(contours, key = cv2.contourArea, reverse = True)
-    largestContour = contours[0]
-    return cv2.drawContours(newImage, [largestContour], 0, (0,255,0), 3)
+    img_grayscaled = get_grayscale(newImage)
+    img_denoised = remove_noise(img_grayscaled)
+    image_G_thresh = adaptiveGaussianThresholding(get_grayscale(img_denoised), blockSize=5, c=2)
+    img_eroded = erode(image_G_thresh, kernelSize=2)
+    return img_eroded
