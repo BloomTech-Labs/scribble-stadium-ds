@@ -28,4 +28,3 @@ for file_path in img_files:
     img = processing_pipeline(img)
     processed_path = target_dir + file_name + "_PROCESSED.jpg"
     cv2.imwrite(processed_path, img)
-    

@@ -49,27 +49,13 @@ def canny(image):
     return cv2.Canny(image, 100, 200)
 
 
-# skew correction
-def deskew(image):
-    coords = np.column_stack(np.where(image > 0))
-    angle = cv2.minAreaRect(coords)[-1]
-    if angle < -45:
-        angle = -(90 + angle)
-    else:
-        angle = -angle
-    (h, w) = image.shape[:2]
-    center = (w // 2, h // 2)
-    M = cv2.getRotationMatrix2D(center, angle, 1.0)
-    rotated = cv2.warpAffine(image, M, (w, h), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
-    return rotated
-
-
 # template matching
 def match_template(image, template):
     return cv2.matchTemplate(image, template, cv2.TM_CCOEFF_NORMED)
 
-# Deskewing steps (courtesy of Carl)
 
+# deskewing (3 functions)
+# Find deskew angle 
 def getSkewAngle(cvImage) -> float:
     """
     Calculate skew angle of an image.
@@ -107,6 +93,7 @@ def getSkewAngle(cvImage) -> float:
         angle = angle - 90
     return angle
 
+# Rotate image using the angle from the above function
 def rotateImage(cvImage, angle: float):
     """
     Rotates image
