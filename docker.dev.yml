@@ -9,5 +9,5 @@ services:
     ports:
       - 8000:8000
     volumes:
-      - .:/app
-    command: sh start.sh
+      - ./data:/train/tessdata/data
+    command: sh /app/start.sh
