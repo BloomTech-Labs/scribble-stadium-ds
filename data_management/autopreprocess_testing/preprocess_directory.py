@@ -7,6 +7,7 @@ Base code for batch pre-processing
 
 import cv2
 import os
+import glob
 from PIL import Image
 from processing_pipeline import processing_pipeline
 
