@@ -15,7 +15,8 @@ def processing_pipeline(img):
     """
     newImage = img.copy()
     img_grayscaled = get_grayscale(newImage)
-    img_denoised = remove_noise(img_grayscaled)
+    img_delined = removeLines(img_grayscaled)
+    img_denoised = remove_noise(img_delined)
     image_G_thresh = adaptiveGaussianThresholding(img_denoised, blockSize=5, c=2)
     img_eroded = erode(image_G_thresh, kernelSize=2)
     return img_eroded

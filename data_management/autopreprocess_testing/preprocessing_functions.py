@@ -6,6 +6,22 @@ import numpy as np
 def get_grayscale(image):
     return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
+def removeLines(img):
+    imfft = np.fft.fft2(img)
+    mags = np.abs(np.fft.fftshift(imfft))
+    angles = np.angle(np.fft.fftshift(imfft))
+    visual = np.log(mags)
+    visual2 = (visual - visual.min()) / (visual.max() - visual.min())*255
+    mask = img
+    mask = (np.mean(mask,-1) > 20)
+    visual[mask] = np.mean(visual)
+    newmagsshift = np.exp(visual)
+    newffts = newmagsshift * np.exp(1j*angles)
+    newfft = np.fft.ifftshift(newffts)
+    imrev = np.fft.ifft2(newfft)
+    newim2 = 255 - np.abs(imrev).astype(np.uint8)
+    return newim2
+
 
 # noise removal
 def remove_noise(image, kernelSize=5):
