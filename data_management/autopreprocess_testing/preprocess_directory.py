@@ -6,7 +6,6 @@ Base code for batch pre-processing
 """
 
 import cv2
-import glob
 import os
 from PIL import Image
 from processing_pipeline import processing_pipeline
@@ -16,16 +15,20 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 # Test image directory
 source_dir = os.getcwd() + '/test_images'
 # Processed image directory
-target_dir = os.getcwd() + '/processed_test_images/'
+target_dir = os.getcwd() + '/processed_test_images'
 
-# Get list of all image paths
-img_files = glob.glob(source_dir + "/**/*.jpg", recursive=True)
-
-# Process each image and save in target directory
-for file_path in img_files:
-    file_name = os.path.basename(file_path)[:-4]
-    img = cv2.imread(file_path)
-    img = processing_pipeline(img)
-    processed_path = target_dir + file_name + "_PROCESSED.jpg"
-    cv2.imwrite(processed_path, img)
-    
+# Process all images in directory
+# Name format: preprocessing_sample_#.jpg
+exists = True
+i = 1
+while exists:
+    img_path = source_dir + "/preprocessing_sample_" + str(i) + ".jpg"
+    if os.path.isfile(img_path):
+        img = cv2.imread(img_path)
+        img = processing_pipeline(img)
+        processed_path = target_dir + "/preprocessing_sample_" + str(i) + "_PROCESSED.jpg"
+        cv2.imwrite(processed_path, img)
+        i += 1
+        # Image.fromarray(img).show()
+    else:
+        exists = False
