@@ -6,7 +6,6 @@ Base code for batch pre-processing
 """
 
 import cv2
-import glob
 import os
 from PIL import Image
 from processing_pipeline import processing_pipeline
@@ -16,7 +15,7 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 # Test image directory
 source_dir = os.getcwd() + '/test_images'
 # Processed image directory
-target_dir = os.getcwd() + '/processed_test_images/'
+target_dir = os.getcwd() + '/processed_test_images'
 
 # Get list of all image paths
 img_files = glob.glob(source_dir + "/**/*.jpg", recursive=True)
