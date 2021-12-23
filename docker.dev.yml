@@ -1,10 +1,22 @@
 version: "3"
 
 services:
-  app:
-    container_name: scribble-ocr
+  train:
+    container_name: scribble-ocr-train
     build:
       context: .
+      target: tesseracttraining
+      dockerfile: Dockerfile_tesseract_training
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/app
+    command: sh start.sh
+  api:
+    container_name: scribble-ocr-api
+    build:
+      context: .
+      target: apitest
       dockerfile: Dockerfile_tesseract_training
     ports:
       - 8000:8000
