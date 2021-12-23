@@ -6,25 +6,22 @@
 # to access the container
 
 # Set docker image
-FROM ubuntu:18.04
+FROM python:3.8-bullseye as tesseracttraining
 
 # Skip the configuration part
 ENV DEBIAN_FRONTEND noninteractive
 
 # Update and install depedencies
 RUN apt-get update && \
-    apt-get install -y wget unzip bc vim python3-pip libleptonica-dev git zsh curl python3-venv
+    apt-get install -y wget unzip bc vim libleptonica-dev git curl
 
 # Packages to complie Tesseract
 RUN apt-get install -y --reinstall make && \
-    apt-get install -y g++ autoconf automake libtool pkg-config libpng-dev libjpeg8-dev libtiff5-dev libicu-dev \
+    apt-get install -y g++ autoconf automake libtool pkg-config libpng-dev libjpeg62-turbo-dev libtiff5-dev libicu-dev \
         libpango1.0-dev autoconf-archive
 
 # Set working directory
 WORKDIR /app
-
-# Copy requirements into the container at /app
-COPY requirements.txt ./
 
 # Compile Tesseract with training options
 RUN cd .. && \
@@ -36,20 +33,43 @@ RUN cd .. && \
     cd ..  && \
     git clone https://github.com/tesseract-ocr/tesstrain.git && \
     cd tesstrain && \
-    python3 -m venv ocr && \
     mkdir data && cd data  && \
     cd /usr/local/share/tessdata && wget https://github.com/tesseract-ocr/tessdata_best/raw/main/eng.traineddata && \
     wget https://github.com/tesseract-ocr/tessdata_fast/blob/65727574dfcd264acbb0c3e07860e4e9e9b22185/osd.traineddata && \
     mv /usr/local/share/tessdata/ /train
 
-# Setting the TESSDATA_PREFIX prefix
-ENV TESSDATA_PREFIX=/train/tessdata
+RUN mkdir -p /train/langdata && cd /train/langdata && \
+    wget https://raw.githubusercontent.com/tesseract-ocr/langdata_lstm/main/radical-stroke.txt && \
+    wget https://raw.githubusercontent.com/tesseract-ocr/langdata_lstm/main/common.punc  && \
+    wget https://raw.githubusercontent.com/tesseract-ocr/langdata_lstm/main/font_properties && \
+    wget https://raw.githubusercontent.com/tesseract-ocr/langdata_lstm/main/Latin.unicharset  && \
+    wget https://raw.githubusercontent.com/tesseract-ocr/langdata_lstm/main/Latin.xheights  && \
+    mkdir eng && cd eng && \
+    wget https://raw.githubusercontent.com/tesseract-ocr/langdata/main/eng/eng.training_text && \
+    wget https://raw.githubusercontent.com/tesseract-ocr/langdata/main/eng/eng.punc && \
+    wget https://raw.githubusercontent.com/tesseract-ocr/langdata/main/eng/eng.numbers && \
+    wget https://raw.githubusercontent.com/tesseract-ocr/langdata/main/eng/eng.wordlist
 
-# Installing libraries can happen later due to specific version not been able to install
-RUN python3 -m pip install --upgrade pip
+RUN mkdir -p /usr/local/share/fonts/journal && \
+    wget https://dl.dafont.com/dl/?f=journal -O /tmp/journal.zip && \
+    unzip /tmp/journal.zip -d /usr/local/share/fonts/journal
 
-# Set the locale
-RUN apt-get install -y locales && locale-gen en_US.UTF-8
-ENV LC_ALL=en_US.UTF-8
-ENV LANG=en_US.UTF-8
-ENV LANGUAGE=en_US.UTF-8
+# Setting the TESSDATA_PREFIX
+
+# Set docker image
+FROM tesseracttraining as apitest
+
+# Skip the configuration part
+ENV DEBIAN_FRONTEND noninteractive
+
+COPY requirements.txt /app/requirements.txt
+
+# Set working directory
+WORKDIR /app
+
+# Update and install depedencies
+RUN apt-get update && \
+    apt-get install ffmpeg libsm6 libxext6 -y
+
+RUN pip install -r requirements.txt
+
