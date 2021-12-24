@@ -151,3 +151,8 @@ cython_debug/
 # data
 /data/story_images.zip
 /Pipfile.lock
+data/configs/*
+data/eng.traineddata
+data/eng/
+data/storysquad-ground-truth/*.lstmf
+data/storysquad-ground-truth/*.box

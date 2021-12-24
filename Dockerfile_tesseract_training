@@ -33,7 +33,6 @@ RUN cd .. && \
     cd ..  && \
     git clone https://github.com/tesseract-ocr/tesstrain.git && \
     cd tesstrain && \
-    mkdir data && cd data  && \
     cd /usr/local/share/tessdata && wget https://github.com/tesseract-ocr/tessdata_best/raw/main/eng.traineddata && \
     wget https://github.com/tesseract-ocr/tessdata_fast/blob/65727574dfcd264acbb0c3e07860e4e9e9b22185/osd.traineddata && \
     mv /usr/local/share/tessdata/ /train
@@ -63,6 +62,8 @@ RUN python3 -m pip install --upgrade pip
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
 
+COPY ./tesstrain/Makefile /train/tesstrain/Makefile
+
 # Set the locale
 RUN apt-get install -y locales && locale-gen en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
@@ -70,4 +71,6 @@ ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US.UTF-8
 
 COPY start.sh /app/start.sh
+
+WORKDIR /train/tesstrain 
 

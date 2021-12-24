@@ -223,12 +223,10 @@ The directory structure for important directories of the container from **root**
         │                      eng.trainedata is available. The trained models are placed here. 
         │
         ├── tesstrain      <- tesstrain directory through which the training will be
-        │                     run. Always run the `source ocr/bin/activate` to activate 
-        │                     `ocr` venv before doing any training. Make sure to install 
-        │                     all dependencies using `pip install -r requirements.txt` for 
-        │                     initial run. For training use 
-        │                     `make training MODEL_NAME=storysquad START_MODEL=eng 
-        │                     TESSDATA=/train/tessdata`. For hyperparameter tuning refer 
+        │                     run. 
+        │                     
+        For training use 
+        │                     `make training MODEL_NAME=storysquad START_MODEL=eng TESSDATA=/train/tessdata/`. For hyperparameter tuning refer 
         │                     https://tesseract-ocr.github.io/tessdoc/tess4/TrainingTesseract-4.00.html#lstmtraining-command-line
         │                   
         └── data           <- house `storysquad-ground-truth` which has all the training
