@@ -5,13 +5,11 @@ services:
     container_name: scribble-ocr-train
     build:
       context: .
-      target: tesseractbuild
+      target: tesseract_training
       dockerfile: Dockerfile
-    ports:
-      - 8000:8000
     volumes:
       - "./data:/train/tesstrain/data"
-    command: sh /app/start.sh
+    command: sh /train/start.sh
   api:
     container_name: scribble-ocr-api
     build:
@@ -22,4 +20,6 @@ services:
       - 8000:8000
     volumes:
       - .:/app
-    command: sh start.sh
+    environment:
+      - GOOGLE_CREDS=${GOOGLE_CREDS}
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000

@@ -6,9 +6,10 @@
 # to access the container
 # For api testing run
 # docker-compose -f docker-compose.yml up --build -d api
-# After complete running the build run the command below
-# docker exec -ti scribble-ocr-api bash
-# to access the container
+# Run this command within the command line once complete to start the container
+# if it's not already running
+# docker start scribble-ocr-api
+# accessed from 127.0.0.1:8000
 
 # Set docker image
 FROM python:3.8-bullseye as tesseractbuild
@@ -59,24 +60,34 @@ RUN mkdir -p /usr/local/share/fonts/journal && \
     wget https://dl.dafont.com/dl/?f=journal -O /tmp/journal.zip && \
     unzip /tmp/journal.zip -d /usr/local/share/fonts/journal
 
-# Setting the TESSDATA_PREFIX
+# Update and install depedencies
+RUN apt-get update && \
+    apt-get install ffmpeg libsm6 libxext6 -y
 
-# Set docker image for second stage requirements for API testing
-# Run this command within the docker container to test the api
-# uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+COPY requirements.txt /app/requirements.txt
+
+RUN pip install -r requirements.txt
+
+# Setting the TESSDATA_PREFIX
+ENV TESSDATA_PREFIX=/train/tessdata
+
+FROM tesseractbuild as tesseract_training
+COPY start.sh /train/start.sh
+WORKDIR /train/tesstrain
+
+# Set docker image for api stage requirements for API testing
+# Run this command within the command line
+# docker start scribble-ocr-api
+# API is accessed from 127.0.0.1:8000 through a web browser
 FROM tesseractbuild as apitest
 
 # Skip the configuration part
 ENV DEBIAN_FRONTEND noninteractive
 
-COPY requirements.txt /app/requirements.txt
-
 # Set working directory
 WORKDIR /app
+EXPOSE 8000
+ENV GOOGLE_CREDS={}
+CMD uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
-# Update and install depedencies
-RUN apt-get update && \
-    apt-get install ffmpeg libsm6 libxext6 -y
-
-RUN pip install -r requirements.txt
 
