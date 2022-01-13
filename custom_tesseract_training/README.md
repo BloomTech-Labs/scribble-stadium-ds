@@ -22,7 +22,7 @@
 (all commands done in the terminal, with Docker open, in your base environment (you will connect to a virtual environment in docker)
 
 * Run the Dockerfile using this command from the repo root. 
-  * docker-compose -f docker.dev.yml up -d train
+  * docker-compose -f docker-compose.yml up --build -d train
     *  Note: You only need to do this step once.
    
 * Run this command to access the container once the build is complete, or if you have already built the container before

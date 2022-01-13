@@ -1,11 +1,11 @@
 
 # Run this dockerfile using the command below from repo root for model training
-# docker-compose -f docker-compose.yml up -d train
+# docker-compose -f docker-compose.yml up --build -d train
 # After complete running the build run the command below
 # docker exec -ti scribble-ocr-train bash
 # to access the container
 # For api testing run
-# docker-compose -f docker-compose.yml up -d api
+# docker-compose -f docker-compose.yml up --build -d api
 # After complete running the build run the command below
 # docker exec -ti scribble-ocr-api bash
 # to access the container
