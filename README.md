@@ -103,11 +103,11 @@ These links were important to learn where to start with `AWS`:
 This infrastructure is suited for Tesseract training on a local machine using Docker container.
 To build a docker container to improve the Tesseract OCR model run the following command after cloning this repo from within the repo.
 
-`docker-compose -f docker-compose.yml up -d`
+`docker-compose -f docker-compose.yml up --build -d train`
 
 Once the docker completes making the image run the container using the following command:-
 
-`docker exec -ti scribble-ocr bash`
+`docker exec -ti scribble-ocr-train bash`
 
 The directory structure for important directories of the container from **root** is shown below:-
 
