@@ -1,10 +1,13 @@
 import pandas as pd
 from collections import Counter
 import re
+from os import path
 
-complex_words = pd.read_csv(
-    '../../../data/crop-cloud/complex_words.csv'
-    )
+filepath = path.join(
+    path.dirname(__file__), "..", "..", "..", "data", "crop-cloud", "complex_words.csv"
+)
+
+complex_words = pd.read_csv(filepath)
 
 
 # Takes in the story and how many words needed
@@ -16,7 +19,7 @@ def complexity_df(story_string, num_of_words_needed=20):
     def count_syllables(word):
         word = word.lower()
         syllable_count = 0
-        vowels = 'aeiouy'
+        vowels = "aeiouy"
         if len(word) == 0:
             return 0
         if word[0] in vowels:
@@ -24,9 +27,9 @@ def complexity_df(story_string, num_of_words_needed=20):
         for index in range(1, len(word)):
             if word[index] in vowels and word[index - 1] not in vowels:
                 syllable_count += 1
-        if word.endswith('e'):
+        if word.endswith("e"):
             syllable_count -= 1
-        if word.endswith('le') and len(word) > 2 and word[-3] not in vowels:
+        if word.endswith("le") and len(word) > 2 and word[-3] not in vowels:
             syllable_count += 1
         if syllable_count == 0:
             syllable_count = 1
@@ -46,37 +49,42 @@ def complexity_df(story_string, num_of_words_needed=20):
         word_list.append(k)
         count_list.append(v)
 
-    words = pd.DataFrame({'word': word_list, 'count': count_list})
+    words = pd.DataFrame({"word": word_list, "count": count_list})
 
     # make a column for letter counts
-    words['len'] = words['word'].apply(len)
+    words["len"] = words["word"].apply(len)
 
     # column for syllable count
-    words['syllables'] = words['word'].apply(count_syllables)
+    words["syllables"] = words["word"].apply(count_syllables)
     # https://medium.com/@mholtzscher/programmatically-counting-syllables-ca760435fab4
 
     # make a column for how complex a word is
 
     # first setting words that are in the complex_words with their set complexity
     # these are words at higher grade levels, that don't work with the complexity metric
-    vdic = pd.Series(complex_words.complexity.values, index=complex_words.word).to_dict()
-    words.loc[words.word.isin(vdic.keys()), 'complexity'] = words.loc[words.word.isin(vdic.keys()), 'word'].map(vdic)
+    vdic = pd.Series(
+        complex_words.complexity.values, index=complex_words.word
+    ).to_dict()
+    words.loc[words.word.isin(vdic.keys()), "complexity"] = words.loc[
+        words.word.isin(vdic.keys()), "word"
+    ].map(vdic)
 
     # then filling in the rest with the complexity metric
-    words['complexity'] = words['complexity'].fillna(words['syllables'] + words['len'])
+    words["complexity"] = words["complexity"].fillna(words["syllables"] + words["len"])
     words = words.astype({"complexity": int})
 
     # Dividing the complexity of each word by how many times
     # the word is used in the story
-    words['complexity'] = words['complexity'] / words['count']
+    words["complexity"] = words["complexity"] / words["count"]
+
     # Sorting the words so that the most complex are at the top
-    words = words.sort_values(by=['complexity'], ascending=False)
+    words = words.sort_values(by=["complexity"], ascending=False)
 
-    # can return the df to look at the words and their scores
-    # return words[['word', 'complexity']][:num_of_words_needed]
+    # returns the selected number of words and their complexities
+    temp = words[["word", "complexity"]][:num_of_words_needed]
+    word_complexities = dict(zip(temp.word, temp.complexity))
 
-    # Returns the selected number of words in a list
-    return words['word'][:num_of_words_needed].tolist()
+    return word_complexities
 
 
 def story_word_count(story_string):
