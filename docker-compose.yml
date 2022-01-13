@@ -6,7 +6,7 @@ services:
     build:
       context: .
       target: tesseractbuild
-      dockerfile: Dockerfile_tesseract_training
+      dockerfile: Dockerfile
     ports:
       - 8000:8000
     volumes:
@@ -17,7 +17,7 @@ services:
     build:
       context: .
       target: apitest
-      dockerfile: Dockerfile_tesseract_training
+      dockerfile: Dockerfile
     ports:
       - 8000:8000
     volumes:
