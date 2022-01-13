@@ -1,12 +1,17 @@
 
-# Run this dockerfile using the command below from repo root
-# docker-compose -f docker.dev.yml up -d
+# Run this dockerfile using the command below from repo root for model training
+# docker-compose -f docker.dev.yml up -d train
 # After complete running the build run the command below
-# docker exec -ti scribble-ocr bash
+# docker exec -ti scribble-ocr-train bash
+# to access the container
+# For api testing run
+# docker-compose -f docker.dev.yml up -d api
+# After complete running the build run the command below
+# docker exec -ti scribble-ocr-api bash
 # to access the container
 
 # Set docker image
-FROM python:3.8-bullseye as tesseracttraining
+FROM python:3.8-bullseye as tesseractbuild
 
 # Skip the configuration part
 ENV DEBIAN_FRONTEND noninteractive
@@ -56,8 +61,10 @@ RUN mkdir -p /usr/local/share/fonts/journal && \
 
 # Setting the TESSDATA_PREFIX
 
-# Set docker image
-FROM tesseracttraining as apitest
+# Set docker image for second stage requirements for API testing
+# Run this command within the docker container to test the api
+# uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+FROM tesseractbuild as apitest
 
 # Skip the configuration part
 ENV DEBIAN_FRONTEND noninteractive
