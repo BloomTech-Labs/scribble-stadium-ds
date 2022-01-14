@@ -151,3 +151,10 @@ cython_debug/
 # data
 /data/story_images.zip
 /Pipfile.lock
+
+data/*/*.box
+data/*/*.lstmf
+data/eng/*
+data/storysquad/*
+data/configs/*
+data/*.traineddata
