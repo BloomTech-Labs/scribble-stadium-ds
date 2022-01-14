@@ -25,9 +25,10 @@ def dump(sql, *multiparams, **params):
 
 DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 engine = None
-if all([DB_NAME]):
+if all([DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT]):
     engine = create_engine(DATABASE_URL, pool_pre_ping=True)
 else:
+    print("Warning: Not all RDS environment variables set, falling back to mock database")
     engine = create_mock_engine("postgresql://mock:{mock}@mock:5432/mock", dump)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
