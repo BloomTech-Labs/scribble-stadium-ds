@@ -108,8 +108,18 @@ For training use:
 
 `make training MODEL_NAME=storysquad START_MODEL=eng TESSDATA=/train/tessdata`
 
-To use a different trainingset than `storysquad`, add another folder within the `data/` folder of this repository named `<MODEL_NAME>-ground-truth`. Then you can use your new `MODEL_NAME` as an input in the make command above.
+To use a different trainingset than `storysquad`, add another folder within the `data/` folder of this repository named `<MODEL_NAME>-ground-truth`. Then you can use your new `MODEL_NAME` as an input in the make command above. You can test this with `MODEL_NAME=testsquad`. This should start runnign correctly and fail because there are not enough examples to train a model.
 
+Additionally you can replace layers of the LSTM model by using the `make finetune` route.
+
+`make finetune MODEL_NAME=storysquad START_MODEL=eng TESSDATA=/train/tessdata`
+
+You can also optionally specifiy the following arguments to more granularly control the network structure. For more information on this see [here](https://tesseract-ocr.github.io/tessdoc/tess4/TrainingTesseract-4.00.html#lstmtraining-command-line)
+
+- *FINETUNE_INDEX* - Essentially the number of layers from the original LSTM model to keep. By default that LSTM has 7 layers and the default index is to keep 5
+- *FINETUNE_LAYERS* - The layers you'd like to append to the end of the existing network. Default is `[Lfx256 O1c111]`
+
+☝️ The default parameters keep 5 of the 7 original layers and introduce 2 smaller ones to the end of the network(LSTM 256 Output Layer and softmax layer).
 
 
 For hyperparameter tuning refer https://tesseract-ocr.github.io/tessdoc/tess4/TrainingTesseract-4.00.html#lstmtraining-command-line

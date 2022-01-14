@@ -156,5 +156,5 @@ data/*/*.box
 data/*/*.lstmf
 data/eng/*
 data/storysquad/*
-data/config/*
+data/configs/*
 data/*.traineddata
