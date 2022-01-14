@@ -13,15 +13,22 @@ router = APIRouter()
 
 
 # connect to ElephantSQL-hosted PostgreSQL
-DB_NAME = os.getenv("RDS_DB_NAME", default="OOPS")
-DB_USER = os.getenv("RDS_USERNAME", default="OOPS")
-DB_PASSWORD = os.getenv("RDS_PASSWORD", default="OOPS")
-DB_HOST = os.getenv("RDS_HOSTNAME", default="OOPS")
-DB_PORT = os.getenv("RDS_PORT", default="OOPS")
+DB_NAME = os.getenv("RDS_DB_NAME", default=None)
+DB_USER = os.getenv("RDS_USERNAME", default=None)
+DB_PASSWORD = os.getenv("RDS_PASSWORD", default=None)
+DB_HOST = os.getenv("RDS_HOSTNAME", default=None)
+DB_PORT = os.getenv("RDS_PORT", default=None)
+
+
+def dump(sql, *multiparams, **params):
+    print(sql.compile(dialect=engine.dialect))
 
 DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-
-engine = create_engine(DATABASE_URL, pool_pre_ping=True)
+engine = None
+if all([DB_NAME]):
+    engine = create_engine(DATABASE_URL, pool_pre_ping=True)
+else:
+    engine = create_mock_engine(DATABASE_URL, dump)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
