@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Integer, Column, String
+from sqlalchemy import create_engine, Integer, Column, String, create_mock_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 from fastapi import APIRouter, Depends, HTTPException
@@ -28,7 +28,7 @@ engine = None
 if all([DB_NAME]):
     engine = create_engine(DATABASE_URL, pool_pre_ping=True)
 else:
-    engine = create_mock_engine(DATABASE_URL, dump)
+    engine = create_mock_engine("postgresql://mock:{mock}@mock:5432/mock", dump)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()

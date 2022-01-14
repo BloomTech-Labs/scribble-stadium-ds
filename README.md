@@ -48,11 +48,7 @@ Welcome to the DS Repo for Story Squad. It can be a little overwhelming for new 
  
 - We have a Dockerfile set up, and instructions to use it can be found in the [`custom_tesseract_training`](https://github.com/BloomTech-Labs/scribble-stadium-ds/tree/main/custom_tesseract_training) folder. This README walks you through connecting to Docker, how and where our data is stored, and how to tune and save a new model. *Improving our OCR model is one of our main tasks on the Data Science side of the project, so future cohorts should focus attention on this.*
  
-- Once you’ve trained a new model, save it to the [`models`](https://github.com/BloomTech-Labs/scribble-stadium-ds/tree/main/models) folder. Its README shows our top performing OCR model at the moment. *Be sure to continue to update this README as you add new or better models.*
- 
 - In the [`app`](https://github.com/BloomTech-Labs/scribble-stadium-ds/tree/main/app) folder, you will find all of the files and endpoints related to the API and how they interact with each other. The folder README gives a visual of the story submission workflow.
- 
-- Related to the API is the [`model_transition`](https://github.com/BloomTech-Labs/scribble-stadium-ds/tree/main/model_transition) folder. This README shows what will need to be changed as we transition from the Google Vision model to our custom OCR model, once it is ready for use. *This transition will be an important task for future DS cohorts.*
  
 - The current data we have is stored in the [`data`](https://github.com/BloomTech-Labs/scribble-stadium-ds/tree/main/data) folder. In the future we want to move these samples to S3 Cloud storage buckets, so that they aren’t saved on Github. We’ve also been looking into data augmentation techniques to generate more data to train with.
  
@@ -65,30 +61,6 @@ Welcome to the DS Repo for Story Squad. It can be a little overwhelming for new 
 
 
 ## Deployment
-
-### **Setting up a python environment**
-
-It is recommended to use `pipenv` for creating a python environment. First, install python with pip. Then open a terminal and enter `pip install pipenv`. After that, navigate to the root folder of this project, and enter `pipenv install --dev`. This uses Pipfile and Pipfile.lock to recreate the same python environment used in development. We are also trying to keep the requirements in the [packages] section to a minimum. The dependencies in [packages] are only those imported into the app itself. Many of the python notebooks use packages that are not in this environment, as they contain a lot of proof of concept work that never made it into the app itself. Much of their imported data also isn't present in this repo for COPPA reasons. It would be fine to add notebook-only dependencies to the [dev-packages] section of Pipfile if this makes development easier. If you change Pipfile, please run `pipenv update` afterwards. This runs `pipenv lock` and `pipenv sync` for you, and keeps Pipfile.lock in aggreement with Pipfile. Then commit and push the changes to Pipfile.lock.
-
-### **How to Deploy locally on a Windows Machine**
-
-It is possible to deploy this API locally on Windows 10, but you will need to make some local changes to do so. There are other options for local deployment on a Windows machine that does not involve making changes, such as running a Ubuntu WSL (Windows Subsystem for Linux).
-
-* Then you need to go to `app/utils/img_processing/google_api.py` and locate the code: `with open("/tmp/google.json", "wt") as fp:` in the `__init__` function (currently it is line 32) and change that to: `with open("././app/tmp/google.json", "wt") as fp:`
-
-* In the same file and function as above, you need to also change: `environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/tmp/google.json"` (currently line 41) to : `environ["GOOGLE_APPLICATION_CREDENTIALS"] = "././app/tmp/google.json"`
-
-  * ***NOTE:*** If the above path does not work for you, you can try to replace `"/tmp/google.json"` with `"app/tmp/google.json"`, which is the path from the repository root.
-
-* Then, in the `app` directory, you need to create a new directory called `tmp`
-
-* In the `tmp` directory, create an empty file named `google.json`
-
-* Now, you should be all set to run `uvicorn app.main:app --reload` to deploy the API locally, provided you have the proper credentials. 
-
-  > ***NOTE:***  
-  > **Do NOT push these changes to GitHub!**  
-  > These changes need to remain on your local machine only!
 
 
 ### **Infrastructure**
@@ -123,23 +95,40 @@ The directory structure for important directories of the container from **root**
         │                      eng.trainedata is available. The trained models are placed here. 
         │
         ├── tesstrain      <- tesstrain directory through which the training will be
-        │                     run. Always run the `source ocr/bin/activate` to activate 
-        │                     `ocr` venv before doing any training. Make sure to install 
-        │                     all dependencies using `pip install -r requirements.txt` for 
-        │                     initial run. For training use 
-        │                     `make training MODEL_NAME=storysquad START_MODEL=eng 
-        │                     TESSDATA=/train/tessdata`. For hyperparameter tuning refer 
-        │                     https://tesseract-ocr.github.io/tessdoc/tess4/TrainingTesseract-4.00.html#lstmtraining-command-line
+        │                     run.
         │                   
         └── data           <- house `storysquad-ground-truth` which has all the training
-                              material for tesseract to learn from. This directory is copied 
+                              material for tesseract to learn from. This directory is mounted 
                               from `scribble-stadium-ds/data`. More data can be uploaded if 
                               it becomes available.
      
 --------
 
+For training use:
+
+`make training MODEL_NAME=storysquad START_MODEL=eng TESSDATA=/train/tessdata`
+
+To use a different trainingset than `storysquad`, add another folder within the `data/` folder of this repository named `<MODEL_NAME>-ground-truth`. Then you can use your new `MODEL_NAME` as an input in the make command above.
+
+
+
+For hyperparameter tuning refer https://tesseract-ocr.github.io/tessdoc/tess4/TrainingTesseract-4.00.html#lstmtraining-command-line
+
 ### **API Endpoints**
 <img src="assets/endpoints.png" alt="arch diagram"/>
+
+
+#### Running the API
+Use the following to run the API in the background of your machine:
+`docker-compose -f docker-compose.yml up --build -d train`
+
+*Note!:* The API will fail to initiate unless you have a valid `GOOGLE_CREDS` environment variable set. This environment variable points to the contents of a credential file (application or service) generated from the google cloud console. If you have a credential file downloaded, simply run the following to place the file contents into the environment variable:
+
+`export GOOGLE_CREDS=$(cat <PATH TO CREDENTIAL FILE>)` 
+
+☝️ you can place the above code in your `.bashrc` or `.zshrc` file to have your shell automatically execute this everytime you open it. 
+
+The logs will be available via the Docker UI or by using `docker-compose logs train` to see logged outupts.
 
 - Submission subroute:
    - This subroute deals with original copy uploads of the user generated content (UGC).
