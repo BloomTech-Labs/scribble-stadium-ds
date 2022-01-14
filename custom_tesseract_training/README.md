@@ -27,6 +27,8 @@
    
 * Run this command to access the container once the build is complete, or if you have already built the container before
   * docker exec -ti scribble-ocr-train bash
+* Train the storysquad model
+  * make training MODEL_NAME=storysquad START_MODEL=eng TESSDATA=/train/tessdata
 * cd to root
   * cd ..
 * cd to train folder
@@ -41,9 +43,12 @@
 For further information on the Dockerfile, see here: ​​https://github.com/BloomTech-Labs/scribble-stadium-ds/blob/main/Dockerfile_tesseract_training
 
 ## Data Storage
-When using Docker all new training data must be placed in:
+When using Docker all new training data must be placed in either:
 
-/train/tesstrain/data/storysquad-ground-truth
+- `data/storysquad-ground-truth`
+- `data/<MODEL_NAME>-ground-truth` where `<MODEL_NAME>` is replaced with whatever name you want for the model. 
+
+
 ### Training Data and Label Naming Conventions
 * Preprocess Data using agreed upon pipeline
 * Label the data by transcribing the characters exactly how they appear (not fixing the spelling) in a plain .gt.txt file

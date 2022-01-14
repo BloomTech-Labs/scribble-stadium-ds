@@ -73,6 +73,7 @@ ENV TESSDATA_PREFIX=/train/tessdata
 
 FROM tesseractbuild as tesseract_training
 COPY start.sh /train/start.sh
+COPY ./tesstrain/Makefile /train/tesstrain/Makefile
 WORKDIR /train/tesstrain
 
 # Set docker image for api stage requirements for API testing
