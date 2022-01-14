@@ -29,6 +29,16 @@
   * docker exec -ti scribble-ocr-train bash
 * Train the storysquad model
   * make training MODEL_NAME=storysquad START_MODEL=eng TESSDATA=/train/tessdata
+* cd to root
+  * cd ..
+* cd to train folder
+  * cd train
+* cd to tesstrain folder
+  * cd tesstrain
+* activate the virtual environment
+  * source ocr/bin/activate
+* install the required libraries:
+  * pip install -r requirements.txt
 
 For further information on the Dockerfile, see here: ​​https://github.com/BloomTech-Labs/scribble-stadium-ds/blob/main/Dockerfile_tesseract_training
 
