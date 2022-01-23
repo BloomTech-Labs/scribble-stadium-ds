@@ -12,8 +12,9 @@ The previous cohort worked on using available libraries like profanity-filter
 and profanity_Check but these could not sufficiently flag all profane words, newer
 phrases and Scuntorpe like words.
 
-Using a list of profanity phrases in (bad_phrases.csv) and profanity words in (bad_single.csv);
-bad_phrases.csv has a total of 215 phrases/expressions and bad_single.csv has a total of 1395 words.
+Using a list of profanity phrases in (bad_phrases.csv) and profanity words in (bad_single.csv), profanity_words_phrase_filters.py can be used on a string of text to indentify and flag words and phrases as inappropriate.
+
 These words are updated accordingly to reflect what is currently flagged as inappropriate.
-Profanity_word_phrase_filters.py uses both lists to search if an uploaded document
-contains profanity. 
+The file "profanity_word_phrase_filters.py" uses both lists to search if an uploaded document
+contains profanity.	
+ 
