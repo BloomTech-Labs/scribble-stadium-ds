@@ -6,8 +6,8 @@ kiddos in compliance with the Children's Online Privacy Protection Rule (COPPA).
 https://www.ftc.gov/enforcement/rules/rulemaking-regulatory-reform-proceedings/childrens-online-privacy-protection-rule
 
 It is important for submitted stories to be flagged as inappropriate if they 
-contain any profanity. The stories will still be reviewed by a live person to make
-sure the flagging is warranted. 
+contain any profanity.The stories will still be reviewed manually by a person to make
+sure flagging, by the system, is warranted. 
 The previous cohort worked on using available libraries like profanity-filter
 and profanity_Check but these could not sufficiently flag all profane words, newer
 phrases and Scuntorpe like words.
