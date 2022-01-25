@@ -19,12 +19,15 @@ source_dir = os.getcwd() + '/test_images'
 target_dir = os.getcwd() + '/processed_test_images/'
 
 # Get list of all image paths
-img_files = glob.glob(source_dir + "/**/*.jpg", recursive=True)
+jpg_files = glob.glob(source_dir + "/**/*.jpg", recursive=True)
+png_files = glob.glob(source_dir + "/**/*.png", recursive=True)
+img_files = jpg_files + png_files
+tif_files = glob.glob(source_dir + "/**/*.tif", recursive=True)
 
 # Process each image and save in target directory
 for file_path in img_files:
-    file_name = os.path.basename(file_path)[:-4]
+    file_name = os.path.basename(file_path) 
     img = cv2.imread(file_path)
     img = processing_pipeline(img)
-    processed_path = target_dir + file_name + "_PROCESSED.jpg"
+    processed_path = target_dir + "PROCESSED_" + file_name
     cv2.imwrite(processed_path, img)
