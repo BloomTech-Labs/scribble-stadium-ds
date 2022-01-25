@@ -1,6 +1,13 @@
 # Story Squad Data
 
-- Children's story submissions are not able to be made public due to [COPPA](https://www.ecfr.gov/cgi-bin/text-idx?SID=4939e77c77a1a1a08c1cbf905fc4b409&node=16%3A1.0.1.3.36&rgn=div5) guidelines, and our team decided to extend that to transcriptions as well out of precaution. 
+- According to https://www.ftc.gov/tips-advice/business-center/guidance/complying-coppa-frequently-asked-questions-0#F.%20Photos, FAQ F.2 states:
+
+   COPPA applies to photos, videos, and audio files that contain children’s images or voices. It also applies to geolocation data contained in these files sufficient to identify street name and name of city or town. Finally, it applies to any persistent identifiers collected via the children’s upload of their photos. Therefore, in order to offer an app without parental notice and consent, the operator must take the following steps:
+
+      1. Pre-screen the children’s photos in order to delete any that depict images of children or to delete the applicable portion of the photo, if possible. The operator must also delete any other personal information, for example, geolocation metadata, contained in the photos prior to posting them through the app. Note that if an operator does not pre-screen, then it may be subject to civil penalties under COPPA if any personal information is collected from children without the operator first notifying parents and obtaining their consent; and
+      2. Ensure that any persistent identifiers are used only to support the internal operations of the app (as that term is defined in the Rule – see 16 C.F.R. 312.2) and are not used or disclosed to contact a specific individual, including through behavioral advertising, to amass a profile on a specific individual, or for any other purpose.
+      
+Therefore, according to the above rule, the app needs to ensure that all personal identification markers are removed during the processessing of the images.
 - The `squad_score_metrics` csv file in this folder contains the Squad Score v1.1 metrics from all 167 provided stories in our training data set, and was generated from the `squad_score_mvp` [notebook](../notebooks/squad_score_mvp.ipynb). 
    - features: story_id, story_length, avg_word_len, quotes_num, unique_words_num, adj_num, squad_score
 - The `rankings` csv file contains the hand-rankings of 25 stories in the dataset, which is the only piece of labeled data provided by the stakeholder.
