@@ -35,18 +35,16 @@ def create_fake_paper_with_writing(pix_per_mm: float, lines: int = 25, red: [] =
     """Creates an image that is much like written words on ruled paper, also returns a dict of important information"""
 
     def get_rnd_col(col=[128, 128, 128], c_noise: int = 128):
+        # Modify the base colors so adding or subtracting noise will not possibly put the value out of range
         for i in range(len(col)):
             if (c_noise / 2) + col[i] > 255:
                 col[i] = 255 - (c_noise / 2)
 
             if (c_noise / 2) + col[i] < 0:
                 col[i] = (c_noise / 2)
-
+                
+        # iterate through the colors and add noise with a std dev of c_noise
         for i in range(len(col)):
-            if (c_noise / 2) + col[i] > 255:
-                raise ValueError
-            if (c_noise / 2) + col[i] < 0:
-                raise ValueError
             mod = random.randint(-int(c_noise / 2), int(c_noise / 2))
             col[i] = col[i] + mod
         return col
