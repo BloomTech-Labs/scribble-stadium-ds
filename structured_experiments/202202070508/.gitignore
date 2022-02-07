@@ -1,0 +1,8 @@
+# List of all files and directories relating to experiment to be excluded from repository.
+# This file cascades and will not interfere with parent directories.
+
+# Images
+.jpg
+.jpeg
+.tif
+.png
