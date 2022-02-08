@@ -31,5 +31,5 @@
 ### [Template Experiment - 202202070508](202202070508/)
 #### This is the template. This directory can be copied and renamed for a new experiment.
 
-###
-####
+### [Color Mask Test - 202202010600](202202010600/)
+#### Attempt to remove specific colors to mask lined paper.
