@@ -50,7 +50,17 @@ Welcome to the DS Repo for Story Squad. It can be a little overwhelming for new 
  
 - In the [`app`](https://github.com/BloomTech-Labs/scribble-stadium-ds/tree/main/app) folder, you will find all of the files and endpoints related to the API and how they interact with each other. The folder README gives a visual of the story submission workflow.
  
-- The current data we have is stored in the [`data`](https://github.com/BloomTech-Labs/scribble-stadium-ds/tree/main/data) folder. In the future we want to move these samples to S3 Cloud storage buckets, so that they aren’t saved on Github. We’ve also been looking into data augmentation techniques to generate more data to train with.
+- The current data we have is stored in the [`data`](https://github.com/BloomTech-Labs/scribble-stadium-ds/tree/main/data) folder.
+
+- In order to make the repo more lightweight, we have begun the process of migrating all training data out of the repo and into the cloud. First, we are implementing [Git Large File System](https://git-lfs.github.com/), or Git-LFS, to store our data on a Github server.
+
+   - LFS tracks and migrates each specified file or files of a certain type to a remote location, in this case a Github server(s).
+
+   - It replaces each tracked file in the repo with a text file that points to the corresponding remote location.
+
+   - To get familiar with using Git-LFS, check out this [tutorial](https://sabicalija.github.io/git-lfs-intro/).
+
+- In the future we want to move our training data to S3 Cloud storage buckets, so that they aren’t saved on Github. We’ve also been looking into data augmentation techniques to generate more data to train with.
  
 - The README of the [`data management`](https://github.com/BloomTech-Labs/scribble-stadium-ds/tree/main/data_management) folder walks through the data cleaning pipeline, to prepare a story submission to be used by our model. Currently, this is done manually. *An important task for future cohorts will be to automate this process.*
  
@@ -122,7 +132,8 @@ You can also optionally specifiy the following arguments to more granularly cont
 ☝️ The default parameters keep 5 of the 7 original layers and introduce 2 smaller ones to the end of the network(LSTM 256 Output Layer and softmax layer).
 
 
-For hyperparameter tuning refer https://tesseract-ocr.github.io/tessdoc/tess4/TrainingTesseract-4.00.html#lstmtraining-command-line
+For hyperparameter tuning refer to https://tesseract-ocr.github.io/tessdoc/tess4/TrainingTesseract-4.00.html#lstmtraining-command-line
+
 
 ### **API Endpoints**
 <img src="assets/endpoints.png" alt="arch diagram"/>
