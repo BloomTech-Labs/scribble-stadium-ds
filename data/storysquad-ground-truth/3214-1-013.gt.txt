@@ -1,1 +1,3 @@
-we do everything together and that will never change."
+version https://git-lfs.github.com/spec/v1
+oid sha256:0a99a6df738517958dc2e4c710ea4bad47fda992a9316189086467213c97c881
+size 54

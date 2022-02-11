@@ -1,1 +1,3 @@
-Rachel is always was too cocky
+version https://git-lfs.github.com/spec/v1
+oid sha256:379c696a482316e3fa96e07947dbd62d8ad8dba315bf3528e6d6a89923c414a2
+size 30

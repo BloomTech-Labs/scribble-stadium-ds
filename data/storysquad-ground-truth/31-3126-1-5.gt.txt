@@ -1,1 +1,3 @@
-"Hello," He said. "My name is "Starburst." 
+version https://git-lfs.github.com/spec/v1
+oid sha256:10f0c9fb151976edc3b8a80a92c76e6cbb8873947c04b2a3fdd0286322ba2f1f
+size 43

@@ -1,1 +1,3 @@
-When he reached the kina
+version https://git-lfs.github.com/spec/v1
+oid sha256:b2bbb9093fa94dbf5400f79bb88c5e7aa7d2b4ecddae2471d4427ae39932ee6c
+size 24

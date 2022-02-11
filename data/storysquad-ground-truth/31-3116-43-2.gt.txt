@@ -1,1 +1,3 @@
-became best friends forever.
+version https://git-lfs.github.com/spec/v1
+oid sha256:58e2fc859d3996e82f1292f03a20ec6d14eca24d922f55b546818d9f64aaa7ca
+size 28

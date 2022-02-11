@@ -1,1 +1,3 @@
-the car stopped the girl looked out the window
+version https://git-lfs.github.com/spec/v1
+oid sha256:f579b576d299b6d714b22df6d8be3752bb48be9e74c477887420240e277753b5
+size 46

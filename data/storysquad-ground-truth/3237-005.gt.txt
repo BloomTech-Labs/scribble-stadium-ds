@@ -1,1 +1,3 @@
-nd Lucy went to a store then Lucy
+version https://git-lfs.github.com/spec/v1
+oid sha256:6973e9c252447137a32b53b08bb78567a856d6dbded4c0eeb535eca89cfb7de8
+size 33

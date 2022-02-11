@@ -1,1 +1,3 @@
-His house was
+version https://git-lfs.github.com/spec/v1
+oid sha256:42ad8d6e1dd7af1f811bb2685ce74c07d06cf3a8e73388921586141b28eb14fd
+size 13

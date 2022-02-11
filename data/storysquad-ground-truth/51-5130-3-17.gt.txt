@@ -1,1 +1,3 @@
-of Bosco. "Stupid dog," he said, "Killed
+version https://git-lfs.github.com/spec/v1
+oid sha256:f89153c12b1751b866ef4d6613fe1bcfb31478693b9e6ca7dd69ebff0e1b565a
+size 40

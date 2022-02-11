@@ -1,1 +1,3 @@
-All of the dogs always barked. 
+version https://git-lfs.github.com/spec/v1
+oid sha256:67f66afaf2a46120a6f6cfcab6855c76d50e6c469d533ae8df4b9862e5b7e2da
+size 31

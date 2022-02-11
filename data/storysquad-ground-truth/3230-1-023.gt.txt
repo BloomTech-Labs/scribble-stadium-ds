@@ -1,1 +1,3 @@
-"Okay, so what your telling me is
+version https://git-lfs.github.com/spec/v1
+oid sha256:4052d01a838b3d57b8b587b3d03f3d174a0fd610c4857cd68e59cab4f50bf452
+size 33

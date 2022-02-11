@@ -1,1 +1,3 @@
-my brother's room door. "Meow." I opened
+version https://git-lfs.github.com/spec/v1
+oid sha256:0c880733725e717aaa205396c12863a0237aa2a7b3e1fbdfacb474cbf3e39297
+size 40

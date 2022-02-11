@@ -1,1 +1,3 @@
-about how good of a score she got but
+version https://git-lfs.github.com/spec/v1
+oid sha256:e109075a7b5791224b274d9d4fd218d8a4514e8fcab717ba0649b3ab887d6012
+size 37

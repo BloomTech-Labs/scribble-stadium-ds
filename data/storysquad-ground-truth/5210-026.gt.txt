@@ -1,1 +1,3 @@
-was something else about this cavern. A blue glow was
+version https://git-lfs.github.com/spec/v1
+oid sha256:2a169b978b1103fd59015dedb6884e3a914adbdafd5cdd047f0bc61729be7e8a
+size 53

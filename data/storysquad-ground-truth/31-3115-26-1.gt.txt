@@ -1,1 +1,3 @@
-freinds from Scratch a new person
+version https://git-lfs.github.com/spec/v1
+oid sha256:69c8e7ec955fbfcd6a875b60450b7d4d734b54bb8503cb8155fcb723cf7ba10e
+size 33

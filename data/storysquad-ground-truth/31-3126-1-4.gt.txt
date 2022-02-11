@@ -1,1 +1,3 @@
-He was walking near home and met a cute puppy.
+version https://git-lfs.github.com/spec/v1
+oid sha256:160db578b1aedd8744171d0879f56f1969bf4265258b0305bab936a65a7ecd3b
+size 46

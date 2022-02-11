@@ -1,1 +1,3 @@
-newest galaxy discovered in 1964, with a camera they saw something
+version https://git-lfs.github.com/spec/v1
+oid sha256:d9400e564c8b92aeee7f34270a1676d2466d6cd070800991048c3cde02b77c7b
+size 66

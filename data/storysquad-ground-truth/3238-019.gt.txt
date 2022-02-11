@@ -1,1 +1,3 @@
-Samashed Max to hes death the end
+version https://git-lfs.github.com/spec/v1
+oid sha256:5c1e2ea62505bc63316c04bdf4a56dea2a56c085e7f6d477c87765ee1a8bd5a7
+size 33

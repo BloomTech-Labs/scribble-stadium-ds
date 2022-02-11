@@ -1,1 +1,3 @@
-and he was to shy to have friends.
+version https://git-lfs.github.com/spec/v1
+oid sha256:040bb449eca1e3363c276331cf084d29c3a1927b2ffb949827dfaaa6e92fdfb2
+size 34

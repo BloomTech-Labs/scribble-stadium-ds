@@ -1,1 +1,3 @@
-my buyer says. "Didn't stand a chance
+version https://git-lfs.github.com/spec/v1
+oid sha256:0d522b119197ff5cbae05b33430828b1e626f3eae30b48c89637acae79b11cc5
+size 37
