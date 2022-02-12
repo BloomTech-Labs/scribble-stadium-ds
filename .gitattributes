@@ -9,3 +9,4 @@ data/crop-cloud/*.csv filter=lfs diff=lfs merge=lfs -text
 data/crop-cloud/*.jg filter=lfs diff=lfs merge=lfs -text
 data/testsquad-ground-truth/*.png filter=lfs diff=lfs merge=lfs -text
 data/testsquad-ground-truth/*.gt.txt filter=lfs diff=lfs merge=lfs -text
+data/*.csv filter=lfs diff=lfs merge=lfs -text
