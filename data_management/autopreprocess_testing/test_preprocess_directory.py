@@ -4,11 +4,11 @@ FIXTURES_DIRECTORY_PATH = "Fixtures"
 
 class TestGetImages(unittest.TestCase):
     """
-    Test the get_all_images function from the preprocess_directory.py file
+    Class for test function below for the get_all_images function from the preprocess_directory.py file
     """
     def test_check_file(self):
         """
-        Test that the addition of two integers returns the correct total
+        Test for the get_all_images function from the preprocess_directory.py file, verifying images are in the file.
         """
         result = preprocess_directory.get_all_images(FIXTURES_DIRECTORY_PATH)
         self.assertEqual(1, len(result))
