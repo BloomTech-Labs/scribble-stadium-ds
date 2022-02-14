@@ -5,6 +5,7 @@ Base code for batch pre-processing
 3. Puts processed file in new directory
 """
 
+import queue
 import cv2
 import os
 import glob
@@ -32,10 +33,11 @@ img_files = get_all_images(source_dir)
 
 
 # Process each image and save in target directory
+queue = [0,1,2,3,4]
 for file_path in img_files:
     file_name = os.path.basename(file_path)
     img = cv2.imread(file_path)
-    img = processing_pipeline(img)
+    img = processing_pipeline(img, queue)
     processed_path = target_dir + file_name
     PILimage = Image.fromarray(img)
     PILimage.save(processed_path, dpi=(300,300))
