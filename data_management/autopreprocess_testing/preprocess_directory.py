@@ -11,6 +11,15 @@ import glob
 from PIL import Image
 from processing_pipeline import processing_pipeline
 
+# Get list of all image paths
+def get_all_images(source_dir):
+
+    supported_file_extensions = ["jpg", "jpeg", "png", "tif", "tiff"]
+    img_files = []
+    for ext in supported_file_extensions:
+        img_files += glob.glob(source_dir + f"/**/*.{ext}", recursive=True)
+    return img_files
+
 # Change to current directory
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 # Test image directory
@@ -18,11 +27,9 @@ source_dir = os.getcwd() + '/test_images'
 # Processed image directory
 target_dir = os.getcwd() + '/processed_test_images/'
 
-# Get list of all image paths
-supported_file_extensions = ["jpg", "jpeg", "png", "tif", "tiff"]
-img_files = []
-for ext in supported_file_extensions:
-    img_files += glob.glob(source_dir + f"/**/*.{ext}", recursive=True)
+img_files = get_all_images(source_dir)
+
+
 
 # Process each image and save in target directory
 for file_path in img_files:
