@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:0ef88f2c47e349640de676b19ecfda414307d173d8ef951931db594bd5ca4fdf
-size 36
+   "What's in the box?" I asked. She

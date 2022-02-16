@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:7db54c97e95b6f0d19aa71e1d288a10e58b1825611590859039d6407c3b96bb9
-size 41
+Some thing is bothering you. What is it?"

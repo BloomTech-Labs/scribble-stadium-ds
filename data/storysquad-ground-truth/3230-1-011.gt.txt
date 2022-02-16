@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ee63b20e771ad5cd24a077be40c20df2e2c886e96bcf124992fdbaa464a4bc3a
-size 34
+"Fruddle and Fred, get down here!"

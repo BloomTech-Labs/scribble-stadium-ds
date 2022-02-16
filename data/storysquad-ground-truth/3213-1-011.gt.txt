@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e432bc2b421a1d2154dd76e84c7869519cbb05b5bc92aaf83ec81ef154068801
-size 34
+"Barbie" was a little scared about

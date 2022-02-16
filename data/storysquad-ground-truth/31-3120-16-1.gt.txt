@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:52d6e86473248e29c333ef0c872fa1e9e5d0eb95f7d30fc9b816809e6bd938d7
-size 42
+he saw the star.Before he could pick it up

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:7f59b34c68c9f3dd175521e40d0b777b0c428a1b602c8a5a4b428f06aa07ed93
-size 40
+all wanted to run away, but suddenly, we

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c9c2adafae997024f9a008d89508f50baa6bab7323ef929f847f955ed0bcec82
-size 17
+grove ants wanted

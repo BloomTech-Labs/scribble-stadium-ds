@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:012b5ed5c00bc2ae7ea5929bf9839139a372b890cbeeb4bc4aa39f19b07a97e7
-size 35
+But my father's response was not ->

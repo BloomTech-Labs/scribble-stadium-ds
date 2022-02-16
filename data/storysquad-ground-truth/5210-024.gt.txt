@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:202268cbd837613569d5139f1d022fc5b4f8701f28ec1d8addd567fc7759abe4
-size 54
+small cavern crowded by rocks on the ground. But there

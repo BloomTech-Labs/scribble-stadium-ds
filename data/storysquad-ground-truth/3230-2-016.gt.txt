@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:5baa27360f19fc9a4e08ebff5b6ea3f6dc3e25a897c4e1964038e976eb6935e6
-size 32
+What was that?" Oguk asked Ogurk

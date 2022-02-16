@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:adacaec4b40add56f0e93f1280ea9bd88f5cad304bf084d2fe557685d85502ec
-size 60
+the door opened it and slammed it shut before the bear could

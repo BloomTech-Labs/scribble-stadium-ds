@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:5bacbba259dad56fcf0a78701b5d5ecd0192a21e288de96409633cd20296160f
-size 34
+Day after day this went on , but a

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1ebbfc9710d1aa10330c5060b0dd12b5e434effc77094849b75dc44ec3ee415f
-size 32
+to show steve the way to his mom

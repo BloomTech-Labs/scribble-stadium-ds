@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:4db46d9977ed6a5f6f36f5fb61e65cccc000e4309cbfb27609726207335ea14b
-size 39
+beast continues, 'Look at the skeletons

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8df312357f15f227b35eab3b3a342dfd24da73754c77a03ca191bd5ca0d45a83
-size 19
+and King Potatohead

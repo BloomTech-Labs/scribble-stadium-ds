@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b56cf2abc74315376bcbb297979d528bb146f217e2c4084808919f4760549bd3
-size 28
+"Settle down" said the owner

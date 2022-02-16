@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:74f091cdf7b67e9b9c58bb407b6822cffcf96dd4aeaf4b5682428258ee40909f
-size 42
+something very nice Jack gave him the dog.

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d6848e0648a57a0e934c82e230e3cf2104f8385d258ac4c1819301abfbf9997a
-size 47
+so it was still stable but not off the ground .

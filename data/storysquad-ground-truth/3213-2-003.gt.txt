@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:cf5069af70192ca004657950ddb48f34ef7b06d3eb19eae1a8f6ba6d067596c8
-size 21
+Jack waved goodbyr to

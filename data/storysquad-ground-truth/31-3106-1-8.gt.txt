@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ac599208816bb838099d304a1fd79d1e6dad256050beea55699079ddb1175882
-size 39
+week we just kept stopping and stopping

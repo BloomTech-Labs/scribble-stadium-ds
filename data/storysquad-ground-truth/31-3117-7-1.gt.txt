@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8fda41b8ebc0e3a6c62cb2bea38f1243057742b6e75fae0474f37e1f535c8582
-size 18
+animals live their

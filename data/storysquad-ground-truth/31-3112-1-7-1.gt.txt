@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:4decc108f5442f5abd4f6418677c3934bf0c90bb2121f57866235dbbe6dda250
-size 29
+in my day we had to fight for

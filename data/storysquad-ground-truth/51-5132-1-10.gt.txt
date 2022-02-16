@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:99029be32f4be14a737c001e85a75549ba043cbcb9ce473205b79de7d4cd1a51
-size 29
+the t.v. and starting looking

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:afb9d97be5f18f1495eb5aadc27973d2fd04f25cead02eac978fbdc6588d5616
-size 36
+where we fighting in the first place

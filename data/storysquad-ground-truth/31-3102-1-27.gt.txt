@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:013d91771f0e2123dbdd154a34a73118388b52eea7068be7208710de6c5a408f
-size 40
+division problems and they were all with

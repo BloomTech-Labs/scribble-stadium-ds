@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:eaa2adacfd4628e3e8152aec1615f72322ccd61d3f78ccad7dbd416c929dfb3a
-size 63
+they saw Jerry, they ran away, but Billy walked up to Jerry and

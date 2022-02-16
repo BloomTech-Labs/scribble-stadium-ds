@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:839cfcce3822b04f129e9c8e245fed865750724b07caa8558f1835aaa86a35d9
-size 17
+Whoeverwins three

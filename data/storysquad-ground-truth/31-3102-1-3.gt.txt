@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e472b6b67c839997d0e406d8574092e547c3b42df2828f3a69c8627f04cb0492
-size 39
+I am Ameilia I am starting fifth grade.

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6d72cd8ba1f34dc4f298aebddcbcc14d9b945db66610bcb762603b45edfa4787
-size 28
+That is why Bearu was smart.

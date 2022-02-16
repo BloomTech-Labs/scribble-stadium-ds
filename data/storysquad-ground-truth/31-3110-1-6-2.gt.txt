@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ccf7a2ab0b73901780d95a17ea968efd8b87dba7e0d989c30dbb4379b69511d8
-size 19
+and ask our parents

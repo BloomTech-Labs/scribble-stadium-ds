@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1ef05cd1f43446094553461f9a73b0af166ca36a0b35c36600d3b5d43f5207f4
-size 29
+mom said I picked Lucy up the

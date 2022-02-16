@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:cdfe537bb5c3fb4151dd30bfe236aadc71ba43df0fb16925529ef42825322500
-size 34
+grabbed that .cat mom was,, still 

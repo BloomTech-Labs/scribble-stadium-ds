@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:204ae691421f53be0e8e95b403804fdf723df6f254da1a4d53c32481339a72f4
-size 43
+There once was a boy who lived in a cottage

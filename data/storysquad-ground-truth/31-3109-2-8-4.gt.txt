@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:301d1d7e5030f804a5668993e6df72597aa41cf56317ce004ce0d6c8aa00a8c2
-size 10
+the stairs

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ef82042a61d76638c7e56cac0c2c15ae8008eaaa2e29bd6a71514a232f1967be
-size 20
+strengthened power. 

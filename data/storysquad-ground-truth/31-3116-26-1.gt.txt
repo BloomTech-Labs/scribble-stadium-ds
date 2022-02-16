@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:25a38ab9ef1131a7554b0b3b788cc2abdeeb46786f5e2c88928af3442acb769f
-size 26
+settled in he relized that

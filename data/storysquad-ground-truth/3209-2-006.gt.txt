@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:344b4dee8a21549e20f458450ed1cf440249d8aad7e8840ec7b8ad2b241abb9b
-size 46
+were surronded by robots everywhere. They were

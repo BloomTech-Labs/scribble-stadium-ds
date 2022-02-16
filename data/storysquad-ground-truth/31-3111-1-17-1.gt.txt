@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ec08fe490e61d07f7baf34f0c5ba623e24b3bc0a5ece817d5e7bd913feb114b3
-size 19
+school and find out

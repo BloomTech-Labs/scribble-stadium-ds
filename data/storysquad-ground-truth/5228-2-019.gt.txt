@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:0f834b8f4779e2b83bb2aafa10af72d73be4bda5c953f1c4a24940e547a6295c
-size 23
+September 4, 2019 Sunny

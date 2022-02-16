@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1df4c1b1be1457cdfadc5c164a42424a22c7d474b473eea95bf5e9131ba08dab
-size 52
+Long ago there was two astronauts named Potatoe Heaa

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:16c01099e017580154cff1199451b8484fad074d93a196d4b680d2f888a302b1
-size 25
+He really is a sweet dog.

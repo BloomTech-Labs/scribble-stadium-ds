@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:965d36c868ec2b7ef7f0eaf234f3f360438fd02d1313bbf34671e5044e091fc3
-size 45
+ war is a fight with dialogue. Ishaan wanted 

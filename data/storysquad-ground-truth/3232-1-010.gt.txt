@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d3fc02e07d3011c2aec0ffbaa78626b4e9c37ce81431c384c579facc34cf8d74
-size 42
+wouldn't have, because you are so selfish.

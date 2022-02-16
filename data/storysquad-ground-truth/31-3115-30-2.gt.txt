@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6e6d614cefe0eabf3ae57a064262fb5bdd887513f9f712dd0b6faf90e4b1de63
-size 30
+Gerrard".Now lunch and remeber

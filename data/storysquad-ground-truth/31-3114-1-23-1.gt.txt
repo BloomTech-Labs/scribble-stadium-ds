@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a13602fc57916f140fdfb87bf7cdfab94a555f8e3fdbaf04f9504f03d81e0f9f
-size 32
+hmm... oh yeah he was in college

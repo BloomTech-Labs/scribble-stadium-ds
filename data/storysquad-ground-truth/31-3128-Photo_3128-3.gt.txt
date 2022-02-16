@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d9d78d78af21c97c8946f50580507f783251c0f5fe4416fe40ac9e95cbc8cafd
-size 43
+way live. "Hi my name is Dave my buddie are

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1ace6dd34b531f51014c5452475bb9f1b590ab340dbb97dbebd26d21449ed247
-size 36
+both ran inside."Can we eat outside"

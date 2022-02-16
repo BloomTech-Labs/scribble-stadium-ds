@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6e58225a4f2b131ad37db203d04c8a8d7357814239bed215f17ff447912f55e0
-size 39
+ crash landed and now we are stuck near

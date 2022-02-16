@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:fce2293baa08cc217b85498e2e39f5956881f58658b95bcf11fadad18371c7de
-size 45
+go to the Smithson School you never know what

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:acec38c2027f20c4e51555e4baeef5376ed2b4ff893ebd8233e453b37825c8d8
-size 59
+selfish, annoying, and mean! Jerry almost cried but he kept

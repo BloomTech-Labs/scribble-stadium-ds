@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:64c4d1464e8cde0d83d7d1f4f12f6ccb88fc4c6016169b8200ce066e9236ae71
-size 58
+Billy did not know what to say so he followed his friends.

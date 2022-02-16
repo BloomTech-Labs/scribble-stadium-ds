@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c30876998db5e27caf1c345c3b513bbc7ac89cfc530718ca414c6799ed8cfd23
-size 16
+Every Saturday a

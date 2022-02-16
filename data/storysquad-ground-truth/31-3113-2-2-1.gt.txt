@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a107474eb99116040935d714bca657704403b77792509c2745198f5337ef8c13
-size 34
+They bathed the dog and gave her a

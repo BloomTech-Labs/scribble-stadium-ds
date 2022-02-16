@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3189fe8e2a40a492e8f0b4309465a1bf799181785082d086293000654c5b0951
-size 42
+screamed yes. It seemed as if the creature

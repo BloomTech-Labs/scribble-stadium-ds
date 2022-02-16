@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:423e315cbf183af6d5e22faa36b505d39420f09326e5b26f5021847b1cdeca91
-size 29
+One day Bob took a stroll. He

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ff1e63f825bae30f19afaec178474cfc0909ca685fea9531c86e6f206998f341
-size 31
+explained what had happeed, his

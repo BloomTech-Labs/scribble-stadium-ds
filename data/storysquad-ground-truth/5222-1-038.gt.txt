@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:cb5c2fc2edb0858c0d00e215af4c9afad5ddadc9001cf1c719ffe8a846d47a75
-size 17
+ng "ring" which m

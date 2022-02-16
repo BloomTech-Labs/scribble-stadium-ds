@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:52723b08a5ee0eb72bb7de5ead59c55d228d5c383630b7340363662725aedb41
-size 37
+I walk into the Crying Boy Tavern, my

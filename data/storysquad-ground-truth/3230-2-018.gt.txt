@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:5c40f21ed23bd3ebb52fdd0dff9a08825a619308e378cc2936c81aee6fe4fd94
-size 28
+"The dragon!" Oguk fired the

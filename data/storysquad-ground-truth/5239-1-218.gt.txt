@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:7d343ff40e4e63823a42a2096c74c24fa5556c42e93732351640851403c0d8a5
-size 20
+waway my treasure, a

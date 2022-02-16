@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:03613d75971994ea359dda47f4ea82eded7aa07da85191819e4811dcb3f979db
-size 24
+woke up. "Morning guys",

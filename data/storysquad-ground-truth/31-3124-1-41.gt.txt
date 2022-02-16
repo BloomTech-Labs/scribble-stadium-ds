@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:7f0051d9e990414d0f217bca77e13d13025ba7b8d037f7aa50fcd264d5c32c20
-size 31
+ele'tric bookcart, Book Y got a

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3c7a2477de3d426e8ba556963b18a27ef237f1432fb810854a9aa167d7fa11b3
-size 26
+Then, their journey began.

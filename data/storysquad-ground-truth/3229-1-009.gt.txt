@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:eac2fbc0133f191272bd770265f9834728684c0f685eb3d43b7559572eb60335
-size 25
+cow from a farm and becau

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:4cb6250ca473682124ccd5a7baeae3070ef10a2ce851ecaeee8d1fea3c302c95
-size 48
+ "You know what, meet me hear right after school

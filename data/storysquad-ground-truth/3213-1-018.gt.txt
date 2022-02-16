@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e169c721a11a7ae291e3fa88655604658ab6e53eaf7ac2c059cd8246ba893e07
-size 31
+trx bands for 20min,and last he

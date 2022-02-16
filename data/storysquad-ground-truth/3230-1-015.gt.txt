@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d810dab8c727d3c00c1fcd70cc970e5c0a7abec4b276aa8d8957bfd09be5ec58
-size 36
+Fred exclaimed "I knew it!" The King

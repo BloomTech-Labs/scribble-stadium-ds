@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d1500e729ad9be5c6ebc750284e13fe31afefef4f34c151644c089ea5a0304ea
-size 51
+loker she asked "do you like me?" "of course I do" 

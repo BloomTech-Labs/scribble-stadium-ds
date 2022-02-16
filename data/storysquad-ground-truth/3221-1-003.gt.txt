@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a9b7a8a228485f3f0b3c914204034a3f66ef44874853058753b510e4b2b9d905
-size 31
+A little girl named Kendall and

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:9694827be9f3eb1ebc51b3d1b0b6e63badd335021070d1869518e9ee5c0c1ae3
-size 24
+Bob was scooping the ice

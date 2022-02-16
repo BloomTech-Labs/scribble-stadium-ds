@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6401637f07e21ad4cbce647c6405437df02c29c7e9f0e70ab5a7cacae643eff1
-size 24
+is Headmaster, Samantha.

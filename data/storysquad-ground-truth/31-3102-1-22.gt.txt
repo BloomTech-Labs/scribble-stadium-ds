@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a538db1c5fe5b8c901c58ce8336e4fcb180db66574f5c86d9b75232dc12b3cd4
-size 52
+My schedule : Math writting,reading, vocab,spelling,

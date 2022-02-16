@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:570c79ff2a157d2b1dab18a394273182a36a9f58a1cf8d63b0d73a7e3b047fee
-size 28
+Spirtcal and Kendall said at

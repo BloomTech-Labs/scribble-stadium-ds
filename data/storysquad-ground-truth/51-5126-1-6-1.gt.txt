@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:7aab52295b2adbcfc75714ded4c5cfec77b29647e799d70885b55fbfe6b03443
-size 25
+ team AFK. Then, soldier 

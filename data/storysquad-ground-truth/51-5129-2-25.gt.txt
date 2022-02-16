@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e3ccf1eb8f337327ff0a51a20e2dcd9e0966233303986598887956e1d1a7dd57
-size 37
+   My mom picked up a box she brought

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:9d3da7bb0fd8c14f94c88b0c690f4636321015bbaa7135f4b194c8481ff50e2a
-size 41
+dog's fault, it really wasn't. Bosco was 

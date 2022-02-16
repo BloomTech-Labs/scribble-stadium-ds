@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f927aa1221252f859388b3d8482777bce74bfbc43bcdb5fae660b93077177a15
-size 40
+a promise: don't tell the king anything.

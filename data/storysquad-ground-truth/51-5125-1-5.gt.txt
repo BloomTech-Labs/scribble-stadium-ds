@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:421757b47d4d9a880a87affb97564d3e3918ecad5559905258a8a8537792d524
-size 48
+He was on [] the roof of one of his treehouses. 

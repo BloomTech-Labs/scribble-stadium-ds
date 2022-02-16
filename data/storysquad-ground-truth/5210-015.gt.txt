@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:79c6777eda08768e1eb701281ff476b674297f52262383cc15334a064851a001
-size 54
+Timothy found something he never noticed. A large cave

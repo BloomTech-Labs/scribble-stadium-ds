@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e3d126668fa9557596d8fcdb5650dc48daeb8b8cc4cde9484ced9989d86b62a2
-size 48
+Weather exclaimed,"Look! Someone is falling from

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d7d5cc52828f79d70e51ee94191f6da3bc3208c550cb222477d8ab0cb90280ea
-size 41
+parents can work together to make a great

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e5304af972bfe5e397b3103fec064cc317c1662f0dcbe4d54cdb2334b7361f6c
-size 23
+But her friend told her

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b428ce69abd68ffbd774206b962ec02a42e2d001e6633ccd756fad6a871759c8
-size 22
+were two types of ants

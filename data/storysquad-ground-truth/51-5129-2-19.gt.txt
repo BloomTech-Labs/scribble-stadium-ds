@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b44f004ab1d4798819c91ad8da9aa5becbeda6f0b2bdef5aee337ef91b04073a
-size 47
+   "How's your birthday so far ?" asked my mom.

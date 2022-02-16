@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:4890b36a88378839260e5b497b1798a3684b0d3050d4ffce6082a78a8bcfcffe
-size 60
+from far away. Yes. Mary could be a little weird but that is

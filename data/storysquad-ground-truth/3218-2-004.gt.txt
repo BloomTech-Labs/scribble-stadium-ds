@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:9ff05c64ef28c787feb9d07159d255b30da4d48c36c8c8bbb694d6dd49267aa3
-size 29
+Bearu opend is mouth so Pengu

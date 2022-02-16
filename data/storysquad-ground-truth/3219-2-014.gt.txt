@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:52b95cab374bfcbb57c8623343012275eaed46a10a15e8a0d536404e6e23e4ee
-size 35
+a table and chairs so they sat down

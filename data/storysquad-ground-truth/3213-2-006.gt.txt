@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f6a6dbf7525dd8a923dc1fbae9909c179a2f2da5c48a298d3597cdf9582f4c96
-size 33
+ship. He sat peactuly in the ship

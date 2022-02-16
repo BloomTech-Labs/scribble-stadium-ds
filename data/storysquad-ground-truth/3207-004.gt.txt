@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c34071ab5d9f977cd2e05b38c6cad80394a7c0b30b2ce7c7baa37d89151021a3
-size 43
+One day Sophie the dog was playing with her

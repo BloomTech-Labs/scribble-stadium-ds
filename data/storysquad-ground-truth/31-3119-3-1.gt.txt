@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:52389d35bfdbfce6706eea74b2060d5050fa08f92571980a15db969199d4c0a4
-size 34
+"Finally you are ready." said bob.

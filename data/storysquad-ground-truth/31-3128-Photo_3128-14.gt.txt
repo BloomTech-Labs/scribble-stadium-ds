@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:21fb48312deacc98323d3a8a495d0276a7942a3cac1dae81834ea7f29c0b5e21
-size 55
+explained "By" he told me before opening the door "ugh 

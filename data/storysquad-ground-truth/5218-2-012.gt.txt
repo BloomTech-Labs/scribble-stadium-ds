@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:450357ea7e3dcba0f912805652d3329c1ca4462eab4dc2dbcf253ba99dc36af6
-size 41
+'The was a long six weeks! I was starting

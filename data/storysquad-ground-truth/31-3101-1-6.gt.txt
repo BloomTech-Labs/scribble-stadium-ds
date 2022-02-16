@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:71bc9c54e8b69f8457678cf7f413c7c7268155c0071a52d94bc145e5973a7a1f
-size 63
+She thinks that she is going to die soon. She does go to school

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:548a0cea4fb132ddb818d3301948b0132f78e756ee9e62c4c0cdd4f4ba03ae2c
-size 41
+At the end Fluffy was too tired to fight.

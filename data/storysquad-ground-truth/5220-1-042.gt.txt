@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6c303d0b4d84712c7691bee9854494bcbe35c0dd194fc01b3620e1c52aaf8b20
-size 35
+an anger; one that filled up with a

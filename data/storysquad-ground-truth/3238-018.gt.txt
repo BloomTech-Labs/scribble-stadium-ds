@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:0474d08f667e862a9f0d840548ed96272d408a40a63b0ea99d2b31c4de869868
-size 30
+and the robot came to life and

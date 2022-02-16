@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:9fa9a1f559dffc52c68b47c0b7fbc16ae3fe2f08d3ee5a8c74e22ec8e6f981b8
-size 31
+Oguk was about to say something

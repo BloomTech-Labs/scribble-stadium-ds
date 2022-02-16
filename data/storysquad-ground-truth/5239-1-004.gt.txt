@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:754a92715199bbab5aa4be1e991217352ab254425e783aee64dc82c2ff50b916
-size 28
+house, in my yard, one wing 

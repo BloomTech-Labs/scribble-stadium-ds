@@ -1,12 +1,2 @@
 data/kaggle-ground-truth/*.jpg filter=lfs diff=lfs merge=lfs -text
 data/kaggle-ground-truth/*.csv filter=lfs diff=lfs merge=lfs -text
-data/storysquad-ground-truth/*.gt.txt filter=lfs diff=lfs merge=lfs -text
-data/storysquad-ground-truth/*.png filter=lfs diff=lfs merge=lfs -text
-data/storysquad-ground-truth/*.tif filter=lfs diff=lfs merge=lfs -text
-data/storysquad-ground-truth-31/3109/*.gt.txt filter=lfs diff=lfs merge=lfs -text
-data/storysquad-ground-truth-31/3111/*.png filter=lfs diff=lfs merge=lfs -text
-data/crop-cloud/*.csv filter=lfs diff=lfs merge=lfs -text
-data/crop-cloud/*.jg filter=lfs diff=lfs merge=lfs -text
-data/testsquad-ground-truth/*.png filter=lfs diff=lfs merge=lfs -text
-data/testsquad-ground-truth/*.gt.txt filter=lfs diff=lfs merge=lfs -text
-data/*.csv filter=lfs diff=lfs merge=lfs -text

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:02e9314903a30addcdf837d942c50efb73c7312de89e00ce279c2594f656abce
-size 40
+are currently DESTROYING the environment

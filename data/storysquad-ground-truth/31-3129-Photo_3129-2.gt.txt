@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:0f5176e26b39bf7d0aed50f076a652c6ea1c523e759542eedd6091e383eaeb3b
-size 56
+sidekick, Caterine. They were like cats, except humans. 

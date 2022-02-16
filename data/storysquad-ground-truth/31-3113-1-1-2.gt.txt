@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a75b34af55f4832463df88d6b4b323ae00335961e1ab445290e2f6c6b5776ae6
-size 14
+A Homeless dog

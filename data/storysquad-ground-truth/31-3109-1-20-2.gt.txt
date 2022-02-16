@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e449cf744cdab7cfb37283e9e319e1c645d0654b95b575fbc4ce8c9815c317ee
-size 10
+war school

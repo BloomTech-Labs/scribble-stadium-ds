@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:cc1bee046077905d7e0287afee806264d31b3b4d00fa81644a1f94c8d3fa1ea5
-size 30
+Jeff. He was in his new house.

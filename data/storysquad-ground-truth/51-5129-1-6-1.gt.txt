@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:be9b53a9e8774a8931b85b0797a42db318eda5194afff0c37014acca8ff6d986
-size 23
+try to tell my parents 

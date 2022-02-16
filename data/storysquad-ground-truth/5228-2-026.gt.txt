@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:17282db1b7debcf094a15c1e12364ba55657a35437499ff7f43cf6b891a1f57b
-size 6
+Sunny!

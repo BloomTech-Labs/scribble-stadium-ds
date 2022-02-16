@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:18bd1b2e23e23a3507dabc7ad924fb0d2ec02cdc8a1bb28250cb035edbef5f76
-size 40
+is strang and bob super power is shoting

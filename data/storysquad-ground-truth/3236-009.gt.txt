@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:38556f1e406c71b4180040ec75283f4effeb8acf5287bc548496e4d215c673cc
-size 32
+and played alien shooting games.

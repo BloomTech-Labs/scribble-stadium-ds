@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6bd5d4b6cdb21bdb647872542f87e168ad0d56e8c6b001d711fc69af77a1396a
-size 45
+"Want a minute.I am trying to get ready bob."

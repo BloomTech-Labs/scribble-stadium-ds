@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d033a9261ccbfffe355c9e8f8724b6c90039b585957d603c48bba120418af9b8
-size 30
+scientists could studie, later

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d79e99e95dd96e2aa9479a9a89d0a32ea4b3e5354bfb5ac180286c8b9c44adf0
-size 62
+Billy and his friends walk up to Jerry and they all give their

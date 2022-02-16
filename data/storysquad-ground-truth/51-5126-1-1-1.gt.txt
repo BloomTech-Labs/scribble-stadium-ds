@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:4dee1bf115d66b2b1eeaee9713c4a3d4e2580d8d9d7de918b9876b1866c1372a
-size 32
+"Time to go " Genji said grimly.

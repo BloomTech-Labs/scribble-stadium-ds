@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8d4c21c3bb6dfb9cfb61d929711e754ab4c09b2d892ee4cd80b69827605830c5
-size 21
+was on a walk. He ran

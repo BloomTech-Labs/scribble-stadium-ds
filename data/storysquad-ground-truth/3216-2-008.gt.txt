@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:91d64e0ada4e5dadbc32c04212cb6142c8cdfb056883de3f0aec3a9d8f5a1d3d
-size 27
+took shirly to the hospital

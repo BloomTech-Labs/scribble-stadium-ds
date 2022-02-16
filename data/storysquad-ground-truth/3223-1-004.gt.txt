@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:96cd39c0d3eaddb0847a6f1774b9616e2b09b50761b330bf0de7d11a77b4a027
-size 44
+soul. I walk to school every morning with my

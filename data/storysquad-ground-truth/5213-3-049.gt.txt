@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:877e4346457e2ed482e4cfda007f1facd353918fdc1d0d1e9a6bbce97dbaf0a5
-size 35
+"Keep the money, and I'll keep both

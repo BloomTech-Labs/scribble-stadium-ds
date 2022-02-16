@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a9de1228739308e5a64b8772b9c5ec3aa9a536de823e3ccfe0ff6af0ca70be74
-size 29
+Amanda was out on a walk. Whe

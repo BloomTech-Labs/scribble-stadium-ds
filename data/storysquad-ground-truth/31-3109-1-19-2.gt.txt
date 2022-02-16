@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:cb2e20acf3a34d6c02abde7925c176edcfbaa6a9ba7a28fa01b58107a59922b0
-size 22
+ant grove ant who just

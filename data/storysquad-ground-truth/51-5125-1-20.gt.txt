@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:aad7f47293e4ec021043c7d7f6bba0289e16cce49c042d473104f2cdd7c8aa2e
-size 50
+Out of the corner of his eye  he saw a helicopter 

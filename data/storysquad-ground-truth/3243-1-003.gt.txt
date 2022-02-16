@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:dc8c47a07a001c6825fd22f2b03e19ce4256dd842af0acd296684f4fcdf861bf
-size 34
+on a stormy dayoIt started raining

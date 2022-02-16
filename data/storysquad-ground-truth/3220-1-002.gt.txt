@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:73d6196d875e84dc66592f70f3581b8f1f78872fa5f7eed1ff8788712cfc67be
-size 23
+It was a Sunday cvening

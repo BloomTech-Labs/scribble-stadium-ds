@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b48e711d6c422ab6aa2164015e5eecdb1e6f1165b14e13f2b14cb0a5e9a1fd20
-size 20
+found and old mining

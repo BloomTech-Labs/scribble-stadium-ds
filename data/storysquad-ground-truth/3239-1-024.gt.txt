@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:9993c502204470b2b6534ee504ec41c3e3c93f902d312674db800a3954d3aadf
-size 46
+"Explained Elvis. Before Rachel went to school

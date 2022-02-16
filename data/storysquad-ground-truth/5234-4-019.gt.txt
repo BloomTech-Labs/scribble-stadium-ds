@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:29d5ab617d9ced667cd3dfca76ec6050609e53fb30d5930a85ab921037ad4c02
-size 24
+"What?" the human asked.

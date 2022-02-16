@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:61b02a5b9d0df7d8ff05fbfaa7bd81fddd4f438eb32ca3f549ac6cf2e94d8085
-size 20
+Brian loved the dog.

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:40b6c9225601f617d96aac730386846b97099d728524b61727ce0f51a95f41bf
-size 54
+went dead. All of a sudden  the ground began to shake 

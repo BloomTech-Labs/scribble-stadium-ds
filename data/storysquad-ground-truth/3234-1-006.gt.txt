@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1a6cc38bcff39b97f8ec2e846958e8a6d694bbfb568708d9d822290236a3fa68
-size 52
+I wish for a pencil,I wish for a pencil,I wish for a

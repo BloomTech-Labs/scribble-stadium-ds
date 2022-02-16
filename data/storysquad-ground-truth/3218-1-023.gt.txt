@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6e551727ff549789d3c93a039b90d9b06788b1a6afd7e92a9120bae8bd29a9cf
-size 27
+Then Bearu pushed Pufu into

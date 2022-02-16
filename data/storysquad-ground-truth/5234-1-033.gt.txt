@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:fc6b2fe2863a1af63c92740030373be47a0f85bd0a1736afcd000b138d2121c4
-size 41
+face-to-face. The human told the dolphin,

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:0b9c15a7ecf209350e39bfb80b285d4431b2ab4e9696c7b5c127138562899c93
-size 28
+I am allways late to school.

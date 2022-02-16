@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:95d28754ff9ed8c3c0d3bd292bbd66a3be87cc397c8765efba8f02f0d1bec0f2
-size 16
+"I see a cat," I

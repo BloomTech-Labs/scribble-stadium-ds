@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a00f29548b406b5c6a4952fc0f84864f5fd2f0d9314527079ea4998e03caa31a
-size 6
+pistol

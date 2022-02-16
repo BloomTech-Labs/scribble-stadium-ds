@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8a92e2bbe0edecc0e811d5a2c844dc9fbcfc38ada09739d1a0ee79cc3eb5ce78
-size 34
+things right." It was June 6, 1944

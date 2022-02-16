@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c93a5edc3dc2481a1e4df96e82f1123e40d274867ccc60b8c160fda3496be0ee
-size 45
+Carly wasnt the most popular kid in her grade

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e9353687cec11f9d826c28b966b0ecf6561d5ddbe715e7d064787cf05f8c19bd
-size 26
+Book Y,, "We need to hide"

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:692e3fd9e43f52f47649814eb10695695fd3c8d016ddf551460a6edd51de41e6
-size 25
+in 2nd grade Annas dog's 

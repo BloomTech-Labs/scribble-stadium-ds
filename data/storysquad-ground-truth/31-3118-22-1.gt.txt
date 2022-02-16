@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:88583b5912e4c26ba0db8db46ab46dbca31c7b251289100f384463cdfcfb620b
-size 44
+idea worked and Tiger and Lion happy lives.

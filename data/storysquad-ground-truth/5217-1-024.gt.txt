@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:55ad81eae228f82abc2718d9136866630194dd15b1638182e349bccfcd98c9c7
-size 50
+fooling around in class; the teachers loathed her.

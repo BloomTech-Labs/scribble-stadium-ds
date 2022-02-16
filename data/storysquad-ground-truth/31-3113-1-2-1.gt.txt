@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:425539ebd63cfb2ef77b62df605243d1db98fafacd214a080aa04087e2a6549a
-size 34
+A girl that lived in New York City

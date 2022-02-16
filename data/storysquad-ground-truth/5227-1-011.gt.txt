@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f9903601eb0193f19abc32bc76735d24ab356d3487a88cb2dd74cba73341c9ac
-size 18
+ean, "Follow me, I

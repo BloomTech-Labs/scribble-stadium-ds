@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:48ebe447c77ad8680ca9171977000c4e124e69799728747f6b6ec0b669859a9b
-size 28
+He was picked to go to space

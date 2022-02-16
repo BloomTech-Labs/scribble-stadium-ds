@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:4613465618b526cc3df80a29adba50cbb774755cbb8cef76bc0d4aa5141c0ce1
-size 18
+Ink shot out , and

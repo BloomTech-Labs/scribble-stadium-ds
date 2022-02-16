@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:74214fa63a5a3bf851faf3fc65be0c01630e0ae405e92f721e3a1a3113c2c3fe
-size 50
+walking to school, at least for right now when you

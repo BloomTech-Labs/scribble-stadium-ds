@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ce0bd9bb8cd53311826e7b5a9c5f9d4bc9eb7018fb8caba1c8c04682fee5e27b
-size 24
+and removed the pars but

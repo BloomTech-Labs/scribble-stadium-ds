@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:5f904823bb50a04fe8b929323018f6571278502f038c075becf8fe0eb981722e
-size 25
+the dog as her ran after 

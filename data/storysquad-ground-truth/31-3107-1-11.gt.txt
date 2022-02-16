@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:75764a3f688eece604d5ffcd3685313b83fda391c08bc838f8123db8e9ddd719
-size 25
+the monkey was inspecting

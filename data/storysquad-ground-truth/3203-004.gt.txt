@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a6b3e418ce8b397e332424d5d969c0b4704940532909a12b5af6130c81f43b90
-size 46
+the dog "do you have a superpower"S And surpri

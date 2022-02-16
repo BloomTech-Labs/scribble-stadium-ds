@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3ebf4bf5b2f9f169a924b765b7788cca2d851c758e90165078041f6154e48ddd
-size 40
+yeasterday on the bus someone said to me

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:67a9bcf78b873d3000106525291346d11602c15f5bad07ae8f788565754503e0
-size 24
+saw it, the dragon Ogurk

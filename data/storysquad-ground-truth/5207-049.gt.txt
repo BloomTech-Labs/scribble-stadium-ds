@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:cdc991435378d3dd00731b77b12122a9eae22a704cc9e4541f6dd79495f3214e
-size 25
+Then they became friends,

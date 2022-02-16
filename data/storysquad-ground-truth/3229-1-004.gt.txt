@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:78562f63d2ae7dabcd8c261b9165fb6b15ea9bd2515afa6dcf3cd2e511703934
-size 27
+and I am riding my cow I am

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:19c325c8961f09ee20ab9944bac08445ee4a9ccd151de9a6e08a3b42b244428d
-size 12
+As we walked

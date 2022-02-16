@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b19c556c2ac56b921e587a7848840811f65a28731ecce7006e9c2fad1475d623
-size 50
+" Hey Sandy! You ready for gym? We have to run the

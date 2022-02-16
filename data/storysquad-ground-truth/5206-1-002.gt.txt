@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6772129471e8579a61e33a60f091fd6c745fc60cff6da9fa6bbb7c1899ef128a
-size 18
+"It's so hot outsi

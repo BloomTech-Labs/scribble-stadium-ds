@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:cc9ef48dddb24f00fc919ccbfed5e1237482e961679605c0d9127d80c6a39912
-size 37
+she had an exam she would always brag

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:81ee940615fb8f15c1bd0d18f5180fb4f5a86e4241f42b29dbc2ad4dc62ae4fe
-size 29
+bloody nose.Then Jack stopped

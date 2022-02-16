@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:9b7ac1e87a77fadc0d13ee15fcea941c85d7d7d323a4a0aac5dd587c88a77505
-size 59
+sunny day Mary was walking through the woods near her house

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:76d023f9043edb6ab5dc30ef8053f586e1b9b28e149404e00fed7c27a86052d8
-size 24
+More people killed cows.

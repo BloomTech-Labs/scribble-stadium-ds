@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a5e0dfa9fdf59d4132c8c068586fe5bb90c60981cf3729b746a84b3c780f19c5
-size 26
+Spirtcal won the festival!

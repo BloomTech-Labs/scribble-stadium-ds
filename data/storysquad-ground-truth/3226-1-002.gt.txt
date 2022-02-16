@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3eb19c9b917aad9b42613fc544e826d028dceb7aa2d6423cff1a0e413cf0cbc1
-size 27
+"Hi I am Anna." "I have bin

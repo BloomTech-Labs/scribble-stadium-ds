@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:0f4bc0e7f9f192965e5330d600a254cf186d99f040314f0b8ee65082fdbb1561
-size 33
+school is not as normal as it was

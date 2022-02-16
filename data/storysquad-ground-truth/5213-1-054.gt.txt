@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ff44c313fb54902983aa536e08bb2e7eb1cb7969cf1c0f2503bbcab065c02b59
-size 33
+I launch myself off of a rock and

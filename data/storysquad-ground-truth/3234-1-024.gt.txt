@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:5b731a040e5262a1a2824b2fee07462b90876d8790cd593ef40f12447644192f
-size 50
+place stood a pencil. Arania felt like celebrating

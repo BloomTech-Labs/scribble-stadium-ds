@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8ce018cb195bb481859a4439b662e18147cad1793d682eb8b469e2459fb7047a
-size 37
+"Hi," steve said, in a shaking voice.

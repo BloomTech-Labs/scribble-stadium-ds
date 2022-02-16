@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:7eba63e86b397793d5a11600482c21945a7db2ba64b93343b39242aec1ce8f09
-size 28
+ibat in here lokera she.went

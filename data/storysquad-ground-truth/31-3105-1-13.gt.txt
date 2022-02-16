@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:021d856b2aa28bfce867eaca8d803ed529a38c93549c53ca78a7216c47353752
-size 38
+But "Penguin was fast asleep. I opened

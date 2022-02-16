@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:2696ad285739f338cfef6e14353fe396f45337eadddd0715749a36ee3655bb26
-size 40
+so I boil hot water and soak a washcloth

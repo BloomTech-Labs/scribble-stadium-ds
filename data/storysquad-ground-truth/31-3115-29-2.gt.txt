@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f5b8863c66b777e755b66f7af94e351e3117fca21e359d34b878a59604d554df
-size 28
+the new kid said "my name is

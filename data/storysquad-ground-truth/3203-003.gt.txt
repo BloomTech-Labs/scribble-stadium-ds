@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:68618a021ad2e2b84d2711e056fe04761d00ff3fe9d4f1be62318d1ce5f2c2f6
-size 48
+Now there was something about this dog that Jack

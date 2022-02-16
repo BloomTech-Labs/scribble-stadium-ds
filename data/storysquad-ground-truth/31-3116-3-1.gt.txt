@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:867f53bf89ef6810eff698dcf9b25bf16d2161a5e4b9b846bbdec4c7f8f3594e
-size 24
+He lived in oasis in the

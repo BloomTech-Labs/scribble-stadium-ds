@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:bddd67a2591298b03f033db3c2700ea3a7c41f6a461607f1b2883c636ef8d83e
-size 63
+talk pals from Sandville School,a sea turtle,sea ericorn,and tw

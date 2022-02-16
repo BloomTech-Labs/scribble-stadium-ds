@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:952002927963fb33c0f482ce36d89538ade66e871e6f2ff569904f14b22d1dd1
-size 35
+Bob was born. Bob and Roboto were  

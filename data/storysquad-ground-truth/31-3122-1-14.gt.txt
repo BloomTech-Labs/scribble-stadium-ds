@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:5a2d9fb92b3687689e517ef95c69dc5a787c1e4035f579258eaf5467b4042084
-size 36
+as he was playing with a toy mouse. 

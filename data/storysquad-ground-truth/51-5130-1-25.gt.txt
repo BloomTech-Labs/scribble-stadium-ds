@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:73efa7baaae3bb9f32a298fcba6396107b0f664ddc5d72aa4f56975b10b965f6
-size 39
+screaming, "Bosco! Bosco come back!" He

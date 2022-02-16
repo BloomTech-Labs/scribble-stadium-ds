@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:226c8ca18aeba495ddb6a5a27c6f79285fbc7763bb0df878d696bd2c88925ded
-size 28
+nd open the safe(code 5921),

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ace559c6c3d6c771356444746933eb13e20c123a40810a72d207d194dcba0284
-size 61
+and Crusher. That one summer morning they were going to space

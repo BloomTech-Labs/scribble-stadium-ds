@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:57ee7babab2e7cbff942e030f2e036d6ad57926013ea75b1afe94c35688e0636
-size 34
+Thumbs. Or hands for that matter!'

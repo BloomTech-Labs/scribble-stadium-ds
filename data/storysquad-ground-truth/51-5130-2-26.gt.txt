@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:7b096fd65092cb750f1c4f79cd9848d60a41142b0e21c77e47f37f1e036f6699
-size 36
+oblivious to the scream that escaped

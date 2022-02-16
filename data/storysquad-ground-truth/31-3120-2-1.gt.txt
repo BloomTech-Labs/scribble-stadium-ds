@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:561033b2a86df0a5eec0ede3b302af04605bae6f2de44165c6893338039fb173
-size 40
+friends who where playing.One friend get

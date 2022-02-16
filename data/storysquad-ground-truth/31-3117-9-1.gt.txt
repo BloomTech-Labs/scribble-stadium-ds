@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e82f0f63ec7fa5c033d35492536e1a9edd4922cab99296f71d9b610ef6327ec9
-size 14
+than the human

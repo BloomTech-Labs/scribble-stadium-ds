@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:07f1d36abffe4b722ff086c7a6e3c4e1e1261fc484cc4bc808b188b840122b99
-size 38
+said.No said Ava. Should I tell Mom if

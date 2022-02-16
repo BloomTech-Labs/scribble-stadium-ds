@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f423bda5451d8de760abb9c4120878121c9314cd171c0d17fe058a008814a7e6
-size 42
+her teacher asked her a question she would

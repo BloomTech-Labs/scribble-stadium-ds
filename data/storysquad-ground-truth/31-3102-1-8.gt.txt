@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:623f0a702da218c1cf31b2f2ebb6c92bd24f17db4bcede533da1bbf027b23218
-size 34
+learned how to invent. This xear I

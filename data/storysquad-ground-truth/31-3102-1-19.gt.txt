@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6d97b360d3920de1aae1a1006e495f25e9c32acfec5caf5733789bc3ed1280be
-size 33
+When I walked in Mrs. Begula said

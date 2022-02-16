@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b0d2e50d0928c59b0392a547898b187790c74f01da2591ddcd415df3260af541
-size 26
+Be besh tryed to smash him

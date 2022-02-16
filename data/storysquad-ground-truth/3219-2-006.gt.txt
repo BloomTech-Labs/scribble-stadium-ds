@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6f5da748d343d807f1e92a02b077331221d84b4ebd506f526dd4e9836232e087
-size 37
+asked Bob? "Sure". Said the mom. Then

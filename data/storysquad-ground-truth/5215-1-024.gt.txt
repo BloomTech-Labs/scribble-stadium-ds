@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:557bd1a983484a544efa9f01a9c369865d61999299737450a8e9fa0723e95ce1
-size 34
+heading for Normandy to defeat the

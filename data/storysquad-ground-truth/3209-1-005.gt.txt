@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:45b8de9adea29a8fb4747ac2a1c183fcd6e9ddf90d0613ee694183ef19c85807
-size 14
+I do everyday.

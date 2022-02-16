@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:cb93d81333ded8990b78d402386c09b70e28be7f0ae4066ee61240dc858bfa5a
-size 50
+that amanda could talk to her. The uinicorn looked

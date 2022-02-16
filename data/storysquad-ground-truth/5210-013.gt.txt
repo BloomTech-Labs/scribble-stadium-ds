@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d9e11bf37495abeaa0c917d4221c99af2c29722d76eaee94d1a70d6aa7cf5e48
-size 60
+came by on this adventure. As he strolled through the forest

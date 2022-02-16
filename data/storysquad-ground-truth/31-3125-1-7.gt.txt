@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:256194f3d2bc09168ae9e41c8af9a753975516ac37b421b4603fcd38b62e9dca
-size 44
+said Simone "Why do you ask?" "I ask because

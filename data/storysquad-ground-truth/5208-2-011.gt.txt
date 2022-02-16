@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:312b2f9ef57585e3771c4e6d9efa13d9556d687ca88485cddd94b758a36637bf
-size 30
+On Saturday, Lindsay met with 

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6e5e92f883fcfc9b611753287bbdae34e6c7c58339de4518b3752c3b4f686cd7
-size 34
+I held my rifle closer. "How was I

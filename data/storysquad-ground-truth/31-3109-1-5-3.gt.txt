@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:635e17438c3a364c3388a1ed26985bbd8ca3f9f72870f8dee753bdb8dd626bbc
-size 20
+and the hyping ants.

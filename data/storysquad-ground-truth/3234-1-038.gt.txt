@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d2aee940e65b2add34ca4736a1993adac3c937e6fdf3489f12266c6631c86018
-size 40
+Arania thought fast. Maybe she should ma

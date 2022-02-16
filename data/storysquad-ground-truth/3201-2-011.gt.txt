@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:334e6aaf77f0c32fd924d80c2cdd6e0033e960e0e5de5c60114ee0087c16383d
-size 17
+coolest kid ever.

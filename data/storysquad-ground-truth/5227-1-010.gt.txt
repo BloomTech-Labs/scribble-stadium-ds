@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:69892f05e48193ddd1b68a76dbd0efbf978d00e022cc8ec4256da6db4909dc15
-size 26
+" You're like me. You seek

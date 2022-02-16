@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:eecbf583a989fd8c10efea633775580c6a61fe9d1d151e05dd2f20de7a60d143
-size 46
+could talk. Brian begged Jack if he could keep

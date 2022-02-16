@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:67883f68b6b3648f5fd17eed1171e86f7081da08e1ec3afbb895f76aa4e3b72d
-size 34
+School here was alot of home work,

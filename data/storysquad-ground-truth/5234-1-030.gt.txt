@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8c3b9a1e38bda60eab015f97562a0bf54c4d87486de552fdaf2ad122358dbcad
-size 40
+we have a contest? Well have two judges.

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:428e8284ca36648282a62468090b940a0237198abf45caa8b738204cb8369e6e
-size 19
+It was a hot summer

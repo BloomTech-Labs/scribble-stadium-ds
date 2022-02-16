@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b67ed48787b42e37d1a4cfbf99bf2f2174a2df52ac43cc96224c32e21a7f2c90
-size 40
+Bob how was still being annoying. Then, 

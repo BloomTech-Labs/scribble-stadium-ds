@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:bc8561220125a23e12792720d3235d86bff2e864e5571e2ce01996122a7520d5
-size 47
+One day in the morning I heared a loud crash. I

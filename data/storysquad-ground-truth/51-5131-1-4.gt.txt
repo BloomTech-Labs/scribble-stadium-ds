@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:af786c89781ac04f0715b686f93df3c0b0f5e0e80cae21fa8b5f741625e12d65
-size 35
+owner Barbara. Although Barbara was

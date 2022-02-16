@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3f1198cf43271b8b9e506ae71393b59f95d9a6173c0637b4df3edf5e77a65930
-size 29
+eatute stopped. tighting too,

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:53bb574f5912cc48433cc97b38dc16acd198529adac9b449d7454f40d6043858
-size 35
+thing. But one day I saw a book on 

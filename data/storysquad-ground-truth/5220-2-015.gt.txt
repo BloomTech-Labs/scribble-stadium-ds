@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:7a7ab337914772907c276497576c99da59b57a6bda4a695e489e09509ed3d21a
-size 33
+biggest struggle, in exchange for

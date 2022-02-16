@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:24aa04328d5dc959841a668ee3b9d1652a6dc086bcdb9787c49a5d827a6c8a04
-size 30
+to sit down, have a snack, and

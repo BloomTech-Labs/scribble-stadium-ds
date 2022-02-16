@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a97bdb7d1de171bde947134cce90fcb0c17f69ec5c1fca181bf273018940086d
-size 29
+I stood there, so happy I was

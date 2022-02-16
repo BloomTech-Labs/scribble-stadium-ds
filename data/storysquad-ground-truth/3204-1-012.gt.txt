@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b940da2d2b99fce03f407de476cbfac8c8ac6c5cc5dcb116dbf7c11432053227
-size 52
+head was filled with sweat and the same with Crusher

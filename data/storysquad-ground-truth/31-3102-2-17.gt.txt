@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:84471f30f35ca3f0c9e949881a056891502d90730e8fa674aebd9c78557860b6
-size 34
+is home vou are doing my homework!

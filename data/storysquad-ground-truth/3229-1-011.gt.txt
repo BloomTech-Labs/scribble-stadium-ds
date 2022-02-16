@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3f04ced48b5e7d01906172fc4e2efa210e6da7d49aad1a82841806462b9c29f0
-size 21
+I Love my cow because

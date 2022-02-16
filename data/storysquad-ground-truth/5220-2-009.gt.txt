@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:54766339f76f5f5852b01dc19ac3e8ef046f20872ffa208e6e8adfd3b029ab0f
-size 32
+I kept on helping each Astenian.

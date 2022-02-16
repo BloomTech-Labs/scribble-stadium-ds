@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:9b98fc0592b3f3c88c450d6a12b47cff91a914f59ce582292af0fa9d30fc7a08
-size 26
+The pony that didn't know.

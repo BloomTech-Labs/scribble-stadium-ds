@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1abedc9c4baa925858b3d9041764aacf12df1b3ccd3923fa38586fcc1a6c51a9
-size 12
+of the yard.

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1a1fa73c41643cd4df16b45c2c739d6b38c636c33994da0e34e0b796e7b65ac9
-size 26
+of Pufu it would be easyer

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8aa15983d816ed34e8aa1efc0b548b4ab4d9a72e2d92d4f39f44d22c7c4e7432
-size 39
+arobot will go to school forme . Got to

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:0539d67c920c2cfdcf2abd634ed3a8dee981594d27efcf04bb52182fa03bfa09
-size 42
+brushed my teeth, and ate breakfast. "hey,

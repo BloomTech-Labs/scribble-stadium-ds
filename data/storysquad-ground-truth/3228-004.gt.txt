@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:69590fe5f30e8b7b55dc1e5c5e51661d907e97fe8c0db771647d46eca7807d5c
-size 22
+Fought so there leders

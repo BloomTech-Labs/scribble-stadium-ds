@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:41c25016bba2b971176a3db365b771e583bd4b05064cf87a688b5231a5363c75
-size 55
+walking around for a minute or two, Timothy came upon a

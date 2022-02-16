@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d9f712973ea4a6072835e14921181855a9c626d8c375b3838c03a9198ab42c83
-size 61
+creature slowly came out of the bush. It was a bear. The bear

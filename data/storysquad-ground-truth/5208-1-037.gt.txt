@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:4e13359680eb77ef824f66b1be53ad2a1c094e11d226d93933bb3dea6236b9cf
-size 10
+summeNo, S

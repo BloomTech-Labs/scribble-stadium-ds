@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e75abfa0a2918103085063ec924a3960d96253a84b89877eb8af40deb43b349e
-size 45
+think you're s- so smart, but I'm s-smarter!"

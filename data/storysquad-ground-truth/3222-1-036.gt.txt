@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:0ec691dd3550b5b0de0471b7d672ba6822a881070ac199586ff3984ffdd38f75
-size 10
+animal was

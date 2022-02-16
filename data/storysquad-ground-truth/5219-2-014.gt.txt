@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f2f76d369419677349ff1cad0e1105cb08801486659220a36cf5b36d0370301b
-size 44
+Phil said with a sigh, "Amelia deserted me."

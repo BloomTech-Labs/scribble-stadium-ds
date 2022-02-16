@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:129c0b17099507c8cf64df535e0c37d08cb8f2711ea9f0971675de73e7c97374
-size 37
+. Jerry saw Billy playing at the Dark

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:310474431501e010ac5d57c4fa69b2b17d75482a98f21f0aff2102eb1ff50fc8
-size 21
+with a mask over his 

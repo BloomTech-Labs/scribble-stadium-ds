@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b5b52a329ba26ae5f912e2e2b565fa30b25eb141ea97cd92fe65d557e42e4748
-size 37
+my house. I opened the door.I heard a

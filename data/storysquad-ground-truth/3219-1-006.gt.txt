@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:867d73aa4acc8d02c854eb29bc0e65791716abc82376271ca92339551801d0af
-size 37
+was born. Bob was born Helena,Montana

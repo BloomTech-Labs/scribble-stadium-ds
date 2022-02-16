@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:fe8bab8db98226e74dc024ca2f2a3fbc2c14b5be6afcd60adc589a28a26ba617
-size 33
+Spirtcal and Kendall were talking

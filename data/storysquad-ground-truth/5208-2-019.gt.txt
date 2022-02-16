@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:44b6d80372824ebde63976577eecc00e1cd2c212f85ec6fc1d78f4da3aa6be9f
-size 27
+"Snappy! What a good boy!  

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:88a8f485920eb574e284bc15052b9f7073a08e7a1b33e24f1201a34aeda3744d
-size 34
+my best friend walked up to me and

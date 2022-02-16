@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:cb9cfd23619067a776138384929a68a7f849b2556b88af7cff749dfeb6a80a56
-size 36
+ “I want 1 million dollars and the

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:39a5f0b0c1386ddc04992b6c28ee6fb8df0952a5f5e733526fcb1bd205c4e436
-size 33
+Then came flying in from the sky,

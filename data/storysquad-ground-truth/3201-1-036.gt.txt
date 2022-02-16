@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b558f30e37eea907d5e08d82024974136e5c3b39a85cdf6c537fd1a3820e77cf
-size 21
+nat house was abandon

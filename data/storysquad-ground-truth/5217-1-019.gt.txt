@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d861c43da7a2490dbc288c2ce2ac477f97b0f14361a4b85552790c54c0ccd07d
-size 44
+were awesome and all the teachers loved her.

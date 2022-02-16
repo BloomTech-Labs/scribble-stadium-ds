@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:27ff9a0fadc60ad4a74d372eea2718a949742481fd1f2f085400a48d3528b25b
-size 20
+the lights turn off,

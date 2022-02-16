@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:4cae4f2942923319a4e5e48c5fe2fb4cf1f5bddad60e97d2240c61d39dfa1570
-size 33
+asked "Did you do your homework?"

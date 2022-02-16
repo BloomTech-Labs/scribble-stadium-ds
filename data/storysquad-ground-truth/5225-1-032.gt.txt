@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ce481bf6131bcbd2a99b6bbc90f82bba4877d2dfa76ebc31e4a50da51244edac
-size 34
+then, "Ahh!!" Bob's fathe'r ranout

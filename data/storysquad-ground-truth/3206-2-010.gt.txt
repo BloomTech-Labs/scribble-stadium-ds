@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:73ea046bdffc5002f021a844bfd93ac625a24a770e6e56cc8fa3e266d219b98b
-size 24
+broke up. cows and Fran 

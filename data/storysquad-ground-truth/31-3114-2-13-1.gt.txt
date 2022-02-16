@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8b8a06a4a7b84d8b8e279287e878fae80f9f6c41662262bc49628314f9895e7c
-size 31
+and Bob got all his stuff back.

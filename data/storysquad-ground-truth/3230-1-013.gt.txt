@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b8599aa00242bb489c3a3b40d3d03760f4b7b3182e3e3b3a31d8e617a52f9c37
-size 41
+The King replied "The dragon is missing!"

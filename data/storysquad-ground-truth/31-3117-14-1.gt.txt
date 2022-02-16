@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:42ab045cef1863a82040ef3b4e75005232fac7bc382be0bb15e1222493e082df
-size 24
+all the animals got seal

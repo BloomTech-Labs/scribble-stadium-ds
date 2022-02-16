@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ffa40c5d259ab991c34551e7eb5ee354bbc8595f2aa9466cec1c7a871f4063b9
-size 39
+go out to find the famous giant, Sleth.

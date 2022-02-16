@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e546ae9b5a85c5f3678e41c50a73b5da5b19cf347f57aff5529701055d59e652
-size 24
+ "Shut Up!" I told him. 

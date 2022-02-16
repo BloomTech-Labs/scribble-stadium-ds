@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:bf8eee5513b23ac49e9212cb072b23456569e75a4aab04c3046180d5c3c75ad2
-size 54
+worms, leeches, and bug larva. I am terrifed of worms.

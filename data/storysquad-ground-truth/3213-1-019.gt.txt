@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c55002921b3eaeaacd6d61c0e351c29c637ce99cb47b5a3597d2bddb77a6c1d6
-size 27
+boxed with a punching dumie

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:0171d7580780d9578ece814660b99317118445b4bad2137297b1b03f95eddf35
-size 31
+"I'll never abandon you again."

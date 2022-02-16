@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c914b04cae24176cd7d57022acc097ac3ac291149d56864adc5602bc9321855e
-size 26
+was a hot day. Shirley and

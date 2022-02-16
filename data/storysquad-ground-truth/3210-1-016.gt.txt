@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1ec519b2111f6f1f1dea95dff6fe1ff57c393e82bee2a2bb6e9be8efd5ec1c85
-size 43
+with ifs sad eyes and said "I was strolling

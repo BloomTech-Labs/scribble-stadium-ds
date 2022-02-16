@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:4e379303eec9f3d017310117c9eda585b3f5fdfd95a1ecda89a670ee53b3ab0b
-size 32
+Weatherhad powers of weather. As

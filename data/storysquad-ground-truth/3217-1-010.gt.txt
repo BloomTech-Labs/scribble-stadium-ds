@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:73ed6dbe9fdbeb090a3cb9abb9b9a7d5821f0ebecbbb21a67c9d2de9065b43dc
-size 25
+there was, only a mansion

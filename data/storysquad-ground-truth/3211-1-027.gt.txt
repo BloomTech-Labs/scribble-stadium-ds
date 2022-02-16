@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:56f1276a03310fd0fc6a5ed84b426526443584a023109c0f9dbadd2dd14f959e
-size 63
+penguins. Lily is so happy. She over comes her fear of penguins

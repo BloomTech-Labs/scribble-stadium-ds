@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c0c3f81b4081c26c5f2912b3aaa1324929df2a26a3da6b70bac0fcb91274de74
-size 36
+Lusinda named her new horse Glamour.

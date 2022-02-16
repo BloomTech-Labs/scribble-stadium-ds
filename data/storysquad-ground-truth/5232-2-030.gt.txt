@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b92b4a3b0cd3a247de82001027f8db5393671712256391f52589f3e74ba2c22e
-size 28
+2 days later, he got better.

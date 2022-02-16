@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a46a734c62ecf6b71cb08fb326c83e0416d0434e1a7e65748eb078870e9c58d9
-size 24
+at first she was scared.

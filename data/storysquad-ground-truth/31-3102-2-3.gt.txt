@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d86954a63f8cdd22e565793fbbd305cf34d0ec111b5deb59dab8f2d23a29e7cd
-size 40
+had a blue shirt because my teacherwould

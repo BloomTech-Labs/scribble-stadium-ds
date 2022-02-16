@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1e624e98641edaa91d9047733133744a8a8b4c3f41f8706be759f1226ff94254
-size 46
+He knew that nobody was near by, but he still 

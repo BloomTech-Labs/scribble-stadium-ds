@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b51f7ba97def1e49b51f9a2904ebccede3bc74e476fef2a3ff84df405bab201b
-size 32
+the sky. His name was Roboto. He

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1cf3346c5186c570b0638dbc5f2566b30c8ee53d259a0684fae425b7376ef839
-size 25
+about who won the 1 vs. 1

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ae762a9a2c285f63caed6cc04a7ec62f22ea3ec12edfe80d5b084bbc662de521
-size 59
+isit and talk too.One person in this grade is going to be a

@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:87cd9ecfdcd15f60a0b1d24ac40a4ebd1aa227a5ad06283aaf6080bc1e6af1e1
-size 21
+yard carrying a brown

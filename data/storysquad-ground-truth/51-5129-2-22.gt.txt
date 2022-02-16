@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:9eb4d9a0ef41f8748fdfa497bccef977c0bcaa48960377ac350dc160c37ae0c4
-size 6
+day." 

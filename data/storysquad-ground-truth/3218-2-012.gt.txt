@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c27eeeaee85ccdadaf861ffc1eb3ecfc2046c0eaa631fe76c3ee33d2a6d3694d
-size 41
+Pufu."I do", responded Pengu."But I enjoy

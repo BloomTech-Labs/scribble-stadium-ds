@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:03d434a4fac14f0749c9a24a3a3c9f9885ca69eaa2865dad08ad70acf9c7b27b
-size 24
+the owner of Bob the cow

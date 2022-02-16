@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e960beff0170eee2f26cc6e5fd667c9734145560da1eca0d6cbfa1e26f3be7cf
-size 19
+idea he could fuhle

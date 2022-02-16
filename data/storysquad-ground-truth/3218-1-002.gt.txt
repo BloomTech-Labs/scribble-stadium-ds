@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d2443a200418b0e6321a28ad71abb3a5e4bf5696e88aca067ea47b6fd8675a75
-size 33
+Pengu and Pufu were best friends.

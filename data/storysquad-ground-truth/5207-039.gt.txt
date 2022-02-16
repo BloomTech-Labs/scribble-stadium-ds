@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f7ce984ea3dd3d3f792841b1ddfd35cb4b39a55ba9a38d0c3e0d27baae1ec48e
-size 39
+I got grounded. The next day at school:

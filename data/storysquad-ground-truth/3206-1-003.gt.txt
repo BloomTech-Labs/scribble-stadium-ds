@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:42bfde9067802cf7bf5a361c378378f3aa30a17eaf3fa19ba412b04de2c2b069
-size 30
+One day Billy "a cow" woke upa
