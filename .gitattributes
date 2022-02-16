@@ -1,2 +1,5 @@
 data/kaggle-ground-truth/*.jpg filter=lfs diff=lfs merge=lfs -text
 data/kaggle-ground-truth/*.csv filter=lfs diff=lfs merge=lfs -text
+data/storysquad-ground-truth/*.png filter=lfs diff=lfs merge=lfs -text
+data/storysquad-ground-truth/*.tif filter=lfs diff=lfs merge=lfs -text
+data/storysquad-ground-truth/*.gt.txt filter=lfs diff=lfs merge=lfs -text
