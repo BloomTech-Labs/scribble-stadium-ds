@@ -15,6 +15,7 @@ import numpy
 import numpy as np
 import cv2
 import json
+import multiprocessing
 from multiprocessing import Process
 import os
 import os.path
@@ -220,68 +221,52 @@ def create_one_and_save_it(noise: float = 1, set_name: str = ""):
 
     with open(file_name_data, 'w') as f:
         json.dump(data, f)
+    del img_y_label
+    del img3
+    del img2
+    del img
+
+    return (0)
+
+
+def create_one_worker(arg):
+    return create_one_and_save_it(arg[0], arg[1])
 
 
 def create_bunch(how_many: int, noise: float = 1, cores: int = 4, noise_start: int = -1, noise_end: int = -1,
                  noise_step: int = -1):
-    """function to create many synthetic samples, given a noise level and how many to create."""
+    """function to create many synthetic samples, given a noise level and how many to create.
+    if noise_start is given then noise_end and noise_step must be given"""
+
+    proc_args = []
     # creates a list of processes waiting to be started and completed.
     if noise_start == -1:
-        processes = [Process(target=create_one_and_save_it, args=(noise, "" + str(noise))) for i in
-                     range(0, how_many)]
+        proc_args = [(i, "" + str(i),) for i in range(0, how_many)]
+
     else:
-        processes = []
-        noise_range = noise_end - noise_start
         samples_per_step = how_many
-        how_many = (noise_range / noise_step) * how_many
 
         for current_noise in range(noise_start, noise_end, noise_step):
             for sample_i in range(samples_per_step):
-                processes.append(
-                    Process(target=create_one_and_save_it, args=(current_noise, "" + str(current_noise)))
-                )
+                proc_args.append((current_noise, "" + str(current_noise),))
 
-    # start the initial group
-    for i in range(min(cores, len(processes))):
-        p = processes[i]
-        p.start()
-
-    # monitor list of processes to find opportunities to start no processes and start them, while removing old procs
-    todo = how_many
-    while todo != 0:
-        todo = 0
-        free = 0
-        for i, p in enumerate(processes):
-            if p is not None:
-                if p.exitcode is None:
-                    todo += 1
-                if p.is_alive():
-                    pass
-                if p.exitcode == 0:
-                    free += 1
-                    processes[i] = None
-        started = []
-
-        for _ in range(free):
-            for i, p in enumerate(processes):
-                if p is not None:
-                    if p.exitcode is None:
-                        if not p.is_alive():
-                            if i not in started:
-                                print("starting: ", i, "<->", started)
-                                started.append(i)
-                                p.start()
-                                break
-        print(todo)
-        time.sleep(.10)
+    with multiprocessing.Pool(processes=min(cores, len(proc_args))) as pool:
+        pool_results = pool.map(create_one_worker, proc_args)
+        pool.close()
+    print("Pool closed.", pool_results)
+    print("Done", pool_results)
 
 
 if __name__ == "__main__":
     print(os.path.dirname(__file__))
     cores_to_use = max(os.cpu_count() - 2, 1)
-    cores_to_use = min(cores_to_use, 12)
+    cores_to_use = min(cores_to_use, 20)
 
-    if int(sys.argv[1]) > 1:
+    if len(sys.argv) > 1:
         typer.run(create_bunch)
     else:
-        create_one_and_save_it(noise=25)
+        yn = input("Create test bunch? (y/n)")
+        if "y" in yn:
+            create_bunch(5,noise_start=5,noise_end=45,noise_step=1,cores=cores_to_use)
+        else:
+            print("Aborted.")
