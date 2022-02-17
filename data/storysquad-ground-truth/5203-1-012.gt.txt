@@ -1,1 +1,3 @@
-in the doorway. His dad was
+version https://git-lfs.github.com/spec/v1
+oid sha256:019ddebfc382daa004d55636c55339ac5d1601d08033e4328999853d6312abee
+size 27

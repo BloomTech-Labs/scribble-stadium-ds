@@ -1,1 +1,3 @@
-person say "Hello" a fellow said.
+version https://git-lfs.github.com/spec/v1
+oid sha256:e8c0fbfd6b96e3d160ee3723a69b8bd96c7e76a96591a3037c7043787dd1ca78
+size 33

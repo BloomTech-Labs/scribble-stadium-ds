@@ -1,1 +1,3 @@
-so notfun, Lindsayner day, and
+version https://git-lfs.github.com/spec/v1
+oid sha256:8c189b7269556b19d2ace24adca9e0563e076843edc65e371ca92ad2569dd73d
+size 30

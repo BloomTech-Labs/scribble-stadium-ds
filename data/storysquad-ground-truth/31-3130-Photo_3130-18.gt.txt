@@ -1,1 +1,3 @@
-Pri asked showing Julie her drawing. It was a shirt with ripped jean shorts 
+version https://git-lfs.github.com/spec/v1
+oid sha256:2e25838595e5c46dc3d452b2c0270bdb13060a83d053b4793e0fe12071fbab31
+size 76

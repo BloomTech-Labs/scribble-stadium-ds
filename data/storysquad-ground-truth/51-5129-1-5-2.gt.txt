@@ -1,1 +1,3 @@
-gets them all. When I 
+version https://git-lfs.github.com/spec/v1
+oid sha256:2320598762d2051444c6b3f56b5af6dcb213c16e78bc2d01b363c9b3cc1da956
+size 22

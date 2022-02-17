@@ -1,1 +1,3 @@
-animal.Kat touched it and the
+version https://git-lfs.github.com/spec/v1
+oid sha256:6b3ce1e4700aac2801fd8e6a49cfd6cc565b9378b86324029464552fafc550a8
+size 29

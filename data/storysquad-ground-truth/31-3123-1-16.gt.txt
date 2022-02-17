@@ -1,1 +1,3 @@
-inside the book the book came
+version https://git-lfs.github.com/spec/v1
+oid sha256:6893e019671b0231508dcf460583d34b8da602848f41a77b8f5078d532b90083
+size 29

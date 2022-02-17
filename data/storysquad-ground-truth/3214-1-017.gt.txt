@@ -1,1 +1,3 @@
-alone, We will still be best friends." Anna said
+version https://git-lfs.github.com/spec/v1
+oid sha256:f906ded9844464bbb65d4596a6a423a2f632dec4a60a5c8bd158ef061292c8cc
+size 48

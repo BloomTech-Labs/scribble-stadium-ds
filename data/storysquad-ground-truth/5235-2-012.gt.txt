@@ -1,1 +1,3 @@
-it was a camel, with a neck of an ostrich, and
+version https://git-lfs.github.com/spec/v1
+oid sha256:6758ea7b308404ee22f892049e5bf9bcf951856718d330fcb80f23fbead8e1ef
+size 46

@@ -1,1 +1,3 @@
-collapse. Fortunately, 
+version https://git-lfs.github.com/spec/v1
+oid sha256:bec3be91b94020b4d555fc75e6df46aac049ac3a835404a5f40611bde107ed4b
+size 23

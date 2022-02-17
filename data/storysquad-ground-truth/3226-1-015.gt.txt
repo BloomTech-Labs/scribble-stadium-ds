@@ -1,1 +1,3 @@
-move. Anna gous to 6th grad
+version https://git-lfs.github.com/spec/v1
+oid sha256:2ed5e57a5b626c41e9d5840fdd5df74cb502af1d732583401c61b56ef8e07bc4
+size 27

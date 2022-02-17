@@ -1,1 +1,3 @@
-did she was so proud of herself.
+version https://git-lfs.github.com/spec/v1
+oid sha256:84e2cea835eb3fd8114fa88dd227bdcba7e7a49eddb7cb2e039cd32f1658688e
+size 32

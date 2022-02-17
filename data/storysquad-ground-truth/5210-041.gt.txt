@@ -1,1 +1,3 @@
-The rock flew out of timothy's hand and hit
+version https://git-lfs.github.com/spec/v1
+oid sha256:b4db9a59322f3a28e6e373ff18bbf4735d9209bb4b82ae47daaa52b50a0689ee
+size 43

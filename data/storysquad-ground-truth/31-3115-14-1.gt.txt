@@ -1,1 +1,3 @@
-one time life goes good. if
+version https://git-lfs.github.com/spec/v1
+oid sha256:19053ff8b3eb01deff90ef071b4eac988acf642fef123721ac40212cf136aab2
+size 27

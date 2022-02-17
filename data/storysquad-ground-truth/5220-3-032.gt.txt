@@ -1,1 +1,3 @@
-paralyzed. I had did it. I had earne
+version https://git-lfs.github.com/spec/v1
+oid sha256:a633ca6acfc772ea2cdbe8b6f7746e1f5d13d2c7a7e8e41bab2c194ffe404a51
+size 36

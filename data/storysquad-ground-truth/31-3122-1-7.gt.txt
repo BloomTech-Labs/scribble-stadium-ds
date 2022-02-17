@@ -1,1 +1,3 @@
-"OMG, a squirrel" yelled Blister
+version https://git-lfs.github.com/spec/v1
+oid sha256:b164b6091b63c3f23aa5274e65ce2340ab162f7f96a0d46d73dbfd5c644506e8
+size 32

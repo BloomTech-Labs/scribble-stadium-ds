@@ -1,1 +1,3 @@
-asks. "Let's make this quick," I say,
+version https://git-lfs.github.com/spec/v1
+oid sha256:5f79e3beccb17e860ad25bc7cb483d0ca3fb7f58adcd46f0be0405c719105744
+size 37
