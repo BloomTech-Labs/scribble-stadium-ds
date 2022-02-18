@@ -29,15 +29,17 @@ def cluster(cohort_submissions: dict) -> list:
 
     if num_submissions < matching_minimum:
         return "Flex this cohort"
+
     if remainder != 0:
         """
         identify submissions to promote without matching
         """
         promoted = []
-        return promoted
+
     # sort the cohort by complexity and build squads to return.
     for submission in sorted(cohort_submissions, key="Complexity"):
-        squad.append([submission.SubmissionID, submission.Complexity])
+        if submission.SubmissionID not in promoted:
+            squad.append([submission.SubmissionID, submission.Complexity])
         if len(squad) == 4:
             squads.append(squad)
             squad = []
