@@ -9,8 +9,7 @@ def cluster(cohort_submissions: dict) -> list:
     team = 2 players (1 submission each)
     squad = 2 Teams
     cohort = group of squads
-    """
-    """
+
     Splits given dict into groups of 4 based on their ranked complexity
 
     Input: dictionary of a single cohort containing nested dictionary
@@ -18,25 +17,31 @@ def cluster(cohort_submissions: dict) -> list:
     and 'complexity' as one of the inner keys
     Output: Nested list of clusters:
     [[list of submission_ids], [list of submission_ids]]
+    Highest to lowest complexity score
     """
 
-    # Generate DataFrame from dict
-    df = pd.DataFrame.from_dict(cohort_submissions, orient="index")
-
-    # Rank by complexity
-    df = df.sort_values(by=["Complexity"], ascending=False)
-
     # Initial variables
-    num_submissions = len(df)
+    num_submissions = len(cohort_submissions)
     remainder = num_submissions % 4
     matching_minimum = 8
+    squads = []
+    squad = []
 
-    # assuming cohorts are divisible by 4, then squads can be returned like this.
-    if remainder == 0 and num_submissions >= matching_minimum:
-        return [df[i:i+4] for i in range(0, len(df), 4)]
-
-    else:
-        return "Cohort not ready for matching"
+    if num_submissions < matching_minimum:
+        return "Flex this cohort"
+    if remainder != 0:
+        """
+        identify submissions to promote without matching
+        """
+        promoted = []
+        return promoted
+    # sort the cohort by complexity and build squads to return.
+    for submission in sorted(cohort_submissions, key="Complexity"):
+        squad.append([submission.SubmissionID, submission.Complexity])
+        if len(squad) == 4:
+            squads.append(squad)
+            squad = []
+    return squads
 
 
 async def batch_cluster(submissions: dict) -> json:
