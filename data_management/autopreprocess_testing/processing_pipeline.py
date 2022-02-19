@@ -2,7 +2,16 @@
 # from sklearn import preprocessing
 from preprocessing_functions import *
 
-def processing_pipeline(img, queue):
+PREPROCESSING_STEPS = {
+    "grayscale": get_grayscale,
+    "remove_lines": removeLines,
+    "remove_noise": remove_noise,
+    "adaptive_gaussian_thresholding": adaptiveGaussianThresholding,
+    "erode": erode
+}
+
+
+def processing_pipeline(img, queue=None): # Default parameter list will be treated as global
     """
     Takes and image and passes the image through a series of pre-processing steps
 
@@ -13,30 +22,18 @@ def processing_pipeline(img, queue):
     Returns:
     ___
     A preprocessed image
-
+    
     """
-    newImage = img.copy()
+    new_image = img.copy()
+    if queue is None:
+        queue = [0,1,2,3,4]
+    # queue = queue or [0,1,2,3,4] None value is not changed Or means first list if None
     while len(queue) > 0:
         preprocessing_number = queue.pop(0)
-        match preprocessing_number:
-            case 0:
-                newImage = get_grayscale(newImage)
-            case 1:
-                newImage = removeLines(newImage)
-            case 2:
-                newImage = remove_noise(newImage)
-            case 3:
-                newImage = adaptiveGaussianThresholding(newImage)
-            case 4:
-                newImage = erode(newImage)
 
-    return newImage
+        # Corresponds to preprocessing function
+        prepocessing_function = PREPROCESSING_STEPS.get(preprocessing_number)
+        newImage = prepocessing_function(new_image)
 
-
-
-    # img_grayscaled = get_grayscale(newImage)
-    # img_delined = removeLines(img_grayscaled)
-    # img_denoised = remove_noise(img_delined)
-    # image_G_thresh = adaptiveGaussianThresholding(img_denoised, blockSize=5, c=2)
-    # img_eroded = erode(image_G_thresh, kernelSize=2)
-    # return img_eroded
+    return new_image
+    
