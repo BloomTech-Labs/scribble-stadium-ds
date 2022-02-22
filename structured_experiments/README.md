@@ -3,29 +3,23 @@
 ### This format is intended to facilitate fast iteration over experiments by standardizing documentation and experiment setup. 
 
 ## Directory Structure
-* Top level directory should be named using the date and time in the format YYYYMMDDHHMM allowing for uniqueness.
-* Place README and module directory inside top directory
-* Top level should contain file intended for execution
-* Create requirements.txt file at top level if new libraries are tested
-* Utilize .gitignore for excluding items such as test images or scratch files
+###This should mirror the structure of the template experiment named "2022.02.01.test" and include any new files needed to test new ideas.
 
 ### Experiment README should answer questions in the scientific method format within 2-3 sentences.
-* Question
-  * What question does the experiment seek to answer? ie "will doing A help do B?"
-* Research
-  * What research was done to learn more about the question?
-* Hypothesis
-  * Based on research, what is the expected outcome?
-* Test
-  * Outline your experiment. This may require more than 2-3 sentences.
-* Analyze
-  * What outcome from the hypothesis do the results support?
-  * What is resulting conclusion?
-* Share Results
-  * Proofread all documentation
-  * Review all custom code written for experiment
-  * Create pull request for review on GitHub
 
+* Hypothesis
+  * What are the conditions and expected outcome of the experiment?
+* Methodology
+  * How is the experiment set up?
+  * What tests will be run and how?
+* Results
+  * What was the actual outcome without considering what was expected?
+* Conclusions
+  * Does the outcome support the hypothesis?
+  * Why or why not?
+* Reproduce
+  * Start over by building your docker container and running the model to ensure reproducibility 
+  * Run docker-compose -f docker-compose.yml build train && docker-compose -f structured_experiments/2022.02.01.test/docker-compose.yml up --build train_test_experiment to train a tesseract model using provided sample of kaggle data
 ## Experiments
 
 ### [Template Experiment - 202202070508](202202070508/)
