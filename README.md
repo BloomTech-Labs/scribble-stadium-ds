@@ -54,9 +54,14 @@ Welcome to the DS Repo for Story Squad. It can be a little overwhelming for new 
 
 - In order to make the repo more lightweight, we have begun the process of migrating all training data out of the repo and into the cloud. First, we are implementing [Git Large File System](https://git-lfs.github.com/), or Git-LFS, to store our data on a Github server.
 
-   - LFS tracks and migrates each specified file or files of a certain type to a remote location, in this case a Github server(s).
+   - LFS tracks and migrates files of a specified type to a remote location, in this case a Github server(s). It replaces each tracked file in the repo with a text file that points to the corresponding remote location.
 
-   - It replaces each tracked file in the repo with a text file that points to the corresponding remote location.
+   - Before cloning the Scribble Stadium DS repo, please install the Git-LFS command line extention for your opperating system. On Linux, for example, you may run the following:
+      - `sudo apt-get install git-lfs`
+
+   - Once LFS is installed on your computer and you have cloned the repo, use the following commands to install LFS in your local repo:
+      - `cd scribble-stadium-ds`
+      - `git lfs install --local --skip-smudge`
 
    - To get familiar with using Git-LFS, check out this [tutorial](https://sabicalija.github.io/git-lfs-intro/).
 
