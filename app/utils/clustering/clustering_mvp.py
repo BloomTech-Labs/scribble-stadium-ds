@@ -16,7 +16,7 @@ def cluster(cohort_submissions: dict) -> list:
     with 'submission_id' as first level key,
     and 'complexity' as one of the inner keys
     Output: Nested list of clusters:
-    [[list of submission_ids], [list of submission_ids]]
+    [[list of unmatched - promoted submission_ids],[list of submission_ids], [list of submission_ids]]
     Highest to lowest complexity score
     """
 
@@ -28,13 +28,14 @@ def cluster(cohort_submissions: dict) -> list:
     squad = []
 
     if num_submissions < matching_minimum:
-        return "Flex this cohort"
+        return squads
 
     if remainder != 0:
         """
         identify submissions to promote without matching
         """
         promoted = []
+        squads.append(promoted)
 
     # sort the cohort by complexity and build squads to return.
     for submission in sorted(cohort_submissions, key="Complexity"):
