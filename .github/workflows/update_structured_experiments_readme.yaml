@@ -1,0 +1,39 @@
+# Unless specified, the working directory is the root of the repo
+# This is the name displayed on GitHub under the actions tab
+name: auto-update
+
+# Defines what repository event triggers the action
+on:
+  # Triggers the workflow on push
+  push:
+    # Restricts the trigger to the structured experiments directory and sub-directories
+    paths:
+      - 'structured_experiments/**'
+    # Only triggers when push is to the main branch
+    branches: [ main ]
+
+# Defines an individual job
+jobs:
+  # Operating system the runner is built with
+  build:
+    runs-on: ubuntu-latest
+    # Defines each step of this job
+    steps:
+      # Checks out repo under the $GITHUB_WORKSPACE so the workflow has access
+      - uses: actions/checkout@v2
+      # Executes the python file to modify the readme
+      - name: update structured experiments readme
+        run: python ./.github/workflows/update_structured_experiments_readme.py
+      # Commits the changes using the Actions credentials with a commit message
+      - name: commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git commit -m "update structured experiments readme" -a
+        # Pushes the changes to main branch using the repository secret Github token
+      - name: push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
