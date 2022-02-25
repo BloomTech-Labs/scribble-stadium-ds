@@ -8,7 +8,7 @@ def cluster(cohort_submissions: dict) -> list:
     Naming structure for variables:
     team = 2 players (1 submission each)
     squad = 2 Teams
-    cohort = group of squads
+    cohort = group of players, either grouped into squads or not
 
     Splits given dict into groups of 4 based on their ranked complexity
 
