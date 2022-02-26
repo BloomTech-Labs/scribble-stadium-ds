@@ -150,21 +150,6 @@ for i in range(len(nouns)):
 list_of_string_pairs.append(("helloworld", "hello world"))
 list_of_string_pairs.append(("cats", "cats catch mice"))
 list_of_string_pairs.append(("dogs", "dogs chase cars"))
-"""
-list_of_string_pairs.append(("3101-1", "Once apon a time there was a girl named Mary. On a warm sunny day Mary was "
-                                       "walking through the woods near hear nouse to look for some critters to take "
-                                       "pictures of. She loved animals and nature all her life even though she was "
-                                       "only nine years old She thinks that she is going to die soon. She does go to "
-                                       "school but she isn't that smart. For example Mary recycled a pie even though "
-                                       "the pie was not even bitten. Another thing she did was leave her muffin in the "
-                                       "woods while she was traveling with her family to Andrea's house which is one "
-                                       "of Mary's friends at school and Mary's muffin was eaten by a bear that sniffed "
-                                       "it from far away. Yes. Mary could be a little weird but that is just how she "
-                                       "is. Back to the real story now. Mary found a fox, took a picture she also "
-                                       "found a rabbit took a picture she found a squirrel and took a picture before "
-                                       "it ran away. But sooner or later she saw two eyes peeking through a bush on "
-                                       "the side of the path she was walking on."))
-"""
 
 for pair in list_of_string_pairs:
     file_name = pair[0]
