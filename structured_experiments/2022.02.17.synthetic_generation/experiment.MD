@@ -9,13 +9,12 @@ inputted text.
 
 # Results
 
-TODO: Create Template
+Successfully created synthetic images and text file for each string.
 
 # Conclusions
 
-TODO: Create Template
-
-
+This is a useful way of creating new data to help train the tesseract model.
+Need more diverse ways of creating new strings to create more data.
 
 # Reproduce
 

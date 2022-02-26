@@ -1,5 +1,6 @@
 """
 This file will create synthetic data from inputted strings.
+It creates variations of a sentence using a list of nouns and verbs.
 
 """
 
@@ -42,8 +43,8 @@ def create_char_list():
 
     print(cwd)
     for file_path in img_files:
-        file_name = os.path.basename(file_path)[5]
-        char_place = get_place_from_char(file_name)
+        file_char = os.path.basename(file_path)[5]
+        char_place = get_place_from_char(file_char)
 
         char_list[char_place].append(Image.open(file_path))
 
@@ -130,12 +131,12 @@ def create_image_from_string(sentence: str):
 
 nouns = ["dog", "cat", "rat", "mouse", "kitty", "doggy", "rabbit", "bunny", "snake", "snail", "squirrel", "bird",
          "rodent", "duck", "goose"]
-verbs = ["jumps", "runs", "zooms", "swims", "dives", "sprints", "stalks", "submits", "catchs", "chases"]
+verbs = ["jumps", "runs", "zooms", "swims", "dives", "sprints", "stalks", "submits", "catches", "chases"]
 
 
 # Create new string with a certain pattern
-def create_simple_string(i: int, j: int):
-    return f"the {nouns[i]} {verbs[j]}."
+def create_simple_string(n: int, v: int):
+    return f"the {nouns[n]} {verbs[v]}."
 
 
 create_char_list()
@@ -147,7 +148,7 @@ for i in range(len(nouns)):
         list_of_string_pairs.append((str(i) + "-" + str(j), create_simple_string(i, j)))
 
 
-list_of_string_pairs.append(("helloworld", "hello world"))
+list_of_string_pairs.append(("hello-world", "hello world"))
 list_of_string_pairs.append(("cats", "cats catch mice"))
 list_of_string_pairs.append(("dogs", "dogs chase cars"))
 
