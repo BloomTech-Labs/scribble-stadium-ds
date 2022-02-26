@@ -158,5 +158,5 @@ data/eng/*
 data/storysquad/*
 data/configs/*
 data/*.traineddata
-/data/synthetic_data_creation/created_synthetic_data/*
-/data/synthetic_data_creation/character_images/*
+/structured_experiments/2022.02.17.synthetic_generation/created_synthetic_data/*
+/data/character_images/*
