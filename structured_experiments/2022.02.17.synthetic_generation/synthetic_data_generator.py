@@ -129,6 +129,7 @@ def create_image_from_string(sentence: str):
     return return_image
 
 
+# Lists to create different variations of a sentence
 nouns = ["dog", "cat", "rat", "mouse", "kitty", "doggy", "rabbit", "bunny", "snake", "snail", "squirrel", "bird",
          "rodent", "duck", "goose"]
 verbs = ["jumps", "runs", "zooms", "swims", "dives", "sprints", "stalks", "submits", "catches", "chases"]
@@ -139,10 +140,11 @@ def create_simple_string(n: int, v: int):
     return f"the {nouns[n]} {verbs[v]}."
 
 
+# Setup the character image list
 create_char_list()
-
 list_of_string_pairs = []
 
+# Loops through every variation of nouns/verbs and creates a string from them
 for i in range(len(nouns)):
     for j in range(len(verbs)):
         list_of_string_pairs.append((str(i) + "-" + str(j), create_simple_string(i, j)))
@@ -152,9 +154,8 @@ list_of_string_pairs.append(("hello-world", "hello world"))
 list_of_string_pairs.append(("cats", "cats catch mice"))
 list_of_string_pairs.append(("dogs", "dogs chase cars"))
 
-for pair in list_of_string_pairs:
-    file_name = pair[0]
-    text_data = pair[1]
+# Whatever has been added to the list_of_string_pairs will be created to an image
+for file_name, text_data in list_of_string_pairs:
 
     syn_image = create_image_from_string(text_data)
 
