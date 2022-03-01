@@ -3,5 +3,4 @@ data/kaggle-ground-truth/*.csv filter=lfs diff=lfs merge=lfs -text
 *.box filter=lfs diff=lfs merge=lfs -text
 *.gt.txt filter=lfs diff=lfs merge=lfs -text
 *.jpg filter=lfs diff=lfs merge=lfs -text
-*.lstmf filter=lfs diff=lfs merge=lfs -text
 *.png filter=lfs diff=lfs merge=lfs -text
