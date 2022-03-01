@@ -117,7 +117,7 @@ testpath==0.5.0
 threadpoolctl==2.2.0
 tifffile
 tornado==6.1
-traitlets==5.1.0
+traitlets
 typing-extensions==3.7.4.3
 urllib3==1.25.11
 uvicorn==0.15.0
