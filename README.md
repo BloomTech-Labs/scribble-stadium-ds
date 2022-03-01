@@ -1,4 +1,4 @@
-## Story Squad, Team B - Data Science
+## Story Squad - Data Science
 [![Maintainability](https://api.codeclimate.com/v1/badges/146d9feb7549b988077a/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/Labs26-StorySquad-DS-TeamB/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/146d9feb7549b988077a/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/Labs26-StorySquad-DS-TeamB/test_coverage)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
@@ -14,7 +14,7 @@ The repository contains a **Rest API** (`app/`), **OCR Model Training Pipeline**
 
 **Want to hear an overview of all our project features?** Click the Story Squad banner above for a link to our product video from 10/22/20! Or keep scrolling to read more thorough information on each feature.
 
-#### Quickstart Guide
+## Quickstart Guide
 
 ### Required Dependencies
 
@@ -105,7 +105,7 @@ For information on how to build your own experiment, please consult the contribu
 For more information on developing with scribble stadium. Please visit the wiki [here](https://github.com/BloomTech-Labs/scribble-stadium-ds/wiki)
 
 
-#### License
+## License
  
 The MIT License (MIT)
 
