@@ -38,7 +38,12 @@ git clone https://github.com/BloomTech-Labs/scribble-stadium-ds.git
 Each of the components of this repository have been dockerized and can be intialized by executing the correct docker command.
 
 #### Running API
+A Docker image has been created bundling the API, written using the FastAPI framework. The api can be run by executing 
+`docker-compose -f docker-compose.yml up --build api`
 
+**☝️ the above will likely fail without a valid Google Cloud credential key stored in the GOOGLE_CREDS environment variable of your local machine**
+
+Once running, visit [http://127.0.0.1:8000/](http://127.0.0.1:8000/) to view interactive Swagger documentation of the API.
 
 #### Running Model Training Base Container
 A Docker base image has been created that bundles Tesseract with all the necessary python libraries to train a model. The following will build the image locally.
