@@ -28,8 +28,9 @@ Clone the repository by running the following on Linux/OSX:
 or the following on Windows:
 
 ```posh
-set GIT_LFS_SKIP_SMUDGE=1  
-git clone https://github.com/BloomTech-Labs/scribble-stadium-ds.git
+set GIT_LFS_SKIP_SMUDGE=1;
+git clone https://github.com/BloomTech-Labs/scribble-stadium-ds.git;
+set GIT_LFS_SKIP_SMUDGE=0;
 ```
 
 **☝️ use the above to avoid downloading all training data**
