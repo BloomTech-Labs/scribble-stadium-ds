@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v2
       # Executes the python file to modify the readme
       - name: update structured experiments readme
-        run: python ./.github/workflows/update_structured_experiments_readme.py
+        run: python ./.github/workflows/update_structured_experiments_readme.py ./structured_experiments
       # Commits the changes using the Actions credentials with a commit message
       - name: commit changes
         run: |
