@@ -185,7 +185,7 @@ def create_one_and_save_it(noise: float = 1, set_name: str = ""):
     set that it is part of
     """
     if set_name != "":
-        set_name = set_name + "\\"
+        set_name = set_name + os.path.sep
 
     file_name_base = str(uuid.uuid4())
 
