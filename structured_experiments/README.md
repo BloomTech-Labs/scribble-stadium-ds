@@ -2,6 +2,7 @@
 ##How to use the template folder
 - Copy the template folder within your branch
 - Rename the folder to YYYY.MM.DD.<my_experiment> where <my_experiment> is the name of your experiment
+- Add a brief (1 sentence) description at the top of the experiment.md file replacing the sample after DESC
 - Create and/or include any files needed within the folder except data files
   - Data is set up in the docker compose file with different data streams being managed using git lfs
   - When using a different data set the volume must be set to that directory in the docker-compose under the volume label
@@ -26,3 +27,5 @@
   - Has the experiment been reproduced?
   - Does the reproduction support the original results?
 
+<!--DO NOT CHANGE OR REMOVE THIS LINE-->
+##Experiment Directory
