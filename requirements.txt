@@ -56,7 +56,7 @@ matplotlib
 matplotlib-inline
 mistune==0.8.4
 nbclient==0.5.4
-nbconvert==6.2.0
+nbconvert
 nbformat==5.1.3
 nest-asyncio==1.5.1
 networkx==2.6.2
