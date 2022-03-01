@@ -188,9 +188,11 @@ def create_one_and_save_it(noise: float = 1, set_name: str = ""):
         set_name = set_name + "\\"
 
     file_name_base = str(uuid.uuid4())
-    file_name_img_X_input = os.path.dirname(__file__) + "\\data\\" + set_name + file_name_base + ".X_input.png"
-    file_name_data = os.path.dirname(__file__) + "\\data\\" + set_name + file_name_base + ".json"
-    file_name_img_y_label = os.path.dirname(__file__) + "\\data\\" + set_name + file_name_base + ".y_label.png"
+
+    base_path = os.path.join(os.path.dirname(__file__),"data",set_name,file_name_base)
+    file_name_img_X_input = base_path + ".X_input.png"
+    file_name_data = base_path + ".json"
+    file_name_img_y_label = base_path + ".y_label.png"
 
     os.makedirs(os.path.dirname(file_name_img_X_input), exist_ok=True)
 
