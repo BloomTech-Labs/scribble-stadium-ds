@@ -101,7 +101,7 @@ retrying==1.3.3
 rsa==4.7.2
 scikit-image
 scikit-learn
-scipy==1.7.1
+scipy
 Send2Trash==1.8.0
 six==1.15.0
 SQLAlchemy==1.4.22
