@@ -40,7 +40,7 @@ ipywidgets
 jedi==0.18.0
 Jinja2==3.0.2
 joblib==0.16.0
-jsonschema==4.0.1
+jsonschema
 jupyter==1.0.0
 jupyter-client==7.0.6
 jupyter-console==6.4.0
