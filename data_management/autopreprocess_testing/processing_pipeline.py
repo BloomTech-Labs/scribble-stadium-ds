@@ -33,7 +33,7 @@ def processing_pipeline(img, queue=None): # Default parameter list will be treat
 
         # Corresponds to preprocessing function
         prepocessing_function = PREPROCESSING_STEPS.get(preprocessing_number)
-        newImage = prepocessing_function(new_image)
+        new_image = prepocessing_function(new_image)
 
     return new_image
     
