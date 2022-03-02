@@ -7,7 +7,8 @@
   - Data is set up in the docker compose file with different data streams being managed using git lfs
   - When using a different data set the volume must be set to that directory in the docker-compose under the volume label
 - Edit the Dockerfile, docker-compose, experiment.sh, requirements files as needed for repeatability
-- Run `docker-compose -f docker-compose.yml build train && docker-compose -f structured_experiments/2022.02.01.test/docker-compose.yml up --build train_test_experiment` to train a tesseract model
+- Run `docker-compose -f docker-compose.yml build train && docker-compose -f structured_experiments/YYYY.MM.DD.my_experiment/docker-compose.yml up --build train_test_experiment` to train a tesseract model
+  - change the directory `YYYY.MM.DD.my_experiment` to the directory which matches your experiment to train your model
 - Document your experiment in the experiment.md file which can be renamed if needed
 
 ##Documenting Experiments
