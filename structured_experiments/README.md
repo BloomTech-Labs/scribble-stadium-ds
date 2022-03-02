@@ -29,6 +29,10 @@
   - Does the reproduction support the original results?
 
 <!--DO NOT CHANGE OR REMOVE ANYTHING BELOW THIS LINE-->
+<!--
+The module uses the heading below as a reference to populate the experiments below from their folder names
+in the form of YYYY.MM.DD.<my_experiment> where <my_experiment> is the name of the experiment
+-->
 ##Experiment Directory
 ###[2022.02.01.test](2022.02.01.test)
 #### Template folder to use for experiments
