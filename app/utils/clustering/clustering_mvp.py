@@ -34,16 +34,15 @@ def cluster(cohort_submissions: dict) -> list:
         return squads
 
     # identify players to be promoted without matching to ensure squads have 4 players each.
-    while len(promoted) < remainder:
-        for submission in sorted(cohort_submissions.items(), key=lambda x:x[1]["Skipped"]):
-            if not submission.Skipped:
-                promoted.append(submission[0])
+    for submission in sorted(cohort_submissions.items(), key=lambda x:x[1]["Skipped"]):
+        promoted.append(submission[0])
 
+    promoted = promoted[:remainder]
     squads.append(promoted)
 
     # sort the cohort by complexity and build squads to return.
     for submission in sorted(cohort_submissions.items(), key=lambda x:x[1]["Complexity"], reverse=True):
-        if submission not in promoted:
+        if submission[0] not in promoted:
             squad.append(submission[0])
         if len(squad) == 4:
             squads.append(squad)
