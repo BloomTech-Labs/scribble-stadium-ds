@@ -1,1 +1,3 @@
-laughing. Everything was
+version https://git-lfs.github.com/spec/v1
+oid sha256:ba4db5eca3cb495f9fbceb8b7b24cbbe9988b2dc51d81d09cc6b32c9bd2d2b17
+size 24

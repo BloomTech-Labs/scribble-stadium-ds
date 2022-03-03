@@ -1,1 +1,3 @@
-father had told me to got one of the
+version https://git-lfs.github.com/spec/v1
+oid sha256:09429a9498878edb32467034f2a03d623408283711ace27794c8bb306953a868
+size 36

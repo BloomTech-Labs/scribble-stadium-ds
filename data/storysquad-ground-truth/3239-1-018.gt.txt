@@ -1,1 +1,3 @@
-"Hello! Rachel." said the little person, "AHH!!"
+version https://git-lfs.github.com/spec/v1
+oid sha256:a3f635eadf8cefef8257bd49ba53b7cc874f88f3010e69844ee600bb3398667f
+size 48

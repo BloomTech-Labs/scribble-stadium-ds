@@ -1,1 +1,3 @@
-homework  in   class    and  she
+version https://git-lfs.github.com/spec/v1
+oid sha256:3c332bc38afdebef6d77cddc5c9f8c981deb3a9a552ca0fdf123c58dda24eb32
+size 33

@@ -1,1 +1,3 @@
-the best in Antartica.Pufu was weak
+version https://git-lfs.github.com/spec/v1
+oid sha256:3b6ada459a81966adb59a24d1e0b7fb79037b4183597134a54a9622eb07bdf70
+size 35

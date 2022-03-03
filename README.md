@@ -93,7 +93,8 @@ You can also optionally specifiy the following arguments to more granularly cont
 ☝️ The default parameters keep 5 of the 7 original layers and introduce 2 smaller ones to the end of the network(LSTM 256 Output Layer and softmax layer).
 
 
-For hyperparameter tuning refer https://tesseract-ocr.github.io/tessdoc/tess4/TrainingTesseract-4.00.html#lstmtraining-command-line
+For hyperparameter tuning refer to https://tesseract-ocr.github.io/tessdoc/tess4/TrainingTesseract-4.00.html#lstmtraining-command-line
+
 
 #### Running a Structured Experiment
 A series of completed experiments exist within folders in `structured_experiments/`. Each folder represents an experiment completed in the hopes of identifying succesful strategies for training better handwriting OCR models. Each experiment is dockerized and can be executed via docker commands. The `experiment.MD` file in each experiment folder provides a detailed overview of what the experiment does, the conclusions drawn, and commands to recreate it.   To run the template experiment `2022.02.01.test`, simply run the command provided:

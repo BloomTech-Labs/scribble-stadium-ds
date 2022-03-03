@@ -1,1 +1,3 @@
-e bedroom and
+version https://git-lfs.github.com/spec/v1
+oid sha256:2f9309061fe36585e4222871a8f1da661facd00a1ff91e420a1ca567309f4cea
+size 13

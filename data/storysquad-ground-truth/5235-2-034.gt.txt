@@ -1,1 +1,3 @@
-queen!" He was pushed out of the gathering.
+version https://git-lfs.github.com/spec/v1
+oid sha256:79c73ebfbf5b4d8e836e6ae86cdc8289bb2fcd369f4e7ac65d8293ad33b5cbe2
+size 43

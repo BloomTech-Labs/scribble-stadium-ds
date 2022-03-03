@@ -1,1 +1,3 @@
-Once there was a female black lab named
+version https://git-lfs.github.com/spec/v1
+oid sha256:33a9ffb6e04a2c9c598220e35b22bc6a62b2a62991f5ba01b707a9e800a42c18
+size 39

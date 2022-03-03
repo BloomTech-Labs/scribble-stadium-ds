@@ -1,1 +1,3 @@
-I went straight past the cafeteria and
+version https://git-lfs.github.com/spec/v1
+oid sha256:6515ff40a0acaecea9f7d436c3e1f86ab881bf11e9130dd237a604ffd941f700
+size 38

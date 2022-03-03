@@ -1,1 +1,3 @@
-Jerry screamed at them, "Why are you picking on me?! "They
+version https://git-lfs.github.com/spec/v1
+oid sha256:be21a0ee273dbe99ccf4681829215d9da7df53305ecbb9365ceec5513436fe84
+size 58

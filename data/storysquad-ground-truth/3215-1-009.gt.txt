@@ -1,1 +1,3 @@
-mas the dog were outside
+version https://git-lfs.github.com/spec/v1
+oid sha256:0c93c4e181f705b76ae1f7d184a8a6ed59cdcc2c60ab79f00fd4caad632910c5
+size 24

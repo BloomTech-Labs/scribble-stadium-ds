@@ -1,1 +1,3 @@
-alk pal with me too. I quickly scan the classroom. I just have
+version https://git-lfs.github.com/spec/v1
+oid sha256:d114ab6f504a463996137d31bc11041372e8be34de1ad7c060add6a5f3455cb5
+size 62

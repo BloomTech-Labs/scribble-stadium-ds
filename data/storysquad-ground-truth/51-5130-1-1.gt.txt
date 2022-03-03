@@ -1,1 +1,3 @@
-The day I got my dog was the 
+version https://git-lfs.github.com/spec/v1
+oid sha256:53b3b66466ed0435a0baba9cc941923b3e558dd35d808013d7e138f6daed9a85
+size 29

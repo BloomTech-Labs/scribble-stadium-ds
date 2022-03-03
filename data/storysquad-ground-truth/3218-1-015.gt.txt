@@ -1,1 +1,3 @@
-he knew how to face Bearu.
+version https://git-lfs.github.com/spec/v1
+oid sha256:1092a5933b94d7e0fe8af0f26ab084895cee463f2db9e620c49f8b96204cf38c
+size 26

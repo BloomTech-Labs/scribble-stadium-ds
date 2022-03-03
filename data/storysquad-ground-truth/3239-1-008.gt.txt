@@ -1,1 +1,3 @@
-a mean an "Look Rachel I got a 69 on
+version https://git-lfs.github.com/spec/v1
+oid sha256:ec87067347869b2f95013c9f82b183723dbfe6023761aa4a1dce6cf8cd0594c3
+size 36

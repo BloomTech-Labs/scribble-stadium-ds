@@ -1,1 +1,3 @@
-"He's just a stupid dog," Lindsay muttered.
+version https://git-lfs.github.com/spec/v1
+oid sha256:9d9eecb7e5683ccc656cddf36550dc58b148cb72487b55b588d7dc917cb09b49
+size 43

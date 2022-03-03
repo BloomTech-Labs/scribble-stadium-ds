@@ -1,1 +1,3 @@
-wanderer ventured into the mysterious new cave. After
+version https://git-lfs.github.com/spec/v1
+oid sha256:6467d7ca6222caea114cca4e72ed443852583b42276879c2eeef98cf568e7d2f
+size 53

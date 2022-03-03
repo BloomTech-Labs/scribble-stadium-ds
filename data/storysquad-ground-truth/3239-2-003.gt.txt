@@ -1,1 +1,3 @@
-When Rachel got to school she couldn't
+version https://git-lfs.github.com/spec/v1
+oid sha256:9059640d5d97cede150ded20908f4ccdac5cfe4bef254b63a89f53456f4ada27
+size 38

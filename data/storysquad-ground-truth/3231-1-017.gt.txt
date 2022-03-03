@@ -1,1 +1,3 @@
-the goid wizard tryed
+version https://git-lfs.github.com/spec/v1
+oid sha256:6ac4c8e3f546b85a506cd67eec2ec7af99f970fa32c38b26783aed9aa6ecf626
+size 21

@@ -1,1 +1,3 @@
-worst.Uhh I don't like life.
+version https://git-lfs.github.com/spec/v1
+oid sha256:1600281774cd3bea0094701dd9ca15adc7d2ebdaf9d560d6216353f7db5c0892
+size 28

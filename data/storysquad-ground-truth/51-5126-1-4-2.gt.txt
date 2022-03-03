@@ -1,1 +1,3 @@
-said in Japanese. He was torn 
+version https://git-lfs.github.com/spec/v1
+oid sha256:7f6f98ea658193247a55117720e8cb18b12a918929f2ccbd92a9190d997e9095
+size 30

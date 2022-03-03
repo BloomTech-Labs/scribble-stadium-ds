@@ -1,1 +1,3 @@
-"Quick", said
+version https://git-lfs.github.com/spec/v1
+oid sha256:0f07fc616748818739522971f3154a49d41c640c40667ae418c0a64f6a530529
+size 13

@@ -1,1 +1,3 @@
-Anna has a dog she gets it
+version https://git-lfs.github.com/spec/v1
+oid sha256:9b45d18b8f98b5d239acbeb8ad7ac92be15e2db4880465c14252596f5f1b2c55
+size 26

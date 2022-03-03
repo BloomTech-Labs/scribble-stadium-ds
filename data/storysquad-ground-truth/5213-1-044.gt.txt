@@ -1,1 +1,3 @@
-as he swings his mighty arm. "I'm guessing
+version https://git-lfs.github.com/spec/v1
+oid sha256:d43ed912e00c8c6300024839df459f1105f06d270e4066002266cb7198407956
+size 42
