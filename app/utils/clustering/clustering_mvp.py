@@ -2,6 +2,8 @@ import json
 
 import pandas as pd
 
+MATCHING_MINIMUM = 8
+
 
 def cluster(cohort_submissions: dict) -> list:
     """
@@ -23,13 +25,12 @@ def cluster(cohort_submissions: dict) -> list:
     # Initial variables
     num_submissions = len(cohort_submissions)
     remainder = num_submissions % 4
-    matching_minimum = 8
     squads = []
     squad = []
     promoted = []
 
     # if there are insufficient submissions to meet the minimum
-    if num_submissions < matching_minimum:
+    if num_submissions < MATCHING_MINIMUM:
         return squads
 
     # identify players to be promoted without matching to ensure squads have 4 players each.
