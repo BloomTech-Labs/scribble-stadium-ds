@@ -1,6 +1,6 @@
 # Unless specified, the working directory is the root of the repo
 # This is the name displayed on GitHub under the actions tab
-name: auto-update
+name: structured-experiments-auto-update
 
 # Defines what repository event triggers the action
 on:
