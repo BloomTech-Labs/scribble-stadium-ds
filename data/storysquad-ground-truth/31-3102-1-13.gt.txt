@@ -1,1 +1,3 @@
-I have long curly brown hair. I used
+version https://git-lfs.github.com/spec/v1
+oid sha256:f6814c958569cd7095475378711682fb35d8061cb899a5ddfec25be5aabb8cde
+size 36

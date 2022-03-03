@@ -1,1 +1,3 @@
-love. Lion on his tail. This
+version https://git-lfs.github.com/spec/v1
+oid sha256:1cfdfb583c2f6813c070487d9278e3d43ccc4e0ebf2435e46a873ec8e23ba8bb
+size 28

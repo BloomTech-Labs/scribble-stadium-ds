@@ -1,1 +1,3 @@
-The Animals began to fight. 
+version https://git-lfs.github.com/spec/v1
+oid sha256:975ef47fdbc8e1c21dab0cdfdb021e371947e60c1564ff689bc310a60b2dc3d9
+size 28

@@ -1,1 +1,3 @@
-dog said "My Mom is faster
+version https://git-lfs.github.com/spec/v1
+oid sha256:ba945826c62a9b5345987685f7cc093303357678a360bad68c35a4502585df62
+size 26

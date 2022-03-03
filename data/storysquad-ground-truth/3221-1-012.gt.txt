@@ -1,1 +1,3 @@
-Spirtcal Said. Kendall said "Why
+version https://git-lfs.github.com/spec/v1
+oid sha256:0aecd01e114624d2aa512ccc8a02706164bc51679ceabc81e4dc1fbc709ed8bc
+size 32

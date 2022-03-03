@@ -1,1 +1,3 @@
-I go to The Park Street Middle School.
+version https://git-lfs.github.com/spec/v1
+oid sha256:da719861f74770497df0f8ae850209bb0583bd825be61d751269a161ed3e05b6
+size 38

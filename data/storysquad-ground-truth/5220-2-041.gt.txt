@@ -1,1 +1,3 @@
-gray, he had more wrinkles. But I
+version https://git-lfs.github.com/spec/v1
+oid sha256:9badcf7377318e59408498bdd623e95b7e483c71febbc851f12bbd9a1f078b7a
+size 33

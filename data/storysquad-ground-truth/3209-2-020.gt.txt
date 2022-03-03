@@ -1,1 +1,3 @@
-of school, Kaylee told me, "Today u
+version https://git-lfs.github.com/spec/v1
+oid sha256:9accf148b5825ba6b87c94ae6dc728926013deb2f8bfa84b0c9da85b5684b4d8
+size 35

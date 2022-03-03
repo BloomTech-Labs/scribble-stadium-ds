@@ -1,1 +1,3 @@
-   "I don't care just shut up!" I replied.
+version https://git-lfs.github.com/spec/v1
+oid sha256:e0050cffea43b5ee93f3c463ef336a985fbe023d1ab796360ebfaeaedc29ee7c
+size 42

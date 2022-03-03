@@ -1,1 +1,3 @@
-close!" One of his teamates had an argument with
+version https://git-lfs.github.com/spec/v1
+oid sha256:0afc7512f12988dc2ab45d77945c2082ef262d727eb60d24ce4a7be7ecc01be9
+size 48

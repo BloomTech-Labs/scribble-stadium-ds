@@ -1,1 +1,3 @@
-Ferdolot
+version https://git-lfs.github.com/spec/v1
+oid sha256:d8fb161ff9352b687ed118618ebd7b4f5347cb0d387d58c8940038241360d57f
+size 8

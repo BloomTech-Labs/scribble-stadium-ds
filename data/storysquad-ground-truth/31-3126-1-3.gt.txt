@@ -1,1 +1,3 @@
-There was a cute Kitty.
+version https://git-lfs.github.com/spec/v1
+oid sha256:9d855eaaa46829ac7dd83f6521d6b765649608b669165d8e7c37416aa216781c
+size 23

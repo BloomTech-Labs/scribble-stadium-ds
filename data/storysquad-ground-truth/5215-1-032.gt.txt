@@ -1,1 +1,3 @@
-D-Day. An explosion happened. I looked
+version https://git-lfs.github.com/spec/v1
+oid sha256:cc4910ebb4b14013077603a005164880710a349ce37e09ac94128ed74d9bd73d
+size 38

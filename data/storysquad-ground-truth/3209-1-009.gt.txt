@@ -1,1 +1,3 @@
-I do everyday. As I said, it was a normal day
+version https://git-lfs.github.com/spec/v1
+oid sha256:250f9bb9557274f1a3cf3686ce1819aa9c3cf52eff7e128583262ddfd25f24fa
+size 45

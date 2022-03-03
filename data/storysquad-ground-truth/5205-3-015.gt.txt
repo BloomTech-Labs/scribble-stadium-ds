@@ -1,1 +1,3 @@
-it was bad. She found out that she
+version https://git-lfs.github.com/spec/v1
+oid sha256:056979f1729015cc2cf2db363a9dbe6baef54aa273f62a13c34d7dfbaf181488
+size 34

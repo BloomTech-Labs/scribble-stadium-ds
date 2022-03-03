@@ -1,1 +1,3 @@
-Lilly and Sophie went to the swings. Ano
+version https://git-lfs.github.com/spec/v1
+oid sha256:666ded29dc70f1f2688aded742ae819b5fd072d44bacc163743c0f801a17ed61
+size 40

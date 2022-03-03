@@ -1,1 +1,3 @@
-towards Omahah beach. Soldiers were
+version https://git-lfs.github.com/spec/v1
+oid sha256:fbf28a62278809629fd510c051315198a70e130c03ed4eb94a63e6ffeef67eee
+size 35

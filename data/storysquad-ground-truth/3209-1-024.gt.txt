@@ -1,1 +1,3 @@
-ordinary. If you ask me, she should switch school
+version https://git-lfs.github.com/spec/v1
+oid sha256:e197a15a6dc24a35de6c33af0456e9e45e01a7bb891059106e9c636bb0225c40
+size 49

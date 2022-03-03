@@ -1,1 +1,3 @@
-but I said "can I stay home from school?"
+version https://git-lfs.github.com/spec/v1
+oid sha256:1188283576cc7c61fddcf373e607f1a1386f4928b9c218fb29873e9119470901
+size 41

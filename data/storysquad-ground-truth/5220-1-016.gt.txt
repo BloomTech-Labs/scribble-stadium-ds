@@ -1,1 +1,3 @@
-my Father is the King of Astenia.
+version https://git-lfs.github.com/spec/v1
+oid sha256:93e767c491ce6a73cbec5a37edf954d2ef0480c9fcb9f9d9541757e5b8cf269d
+size 33
