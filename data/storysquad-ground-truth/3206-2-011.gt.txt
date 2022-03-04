@@ -1,1 +1,3 @@
-Cows. It was a long battle
+version https://git-lfs.github.com/spec/v1
+oid sha256:39ecff1839002c27d8975b907ef7e22da37840f9036453d1976b112d53691372
+size 26

@@ -19,9 +19,10 @@ source_dir = os.getcwd() + '/test_images'
 target_dir = os.getcwd() + '/processed_test_images/'
 
 # Get list of all image paths
-jpg_files = glob.glob(source_dir + "/**/*.jpg", recursive=True)
-png_files = glob.glob(source_dir + "/**/*.png", recursive=True)
-img_files = jpg_files + png_files
+supported_file_extensions = ["jpg", "jpeg", "png", "tif", "tiff"]
+img_files = []
+for ext in supported_file_extensions:
+    img_files += glob.glob(source_dir + f"/**/*.{ext}", recursive=True)
 
 # Process each image and save in target directory
 for file_path in img_files:

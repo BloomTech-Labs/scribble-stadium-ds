@@ -1,1 +1,3 @@
-marveled at the new creature he had discovered. "Woah."
+version https://git-lfs.github.com/spec/v1
+oid sha256:59807289035190df708db882d858b13eddd7421dd2a5f48639ad010598ac539a
+size 55

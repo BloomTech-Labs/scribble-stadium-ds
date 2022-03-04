@@ -3,6 +3,7 @@ version: "3"
 services:
   train:
     container_name: scribble-ocr-train
+    image: scribble-ocr-train
     build:
       context: .
       target: tesseract_training

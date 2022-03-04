@@ -1,1 +1,3 @@
-ny rifle 
+version https://git-lfs.github.com/spec/v1
+oid sha256:80e3bebfbbbf6f8a3a8bafd77f8d48457780e53ab6d29b282866a967790c2a04
+size 9

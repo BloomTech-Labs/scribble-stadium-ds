@@ -1,1 +1,3 @@
-t week, Lindsay went on a jog
+version https://git-lfs.github.com/spec/v1
+oid sha256:618be9378309c48430c52de7c5b67292c7781f086df076520f26f7476ce1602a
+size 29

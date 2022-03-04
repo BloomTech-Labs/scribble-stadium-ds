@@ -1,1 +1,3 @@
-two ears of a fennec fox. I ran over to the
+version https://git-lfs.github.com/spec/v1
+oid sha256:dbd6171fb606b1560b91b542f05501cf71c4a3c98e2a9c3b169bc85e187a72ac
+size 43

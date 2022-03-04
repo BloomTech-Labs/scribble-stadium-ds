@@ -1,1 +1,3 @@
-learned to wait for her friends to
+version https://git-lfs.github.com/spec/v1
+oid sha256:502dbebc6980cb2fef6988a431be1857f13826c86c61c437188eceb703622e65
+size 34

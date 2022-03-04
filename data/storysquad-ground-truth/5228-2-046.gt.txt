@@ -1,1 +1,3 @@
-Every Saturday after that day (September 5, 2019)
+version https://git-lfs.github.com/spec/v1
+oid sha256:9a2b2a0f41ba130344210a5726b539f43c217f03e7a0fa7a57b83005879ced19
+size 49

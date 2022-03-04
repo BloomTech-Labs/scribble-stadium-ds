@@ -1,1 +1,3 @@
-whole week I trained! I'm
+version https://git-lfs.github.com/spec/v1
+oid sha256:3e376bc93a6cc8fe3134fd97cdde957bc013b0737e158038ee470f8e95f11777
+size 25

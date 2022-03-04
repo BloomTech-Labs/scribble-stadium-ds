@@ -1,1 +1,3 @@
-taking a walk and it was a Thursd-
+version https://git-lfs.github.com/spec/v1
+oid sha256:3fffffc1001194039ddfdabaf21f3189368b7e089647b6590b4e80e6ca604e85
+size 34

@@ -1,1 +1,3 @@
-"Hurry up.We need to go."
+version https://git-lfs.github.com/spec/v1
+oid sha256:8fc1fb5949a1609c98e9761e5c0bf3f01e7d51b3818e8d1662245bb9d51f4949
+size 25

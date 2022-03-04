@@ -1,1 +1,3 @@
-realized going outside is beter and he
+version https://git-lfs.github.com/spec/v1
+oid sha256:68dac26f6257c2e41ece4c2cb085d36e6c4696b1fd03fc1580e382106e27f767
+size 38

@@ -1,5 +1,7 @@
-data/kaggle-ground-truth/*.jpg filter=lfs diff=lfs merge=lfs -text
-data/kaggle-ground-truth/*.csv filter=lfs diff=lfs merge=lfs -text
-*.gt.txt filter=lfs diff=lfs merge=lfs -text
-*.jpg filter=lfs diff=lfs merge=lfs -text
-*.png filter=lfs diff=lfs merge=lfs -text
+data/*.csv filter=lfs diff=lfs merge=lfs -text
+data/*/*.png filter=lfs diff=lfs merge=lfs -text
+data/*/*.tif filter=lfs diff=lfs merge=lfs -text
+data/*/*.gt.txt filter=lfs diff=lfs merge=lfs -text
+data/*/*.jpg filter=lfs diff=lfs merge=lfs -text
+data/*/*.csv filter=lfs diff=lfs merge=lfs -text
+

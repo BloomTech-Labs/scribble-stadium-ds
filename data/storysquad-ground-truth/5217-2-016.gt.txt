@@ -1,1 +1,3 @@
-Sandy hung up immediately. This was
+version https://git-lfs.github.com/spec/v1
+oid sha256:b9de5b41cafe173afce7b2ab246e2a09e722cf3878606e77706ee5e1fa05d837
+size 35

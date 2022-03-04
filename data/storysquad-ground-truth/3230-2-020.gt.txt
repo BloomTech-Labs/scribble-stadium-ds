@@ -1,1 +1,3 @@
-one,Orgurk! Oguk called but as the
+version https://git-lfs.github.com/spec/v1
+oid sha256:28ef2558e345dc3c135f1873587e15fa3d800e7359e65478d50a944d2f14a7fd
+size 34

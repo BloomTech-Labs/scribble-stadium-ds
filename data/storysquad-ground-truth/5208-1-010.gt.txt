@@ -1,1 +1,3 @@
-"Mom, why do I have to take care of him? I'm not
+version https://git-lfs.github.com/spec/v1
+oid sha256:b3890d1ab850b0056dbbe5043dede07f6a27a94c4c6fa7fb737f450c62aa7e81
+size 48

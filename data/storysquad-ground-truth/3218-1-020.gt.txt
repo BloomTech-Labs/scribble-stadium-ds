@@ -1,1 +1,3 @@
-day Bearu told Pengu "Pufu is
+version https://git-lfs.github.com/spec/v1
+oid sha256:2724e6462ca0951e8fff57b6a5ff5a9ec60ed54126782bf3ee75b441f2b7d349
+size 29

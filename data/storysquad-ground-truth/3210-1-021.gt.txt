@@ -1,1 +1,3 @@
-going to hurt others." Amanda said firmly
+version https://git-lfs.github.com/spec/v1
+oid sha256:46037fe32e4b68f17ea04ba7ad6d94906be46560c2b9c696332649430f4288e0
+size 41

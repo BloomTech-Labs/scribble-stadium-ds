@@ -1,1 +1,3 @@
-be friends.
+version https://git-lfs.github.com/spec/v1
+oid sha256:69f7a66f9d3fa2ef92bcd61eff9242288574ef95a25b1f0a7e063b5fe14f1fc8
+size 11

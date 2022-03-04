@@ -1,22 +1,21 @@
 # Hypothesis
+
 TODO: Template
+TODO: Create Template
 
 # Methodology
 
-TODO: Template
+TODO: Create Template
 
 # Results
 
-TODO: Template
+TODO: Create Template
 
 # Conclusions
 
-TODO: Template
-
+TODO: Create Template
 
 
 # Reproduce
 
-- Got to [Kaggle OCR Dataset] and download *test* images and corresponding csv
-- Place test images and label csv in data/kaggle-ground-truth in this repository (don't commit this)
-- Run `docker-compose -f docker-compose.yml build train && docker-compose -f structured_experiments/2022.02.01.test/docker-compose.yml up --build train_test_experiment` to train a tesseract model using this data
+- Run `docker-compose -f docker-compose.yml build train && docker-compose -f structured_experiments/2022.02.01.test/docker-compose.yml up --build train_test_experiment` to train a tesseract model using provided sample of kaggle data

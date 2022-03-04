@@ -1,1 +1,3 @@
-best of luck to you." "Same to you."
+version https://git-lfs.github.com/spec/v1
+oid sha256:5e8b422f2474b8829303624c2143cdf3e437583adea6f6af7fcee200862b2165
+size 36

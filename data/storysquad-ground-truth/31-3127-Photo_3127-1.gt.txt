@@ -1,1 +1,3 @@
-One hot day in spring Molly was 
+version https://git-lfs.github.com/spec/v1
+oid sha256:ba75fea9cd038e3cdb95470a5a6e80b0e02b3ec078ffd2dd6d9477d28f4d39ab
+size 32

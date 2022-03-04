@@ -1,1 +1,3 @@
-get changed, brush teeth, and do hair.
+version https://git-lfs.github.com/spec/v1
+oid sha256:b6e96b061ff2a700280cf97b425b97fdf97cf78536c040a06f549bffcf3ab905
+size 38

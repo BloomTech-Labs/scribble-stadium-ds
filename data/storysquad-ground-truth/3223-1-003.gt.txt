@@ -1,1 +1,3 @@
-Hello im Evie and heres my best friend
+version https://git-lfs.github.com/spec/v1
+oid sha256:a5d9ee3284f6bd013a82e762979a21595a11424f9c93b4366d56e85c8f7ce2ed
+size 38

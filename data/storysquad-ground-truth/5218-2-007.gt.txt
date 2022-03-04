@@ -1,1 +1,3 @@
-the park. They went for a walk and
+version https://git-lfs.github.com/spec/v1
+oid sha256:658dd4c06890cb9536e00ae99789244543f136d099d503c3d85bc0fc2288dafc
+size 34

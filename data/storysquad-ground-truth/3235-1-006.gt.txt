@@ -1,1 +1,3 @@
-I called my dog "Lucy!" Lucy was a 2
+version https://git-lfs.github.com/spec/v1
+oid sha256:5a81144874a8410ccf9360bafd41639c387c867c6272a0f9528b08b32b4619b5
+size 36

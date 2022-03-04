@@ -1,1 +1,3 @@
-war was a dialogue war. What I mean by dialogue 
+version https://git-lfs.github.com/spec/v1
+oid sha256:12d5706dd678de1dbad5a9542cd9cdf35d9289d0502488f5b14e72e9529c987f
+size 48
