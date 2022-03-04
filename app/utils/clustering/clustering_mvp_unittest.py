@@ -85,11 +85,3 @@ cohort3 = {"01": {"Image": "sample", "Inappropriate": False, "Sensitive": False,
            "07": {"Image": "sample", "Inappropriate": False, "Sensitive": False, "Status": "APPROVED",
                   "Complexity": 62, "Skipped": False, "Pages": {"1": "sample", "2": "sample"}}
            }
-
-result1 = clustering_mvp.cluster(cohort1)
-result2 = clustering_mvp.cluster(cohort2)
-result3 = clustering_mvp.cluster(cohort3)
-
-print(result1)
-print(result2)
-print(result3)
