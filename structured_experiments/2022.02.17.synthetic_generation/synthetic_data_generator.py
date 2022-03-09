@@ -73,7 +73,7 @@ def get_char_as_image(char: str, handwriting_type: int = 0):
 def create_image_from_string(sentence: str):
     if sentence is None or len(sentence) == 0:
         return None
-    characters = [char for char in sentence.lower()]
+    characters = [char for char in sentence.upper()]
     length = len(sentence) * 36 if len(sentence) * 36 < 1500 else 1500
     width = 0
 
@@ -99,7 +99,7 @@ def create_image_from_string(sentence: str):
                 place += 1
             if place_width + row_image.width > 1500:
                 if return_image is None:
-                    return_image = Image.new(mode="RGB", size=(1500, 0))
+                    return_image = Image.new(mode="RGB", size=(length, 0))
 
                 return_image = get_concat_v(return_image, row_image)
                 row_image = Image.new(mode="RGB", size=(0, 64))
@@ -131,13 +131,15 @@ def create_image_from_string(sentence: str):
 
 # Lists to create different variations of a sentence
 nouns = ["dog", "cat", "rat", "mouse", "kitty", "doggy", "rabbit", "bunny", "snake", "snail", "squirrel", "bird",
-         "rodent", "duck", "goose"]
-verbs = ["jumps", "runs", "zooms", "swims", "dives", "sprints", "stalks", "submits", "catches", "chases"]
+         "rodent", "duck", "goose", "zebra", "fox", "owl"]
+verbs = ["jumps", "runs", "zooms", "swims", "dives", "sprints", "stalks", "submits", "catches", "chases", "claws"]
+preps = ["towards", "inside", "under", "around", "behind", "beside", "above", "below", "within", "over"]
+places = ["bridge", "school", "house", "office", "hospital", "castle", "court", "cafe", "library", "store", "box"]
 
 
 # Create new string with a certain pattern
-def create_simple_string(n: int, v: int):
-    return f"the {nouns[n]} {verbs[v]}."
+def create_simple_string(n: int, v: int, pr: int, pl: int):
+    return f"the {nouns[n]} {verbs[v]} {preps[pr]} the {places[pl]}."
 
 
 # Setup the character image list
@@ -147,7 +149,10 @@ list_of_string_pairs = []
 # Loops through every variation of nouns/verbs and creates a string from them
 for i in range(len(nouns)):
     for j in range(len(verbs)):
-        list_of_string_pairs.append((str(i) + "-" + str(j), create_simple_string(i, j)))
+        for k in range(len(preps)):
+            for l in range(len(places)):
+                list_of_string_pairs.append((str(i) + "-" + str(j) + "-" + str(k) + "-" + str(l),
+                                             create_simple_string(i, j, k, l)))
 
 
 list_of_string_pairs.append(("hello-world", "hello world"))
