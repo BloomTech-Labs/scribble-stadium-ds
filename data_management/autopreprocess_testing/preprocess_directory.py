@@ -4,13 +4,13 @@ Base code for batch pre-processing
 2. Does some pre-processing on it
 3. Puts processed file in new directory
 """
-
+import sys
 import queue
 import cv2
 import os
 import glob
 from PIL import Image
-from processing_pipeline import processing_pipeline
+from processing_pipeline import processing_pipeline 
 
 # Get list of all image paths
 def get_all_images(source_dir):
@@ -23,14 +23,18 @@ def get_all_images(source_dir):
 
 # Change to current directory
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
-# Test image directory
-source_dir = os.getcwd() + '/TestImages22622'
-# Processed image directory
+# Test image directory; Please choose your source file from the command line, the default directory is below, 
+# using the sys module and argv method you can change the file by using the following syntax on the command line:
+# python3 filepath directorypath (Ex: .\data_management\autopreprocess_testing\preprocess_directory.py 
+# .\data_management\autopreprocess_testing\preprocess_directory.py) REMEMBER TO PUT A SPACE BETWEEN filepath and directorypath
+default_directory = '/test_images22622/'
+if len(sys.argv) > 1:
+    default_directory = sys.argv[1]
+
+source_dir = os.getcwd() + default_directory
+# Processed image directory, I also changed the file folder, user needs to change the folder to the one they wish to train images on.
 target_dir = os.getcwd() + '/processed_test_images/'
-
 img_files = get_all_images(source_dir)
-
-
 
 # Process each image and save in target directory
 queue = ["grayscale","remove_lines","remove_noise","adaptive_gaussian_thresholding","erode"]
