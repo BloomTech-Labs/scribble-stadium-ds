@@ -1,5 +1,5 @@
-#Structured Experiments
-##How to use the template folder
+# Structured Experiments
+## How to use the template folder
 - Copy the template folder within your branch
 - Rename the folder to YYYY.MM.DD.<my_experiment> where <my_experiment> is the name of your experiment
 - Add a brief (1 sentence) description at the top of the experiment.md file replacing the sample after DESC
@@ -11,8 +11,8 @@
   - change the directory `YYYY.MM.DD.my_experiment` to the directory which matches your experiment to train your model
 - Document your experiment in the experiment.md file which can be renamed if needed
 
-##Documenting Experiments
-###Below are labels borrowed from the scientific method along with sample questions. These should be elaborated upon in 2-5 sentences.
+## Documenting Experiments
+### Below are labels borrowed from the scientific method along with sample questions. These should be elaborated upon in 2-5 sentences.
 - Hypothesis
   - What is being tested?
   - What results are expected?
@@ -33,6 +33,6 @@
 The module uses the heading below as a reference to populate the experiments below from their folder names
 in the form of YYYY.MM.DD.<my_experiment> where <my_experiment> is the name of the experiment
 -->
-##Experiment Directory
-###[2022.02.01.test](2022.02.01.test)
+## Experiment Directory
+### [2022.02.01.template](2022.02.01.template)
 #### Template folder to use for experiments
