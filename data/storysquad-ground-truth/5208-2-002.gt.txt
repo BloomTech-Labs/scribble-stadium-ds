@@ -1,1 +1,3 @@
-the table. "No begging, Snappy." At breakfast
+version https://git-lfs.github.com/spec/v1
+oid sha256:495a3acca28fec305068831a96eee1a3aed821cc5f08de61d41863378fe9c1b8
+size 45

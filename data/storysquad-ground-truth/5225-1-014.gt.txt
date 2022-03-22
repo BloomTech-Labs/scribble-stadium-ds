@@ -1,1 +1,3 @@
-The other one are the Lionis, Lionis Riptide. 
+version https://git-lfs.github.com/spec/v1
+oid sha256:c1571adcfc15473c366da781319ea8120a6de55e25da3b6a9287b6c68080fdf3
+size 46

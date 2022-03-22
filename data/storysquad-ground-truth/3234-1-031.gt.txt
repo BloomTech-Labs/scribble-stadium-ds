@@ -1,1 +1,3 @@
-unusual, Weather never stayed quiet for so long.
+version https://git-lfs.github.com/spec/v1
+oid sha256:38ba440fa422b10036b97ebb0e9d10ccdb26bdd5b67b01e191f5f6ba7e55d36f
+size 48

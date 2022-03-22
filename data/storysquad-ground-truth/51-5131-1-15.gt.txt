@@ -1,1 +1,3 @@
-was always by her owners side.
+version https://git-lfs.github.com/spec/v1
+oid sha256:94380cbbbcdc7c92f64e71de64133eae94cf3018e75c7f9b77d519216b95a0eb
+size 30

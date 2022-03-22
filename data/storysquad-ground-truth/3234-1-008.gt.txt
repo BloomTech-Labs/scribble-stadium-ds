@@ -1,1 +1,3 @@
-pencil."Arania whispered fiercly under her breath
+version https://git-lfs.github.com/spec/v1
+oid sha256:870c1631adbb617f1e6a283e09fa0345c6717fdfd944d13f3c8174ce771be11d
+size 49

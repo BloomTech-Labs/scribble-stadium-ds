@@ -1,1 +1,3 @@
-asked best friend, Simone if she liked her.
+version https://git-lfs.github.com/spec/v1
+oid sha256:4269013de847a240ecfc725bd7449f3b52679b1328ce60422a4e0951c0696cb0
+size 43

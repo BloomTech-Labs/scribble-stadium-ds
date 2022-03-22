@@ -1,1 +1,3 @@
-design book. "Suit yourself, I'm going to draw something similar to this 
+version https://git-lfs.github.com/spec/v1
+oid sha256:66e58cb2f2bffc7000777ff9c0ee0ed15c296aac933be2924ee4be960dabde4e
+size 73

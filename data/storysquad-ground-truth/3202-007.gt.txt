@@ -1,1 +1,3 @@
-my pool, and inside of it was a rock.I told "Mr. Bark
+version https://git-lfs.github.com/spec/v1
+oid sha256:8a9885ca5dff8d5a2a0b744a7093e5857fe1ea717b85a75c9cbdb0bfed8ea310
+size 53

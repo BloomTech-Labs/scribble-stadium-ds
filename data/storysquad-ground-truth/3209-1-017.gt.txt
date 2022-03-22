@@ -1,1 +1,3 @@
-"Yes?"I replied... "Are you okay?
+version https://git-lfs.github.com/spec/v1
+oid sha256:7482e14d5daf913c988c6094c618a9c2e67578b484b76461e199ddc5db678b25
+size 33

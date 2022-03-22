@@ -1,1 +1,3 @@
-on the table. Pri and her friend Julie were designing a dress for 
+version https://git-lfs.github.com/spec/v1
+oid sha256:3f18aece01c70bfb9d9c119d401cfe6e9f2397f170023bc686fd4b8dd070ba8e
+size 66

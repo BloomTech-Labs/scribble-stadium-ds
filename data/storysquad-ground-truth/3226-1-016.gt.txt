@@ -1,1 +1,3 @@
-it was pritty rocky for the fist
+version https://git-lfs.github.com/spec/v1
+oid sha256:8296d1ac1072cbb190fcc3fb1d7455cdac085f5b574999f75074c88eb8fc6f27
+size 32

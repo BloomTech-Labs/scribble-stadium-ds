@@ -1,1 +1,3 @@
-month old alaskan malamute
+version https://git-lfs.github.com/spec/v1
+oid sha256:f83eb5f285f6855e04a4a60d34e490d252c3bc8213af34aa21d70ba025ebb9aa
+size 26

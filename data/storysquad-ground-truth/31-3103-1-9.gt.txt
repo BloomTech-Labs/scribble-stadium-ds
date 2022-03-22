@@ -1,1 +1,3 @@
-destroid,It lost all of its
+version https://git-lfs.github.com/spec/v1
+oid sha256:12ab1ba393b9de5b98caa850e6c830829ae635f385b2ad4d07006be0260ffade
+size 27

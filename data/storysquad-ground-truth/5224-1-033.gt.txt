@@ -1,1 +1,3 @@
-Draco.
+version https://git-lfs.github.com/spec/v1
+oid sha256:6f77a625920063cb235da291dea450e6315955e40c091771d41b017e04e85693
+size 6

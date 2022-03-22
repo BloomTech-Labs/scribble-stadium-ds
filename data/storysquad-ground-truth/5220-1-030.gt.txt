@@ -1,1 +1,3 @@
-become the king after he would die.
+version https://git-lfs.github.com/spec/v1
+oid sha256:5e0910ca7d038ac94f6953ca034778795a06ca94b1ff98a912887b587c56937c
+size 35

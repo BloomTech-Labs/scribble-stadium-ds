@@ -1,1 +1,3 @@
-point only to hear his other teammates fighting. He charged 
+version https://git-lfs.github.com/spec/v1
+oid sha256:01fcdda3594d3176b45b6e74b2c6ab43b57898293878b8e51f38ed954b2597c4
+size 60

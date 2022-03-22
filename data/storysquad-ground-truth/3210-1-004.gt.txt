@@ -1,1 +1,3 @@
-It was a hot sunny day and princess
+version https://git-lfs.github.com/spec/v1
+oid sha256:d7d20d522dc2bb6ab0c33026fbeaae18743a84cd93293765808c9a87fc247a40
+size 35

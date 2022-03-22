@@ -1,1 +1,3 @@
-only dog of 
+version https://git-lfs.github.com/spec/v1
+oid sha256:a760ce62f2398b4cc311058f9812ad5be96db4007b174aacce0e016c5b1af4a6
+size 12

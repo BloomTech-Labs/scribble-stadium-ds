@@ -1,1 +1,3 @@
-August, there was a boy and
+version https://git-lfs.github.com/spec/v1
+oid sha256:b30ca890d683d89be658ec25fdad83101d13635835e38602ec3053ad1f8a4947
+size 27

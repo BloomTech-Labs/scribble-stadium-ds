@@ -1,1 +1,3 @@
-her mom. Sandy felt great at school. Her grades
+version https://git-lfs.github.com/spec/v1
+oid sha256:c5e06264d362a051758226eb8108091493ecebeae919198268a6394d93e0f713
+size 47

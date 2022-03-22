@@ -1,1 +1,3 @@
-to look for some critters to take pictures of. She loved animals
+version https://git-lfs.github.com/spec/v1
+oid sha256:18bd405a266be1d2c69d35ac80f11c861431a18a12c96e0fdde3116c66493987
+size 64

@@ -1,1 +1,3 @@
-teh mean gir
+version https://git-lfs.github.com/spec/v1
+oid sha256:a0dfc7ddc829db58b3aaf46fd36f8fd43c0a348758624cdfd8271f9c60196a22
+size 12

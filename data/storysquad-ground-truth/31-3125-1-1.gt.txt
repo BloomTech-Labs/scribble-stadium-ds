@@ -1,1 +1,3 @@
-3125One day Lilly was riding the bus home from 
+version https://git-lfs.github.com/spec/v1
+oid sha256:4cd03492e0cd09bfd5ef59e4bd406ab6c74a657e760c3e7644ce4ab4ee0ba67f
+size 47
