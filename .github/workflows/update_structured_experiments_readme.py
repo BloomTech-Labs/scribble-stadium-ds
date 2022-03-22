@@ -58,7 +58,7 @@ def update_readme(wd):
     # Reads the contents currently in the README
     main_readme_contents = main_readme_path.read_text()
     # Gets the index of the beginning of the experiment directory
-    main_idx = main_readme_contents.find('##Experiment Directory') + 23
+    main_idx = main_readme_contents.find('## Experiment Directory') + 24
     # Replaces the current experiments directory with an update version
     main_readme_contents = main_readme_contents.replace(main_readme_contents[main_idx:], exp_readme_list)
     # Rewrites the README in it's entirety
