@@ -1,9 +1,6 @@
 import logging
-
 from fastapi import APIRouter, Response
-
 from app.utils.clustering.clustering_mvp import batch_cluster
-
 
 # global variables and services
 router = APIRouter()
