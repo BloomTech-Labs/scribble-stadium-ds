@@ -158,3 +158,4 @@ data/eng/*
 data/storysquad/*
 data/configs/*
 data/*.traineddata
+/structured_experiments/2022.02.17.synthetic_generation/created_synthetic_data/*

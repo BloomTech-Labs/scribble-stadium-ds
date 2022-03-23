@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  train_test_experiment:
+    image: test_experiment
+    container_name: test_experiment
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - "../../data:/train/tesstrain/data"
+    command: sh /train/tesstrain/experiment.sh
