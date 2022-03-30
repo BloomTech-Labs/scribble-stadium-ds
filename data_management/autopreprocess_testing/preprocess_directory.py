@@ -1,7 +1,7 @@
 """
 Base code for batch pre-processing
 1. Gets file from directory
-2. Does some pre-processing on it
+2. Does pre-processing on the file
 3. Puts processed file in new directory
 """
 import sys
@@ -23,10 +23,8 @@ def get_all_images(source_dir):
 
 # Change to current directory
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
-# Test image directory; Please choose your source file from the command line, the default directory is below, 
-# using the sys module and argv method you can change the file by using the following syntax on the command line:
-# python3 filepath directorypath (Ex: .\data_management\autopreprocess_testing\preprocess_directory.py 
-# .\data_management\autopreprocess_testing\preprocess_directory.py) REMEMBER TO PUT A SPACE BETWEEN filepath and directorypath
+# Test image directory;
+
 default_directory = '/test_images22622/'
 if len(sys.argv) > 1:
     default_directory = sys.argv[1]
