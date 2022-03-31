@@ -1,1 +1,3 @@
-he had his favorite book with him
+version https://git-lfs.github.com/spec/v1
+oid sha256:b4f80ed6e5d9927eebf2f32e48d3510ed392e819170e848e27ccb86680f0e1a0
+size 33

@@ -1,1 +1,3 @@
-wait for the 51-5131-1-19-1.gt.txt
+version https://git-lfs.github.com/spec/v1
+oid sha256:d228aa35d860b9a0fffa54810ff616191ed44b3dc9b8f5349f884bdec76a6068
+size 34

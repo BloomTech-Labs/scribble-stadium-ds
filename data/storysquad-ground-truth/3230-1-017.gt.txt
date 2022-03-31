@@ -1,1 +1,3 @@
-Fred made a long Story,"So first
+version https://git-lfs.github.com/spec/v1
+oid sha256:d8d93b6c49f1da80223803c7b2b930c8f5038ea34b16e2a5f6e60143552f06f4
+size 32

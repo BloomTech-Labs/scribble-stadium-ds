@@ -1,1 +1,3 @@
-friend! Anna figers out the
+version https://git-lfs.github.com/spec/v1
+oid sha256:57eb5456dee422ec57432428f9d2fd3c107ddf20bb4576878c680ea7409831a4
+size 27

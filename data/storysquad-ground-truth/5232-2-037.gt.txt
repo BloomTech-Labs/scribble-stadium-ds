@@ -1,1 +1,3 @@
-I am lucky to have him.
+version https://git-lfs.github.com/spec/v1
+oid sha256:eacd18d8b1c536d040d0f5eeeac11957c227b200c55c29beeb4290749c2215b3
+size 23

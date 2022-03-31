@@ -1,1 +1,3 @@
-so she could live with nature.
+version https://git-lfs.github.com/spec/v1
+oid sha256:81401af49ab6207a2bff15a06a5913dd21f76d1d50397be9fa3fec337435137e
+size 30

@@ -1,1 +1,3 @@
-elementry school. I live in Nevada and
+version https://git-lfs.github.com/spec/v1
+oid sha256:3191e1dbb621c13b857cd8e494a3f4aea0ba9ac91a2c59c0d185481ec7aedbef
+size 38

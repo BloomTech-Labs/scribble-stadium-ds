@@ -1,1 +1,3 @@
-One day. Nick and Matthew were fighting in their house.
+version https://git-lfs.github.com/spec/v1
+oid sha256:43cc7ffca4c435ae4bd64cebe045eb8558a40548ea5f3916d00b62ea83dab971
+size 55

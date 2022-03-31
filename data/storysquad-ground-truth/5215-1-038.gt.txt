@@ -1,1 +1,3 @@
-firing their rifleS. I looked at Sam.
+version https://git-lfs.github.com/spec/v1
+oid sha256:4378910de3eaff17b00abbe8ad7aa15b3b38bdaf9c0186eff08c1138a21d02f6
+size 37

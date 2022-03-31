@@ -1,1 +1,3 @@
-Billy's friends found Jerry crying. Jerry said, "Leave me alone.
+version https://git-lfs.github.com/spec/v1
+oid sha256:7f3d0c57161f1cac05a38818f46d60d22685996a59a88a89e9ed4388bf3ecf82
+size 64

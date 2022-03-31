@@ -1,1 +1,3 @@
-other than her studies, Emily was a very good person
+version https://git-lfs.github.com/spec/v1
+oid sha256:be39bed7c2d2b48ca86f3c811aa27d75d50fa9c1332a03364702c572345d0dce
+size 52

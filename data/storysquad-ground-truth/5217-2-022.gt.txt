@@ -1,1 +1,3 @@
-talked to her. Her gym teacher was
+version https://git-lfs.github.com/spec/v1
+oid sha256:718b80d83e57f96d397a78b6d420068add586b183a89b438f7de1b25919cb4a7
+size 34
