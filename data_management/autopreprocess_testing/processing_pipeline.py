@@ -1,5 +1,3 @@
-# from unittest import case
-# from sklearn import preprocessing
 import queue
 import sys
 from preprocessing_functions import get_grayscale, removeLines, remove_noise, adaptiveGaussianThresholding, erode
