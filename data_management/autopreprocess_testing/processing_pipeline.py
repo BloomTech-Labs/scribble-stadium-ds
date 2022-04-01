@@ -29,7 +29,7 @@ def processing_pipeline(img, queue=None): # Default parameter list will be treat
     new_image = img.copy()
     if queue is None:
         queue = ["grayscale","remove_lines","remove_noise","adaptive_gaussian_thresholding","erode"]
-    # queue = queue or ["grayscale","remove_lines","remove_noise","adaptive_gaussian_thresholding","erode"] None value is not changed Or means first list if None
+    
     grayscale_present = False
     for str1 in queue:
         if str1 == "grayscale":
