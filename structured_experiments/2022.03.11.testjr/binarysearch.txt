@@ -1,0 +1,17 @@
+#         for index, x in enumerate(nums):
+#             i = nums.index(x)
+#             if x == target:
+#                 return i
+#             # elif nums[0] > x:
+#             #     return 0
+#             # elif nums[(len(nums)-1)] < x:
+#             #     return len(nums)
+            
+#             else:
+#                 (nums[index] < x) and (x < nums[index+1]):
+#                     return nums[index+1]
+
+                
+#                 for nums[index] in nums:
+#                     if nums[index] < x and x > nums[index+1]:
+#                         x = nums[index+1]
