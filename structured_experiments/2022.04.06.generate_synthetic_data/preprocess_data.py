@@ -54,16 +54,9 @@ def split_data(data_paths):
     for file in data_paths:
         file = Path(file)
 
-        text = file.read_text()
-        split_text = re.split(r'(.+|?+|!+)', text)
+        text = file.read_text('UTF-8')
+        split_text = re.split('(?<=[.!?]) +', text)
 
         split_file_list.append(split_text)
 
-    return split_file_list
-
-
-if __name__ == '__main__':
-    file_list = get_data_files(argv[1:])
-    print(file_list)
-    processed_data = split_data(file_list)
-    print(processed_data)
+    return split_text
