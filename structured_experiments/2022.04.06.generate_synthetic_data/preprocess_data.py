@@ -5,15 +5,7 @@ on punctuation to extract individual sentences. These sentences are returned as 
 """
 
 from pathlib import Path
-from sys import argv
 import re
-
-
-if len(argv) < 2:
-    raise Exception('Supply at least one path to a directory containing a valid text file(s).')
-for i in argv[1:]:
-    if not Path(i).is_dir():
-        raise NotADirectoryError(f'{argv[argv.index(i)]} at index {argv.index(i)} is not a valid directory')
 
 
 def get_data_files(data_files):
