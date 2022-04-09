@@ -1,13 +1,17 @@
 """
-This file will create synthetic data from inputted strings.
-It creates variations of a sentence using a list of nouns and verbs.
+Original Author : Elijah Day
+Experiment : 2022.02.17.synthetic_generation
 
+Data generated from the original file caused the model to over-fit. This edit and inclusion of the preprocess_data.py
+functionality attempts to generate enough data to fit the model with enough variance to mitigate over-fitting.
+The original code is left intact except to address the model results.
 """
 
 import glob
 import os
 import sys
 from PIL import Image
+import preprocess_data
 
 # Variables created for functions
 cwd = os.path.dirname(os.path.abspath(__file__))
