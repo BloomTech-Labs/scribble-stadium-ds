@@ -6,6 +6,7 @@ on punctuation to extract individual sentences. These sentences are returned as 
 
 from pathlib import Path
 from sys import argv
+import re
 
 
 if len(argv) < 2:
@@ -15,7 +16,7 @@ for i in argv[1:]:
         raise NotADirectoryError(f'{argv[argv.index(i)]} at index {argv.index(i)} is not a valid directory')
 
 
-def get_data_files(data_file):
+def get_data_files(data_files):
     """
     Extracts the files from each directory in the supplied list and returns a list of those files as string objects.
     ==========
@@ -24,10 +25,9 @@ def get_data_files(data_file):
     output  : String containing the contents of the file supplied to the module.
     """
 
-    dir_list = argv[1:]
     file_list = []
 
-    for directory in dir_list:
+    for directory in data_files:
         directory = Path(directory)
         for file in directory.iterdir():
             if Path.is_file(file) and file.name[-4:] == '.txt':
@@ -38,7 +38,7 @@ def get_data_files(data_file):
     return file_list
 
 
-def split_data(data_path):
+def split_data(data_paths):
     """
     Splits text document on '.', '?', and '!' to extract sentences. This will allow the data
     to provide context to the Tesseract model for each word and character.
@@ -48,9 +48,21 @@ def split_data(data_path):
     output  : list of sentences from the input
     """
 
+    split_file_list = []
+
+    for file in data_paths:
+        file = Path(file)
+
+        text = file.read_text()
+        split_text = re.split(r'(.+|?+|!+)', file)
+
+        split_file_list.append(split_text)
+
+    return split_file_list
 
 
-    pass
-
-
-get_file('some_file.txt')
+if __name__ == '__main__':
+    file_list = get_data_files(argv[1:])
+    print(file_list)
+    processed_data = split_data(file_list)
+    print(processed_data)
