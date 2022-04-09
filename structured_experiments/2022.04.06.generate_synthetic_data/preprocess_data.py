@@ -1,5 +1,7 @@
 """
-This module takes in a filepath and splits
+This module takes in a list of directories containing text (.txt) files. It provides the functionality to place
+a string filepath to each file and place each within the same list. It then provides a function to split the text
+on punctuation to extract individual sentences. These sentences are returned as a list.
 """
 
 from pathlib import Path
@@ -15,7 +17,7 @@ for i in argv[1:]:
 
 def get_data_files(data_file):
     """
-    Extracts the contents from a text file and returns it.
+    Extracts the files from each directory in the supplied list and returns a list of those files as string objects.
     ==========
 
     input   : Text file
