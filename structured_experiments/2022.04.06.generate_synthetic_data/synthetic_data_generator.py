@@ -42,12 +42,10 @@ def get_concat_v(im1, im2):
 def create_char_list():
     supported_file_extensions = ["jpg", "jpeg", "png", "tif", "tiff"]
     img_files = []
-    print(ROOT_DIR)
     for ext in supported_file_extensions:
         img_files += glob.glob(
             ROOT_DIR + f"/data/character_images/*.{ext}", recursive=True)
 
-    print(cwd)
     for file_path in img_files:
         file_char = os.path.basename(file_path)[5]
         char_place = get_place_from_char(file_char)
@@ -141,23 +139,12 @@ data_directories = ['structured_experiments/2022.04.06.generate_synthetic_data/d
 data_file_paths = preprocess_data.get_data_files(data_directories)
 
 list_of_string_pairs = preprocess_data.split_data(data_file_paths)
-print(list_of_string_pairs[-10:])
 
 # Whatever has been added to the list_of_string_pairs will be created to an image
 for text_data in list_of_string_pairs:
 
     file_name = str(list_of_string_pairs.index(text_data))
-    print(file_name, text_data)
     syn_image = create_image_from_string(text_data)
     syn_image.save(ROOT_DIR + '/structured_experiments/' + processed_path + file_name + ".png")
     with open(ROOT_DIR + '/structured_experiments/' + processed_path + file_name + ".gt.txt", 'w') as f:
         f.write(text_data)
-
-"""
-# This code block looks for .txt files within the 'data' folder and return a list containing all files inside.
-# If multiple folders are needed, a developer can merely add another folder to the list.
-data_folders = ['./data']
-data_file_paths = preprocess_data.get_data_files(data_folders)
-string_sentences = preprocess_data.split_data(data_file_paths)
-
-"""
