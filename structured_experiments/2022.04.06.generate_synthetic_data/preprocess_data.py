@@ -23,11 +23,10 @@ def get_data_files(data_files):
         directory = Path(directory)
         for file in directory.iterdir():
             if Path.is_file(file) and file.name[-4:] == '.txt':
-                file_path = directory.name + '/' + file.name
+                file_path = directory.absolute().__str__() + '/' + file.name
                 file_list.append(file_path)
             else:
                 continue
-
     return file_list
 
 
@@ -47,7 +46,7 @@ def split_data(data_paths):
         file = Path(file)
 
         text = file.read_text('UTF-8')
-        split_text = re.split('(?<=[.!?]) +', text)
+        split_text = re.split('(?<=[.!?]) +', text.replace('\n', ''))
 
         split_file_list.append(split_text)
 
