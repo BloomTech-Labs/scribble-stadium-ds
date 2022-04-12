@@ -13,11 +13,12 @@ import sys
 from PIL import Image
 import preprocess_data
 
+
 # Variables created for functions
 cwd = os.path.dirname(os.path.abspath(__file__))
 processed_path = sys.argv[1] + "/"
 char_list = [[] for i in range(55)]
-
+ROOT_DIR = cwd[:cwd.index('scribble-stadium-ds') + 19]
 
 # Takes a PIL image (im1, img2) and attaches img2 to the right of img1
 def get_concat_h(im1, im2):
@@ -41,9 +42,10 @@ def get_concat_v(im1, im2):
 def create_char_list():
     supported_file_extensions = ["jpg", "jpeg", "png", "tif", "tiff"]
     img_files = []
+    print(ROOT_DIR)
     for ext in supported_file_extensions:
         img_files += glob.glob(
-            cwd + f"/data/character_images/*.{ext}", recursive=True)
+            ROOT_DIR + f"/data/character_images/*.{ext}", recursive=True)
 
     print(cwd)
     for file_path in img_files:
@@ -133,41 +135,29 @@ def create_image_from_string(sentence: str):
     return return_image
 
 
-# Lists to create different variations of a sentence
-nouns = ["dog", "cat", "rat", "mouse", "kitty", "doggy", "rabbit", "bunny", "snake", "snail", "squirrel", "bird",
-         "rodent", "duck", "goose", "zebra", "fox", "owl"]
-verbs = ["jumps", "runs", "zooms", "swims", "dives", "sprints", "stalks", "submits", "catches", "chases", "claws"]
-preps = ["towards", "inside", "under", "around", "behind", "beside", "above", "below", "within", "over"]
-places = ["bridge", "school", "house", "office", "hospital", "castle", "court", "cafe", "library", "store", "box"]
-
-
-# Create new string with a certain pattern
-def create_simple_string(n: int, v: int, pr: int, pl: int):
-    return f"the {nouns[n]} {verbs[v]} {preps[pr]} the {places[pl]}."
-
-
 # Setup the character image list
 create_char_list()
-list_of_string_pairs = []
+data_directories = ['structured_experiments/2022.04.06.generate_synthetic_data/data']
+data_file_paths = preprocess_data.get_data_files(data_directories)
 
-# Loops through every variation of nouns/verbs and creates a string from them
-for i in range(len(nouns)):
-    for j in range(len(verbs)):
-        for k in range(len(preps)):
-            for l in range(len(places)):
-                list_of_string_pairs.append((str(i) + "-" + str(j) + "-" + str(k) + "-" + str(l),
-                                             create_simple_string(i, j, k, l)))
-
-
-list_of_string_pairs.append(("hello-world", "hello world"))
-list_of_string_pairs.append(("cats", "cats catch mice"))
-list_of_string_pairs.append(("dogs", "dogs chase cars"))
+list_of_string_pairs = preprocess_data.split_data(data_file_paths)
+print(list_of_string_pairs[-10:])
 
 # Whatever has been added to the list_of_string_pairs will be created to an image
-for file_name, text_data in list_of_string_pairs:
+for text_data in list_of_string_pairs:
 
+    file_name = str(list_of_string_pairs.index(text_data))
+    print(file_name, text_data)
     syn_image = create_image_from_string(text_data)
-
-    syn_image.save(processed_path + file_name + ".png")
-    with open(processed_path + file_name + ".gt.txt", 'w') as f:
+    syn_image.save(ROOT_DIR + '/structured_experiments/' + processed_path + file_name + ".png")
+    with open(ROOT_DIR + '/structured_experiments/' + processed_path + file_name + ".gt.txt", 'w') as f:
         f.write(text_data)
+
+"""
+# This code block looks for .txt files within the 'data' folder and return a list containing all files inside.
+# If multiple folders are needed, a developer can merely add another folder to the list.
+data_folders = ['./data']
+data_file_paths = preprocess_data.get_data_files(data_folders)
+string_sentences = preprocess_data.split_data(data_file_paths)
+
+"""
