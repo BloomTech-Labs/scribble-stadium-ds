@@ -13,7 +13,7 @@ PREPROCESSING_STEPS = {
 
 def processing_pipeline(img, queue=None): # Default parameter list will be treated as global
     """
-    Takes and image and passes the image through a series of pre-processing steps
+    Takes an image and passes the image through a series of pre-processing steps
 
     Arguments:
     ___
@@ -27,11 +27,7 @@ def processing_pipeline(img, queue=None): # Default parameter list will be treat
     new_image = img.copy()
     if queue is None:
         queue = ["grayscale","remove_lines","remove_noise","adaptive_gaussian_thresholding","erode"]
-<<<<<<< HEAD
     
-=======
-    # queue = queue or ["grayscale","remove_lines","remove_noise","adaptive_gaussian_thresholding","erode"] None value is not changed Or means first list if None
->>>>>>> e46b4323d275f1f82a4a80f0d900ec7c40a56b0b
     grayscale_present = False
     for str1 in queue:
         if str1 == "grayscale":
