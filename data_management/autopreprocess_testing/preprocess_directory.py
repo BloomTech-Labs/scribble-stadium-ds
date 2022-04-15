@@ -29,8 +29,7 @@ if len(sys.argv) > 1:
 source_dir = default_directory
 # Processed image directory, I also changed the file folder, user needs to change the folder to the one they wish to train images on.
 target_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)),'processed_test_images')
-# cwd = os.getcwd()
-# target_dir = os.path.join(cwd,'processed_test_images')
+
 print(source_dir,target_dir)
 img_files = get_all_images(source_dir)
 
