@@ -21,8 +21,8 @@ def get_all_images(source_dir):
         img_files += glob.glob(source_dir + f"/**/*.{ext}", recursive=True)
     return img_files
 
-# Test image directory
-# Change to current directory
+# Test image directory is below
+# Change to current directory to pull data
 default_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)),'test_images22622')
 if len(sys.argv) > 1:
     default_directory = sys.argv[1]
@@ -30,7 +30,6 @@ source_dir = default_directory
 # Processed image directory, I also changed the file folder, user needs to change the folder to the one they wish to train images on.
 target_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)),'processed_test_images')
 
-print(source_dir,target_dir)
 img_files = get_all_images(source_dir)
 
 # Process each image and save in target directory
