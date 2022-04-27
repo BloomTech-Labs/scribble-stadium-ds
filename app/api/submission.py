@@ -39,12 +39,14 @@ def submission_text(sub: Submission):
     {"SubmissionID": int, "IsFlagged": boolean, "LowConfidence": boolean, "Complexity": int}
     ```
     """
-    # Set model for OCR, defaults to Google Vision
+    # Set model for OCR, checks for Google Vision API Keys
     if sub.Model == "tesseract":
         vision = tesseract_vision
     else:
-        vision = google_vision
-
+        if # Check for google credentials
+            vision = google_vision
+        else:
+            raise Error
     # Empty variables for transcription, confidence flags
     # QUESTION: Also need for moderation flags? 
     transcriptions = ""

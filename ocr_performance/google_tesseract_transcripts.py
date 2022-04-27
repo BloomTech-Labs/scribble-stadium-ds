@@ -1,4 +1,4 @@
-'''
+"""
 google_vision_transcripts.py - Generates transcript and metadata files using
 Google Vision API.
 
@@ -6,18 +6,18 @@ Usage : python -m ocr_performance.google_vision_transcripts from repo root
 
 The image files are expected in <repo root>/data/photos
 
-The google vision transcripts are stored in <repo root>/data/google_transcripts
+The Google vision transcripts are stored in <repo root>/data/google_transcripts
 and the metadata in <repo root>/data/metadata.
 Each metadata file contains 2 boolean values `low_confidence` and `flagged`:
 
 low_confidence :: This is derived from data returned by GoogleVision and a
 value of True implies that the associated transcription is not good.
 
-flagged        :: This is derived by checking if the transcriptions contain
+flagged :: This is derived by checking if the transcriptions contain
 words from the list in .../app/utils/moderation/bad_single.csv in the
 scribble-stadium-ds repository - a True value implies that one or more words
 from the list exist in the transcription.
-'''
+"""
 
 from os import listdir, makedirs
 from os.path import dirname
@@ -26,6 +26,8 @@ from argparse import ArgumentParser
 
 from app.utils.img_processing.google_api import GoogleAPI, NoTextFoundException
 from app.utils.img_processing.tesseract_api import TesseractAPI
+
+
 # global variables and services
 DIR = dirname(__file__)
 DATA_DIR = DIR + '/data/'
@@ -38,15 +40,15 @@ TESS = 'tess'
 
 
 async def transcribe(page_image_file, ocr, trans_dir):
-    '''
+    """
     page_image_file :: fully qualified image path
     ocr             :: the transcription object which
                        provides a transcribe()
                        method
     trans_dir       :: Path where generated
                        transcriptions are to be
-                       placed,
-    '''
+                       placed
+    """
     # Extract the file name without the '.jpg' suffix
     file_name = page_image_file.split('/')[-1].split('.')[0]
 
@@ -71,10 +73,10 @@ async def transcribe(page_image_file, ocr, trans_dir):
 
 
 async def transcribe_all(engine, trans_dir):
-    '''
+    """
     Scans through the image files in PHOTOS_DIR and invokes the
     transcribe() function on each
-    '''
+    """
     image_files = [x for x in listdir(PHOTOS_DIR) if x.endswith('.jpg')]
     image_files.sort()
 
@@ -82,24 +84,29 @@ async def transcribe_all(engine, trans_dir):
         print(f'Processing image<{idx}:{image_file}>')
         await transcribe(PHOTOS_DIR+image_file, ocr=engine, trans_dir=trans_dir)
 
-if __name__ == '__main__':
+    if __name__ == '__main__':
 
-    parser = ArgumentParser()
-    parser.add_argument('-e', '--engine', choices=[GOOGLE, TESS],
-                        default=TESS,
-                        help='Specify transcribe engine')
-    parser.add_argument('-l', '--language', choices=['ssq', 'storysquad'],
-                        default='storysquad',
-                        help='Specify language for Tesseract engine')
+        parser = ArgumentParser()
+        parser.add_argument('-e', '--engine',
+                            choices=[GOOGLE, TESS],
+                            default=TESS,
+                            help='Specify transcribe engine')
+        parser.add_argument('-l', '--language',
+                            choices=['ssq', 'storysquad'],
+                            default='storysquad',
+                            help='Specify language for Tesseract engine')
 
-    args = parser.parse_args()
+        args = parser.parse_args()
 
-    trans_dir = DATA_DIR + args.engine
-    if args.engine == GOOGLE:
-        engine = GoogleAPI()
-    else:
+        trans_dir = DATA_DIR + args.engine
+
+    if args.engine == TesseractAPI(args, language):
         engine = TesseractAPI(args.language)
         trans_dir += f'_{args.language}'
+
+    else args.engine == GOOGLE:
+        engine = GoogleAPI()
+
     trans_dir += '_transcripts/'
 
     print(trans_dir, engine)
