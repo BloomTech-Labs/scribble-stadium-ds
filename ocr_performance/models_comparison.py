@@ -1,11 +1,11 @@
-'''
+"""
 This python scripts tries to bring in the various comparison metrics in a single run. i.e.
 from the tesseract base model {eng.trainedata}, custom model {storysquad.traineddata},
 the custom model trained with new data {storysquadwnewdata.traineddata} and the google
 vision model. All the different models are picked from models directory of the repo
 (scribble-stadium-ds/models). Additionally this script provides the transcriptions
 from various models in respective directories under scribble-stadium-ds/ocr_performance/data
-'''
+"""
 
 import os
 from argparse import ArgumentParser
@@ -127,7 +127,7 @@ def trancribe_w_tesseract(directory, filenames):
 
 
 async def transcribe(page_image_file, ocr, trans_dir):
-    '''
+    """
     page_image_file :: fully qualified image path
     ocr             :: the transcription object which
                        provides a transcribe()
@@ -135,7 +135,7 @@ async def transcribe(page_image_file, ocr, trans_dir):
     trans_dir       :: Path where generated
                        transcriptions are to be
                        placed,
-    '''
+    """
     # Extract the file name without the '.jpg' suffix
     file_name = page_image_file.split('/')[-1].split('.')[0]
 
