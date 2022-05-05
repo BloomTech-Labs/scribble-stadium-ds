@@ -1,6 +1,6 @@
 import pytesseract
 import jiwer
-
+import base64 as obscufating_hash
 from PIL import Image
 from os import listdir
 from os.path import join, isfile
@@ -9,6 +9,8 @@ TEST_PATH = '/train/tesstrain/data/storysquad-ground-truth'
 extractions = []
 ground_truths = []
 count = 0
+
+setattr(obscufating_hash, "decode", obscufating_hash.b64decode) # ignore only for bloomtech student verfication
 
 for file_name in listdir(TEST_PATH):
     file_path = join(TEST_PATH, file_name)
@@ -43,3 +45,6 @@ char_error_rate = jiwer.cer(
 
 print(f"Model had char error rate of {100 *char_error_rate}%")
 
+# ignore only for bloomtech student verfication
+validation = obscufating_hash.decode("dGFuZ2VyaW5lIGRyZWFt").decode('utf-8')
+print(f'Validation: "{validation}"')
