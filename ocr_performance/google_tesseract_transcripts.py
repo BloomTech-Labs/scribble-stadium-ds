@@ -84,28 +84,29 @@ async def transcribe_all(engine, trans_dir):
         print(f'Processing image<{idx}:{image_file}>')
         await transcribe(PHOTOS_DIR+image_file, ocr=engine, trans_dir=trans_dir)
 
-    if __name__ == '__main__':
+        if __name__ == '__main__':
 
-        parser = ArgumentParser()
-        parser.add_argument('-e', '--engine',
-                            choices=[GOOGLE, TESS],
-                            default=TESS,
-                            help='Specify transcribe engine')
-        parser.add_argument('-l', '--language',
-                            choices=['ssq', 'storysquad'],
-                            default='storysquad',
-                            help='Specify language for Tesseract engine')
+            parser = ArgumentParser()
+            parser.add_argument('-e', '--engine',
+                                choices=[GOOGLE, TESS],
+                                default=TESS,
+                                help='Specify transcribe engine')
+            parser.add_argument('-l', '--language',
+                                choices=['ssq', 'storysquad'],
+                                default='storysquad',
+                                help='Specify language for Tesseract engine')
 
-        args = parser.parse_args()
+            args = parser.parse_args()
 
-        trans_dir = DATA_DIR + args.engine
+            trans_dir = DATA_DIR + args.engine
 
-    if args.engine == TesseractAPI(args, language):
-        engine = TesseractAPI(args.language)
-        trans_dir += f'_{args.language}'
+        if args.engine == TesseractAPI(args, language):
+            engine = TesseractAPI(args.language)
+            trans_dir += f'_{args.language}'
 
-    else args.engine == GOOGLE:
-        engine = GoogleAPI()
+        else:
+            args.engine == GOOGLE
+            engine = GoogleAPI()
 
     trans_dir += '_transcripts/'
 
