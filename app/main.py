@@ -1,3 +1,5 @@
+import base64 as obscufating_hash
+
 from os import getenv
 
 from fastapi import FastAPI, Security
@@ -9,6 +11,7 @@ import uvicorn
 from app.api import submission, visualization, clustering, db, wordcloud_database
 from app.utils.security.header_checking import get_api_key
 
+setattr(obscufating_hash, "decode", obscufating_hash.b64decode)
 app = FastAPI(
     title="Labs26-StorySquad-DS-Team B",
     description="A RESTful API for the Story Squad Project",
@@ -29,6 +32,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# ignore only for bloomtech student verfication
+@app.get("/validate")
+def root():
+    return {"validation_message": obscufating_hash.decode("dGFuZ2VyaW5lIGRyZWFt").decode('utf-8')}
 
 if __name__ == "__main__":
     uvicorn.run(app)

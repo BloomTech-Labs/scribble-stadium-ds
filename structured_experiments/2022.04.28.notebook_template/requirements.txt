@@ -1,0 +1,6 @@
+requests
+python-Levenshtein
+pytesseract
+jiwer
+notebook
+pytesseract

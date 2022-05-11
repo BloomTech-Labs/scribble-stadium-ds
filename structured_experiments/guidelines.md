@@ -1,5 +1,5 @@
-# Guidlines for Datascience and Machine learning experimentation
-The purpose of this document is to elaborate on a sctructured experimental technique which utilizes the scitific method 
+# Guidelines for Datascience and Machine Learning Experimentation
+The purpose of this document is to elaborate on a structured experimental technique which utilizes the scientific method 
 <table>
 <tr>
 <td>
@@ -114,6 +114,8 @@ The purpose of this document is to elaborate on a sctructured experimental techn
 </tr>
 
 </table>
+
+
 
 ## Reproducible results
 exactly reproducible results can be a hard thing to achieve <br>
