@@ -1,5 +1,5 @@
-# Guidlines for Datascience and Machine learning experimentation
-The purpose of this document is to elaborate on a sctructured experimental technique which utilizes the scitific method 
+# Guidelines for Data Science and Machine learning experimentation
+The purpose of this document is to elaborate on a structured experimental technique which utilizes the scientific method 
 <table>
 <tr>
 <td>
@@ -12,13 +12,7 @@ The purpose of this document is to elaborate on a sctructured experimental techn
 4) Test with experiment
 5) Analyze data
 6) Report conclusions
-<br><br><br><br><br><br><br><br>a<br><br>
-<br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br>
-</td>
 
-<td>
 
 #### The Scientific method - explanation - for ds/ml/python notebooks
 1) Question
