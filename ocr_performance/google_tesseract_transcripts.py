@@ -84,7 +84,7 @@ async def transcribe_all(engine, trans_dir):
         print(f'Processing image<{idx}:{image_file}>')
         await transcribe(PHOTOS_DIR+image_file, ocr=engine, trans_dir=trans_dir)
 
-    if __name__ == '__main__':
+if __name__ == '__main__':
 
     parser = ArgumentParser()
     parser.add_argument('-e', '--engine',
