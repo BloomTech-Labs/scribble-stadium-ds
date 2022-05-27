@@ -103,7 +103,7 @@ A series of completed experiments exist within folders in `structured_experiment
 
 Or on Windows:
 
-`docker-compose -f docker-compose.yml build train; docker-compose -f structured_experiments/2022.02.01.test/docker-compose.yml up --build train_test_experiment``docker exec -ti scribble-ocr-train bash`
+`docker-compose -f docker-compose.yml build train; docker-compose -f structured_experiments/2022.02.01.test/docker-compose.yml up --build train_test_experiment
 
 For information on how to build your own experiment, please consult the contribution guide located in the wiki [here](https://github.com/BloomTech-Labs/scribble-stadium-ds/wiki)
  
