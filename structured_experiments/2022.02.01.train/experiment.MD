@@ -25,6 +25,10 @@ Run `git lfs pull --exclude .git -I  data/storysquad-ground-truth/`
 
 This will use git-lfs to pull down all the client given training images
 
+Run 'git lfs pull --exclude .git -I data/kaggle-ground-truth/'
+
+This will use git-lfs to pull down all the kaggle sourced training images
+
 ### Execute the training container
 - Run `docker-compose -f docker-compose.yml build train && docker-compose -f structured_experiments/2022.02.01.template/docker-compose.yml up --build train_test_experiment` to train a tesseract model using provided sample of kaggle data
 

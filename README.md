@@ -99,11 +99,11 @@ For hyperparameter tuning refer to https://tesseract-ocr.github.io/tessdoc/tess4
 #### Running a Structured Experiment
 A series of completed experiments exist within folders in `structured_experiments/`. Each folder represents an experiment completed in the hopes of identifying succesful strategies for training better handwriting OCR models. Each experiment is dockerized and can be executed via docker commands. The `experiment.MD` file in each experiment folder provides a detailed overview of what the experiment does, the conclusions drawn, and commands to recreate it.   To run the template experiment `2022.02.01.test`, simply run the command provided:
 
-`docker-compose -f docker-compose.yml build train && docker-compose -f structured_experiments/2022.02.01.template/docker-compose.yml up --build train_test_experiment`
+`docker-compose -f docker-compose.yml build train && docker-compose -f structured_experiments/2022.02.01.train/docker-compose.yml up --build train_test_experiment`
 
 Or on Windows:
 
-`docker-compose -f docker-compose.yml build train; docker-compose -f structured_experiments/2022.02.01.test/docker-compose.yml up --build train_test_experiment
+`docker-compose -f docker-compose.yml build train; docker-compose -f structured_experiments/2022.02.01.train/docker-compose.yml up --build train_test_experiment
 
 For information on how to build your own experiment, please consult the contribution guide located in the wiki [here](https://github.com/BloomTech-Labs/scribble-stadium-ds/wiki)
  
