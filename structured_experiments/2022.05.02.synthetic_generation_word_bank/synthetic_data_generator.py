@@ -8,11 +8,14 @@ import glob
 import os
 import sys
 from PIL import Image
+import json
+import random
 
 # Variables created for functions
 cwd = os.path.dirname(os.path.abspath(__file__))
-processed_path = sys.argv[1] + "/"
-char_list = [[] for i in range(55)]
+processed_path = sys.argv[1].strip() + "/"
+char_list = [[] for i in range(5000000)]
+
 
 
 # Takes a PIL image (im1, img2) and attaches img2 to the right of img1
@@ -41,10 +44,13 @@ def create_char_list():
         img_files += glob.glob(
             cwd + f"/data/character_images/*.{ext}", recursive=True)
 
-    print(cwd)
+    # print(cwd)
     for file_path in img_files:
         file_char = os.path.basename(file_path)[5]
         char_place = get_place_from_char(file_char)
+        # print(file_path)
+        # print(char_place)
+        # print(file_char)
 
         char_list[char_place].append(Image.open(file_path))
 
@@ -66,7 +72,9 @@ def get_place_from_char(char: str):
 
 # Returns an image of the character
 def get_char_as_image(char: str, handwriting_type: int = 0):
+    # print(char_list[get_place_from_char(char)][handwriting_type])
     return char_list[get_place_from_char(char)][handwriting_type]
+
 
 
 # Creates a full image from the complete text desired to become synthetic data
@@ -128,34 +136,6 @@ def create_image_from_string(sentence: str):
     return_image = get_concat_v(return_image, row_image)
     return return_image
 
-
-# # Lists to create different variations of a sentence
-# nouns = ["dog", "cat", "rat", "mouse", "kitty", "doggy", "rabbit", "bunny", "snake", "snail", "squirrel", "bird",
-#          "rodent", "duck", "goose", "zebra", "fox", "owl"]
-# verbs = ["jumps", "runs", "zooms", "swims", "dives", "sprints", "stalks", "submits", "catches", "chases", "claws"]
-# preps = ["towards", "inside", "under", "around", "behind", "beside", "above", "below", "within", "over"]
-# places = ["bridge", "school", "house", "office", "hospital", "castle", "court", "cafe", "library", "store", "box"]
-
-
-# # Create new string with a certain pattern
-# def create_simple_string(n: int, v: int, pr: int, pl: int):
-#     return f"the {nouns[n]} {verbs[v]} {preps[pr]} the {places[pl]}."
-
-
-# # Setup the character image list
-# create_char_list()
-# list_of_string_pairs = []
-
-# # Loops through every variation of nouns/verbs and creates a string from them
-# for i in range(len(nouns)):
-#     for j in range(len(verbs)):
-#         for k in range(len(preps)):
-#             for l in range(len(places)):
-#                 list_of_string_pairs.append((str(i) + "-" + str(j) + "-" + str(k) + "-" + str(l),
-#                                              create_simple_string(i, j, k, l)))
-
-import json
-import random
  
 # Opening JSON file
 f = open('/train/tesstrain/word_bank.json')
@@ -165,20 +145,31 @@ f = open('/train/tesstrain/word_bank.json')
 # a dictionary
 word_data = json.load(f)
 
-# create_char_list()
+#Select a sample for words
+w_sample = 10
+
+word_data['verbs'] = random.sample(word_data['verbs'], w_sample)
+word_data['nouns'] = random.sample(word_data['nouns'], w_sample)
+word_data['preposition'] = random.sample(word_data['preposition'], 5)
+word_data['places'] = random.sample(word_data['places'], 5)
+create_char_list()
 list_of_string_pairs = []
 
 
-for i in range(100):
-  for k, v in word_data.items():
-    list_of_string_pairs.append(random.choice(word_data['nouns']) + "-" + random.choice(word_data['verbs'])+ "-",
-                                + random.choice(word_data['preposition']) + "-" + random.choice(word_data['places']) )
+# Create new string with a certain pattern
+def create_simple_string(n: int, v: int, pr: int, pl: int):
+    return f"the {word_data['nouns'][n]} {word_data['verbs'][v]} {word_data['preposition'][pr]} the {word_data['places'][pl]}."
 
-# list_of_string_pairs.append(("hello-world", "hello world"))
-# list_of_string_pairs.append(("cats", "cats catch mice"))
-# list_of_string_pairs.append(("dogs", "dogs chase cars"))
+# Loops through every variation of nouns/verbs randomly selected and creates a string from them
+for i in range(len(word_data['nouns'])):
+    for j in range(len(word_data['verbs'])):
+        for k in range(len(word_data['preposition'])):
+            for l in range(len(word_data['places'])):
+                list_of_string_pairs.append((str(i) + "imga-" + str(j) + "-" + str(k) + "-" + str(l),
+                                             create_simple_string(i, j, k, l)))
 
-# Whatever has been added to the list_of_string_pairs will be created to an image
+
+# Create images of data added to list_of_string_pairs
 for file_name, text_data in list_of_string_pairs:
 
     syn_image = create_image_from_string(text_data)

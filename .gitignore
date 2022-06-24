@@ -161,3 +161,5 @@ data/*.traineddata
 /structured_experiments/2022.02.17.synthetic_generation/created_synthetic_data/*
 data_management/autopreprocess_testing/test_images/*.png
 data_management/autopreprocess_testing/test_images/*.gt.txt
+
+data/kaggle-ground-truth/*

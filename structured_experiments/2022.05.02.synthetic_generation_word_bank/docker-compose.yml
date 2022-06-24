@@ -3,7 +3,7 @@ version: "3"
 services:
   train_test_experiment:
     image: test_experiment
-    container_name: test_experiment_synthetic_generation_may
+    container_name: test_experiment_synthetic_generation_word_bank
     build:
       context: .
       dockerfile: ./Dockerfile
