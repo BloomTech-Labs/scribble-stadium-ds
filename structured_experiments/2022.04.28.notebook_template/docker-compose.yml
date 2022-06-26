@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  training_notebook:
+    image: training_notebook
+    container_name: training_notebook
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "8888:8888"
+    volumes:
+      - "../../data:/train/tesstrain/data"
+      - "./notebooks:/train/tesstrain/notebooks"
+    command: >
+      bash -c "cd notebooks
+      && jupyter notebook --ip 0.0.0.0 --allow-root"

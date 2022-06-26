@@ -1,4 +1,6 @@
-# Guidelines for Data Science and Machine learning experimentation
+
+# Guidelines for Data Science and Machine Learning experimentation
+
 The purpose of this document is to elaborate on a structured experimental technique which utilizes the scientific method 
 <table>
 <tr>
@@ -87,7 +89,10 @@ The purpose of this document is to elaborate on a structured experimental techni
 
 </table>
 
+
+
 ## Reproducible results
+
 Exact reproducible results can be a hard thing to achieve in tensorflow / keras.  
 Please see [does_synthetic_data_improve_mae.ipynb]
 (./data_training_pipeline_experiments/story_photo_transformer_experiments/does_synthetic_data_improve_mae.ipynb)

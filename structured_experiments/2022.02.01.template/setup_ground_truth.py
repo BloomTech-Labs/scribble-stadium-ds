@@ -7,7 +7,7 @@ from PIL import Image
 
 def main():
     name_of_script = sys.argv[0] # should be setup_ground_truth.py
-    kaggle_folder = sys.argv[1]
+    kaggle_folder = sys.argv[1].strip()
     with open(f'{kaggle_folder}/written_name_test.csv', mode='r') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:
