@@ -1,7 +1,7 @@
+
 """
 
 This file will create synthetic data from inputted strings.
-
 It creates variations of a sentence using a list of nouns and verbs.
 
 """
