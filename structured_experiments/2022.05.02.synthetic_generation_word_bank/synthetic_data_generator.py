@@ -1,6 +1,7 @@
 """
 
 This file will create synthetic data from inputted strings.
+
 It creates variations of a sentence using a list of nouns and verbs.
 
 """
@@ -131,7 +132,6 @@ def create_image_from_string(sentence: str):
 
 # Opening JSON file
 f = open('/train/tesstrain/word_bank.json')
- 
 # returns JSON object as
 # a dictionary
 word_data = json.load(f)
