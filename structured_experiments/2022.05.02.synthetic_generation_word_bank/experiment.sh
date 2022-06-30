@@ -1,4 +1,5 @@
-echo 'Setting Up Synthetic Test Data for Tesseract Training'
+#!/bin/bash
+echo "Setting Up Synthetic Test Data for Tesseract Training"
 mkdir -p /train/tesstrain/data/synthetic-ground-truth
 python synthetic_data_generator.py /train/tesstrain/data/synthetic-ground-truth
 echo 'Training Synthetic Test Model'

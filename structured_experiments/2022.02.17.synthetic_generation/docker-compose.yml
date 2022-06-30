@@ -3,7 +3,7 @@ version: "3"
 services:
   train_test_experiment:
     image: test_experiment
-    container_name: test_experiment2
+    container_name: test_experiment
     build:
       context: .
       dockerfile: ./Dockerfile

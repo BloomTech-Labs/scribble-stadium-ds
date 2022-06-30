@@ -1,4 +1,5 @@
 """
+
 This file will create synthetic data from inputted strings.
 It creates variations of a sentence using a list of nouns and verbs.
 
@@ -16,8 +17,6 @@ cwd = os.path.dirname(os.path.abspath(__file__))
 processed_path = sys.argv[1].strip() + "/"
 char_list = [[] for i in range(5000000)]
 
-
-
 # Takes a PIL image (im1, img2) and attaches img2 to the right of img1
 def get_concat_h(im1, im2):
     dst = Image.new('RGB', (im1.width + im2.width, im1.height))
@@ -25,14 +24,12 @@ def get_concat_h(im1, im2):
     dst.paste(im2, (im1.width, 0))
     return dst
 
-
 # Takes a PIL image (im1, img2) and attaches img2 to the bottom of img1
 def get_concat_v(im1, im2):
     dst = Image.new('RGB', (im1.width, im1.height + im2.height))
     dst.paste(im1, (0, 0))
     dst.paste(im2, (0, im1.height))
     return dst
-
 
 # Creates the list of characters from the folder "character_images"
 # These images need to have the letter on the 6th letter which I put "char-" before.
@@ -54,7 +51,6 @@ def create_char_list():
 
         char_list[char_place].append(Image.open(file_path))
 
-
 # Gets the list position for the specified character
 def get_place_from_char(char: str):
     char_place = ord(char)
@@ -69,13 +65,10 @@ def get_place_from_char(char: str):
     else:
         return -1
 
-
 # Returns an image of the character
 def get_char_as_image(char: str, handwriting_type: int = 0):
     # print(char_list[get_place_from_char(char)][handwriting_type])
     return char_list[get_place_from_char(char)][handwriting_type]
-
-
 
 # Creates a full image from the complete text desired to become synthetic data
 def create_image_from_string(sentence: str):
@@ -136,10 +129,8 @@ def create_image_from_string(sentence: str):
     return_image = get_concat_v(return_image, row_image)
     return return_image
 
- 
 # Opening JSON file
 f = open('/train/tesstrain/word_bank.json')
-
  
 # returns JSON object as
 # a dictionary
@@ -155,7 +146,6 @@ word_data['places'] = random.sample(word_data['places'], 5)
 create_char_list()
 list_of_string_pairs = []
 
-
 # Create new string with a certain pattern
 def create_simple_string(n: int, v: int, pr: int, pl: int):
     return f"the {word_data['nouns'][n]} {word_data['verbs'][v]} {word_data['preposition'][pr]} the {word_data['places'][pl]}."
@@ -167,7 +157,6 @@ for i in range(len(word_data['nouns'])):
             for l in range(len(word_data['places'])):
                 list_of_string_pairs.append((str(i) + "imga-" + str(j) + "-" + str(k) + "-" + str(l),
                                              create_simple_string(i, j, k, l)))
-
 
 # Create images of data added to list_of_string_pairs
 for file_name, text_data in list_of_string_pairs:
