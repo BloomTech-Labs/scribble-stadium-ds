@@ -1,18 +1,30 @@
 <!--DESC Template folder to use for experiments-->
- Hypothesis
-TODO: Create Template
+ # Hypothesis:
+
+Can I learn anything about the mechanism by which Tesseract is failing by observing \
+the outputs of Tesseract and comparing them to the labeling and raw data?
 
 # Methodology
 
-TODO: Create Template
+In the Tesstest directory in the __init__.py, I made some changes to the test_model() \
+function that is defined there so that the outputs of Tesseract are saved in lists.
 
+I also changed the cells in the jupypter notebook as well to display a dataframe of the \
+input raw data (ground_truth), labeling data, and the Tesseract output
+
+To get the images to display in a nice way, I converted the image data into a sort of \
+"HTML" link
 # Results
 
-TODO: Create Template
+The data was able to be nicely read in a DataFrame which I tweaked its appearance until \
+it was easy to read
 
 # Conclusions
 
-TODO: Create Template
+Surprisingly, Tesseract was doing much better than I thought: it was getting all the correct words and letters\
+for the most part.  Definitely much better than we believed by virtue of the 80% character error rate we were seeing.
+
+The problem seemed to stem from Tesseract reading a bunch of extraneous text that was not part of the labeled text.
 
 
 # Reproduce
