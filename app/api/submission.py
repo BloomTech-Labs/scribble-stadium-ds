@@ -22,6 +22,7 @@ log = logging.getLogger(__name__)
 google_vision = GoogleAPI() 
 tesseract_vision = TesseractAPI(OCR_MODEL)
 
+
 @router.post("/submission/text")
 def submission_text(sub: Submission):
     """
@@ -39,7 +40,7 @@ def submission_text(sub: Submission):
     {"SubmissionID": int, "IsFlagged": boolean, "LowConfidence": boolean, "Complexity": int}
     ```
     """
-    # Set model for OCR, defaults to Google Vision
+    # Set model for OCR, checks for Google Vision API Keys
     if sub.Model == "tesseract":
         vision = tesseract_vision
     else:
@@ -91,7 +92,7 @@ def submission_text(sub: Submission):
         status_code=200,
         content={
             "SubmissionID": sub.SubmissionID,
-            "IsFlagged": content_flagged, #QUESTION: Is this returning only the flag for the last page? (see above)
+            "IsFlagged": content_flagged,  # QUESTION: Is this returning only the flag for the last page? (see above)
             "LowConfidence": True in confidence_flags,
             "Complexity": score,
             "WordCount": cleaned_words_count  

@@ -1,6 +1,5 @@
 import sys
 from typing import List
-
 from pydantic import BaseModel, Field, validator
 
 
@@ -35,7 +34,7 @@ class Submission(BaseModel):
 
     ### Model - `str`
     <p>
-        The model to be used for OCR (defaults to Google Vision)
+        The model to be used for OCR (defaults to Tesseract)
     </p>
 
     ## **Validation Functions:**
@@ -160,6 +159,7 @@ class LineGraphRequest(BaseModel):
     ScoreHistory: List[int] = Field(..., example=[1005, 1500, 9000, 789])
     StudentName: str = Field(..., example="Firstname")
 
+
 class CroppedWordsRequest(BaseModel):
     """Model that handles CropCloud Requests to the API"""
 
@@ -169,6 +169,7 @@ class CroppedWordsRequest(BaseModel):
     image_format: str = Field(..., example=".webp")
     canvas_area: int = Field(..., example=658560)
     density: float = Field(..., example=0.40)
+
 
 class CropCloudRequest(BaseModel):
     """Model that handles CropCloud Requests to the API"""
@@ -181,6 +182,7 @@ class CropCloudRequest(BaseModel):
     density: float = Field(..., example=0.40)
     max_words: int = Field(..., example=200)
 
+
 class HistogramRequest(BaseModel):
     """Model that handles Histogram Requests to the API"""
 
@@ -191,7 +193,7 @@ class HistogramRequest(BaseModel):
 
 
 class ClusterSubmission(BaseModel):
-    """Model used to psudocode request body"""
+    """Model used to pseudocode request body"""
 
     Image: str = Field(..., example="http://lorempixel.com/640/480/abstract")
     Inappropriate: bool = Field(..., example=False)

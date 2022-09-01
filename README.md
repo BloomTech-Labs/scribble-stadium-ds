@@ -36,7 +36,7 @@ set GIT_LFS_SKIP_SMUDGE=0;
 **☝️ use the above to avoid downloading all training data**
 
 ### Running Data Science Code
-Each of the components of this repository have been dockerized and can be intialized by executing the correct docker command.
+Each of the components of this repository have been dockerized and can be initialized by executing the correct docker command.
 
 #### Running API
 A Docker image has been created bundling the API, written using the FastAPI framework. The api can be run by executing 
@@ -48,6 +48,7 @@ Once running, visit [http://127.0.0.1:8000/](http://127.0.0.1:8000/) to view int
 
 #### Running Model Training Base Container
 A Docker base image has been created that bundles Tesseract with all the necessary python libraries to train a model. The following will build the image locally.
+Run the following code in your terminal under the same directory as your github repository 
 
 `docker-compose -f docker-compose.yml up --build -d train`
 
@@ -55,7 +56,7 @@ Once the docker completes building the image, run the container using the follow
 
 `docker exec -ti scribble-ocr-train bash`
 
-This will place your shell inside of the running docker container (debian operating system). The directory structure of the container is shown below:-
+This will place your shell inside the running docker container (debian operating system). The directory structure of the container is shown below:-
 
 ------------
 
@@ -79,13 +80,13 @@ To train a model from within the container use:
 
 `make training MODEL_NAME=storysquad START_MODEL=eng TESSDATA=/train/tessdata`
 
-To use a different trainingset than `storysquad`, add another folder within the `data/` folder of this repository named `<MODEL_NAME>-ground-truth`. Then you can use your new `MODEL_NAME` as an input in the make command above. You can test this with `MODEL_NAME=testsquad`. This should start runnign correctly and fail because there are not enough examples to train a model.
+To use a different training set than `storysquad`, add another folder within the `data/` folder of this repository named `<MODEL_NAME>-ground-truth`. Then you can use your new `MODEL_NAME` as an input in the make command above. You can test this with `MODEL_NAME=testsquad`. This should start running correctly and fail because there are not enough examples to train a model.
 
-Additionally you can replace layers of the LSTM model by using the `make finetune` route.
+Additionally, you can replace layers of the LSTM model by using the `make finetune` route.
 
 `make finetune MODEL_NAME=storysquad START_MODEL=eng TESSDATA=/train/tessdata`
 
-You can also optionally specifiy the following arguments to more granularly control the network structure. For more information on this see [here](https://tesseract-ocr.github.io/tessdoc/tess4/TrainingTesseract-4.00.html#lstmtraining-command-line)
+You can also optionally specifically the following arguments to more granularly control the network structure. For more information on this see [here](https://tesseract-ocr.github.io/tessdoc/tess4/TrainingTesseract-4.00.html#lstmtraining-command-line)
 
 - *FINETUNE_INDEX* - Essentially the number of layers from the original LSTM model to keep. By default that LSTM has 7 layers and the default index is to keep 5
 - *FINETUNE_LAYERS* - The layers you'd like to append to the end of the existing network. Default is `[Lfx256 O1c111]`
@@ -97,7 +98,7 @@ For hyperparameter tuning refer to https://tesseract-ocr.github.io/tessdoc/tess4
 
 
 #### Running a Structured Experiment
-A series of completed experiments exist within folders in `structured_experiments/`. Each folder represents an experiment completed in the hopes of identifying succesful strategies for training better handwriting OCR models. Each experiment is dockerized and can be executed via docker commands. The `experiment.MD` file in each experiment folder provides a detailed overview of what the experiment does, the conclusions drawn, and commands to recreate it.   To run the template experiment `2022.02.01.test`, simply run the command provided:
+A series of completed experiments exist within folders in `structured_experiments/`. Each folder represents an experiment completed in the hopes of identifying successful strategies for training better handwriting OCR models. Each experiment is dockerized and can be executed via docker commands. The `experiment.MD` file in each experiment folder provides a detailed overview of what the experiment does, the conclusions drawn, and commands to recreate it.   To run the template experiment `2022.02.01.test`, simply run the command provided:
 
 `docker-compose -f docker-compose.yml build train && docker-compose -f structured_experiments/2022.02.01.template/docker-compose.yml up --build train_test_experiment`
 
@@ -122,7 +123,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 
