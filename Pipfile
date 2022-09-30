@@ -34,6 +34,7 @@ sqlalchemy = "*"
 uvicorn = "*"
 wordcloud = "*"
 numpy = "*"
+typer = "*"
 
 [requires]
 python_version = "3"
