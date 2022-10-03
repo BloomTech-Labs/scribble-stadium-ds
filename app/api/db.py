@@ -38,6 +38,3 @@ async def get_url(connection=Depends(get_db)):
     """
     url_without_password = repr(connection.engine.url)
     return {'database_url': url_without_password}
-
-
-Session = Depends(get_db)
